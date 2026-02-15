@@ -1,0 +1,126 @@
+╔════════════════════════════════════════════════════════════════╗
+║        CarShield Two-Page Demo - QUICK REFERENCE               ║
+╚════════════════════════════════════════════════════════════════╝
+
+🌐 DEMO URL: http://localhost:5174
+🟢 STATUS: Running & Ready
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 PAGE 1: CAMPAIGN PLANNING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+What It Does:
+✅ Select target ZIP codes (896 regions)
+✅ View demographics for each market
+✅ Choose CTV and Traditional TV channels
+✅ See real-time reach and budget estimates
+
+How to Use:
+1. Click ZIP regions on map to select
+2. Review demographics in panel below
+3. Click channel cards to add to plan
+4. Check summary panel for totals
+
+Best Regions to Demo:
+• Los Angeles (900-928) - High-value urban professionals
+• Dallas (750-769) - Suburban families, high auto ownership
+• Atlanta (300-319) - Growing market, upper-middle income
+
+Channels to Select:
+• Roku - Largest CTV platform
+• YouTube TV - Cord-cutters
+• Hulu - Premium viewers
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 PAGE 2: CAMPAIGN RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+What It Shows:
+✅ 24.8M impressions delivered
+✅ +22.4% measured lift (95% confidence)
+✅ $3.80 iROAS (above target)
+✅ Geographic performance by ZIP region
+
+How to Use:
+1. Review top-line metrics (4 KPI cards)
+2. Click ZIP regions on map for details
+3. Scroll to see platform breakdowns
+4. Show statistical confidence validation
+
+Best Regions to Demo:
+• Los Angeles (green) - +28.3% lift, high performer
+• Atlanta (green) - +31.2% lift, top market
+• Philadelphia (gray) - Holdout control group
+
+Key Talking Points:
+• 95% statistical confidence
+• Rigorous holdout methodology
+• Platform-level optimization insights
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔄 NAVIGATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Top Bar Tabs:
+• 📋 Campaign Planning → Design new campaign
+• 📊 Campaign Results → View performance
+
+Bottom Right Badge:
+• Purple dot = Pre-Campaign mode
+• Green dot = Live Campaign mode
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+💬 DEMO SCRIPT (5 MINUTES)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[START ON PLANNING]
+0:00 - "Let's design a CarShield campaign..."
+0:30 - Click LA, Dallas, Atlanta on map
+1:00 - "896 ZIP codes, demographic profiles for each"
+1:30 - Select Roku, YouTube TV, Hulu
+2:00 - "4.5M impressions, $142K budget"
+
+[SWITCH TO RESULTS]
+2:30 - "Campaign ran 30 days, here are results..."
+3:00 - Show +22.4% lift, $3.80 iROAS
+3:30 - Click LA region: "+28.3% lift - high performer"
+4:00 - Scroll to Statistical Confidence
+4:30 - "95% confidence, p=0.003, proven incrementality"
+5:00 - [END] "Complete pre-to-post tool"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🎯 KEY DIFFERENTIATORS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ END-TO-END VISIBILITY: Planning → Execution → Results
+✓ GEOGRAPHIC PRECISION: 896 ZIP-level targeting
+✓ DEMOGRAPHIC INSIGHTS: Segment profiles for each market
+✓ CHANNEL FLEXIBILITY: CTV + Traditional TV inventory
+✓ STATISTICAL RIGOR: 95% confidence, holdout validation
+✓ INTERACTIVE MAPS: Click, hover, zoom on both pages
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🔧 TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If map doesn't load:
+→ Wait 2-3 seconds (GeoJSON loading)
+→ Check browser console for errors
+→ Run: node validate-two-page.js
+
+If pages don't switch:
+→ Click tabs in top navigation bar
+→ Refresh browser if needed
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📚 DOCUMENTATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Quick: DEMO_QUICK_REF.txt (this file)
+Full:  TWO_PAGE_DEMO.md
+Tech:  COMPLETE_TWO_PAGE.md
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ READY FOR LA DEMO
+
