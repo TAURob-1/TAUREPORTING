@@ -1,6 +1,6 @@
 export const ADVERTISER_OPTIONS = [
   { id: 'demo', name: 'Demo Advertiser', vertical: 'general' },
-  { id: 'flutter', name: 'Flutter', vertical: 'gambling' },
+  { id: 'tombola', name: 'Tombola', vertical: 'gambling' },
   { id: 'experian', name: 'Experian', vertical: 'data services' },
 ];
 

@@ -6,7 +6,7 @@ export const COUNTRY_MARKET_CONTEXT = {
     households: 24182655,
     avgMedianIncome: 46433,
     primaryVideoFocus: ['YouTube CTV', 'ITVX', 'Channel 4 Streaming'],
-    demographicsSource: 'Signal /companies/midnite-com/uk_demographics_enriched_msoa.csv (ONS/MSOA derived)',
+    demographicsSource: 'Signal /companies/tombola-co-uk/summary/traffic_intelligence.json (ONS/MSOA aligned enrichment)',
     marketSizingSource: 'ONS-aligned MSOA aggregation from Signal enrichment',
   },
   US: {
@@ -188,11 +188,12 @@ const US_GENERAL_RULES = [
 
 export function getRegulations(countryCode = 'US', advertiser = {}) {
   const vertical = (advertiser.vertical || '').toLowerCase();
+  const advertiserName = advertiser.name || 'Advertiser';
   const isGambling = vertical.includes('gambling') || vertical.includes('betting');
 
   if (countryCode === 'UK' && isGambling) {
     return {
-      title: 'UK Gambling Advertising Compliance',
+      title: `${advertiserName}: UK Gambling Advertising Compliance`,
       tone: 'high',
       rules: UK_GAMBLING_RULES,
     };

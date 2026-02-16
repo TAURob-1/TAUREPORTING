@@ -200,7 +200,7 @@ export const NLP_MAPPINGS = [
     ]
   },
   {
-    keywords: ['sports betting', 'gambling', 'wager', 'sportsbook', 'fantasy sports', 'draft kings', 'fanduel'],
+    keywords: ['sports betting', 'gambling', 'wager', 'sportsbook', 'bingo', 'online bingo', 'tombola'],
     name: 'Sports Bettors',
     description: 'Mapped to: 25-44, moderate-high income, male-skewing',
     criteria: [

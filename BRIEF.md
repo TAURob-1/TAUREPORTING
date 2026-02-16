@@ -2,10 +2,10 @@
 
 ## Overview
 
-Transform the CarShield demo into a **universal media attribution and planning platform** that works for any advertiser. This is TAU's flagship product demo — it needs to WOW clients like Flutter and Experian.
+Transform the CarShield demo into a **universal media attribution and planning platform** that works for any advertiser. This is TAU's flagship product demo — it needs to WOW clients like Tombola and Experian.
 
 **Upcoming Demos:**
-- **Flutter** — this week, full platform capabilities
+- **Tombola** — this week, full platform capabilities
 - **Experian** — YouTube focused
 
 ## Core Transformation: CarShield → Universal
@@ -269,10 +269,10 @@ src/
 
 ## Demo Scenarios
 
-### Flutter Demo (Gambling/Gaming)
+### Tombola Demo (Gambling/Gaming)
 - UK focus
 - CTV emphasis (Sky Sports, YouTube CTV)
-- Geographic targeting for sports betting
+- Geographic targeting for bingo and gambling audiences
 - Show the "Peppa Pig problem" as honest insight
 
 ### Experian Demo (YouTube Focus)
@@ -298,10 +298,10 @@ src/
 
 ## Reference Files
 
-- UK Media Data: `/home/r2/Signal/companies/midnite-com/uk-media-intelligence.html`
+- UK Media Data: `/home/r2/Signal/companies/tombola-co-uk/summary/traffic_intelligence.json`
 - UK Demographics: `/home/r2/Signal/data/uk_demographics.csv`
 - Original CarShield: `/home/r2/clawd/carshield-demo/`
 
 ---
 
-Get this running. Make it impressive. We're showing Flutter this week.
+Get this running. Make it impressive. We're showing Tombola this week.

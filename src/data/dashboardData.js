@@ -89,12 +89,12 @@ const UK_BASE = {
     holdout: [150, 165, 170, 180, 175, 190, 205, 210, 215, 220, 218],
   },
   previousCampaign: {
-    name: 'Autumn Performance TV',
+    name: 'Tombola Winter Bingo Push',
     period: 'Sep-Oct 2025',
     lift: '+13.9%',
     iROAS: '£2.43',
     testDesign: 'Regional Holdout',
-    keyLearning: 'ITVX + YouTube CTV delivered the strongest incremental reach in younger demos',
+    keyLearning: 'ITVX + YouTube CTV delivered the strongest incremental reach for UK bingo-intender audiences',
   },
   statisticalConfidence: {
     exposedGroup: { n: 46, lift: '+14.7%', confidence: 95, interval: '+11.8% to +17.3%' },

@@ -37,123 +37,125 @@ function buildShareRows(trafficComparison, advertiserDomain) {
 }
 
 const SIGNAL_DATASETS = {
-  flutter: {
+  tombola: {
     UK: {
       source: {
-        slug: 'midnite-com',
-        company: 'Midnite',
-        domain: 'midnite.com',
+        slug: 'tombola-co-uk',
+        company: 'Tombola',
+        domain: 'tombola.co.uk',
         country: 'GB',
-        updatedAt: '2025-12-26',
+        updatedAt: '2026-01-17',
       },
       trafficMain: {
         estimated_monthly_visits: {
-          '2025-09-01': 1291488,
-          '2025-10-01': 1362130,
-          '2025-11-01': 1454118,
+          '2025-09-01': 3756366,
+          '2025-10-01': 3652379,
+          '2025-11-01': 4315535,
         },
       },
       trafficComparison: [
-        { domain: 'midnite.com', visits: '1454118', bounce_rate: '0.3247867347248143', time_on_site: '361.6739759210068', pages_per_visit: '7.162724676777663' },
-        { domain: 'bet365.com', visits: '45877760', bounce_rate: '0.4142321645000676', time_on_site: '617.2609758663162', pages_per_visit: '6.706549045395075' },
-        { domain: 'skybet.com', visits: '12740694', bounce_rate: '0.25436062273969373', time_on_site: '613.9507727972165', pages_per_visit: '6.447025345948085' },
-        { domain: 'paddypower.com', visits: '10986951', bounce_rate: '0.24179699348405292', time_on_site: '569.1628930756758', pages_per_visit: '8.862480238673168' },
-        { domain: 'betfair.com', visits: '10207019', bounce_rate: '0.22181702266446446', time_on_site: '696.442978686012', pages_per_visit: '11.53883411295374' },
+        { domain: 'tombola.co.uk', visits: '4315535', bounce_rate: '0.19254960827371592', time_on_site: '845.9591400119313', pages_per_visit: '8.815966673103373' },
+        { domain: 'galabingo.com', visits: '3292891', bounce_rate: '0.2878033390187394', time_on_site: '266.9958316229738', pages_per_visit: '6.739066089216041' },
+        { domain: 'foxybingo.com', visits: '2189929', bounce_rate: '0.2693000933406354', time_on_site: '406.304709154357', pages_per_visit: '6.00840219917026' },
+        { domain: 'buzzbingo.com', visits: '1350197', bounce_rate: '0.2854495301803092', time_on_site: '299.49093462792746', pages_per_visit: '5.376553124327996' },
+        { domain: 'meccabingo.com', visits: '1224883', bounce_rate: '0.2752023628272206', time_on_site: '427.2569610794973', pages_per_visit: '6.577342307677028' },
       ],
       seoSummary: {
         trackedKeywords: 300,
-        estimatedRankingKeywords: 5403,
-        highVolumeGapCount: 791,
-        topKeywordVolume: 110480,
+        estimatedRankingKeywords: 79,
+        highVolumeGapCount: 606,
+        topKeywordVolume: 14800,
         opportunities: [
-          { keyword: 'fa premier league', volume: 9140000, competitor: 'Paddy Power' },
-          { keyword: 'bet365', volume: 5000000, competitor: 'Bet365' },
-          { keyword: 'sky bet', volume: 4090000, competitor: 'Sky Bet' },
-          { keyword: 'football today', volume: 5000000, competitor: 'Paddy Power' },
+          { keyword: 'neptune play', volume: 14800, competitor: 'Gala Bingo' },
+          { keyword: 'free bingo no deposit sites', volume: 4400, competitor: 'Mecca Bingo' },
+          { keyword: 'online bingo website', volume: 2900, competitor: 'Foxy Bingo' },
+          { keyword: 'bingo online', volume: 6600, competitor: 'Buzz Bingo' },
         ],
       },
       aiVisibility: {
-        score: 50,
+        score: 50.7,
         rankings: [
-          { name: 'Midnite', score: 50, rank: 1 },
-          { name: 'Bet365', score: 50, rank: 2 },
-          { name: 'Betfair', score: 50, rank: 3 },
-          { name: 'Skybet', score: 25, rank: 4 },
-          { name: 'Paddypower', score: 25, rank: 5 },
+          { name: 'Tombola', score: 50.7, rank: 1 },
+          { name: 'Galabingo', score: 50, rank: 2 },
+          { name: 'Foxybingo', score: 50, rank: 3 },
+          { name: 'Meccabingo', score: 25, rank: 4 },
+          { name: 'Buzzbingo', score: 25, rank: 5 },
         ],
       },
       spend: {
-        annualMin: 2808020,
-        annualMax: 5258444,
+        annualMin: 18100000,
+        annualMax: 33700000,
         currency: 'GBP',
       },
       insights: [
-        'Midnite has strong direct traffic quality but remains a smaller share-of-voice player versus Bet365 and Sky Bet.',
-        'High-volume SEO gaps cluster around UK football discovery terms and sportsbook branded terms.',
-        'Linear TV plus YouTube CTV can close awareness gaps quickly while maintaining measurable response.',
+        'Tombola leads this UK bingo cohort on traffic volume and engagement quality, with 8.8 pages per visit and low bounce.',
+        'Signal identifies 606 SEO opportunity gaps where competitor content can still intercept high-intent bingo journeys.',
+        'ITV, Channel 4, and Sky plus ITVX/YouTube CTV should be used to defend share and add incremental UK reach.',
       ],
       advisorBrief: {
         planningPriorities: [
           'Protect compliance first: UKGC and CAP/BCAP checks on every creative and placement.',
           'Use ITV/Channel 4/Sky for trusted scale, then ITVX + YouTube CTV for incremental younger reach.',
-          'Prioritize SEO and paid search around non-brand football intent terms to reduce reliance on direct traffic.',
+          'Prioritize non-brand bingo SEO and high-intent paid search while protecting Tombola brand terms.',
         ],
       },
     },
     US: {
       source: {
-        slug: 'fanduel-casino-us',
-        company: 'FanDuel Casino US',
-        domain: 'casino.fanduel.com',
-        country: 'US',
-        updatedAt: '2026-01-12',
+        slug: 'tombola-uk',
+        company: 'Tombola (UK benchmark for US view)',
+        domain: 'tombola.co.uk',
+        country: 'GB',
+        updatedAt: '2026-01-17',
       },
       trafficMain: {
         estimated_monthly_visits: {
-          '2025-10-01': 1670873,
-          '2025-11-01': 1635617,
-          '2025-12-01': 1728186,
+          '2025-09-01': 3756366,
+          '2025-10-01': 3652379,
+          '2025-11-01': 4315535,
         },
       },
       trafficComparison: [
-        { domain: 'casino.fanduel.com', visits: '1728186', bounce_rate: '0.2634534202802249', time_on_site: '430.235463812318', pages_per_visit: '6.244271779158986' },
-        { domain: 'casino.betmgm.com', visits: '217552', bounce_rate: '0.5558482166833056', time_on_site: '111.18120253782826', pages_per_visit: '1.9235207789413649' },
-        { domain: 'caesars.com', visits: '7689868', bounce_rate: '0.39782656721144877', time_on_site: '261.92749665222317', pages_per_visit: '4.823856742214915' },
-        { domain: 'casino.draftkings.com', visits: '1597821', bounce_rate: '0.3677837307399922', time_on_site: '337.3971715270476', pages_per_visit: '4.350225734612293' },
+        { domain: 'tombola.co.uk', visits: '4315535', bounce_rate: '0.19254960827371592', time_on_site: '845.9591400119313', pages_per_visit: '8.815966673103373' },
+        { domain: 'galabingo.com', visits: '3292891', bounce_rate: '0.2878033390187394', time_on_site: '266.9958316229738', pages_per_visit: '6.739066089216041' },
+        { domain: 'foxybingo.com', visits: '2189929', bounce_rate: '0.2693000933406354', time_on_site: '406.304709154357', pages_per_visit: '6.00840219917026' },
+        { domain: 'buzzbingo.com', visits: '1350197', bounce_rate: '0.2854495301803092', time_on_site: '299.49093462792746', pages_per_visit: '5.376553124327996' },
       ],
       seoSummary: {
         trackedKeywords: 300,
-        estimatedRankingKeywords: 10314,
-        highVolumeGapCount: 434,
-        topKeywordVolume: 400890,
+        estimatedRankingKeywords: 79,
+        highVolumeGapCount: 606,
+        topKeywordVolume: 14800,
         opportunities: [
-          { keyword: 'online casino', volume: 301000, competitor: 'BetMGM Casino' },
-          { keyword: 'casinos', volume: 1220000, competitor: 'DraftKings Casino' },
-          { keyword: 'hotel near me', volume: 11100000, competitor: 'Caesars' },
-          { keyword: 'online casinos', volume: 301000, competitor: 'DraftKings Casino' },
+          { keyword: 'neptune play', volume: 14800, competitor: 'Gala Bingo' },
+          { keyword: 'free bingo no deposit sites', volume: 4400, competitor: 'Mecca Bingo' },
+          { keyword: 'online bingo website', volume: 2900, competitor: 'Foxy Bingo' },
+          { keyword: 'bingo online', volume: 6600, competitor: 'Buzz Bingo' },
         ],
       },
       aiVisibility: {
-        score: 37.5,
+        score: 50.7,
         rankings: [
-          { name: 'Casino (BetMGM)', score: 50, rank: 1 },
-          { name: 'FanDuel Casino US', score: 37.5, rank: 2 },
-          { name: 'Caesars', score: 25, rank: 3 },
+          { name: 'Tombola', score: 50.7, rank: 1 },
+          { name: 'Galabingo', score: 50, rank: 2 },
+          { name: 'Foxybingo', score: 50, rank: 3 },
+          { name: 'Meccabingo', score: 25, rank: 4 },
+          { name: 'Buzzbingo', score: 25, rank: 5 },
         ],
       },
       spend: {
-        annualMin: 45471,
-        annualMax: 136413,
-        currency: 'GBP',
+        annualMin: 18100000,
+        annualMax: 33700000,
+        currency: 'USD',
       },
       insights: [
-        'Caesars dominates traffic share in this comparison cohort, with FanDuel and DraftKings close for second tier visibility.',
-        'FanDuel shows stronger engagement quality than BetMGM in page depth and bounce profile.',
-        'Top SEO gaps include both category-intent casino terms and adjacent high-volume conversion pathways.',
+        'US view currently uses the Tombola UK benchmark dataset from Signal while preserving full planning functionality.',
+        'Tombola benchmark data shows strong site engagement and high direct share relative to the selected bingo cohort.',
+        'Priority remains high-attention video plus search capture, with compliance guardrails maintained by market.',
       ],
       advisorBrief: {
         planningPriorities: [
-          'Use CTV for upper-funnel demand shaping, then paid search retargeting for state-eligible users.',
+          'Use CTV for upper-funnel demand shaping, then paid search retargeting for high-intent users.',
           'Anchor creative to trust and game variety while controlling frequency to reduce fatigue.',
           'Treat compliance and geo-eligibility as mandatory constraints in every media recommendation.',
         ],
@@ -290,8 +292,8 @@ function computeChangePercent(trend) {
 }
 
 function resolveDataset(advertiserId = 'demo', countryCode = 'US') {
-  const byAdvertiser = SIGNAL_DATASETS[advertiserId] || SIGNAL_DATASETS.flutter;
-  return byAdvertiser[countryCode] || byAdvertiser.US || SIGNAL_DATASETS.flutter.US;
+  const byAdvertiser = SIGNAL_DATASETS[advertiserId] || SIGNAL_DATASETS.tombola;
+  return byAdvertiser[countryCode] || byAdvertiser.US || SIGNAL_DATASETS.tombola.US;
 }
 
 export function getSignalDataset(advertiserId = 'demo', countryCode = 'US') {
