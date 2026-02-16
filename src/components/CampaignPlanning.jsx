@@ -2,11 +2,11 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { getZipDemographic, estimateZipReach } from '../data/zipDemographics';
-import { channelInventory, formatImpressions, calculateBudget } from '../data/channelInventory';
+import { getChannelInventory, formatImpressions, calculateBudget } from '../data/countryChannelInventory';
 import BudgetAllocator from './BudgetAllocator';
 import ReachFrequency from './ReachFrequency';
 import ScenarioComparison from './ScenarioComparison';
-import { PROVIDER_PLANNING, US_TV_HOUSEHOLDS } from '../data/planningConfig';
+import { getProviderPlanning } from '../data/countryPlanning';
 import { usePlatform } from '../context/PlatformContext.jsx';
 
 // Component to handle map bounds setting
@@ -38,10 +38,11 @@ const CampaignPlanning = () => {
   const [budgetMetrics, setBudgetMetrics] = useState(null);
   const [channelsExpanded, setChannelsExpanded] = useState(false);
   const [exportCopied, setExportCopied] = useState(false);
+  const providerPlanning = useMemo(() => getProviderPlanning(countryCode), [countryCode]);
+  const channelInventory = useMemo(() => getChannelInventory(countryCode), [countryCode]);
 
   const exportPlanJSON = () => {
     if (!budgetMetrics) return;
-    const reachPct = US_TV_HOUSEHOLDS > 0 ? (budgetMetrics.reach / US_TV_HOUSEHOLDS) * 100 : 0;
     const plan = {
       planName: `${advertiser.name} ${countryConfig.shortLabel} CTV Campaign`,
       exportDate: new Date().toISOString().split('T')[0],
@@ -55,9 +56,10 @@ const CampaignPlanning = () => {
       reach: {
         deduplicated: budgetMetrics.reach,
         avgFrequency: budgetMetrics.frequency,
+        grps: budgetMetrics.grps,
       },
       providers: (budgetMetrics.enabledProviders || []).map(pid => {
-        const p = PROVIDER_PLANNING[pid];
+        const p = providerPlanning[pid];
         return { id: pid, name: p?.name || pid, budget: budgetMetrics.allocations?.[pid] || 0 };
       }),
       geographicTargeting: {
@@ -84,6 +86,7 @@ const CampaignPlanning = () => {
       '',
       `Budget: ${countryConfig.currencySymbol}${budgetMetrics.totalBudget.toLocaleString()}`,
       `Blended CPM: ${countryConfig.currencySymbol}${budgetMetrics.blendedCPM.toFixed(2)}`,
+      `GRPs: ${budgetMetrics.grps}`,
       `Deduped Reach: ${formatHH(budgetMetrics.reach)} households`,
       `Avg Frequency: ${budgetMetrics.frequency}x`,
       `Active Providers: ${budgetMetrics.enabledProviders?.length || 0}`,
@@ -398,6 +401,17 @@ const CampaignPlanning = () => {
                       {formatHH(budgetMetrics.reach)}
                     </div>
                     <div className="text-xs text-gray-500">Households (deduped)</div>
+                  </div>
+                )}
+
+                {/* GRPs */}
+                {budgetMetrics && budgetMetrics.grps > 0 && (
+                  <div className="bg-white rounded-lg p-3">
+                    <div className="text-xs text-gray-600">Estimated GRPs</div>
+                    <div className="text-2xl font-bold text-violet-900">
+                      {budgetMetrics.grps}
+                    </div>
+                    <div className="text-xs text-gray-500">Gross rating points</div>
                   </div>
                 )}
 

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { usePlatform } from '../context/PlatformContext.jsx';
+import { getMarketUniverse } from '../data/countryPlanning';
 
-function formatBudget(n) {
-  if (n >= 1000000) return `$${(n / 1000000).toFixed(1)}M`;
-  if (n >= 1000) return `$${(n / 1000).toFixed(0)}K`;
-  return `$${n}`;
+function formatBudget(n, currencySymbol) {
+  if (n >= 1000000) return `${currencySymbol}${(n / 1000000).toFixed(1)}M`;
+  if (n >= 1000) return `${currencySymbol}${(n / 1000).toFixed(0)}K`;
+  return `${currencySymbol}${n}`;
 }
 
 function formatHouseholds(n) {
@@ -12,23 +14,25 @@ function formatHouseholds(n) {
   return n.toString();
 }
 
-const METRICS = [
-  { key: 'budget', label: 'Budget', format: (v) => formatBudget(v), bestMode: null },
+const METRICS = (currencySymbol) => [
+  { key: 'budget', label: 'Budget', format: (v) => formatBudget(v, currencySymbol), bestMode: null },
   { key: 'reach', label: 'Deduped Reach', format: (v) => formatHouseholds(v), bestMode: 'max' },
   { key: 'frequency', label: 'Avg Frequency', format: (v) => `${v}x`, bestMode: null },
-  { key: 'blendedCPM', label: 'Blended CPM', format: (v) => `$${v.toFixed(2)}`, bestMode: 'min' },
-  { key: 'costPerReachPoint', label: 'Cost / Reach Pt', format: (v) => formatBudget(v), bestMode: 'min' },
+  { key: 'grps', label: 'GRPs', format: (v) => v.toString(), bestMode: 'max' },
+  { key: 'blendedCPM', label: 'Blended CPM', format: (v) => `${currencySymbol}${v.toFixed(2)}`, bestMode: 'min' },
+  { key: 'costPerReachPoint', label: 'Cost / Reach Pt', format: (v) => formatBudget(v, currencySymbol), bestMode: 'min' },
   { key: 'activeProviders', label: 'Active Providers', format: (v) => v.toString(), bestMode: null },
 ];
 
 const ScenarioComparison = ({ budgetMetrics, onRestoreScenario }) => {
+  const { countryCode, countryConfig } = usePlatform();
   const [scenarios, setScenarios] = useState([]);
 
   const saveScenario = () => {
     if (!budgetMetrics || scenarios.length >= 3) return;
 
-    const US_TV_HOUSEHOLDS = 131000000;
-    const reachPct = US_TV_HOUSEHOLDS > 0 ? (budgetMetrics.reach / US_TV_HOUSEHOLDS) * 100 : 0;
+    const universe = getMarketUniverse(countryCode);
+    const reachPct = universe > 0 ? (budgetMetrics.reach / universe) * 100 : 0;
     const costPerReachPoint = reachPct > 0 ? budgetMetrics.totalBudget / reachPct : 0;
 
     const scenario = {
@@ -38,6 +42,7 @@ const ScenarioComparison = ({ budgetMetrics, onRestoreScenario }) => {
       budget: budgetMetrics.totalBudget,
       reach: budgetMetrics.reach,
       frequency: budgetMetrics.frequency,
+      grps: budgetMetrics.grps || 0,
       blendedCPM: budgetMetrics.blendedCPM,
       costPerReachPoint,
       activeProviders: budgetMetrics.enabledProviders?.length || 0,
@@ -149,7 +154,7 @@ const ScenarioComparison = ({ budgetMetrics, onRestoreScenario }) => {
               </tr>
             </thead>
             <tbody>
-              {METRICS.map(metric => {
+              {METRICS(countryConfig.currencySymbol).map(metric => {
                 const bestId = getBestForMetric(metric);
                 return (
                   <tr key={metric.key} className="border-b border-gray-50">

@@ -44,7 +44,7 @@ export const COUNTRY_CONFIG = {
     planningMapCenter: [54.5, -3],
     planningMapZoom: 6,
     regulations: 'UK GDPR',
-    platforms: ['Linear TV', 'CTV', 'YouTube', 'Facebook Video', 'TikTok', 'Meta'],
+    platforms: ['Linear TV (ITV/C4/Sky)', 'CTV (ITVX/C4 Streaming/YouTube CTV)'],
   },
 };
 
