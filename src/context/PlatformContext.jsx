@@ -10,6 +10,14 @@ function slugify(value) {
 export function PlatformProvider({ children }) {
   const [countryCode, setCountryCode] = useState('US');
   const [advertiserId, setAdvertiserId] = useState(ADVERTISER_OPTIONS[0]?.id || 'demo');
+  const [planningState, setPlanningState] = useState({
+    totalBudget: 0,
+    allocations: {},
+    selectedMarkets: 0,
+    selectedChannels: [],
+    reach: 0,
+    frequency: 0,
+  });
 
   const countryConfig = COUNTRY_CONFIG[countryCode] || COUNTRY_CONFIG.US;
   const advertiser = ADVERTISER_OPTIONS.find((entry) => entry.id === advertiserId) || ADVERTISER_OPTIONS[0];
@@ -20,11 +28,13 @@ export function PlatformProvider({ children }) {
     countryConfig,
     advertiserId,
     setAdvertiserId,
+    planningState,
+    setPlanningState,
     advertiser: {
       ...advertiser,
       slug: slugify(advertiser?.name || 'advertiser'),
     },
-  }), [countryCode, countryConfig, advertiserId, advertiser]);
+  }), [countryCode, countryConfig, advertiserId, advertiser, planningState]);
 
   return <PlatformContext.Provider value={value}>{children}</PlatformContext.Provider>;
 }

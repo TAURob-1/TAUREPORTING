@@ -6,6 +6,7 @@ import SignalIntelligence from './components/SignalIntelligence';
 import StrategicAdvisor from './components/StrategicAdvisor';
 import { usePlatform } from './context/PlatformContext.jsx';
 import { ADVERTISER_OPTIONS, COUNTRY_OPTIONS, PLATFORM_BRAND } from './config/platformConfig';
+import { getRegulations } from './data/marketData';
 
 const PAGES = [
   { key: 'targeting', label: 'Audience', fullLabel: 'Audience Targeting' },
@@ -27,6 +28,10 @@ function App() {
   } = usePlatform();
 
   const currentIdx = PAGES.findIndex((p) => p.key === currentPage);
+  const regulationSummary = useMemo(
+    () => getRegulations(countryCode, advertiser).title,
+    [countryCode, advertiser]
+  );
   const statusLabel = useMemo(() => {
     if (currentPage === 'targeting') return 'Audience Setup';
     if (currentPage === 'planning') return 'Pre-Campaign';
@@ -113,7 +118,7 @@ function App() {
               <span className="font-medium">Platforms:</span>
               <span>{countryConfig.platforms.join(', ')}</span>
               <span className="text-gray-300">|</span>
-              <span>Regulation: {countryConfig.regulations}</span>
+              <span>Regulation: {regulationSummary}</span>
             </div>
           </div>
         </div>

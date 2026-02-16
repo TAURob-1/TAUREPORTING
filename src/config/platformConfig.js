@@ -1,7 +1,7 @@
 export const ADVERTISER_OPTIONS = [
-  { id: 'demo', name: 'Demo Advertiser' },
-  { id: 'flutter', name: 'Flutter' },
-  { id: 'experian', name: 'Experian' },
+  { id: 'demo', name: 'Demo Advertiser', vertical: 'general' },
+  { id: 'flutter', name: 'Flutter', vertical: 'gambling' },
+  { id: 'experian', name: 'Experian', vertical: 'data services' },
 ];
 
 const advertiserFromEnv = import.meta.env.VITE_ADVERTISER_NAME
@@ -10,6 +10,7 @@ const advertiserFromEnv = import.meta.env.VITE_ADVERTISER_NAME
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '-'),
       name: import.meta.env.VITE_ADVERTISER_NAME,
+      vertical: 'general',
     }
   : null;
 
@@ -29,8 +30,8 @@ export const COUNTRY_CONFIG = {
     planningGeoJson: '/data/us-zip3-simplified.json',
     planningMapCenter: [39.8283, -98.5795],
     planningMapZoom: 4,
-    regulations: 'CCPA/State Privacy',
-    platforms: ['Linear TV', 'CTV', 'YouTube', 'Facebook Video', 'TikTok', 'Meta'],
+    regulations: 'FTC/FCC + State Privacy',
+    platforms: ['Linear TV', 'CTV', 'Digital'],
   },
   UK: {
     code: 'UK',
@@ -43,8 +44,8 @@ export const COUNTRY_CONFIG = {
     planningGeoJson: '/data/uk/uk-postcodes-simplified.json',
     planningMapCenter: [54.5, -3],
     planningMapZoom: 6,
-    regulations: 'UK GDPR',
-    platforms: ['Linear TV (ITV/C4/Sky)', 'CTV (ITVX/C4 Streaming/YouTube CTV)'],
+    regulations: 'UK GDPR + CAP/BCAP',
+    platforms: ['Linear TV', 'CTV', 'Digital'],
   },
 };
 

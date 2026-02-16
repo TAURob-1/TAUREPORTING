@@ -269,7 +269,7 @@ export function processCSVData(csvText) {
 
   // Auto-detect ZIP and metric columns
   const zipColIdx = header.findIndex(h =>
-    /^(zip|zip_?code|zip3|postal|zipcode)$/i.test(h)
+    /^(zip|zip_?code|zip3|postal|zipcode|postcode|postcode_district)$/i.test(h)
   );
   const metricColIdx = header.findIndex(h =>
     /^(sales|conversions|revenue|count|metric|value|amount|quantity)$/i.test(h)
@@ -285,12 +285,20 @@ export function processCSVData(csvText) {
     const cols = lines[i].split(',').map(c => c.trim());
     if (cols.length <= Math.max(zipCol, metricCol)) continue;
 
-    const zipRaw = cols[zipCol].replace(/[^0-9]/g, '');
+    const zipRaw = cols[zipCol].trim().replace(/['"]/g, '');
     const metric = parseFloat(cols[metricCol]);
 
     if (zipRaw && !isNaN(metric)) {
-      // Normalize to 3-digit ZIP
-      const zip3 = zipRaw.length >= 3 ? zipRaw.substring(0, 3) : zipRaw.padStart(3, '0');
+      let zip3;
+      // Detect UK-style alphanumeric postcodes (e.g. "AB10", "SW1A 1AA", "M1")
+      const ukMatch = zipRaw.match(/^([A-Z]{1,2}\d{1,2}[A-Z]?)/i);
+      if (ukMatch) {
+        zip3 = ukMatch[1].toUpperCase();
+      } else {
+        // US numeric ZIP — strip non-digits and normalize to 3 digits
+        const digits = zipRaw.replace(/[^0-9]/g, '');
+        zip3 = digits.length >= 3 ? digits.substring(0, 3) : digits.padStart(3, '0');
+      }
       rawData.push({ zip3, metric });
     }
   }

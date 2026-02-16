@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { getZipType, getZipColor, getZipData } from '../data/zipMapping';
+import { getUkPostcodeDemographic } from '../data/ukPostcodeDemographics';
 import { usePlatform } from '../context/PlatformContext.jsx';
 
 function SetMapBounds({ geoJsonData, center, zoom }) {
@@ -74,11 +75,14 @@ const USAMap = ({ dmaRegions }) => {
     const type = countryCode === 'US' ? getZipType(zipCode) : 'uk-region';
     const zipData = countryCode === 'US'
       ? getZipData(zipCode, type)
-      : {
-          impressions: 'Pending UK campaign dataset',
-          lift: 'Pending UK campaign dataset',
-          description: 'UK postcode-level test region',
-        };
+      : (() => {
+          const demo = getUkPostcodeDemographic(zipCode);
+          return {
+            impressions: `~${(demo.households / 1000).toFixed(0)}K households`,
+            lift: 'Awaiting campaign data',
+            description: `${demo.region} — ${demo.segment}`,
+          };
+        })();
 
     layer.on({
       mouseover: (e) => {
@@ -99,7 +103,7 @@ const USAMap = ({ dmaRegions }) => {
     const labelPrefix = countryCode === 'US' ? 'ZIP' : countryConfig.geoUnit;
     const typeLabel = countryCode === 'US'
       ? type.charAt(0).toUpperCase() + type.slice(1)
-      : 'UK region';
+      : (() => { const d = getUkPostcodeDemographic(zipCode); return `${d.segment}<br/><span style="font-size: 10px; color: #888;">${d.region}</span>`; })();
 
     layer.bindTooltip(
       `<div style="text-align: center;"><strong>${labelPrefix} ${zipCode}</strong><br/><span style="font-size: 11px; color: #666;">${typeLabel}</span></div>`,

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { getZipDemographic, estimateZipReach } from '../data/zipDemographics';
+import { getUkPostcodeDemographic, estimateUkPostcodeReach } from '../data/ukPostcodeDemographics';
 import { getChannelInventory, formatImpressions, calculateBudget } from '../data/countryChannelInventory';
 import BudgetAllocator from './BudgetAllocator';
 import ReachFrequency from './ReachFrequency';
@@ -30,7 +31,7 @@ function getGeoCode(feature, countryCode) {
 }
 
 const CampaignPlanning = () => {
-  const { advertiser, countryCode, countryConfig } = usePlatform();
+  const { advertiser, countryCode, countryConfig, setPlanningState } = usePlatform();
   const [selectedZIPs, setSelectedZIPs] = useState(new Set());
   const [hoveredZIP, setHoveredZIP] = useState(null);
   const [geoJsonData, setGeoJsonData] = useState(null);
@@ -169,11 +170,12 @@ const CampaignPlanning = () => {
       }
     });
 
-    const demographic = countryCode === 'US' ? getZipDemographic(zipCode) : { segment: 'UK postcode area' };
+    const demographic = countryCode === 'US' ? getZipDemographic(zipCode) : getUkPostcodeDemographic(zipCode);
+    const tooltipExtra = countryCode === 'UK' ? `<br/><span style="font-size: 10px; color: #888;">${demographic.region}</span>` : '';
     layer.bindTooltip(
       `<div style="text-align: center;">
         <strong>${countryConfig.geoUnit} ${zipCode}</strong><br/>
-        <span style="font-size: 11px; color: #666;">${demographic.segment}</span>
+        <span style="font-size: 11px; color: #666;">${demographic.segment}</span>${tooltipExtra}
       </div>`,
       {
         permanent: false,
@@ -186,7 +188,7 @@ const CampaignPlanning = () => {
   // Calculate summary stats
   const totalReach = Array.from(selectedZIPs).reduce((sum, zip) => {
     if (countryCode === 'US') return sum + estimateZipReach(zip);
-    return sum;
+    return sum + estimateUkPostcodeReach(zip);
   }, 0);
 
   const selectedChannelList = [
@@ -196,6 +198,21 @@ const CampaignPlanning = () => {
 
   const totalImpressions = selectedChannelList.reduce((sum, ch) => sum + ch.impressions, 0);
   const estimatedBudget = calculateBudget(selectedChannelList);
+
+  useEffect(() => {
+    setPlanningState({
+      totalBudget: budgetMetrics?.totalBudget || 0,
+      allocations: budgetMetrics?.allocations || {},
+      selectedMarkets: selectedZIPs.size,
+      selectedChannels: Array.from(selectedChannels),
+      reach: budgetMetrics?.reach || 0,
+      frequency: budgetMetrics?.frequency || 0,
+      grps: budgetMetrics?.grps || 0,
+      totalGeoReach: totalReach,
+      estimatedBudget,
+      totalImpressions,
+    });
+  }, [budgetMetrics, selectedZIPs, selectedChannels, totalReach, estimatedBudget, totalImpressions, setPlanningState]);
 
   // Helper to format households
   const formatHH = (n) => {
@@ -324,8 +341,10 @@ const CampaignPlanning = () => {
                   {Array.from(selectedZIPs).sort().map(zipCode => {
                     const demographic = countryCode === 'US'
                       ? getZipDemographic(zipCode)
-                      : { segment: 'UK postcode area', income: 'Pending UK dataset', autoOwnership: 'Pending UK dataset' };
-                    const reach = countryCode === 'US' ? estimateZipReach(zipCode) : 0;
+                      : getUkPostcodeDemographic(zipCode);
+                    const reach = countryCode === 'US'
+                      ? estimateZipReach(zipCode)
+                      : estimateUkPostcodeReach(zipCode);
 
                     return (
                       <div
@@ -344,14 +363,17 @@ const CampaignPlanning = () => {
                         <div className="text-xs text-gray-700 space-y-1">
                           <div><strong>Segment:</strong> {demographic.segment}</div>
                           <div><strong>Income:</strong> {demographic.income}</div>
-                          <div><strong>Auto Own:</strong> {demographic.autoOwnership}</div>
                           {countryCode === 'US' ? (
-                            <div className="text-blue-600 font-medium">
-                              ~{(reach / 1000).toFixed(1)}K reach
-                            </div>
+                            <div><strong>Auto Own:</strong> {demographic.autoOwnership}</div>
                           ) : (
-                            <div className="text-blue-600 font-medium">Reach model pending UK demographics ingest</div>
+                            <>
+                              <div><strong>Region:</strong> {demographic.region}</div>
+                              <div><strong>Setting:</strong> {demographic.urbanRural}</div>
+                            </>
                           )}
+                          <div className="text-blue-600 font-medium">
+                            ~{(reach / 1000).toFixed(1)}K CTV reach
+                          </div>
                         </div>
                       </div>
                     );
@@ -455,14 +477,6 @@ const CampaignPlanning = () => {
                   <div className="text-xs text-gray-500">Campaign schedule TBD</div>
                 </div>
 
-                {/* Expected Lift */}
-                {budgetMetrics && budgetMetrics.reach > 0 && (
-                  <div className="bg-white rounded-lg p-3">
-                    <div className="text-xs text-gray-600">Expected Lift</div>
-                    <div className="text-2xl font-bold text-green-800">+12-18%</div>
-                    <div className="text-xs text-gray-500">Based on similar campaigns</div>
-                  </div>
-                )}
               </div>
             </div>
 

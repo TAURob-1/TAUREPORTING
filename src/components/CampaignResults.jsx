@@ -6,9 +6,15 @@ import DeliveryChart from './DeliveryChart';
 import CTVProviders from './CTVProviders';
 import PreviousCampaign from './PreviousCampaign';
 import StatisticalConfidence from './StatisticalConfidence';
-import { dashboardData } from '../data/dashboardData';
+import MediaReachTable from './MediaReachTable';
+import RegulationsPanel from './RegulationsPanel';
+import { getDashboardData } from '../data/dashboardData';
+import { getMediaReachTable, getRegulations } from '../data/marketData';
+import { usePlatform } from '../context/PlatformContext.jsx';
 
 function CampaignResults() {
+  const { countryCode, advertiserId, advertiser } = usePlatform();
+  const dashboardData = getDashboardData(countryCode, advertiserId);
   const { 
     testPeriod, 
     metrics, 
@@ -18,6 +24,8 @@ function CampaignResults() {
     previousCampaign, 
     statisticalConfidence 
   } = dashboardData;
+  const mediaReach = getMediaReachTable(countryCode);
+  const regulations = getRegulations(countryCode, advertiser);
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
@@ -98,12 +106,26 @@ function CampaignResults() {
           {/* CTV Providers */}
           <CTVProviders providers={ctvProviders} />
 
+          <RegulationsPanel
+            title={regulations.title}
+            tone={regulations.tone}
+            rules={regulations.rules}
+          />
+
           {/* Previous Campaign Results */}
           <PreviousCampaign campaign={previousCampaign} />
 
           {/* Statistical Confidence */}
           <StatisticalConfidence confidence={statisticalConfidence} />
         </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto mt-6">
+        <MediaReachTable
+          title={mediaReach.title}
+          subtitle={mediaReach.subtitle}
+          rows={mediaReach.rows}
+        />
       </div>
 
       {/* Footer Note */}

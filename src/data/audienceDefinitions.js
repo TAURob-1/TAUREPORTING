@@ -321,22 +321,71 @@ export function scoreZIPsForAudience(demographicsData, audience) {
 }
 
 /**
- * Get geographic diversity score for a set of ZIPs
+ * Map UK postcode area prefix to a broad UK region
+ */
+const UK_AREA_REGION = {
+  AB:'Scotland',DD:'Scotland',DG:'Scotland',EH:'Scotland',FK:'Scotland',G:'Scotland',
+  HS:'Scotland',IV:'Scotland',KA:'Scotland',KW:'Scotland',KY:'Scotland',ML:'Scotland',
+  PA:'Scotland',PH:'Scotland',TD:'Scotland',ZE:'Scotland',
+  CF:'Wales',LD:'Wales',LL:'Wales',NP:'Wales',SA:'Wales',SY:'Wales',
+  BT:'Northern Ireland',
+  DH:'North East',DL:'North East',NE:'North East',SR:'North East',TS:'North East',
+  BB:'North West',BL:'North West',CA:'North West',CH:'North West',CW:'North West',
+  FY:'North West',L:'North West',LA:'North West',M:'North West',OL:'North West',
+  PR:'North West',SK:'North West',WA:'North West',WN:'North West',
+  BD:'Yorkshire',DN:'Yorkshire',HD:'Yorkshire',HG:'Yorkshire',HU:'Yorkshire',
+  HX:'Yorkshire',LS:'Yorkshire',S:'Yorkshire',WF:'Yorkshire',YO:'Yorkshire',
+  DE:'East Midlands',LE:'East Midlands',LN:'East Midlands',NG:'East Midlands',NN:'East Midlands',
+  B:'West Midlands',CV:'West Midlands',DY:'West Midlands',HR:'West Midlands',
+  ST:'West Midlands',TF:'West Midlands',WR:'West Midlands',WS:'West Midlands',WV:'West Midlands',
+  AL:'East of England',CB:'East of England',CM:'East of England',CO:'East of England',
+  IP:'East of England',LU:'East of England',NR:'East of England',PE:'East of England',
+  SG:'East of England',SS:'East of England',
+  BR:'London',CR:'London',DA:'London',E:'London',EC:'London',EN:'London',HA:'London',
+  IG:'London',KT:'London',N:'London',NW:'London',RM:'London',SE:'London',SM:'London',
+  SW:'London',TW:'London',UB:'London',W:'London',WC:'London',
+  BN:'South East',CT:'South East',GU:'South East',HP:'South East',ME:'South East',
+  MK:'South East',OX:'South East',PO:'South East',RG:'South East',RH:'South East',
+  SL:'South East',SO:'South East',TN:'South East',WD:'South East',
+  BA:'South West',BH:'South West',BS:'South West',DT:'South West',EX:'South West',
+  GL:'South West',PL:'South West',SN:'South West',SP:'South West',TA:'South West',
+  TQ:'South West',TR:'South West',
+};
+
+/**
+ * Get geographic diversity score for a set of ZIPs/postcodes
  * (Higher score = more geographically distributed)
  */
-function getGeographicDiversity(zips) {
+function getGeographicDiversity(zips, countryCode) {
   if (zips.length === 0) return 0;
-  
-  // Group by first digit (rough geographic regions)
+
+  if (countryCode === 'UK') {
+    // UK: diversity across broad regions (12 possible)
+    const ukRegions = new Set();
+    const areaSet = new Set();
+    for (const code of zips) {
+      const area = code.match(/^[A-Z]{1,2}/)?.[0];
+      if (area) {
+        areaSet.add(area);
+        const region = UK_AREA_REGION[area];
+        if (region) ukRegions.add(region);
+      }
+    }
+    const regionScore = Math.min(ukRegions.size * 9, 50); // 12 regions max → 50
+    const areaScore = Math.min(areaSet.size * 0.5, 50);   // 120 areas max
+    return Math.min(Math.round(regionScore + areaScore), 100);
+  }
+
+  // US: group by first digit (rough geographic regions)
   const regions = new Set(zips.map(z => z.charAt(0)));
-  
+
   // Count unique two-digit prefixes
   const prefixes = new Set(zips.map(z => z.substring(0, 2)));
-  
+
   // Diversity score based on region spread and prefix variety
   const regionScore = regions.size * 15; // Max 135 for all 9 regions
   const prefixScore = Math.min(prefixes.size * 2, 65); // Max 65
-  
+
   return Math.min(regionScore + prefixScore, 100);
 }
 
@@ -351,7 +400,8 @@ export function generateRecommendations(demographicsData, audience, options = {}
   const {
     exposedRatio = 0.6,
     minScore = 50,
-    maxZips = 100
+    maxZips = 100,
+    countryCode = 'US'
   } = options;
   
   // Score all ZIPs
@@ -390,8 +440,8 @@ export function generateRecommendations(demographicsData, audience, options = {}
     avgScoreHoldout: holdout.reduce((sum, z) => sum + z.score, 0) / holdout.length || 0,
     minScoreExposed: exposed.length > 0 ? Math.min(...exposed.map(z => z.score)) : 0,
     maxScoreExposed: exposed.length > 0 ? Math.max(...exposed.map(z => z.score)) : 0,
-    geographicDiversityExposed: getGeographicDiversity(exposed.map(z => z.zip3)),
-    geographicDiversityHoldout: getGeographicDiversity(holdout.map(z => z.zip3)),
+    geographicDiversityExposed: getGeographicDiversity(exposed.map(z => z.zip3), countryCode),
+    geographicDiversityHoldout: getGeographicDiversity(holdout.map(z => z.zip3), countryCode),
     totalPopulation: exposed.reduce((sum, z) => sum + (z.demographics.population || 0), 0) +
                      holdout.reduce((sum, z) => sum + (z.demographics.population || 0), 0),
     exposedPopulation: exposed.reduce((sum, z) => sum + (z.demographics.population || 0), 0),

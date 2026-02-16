@@ -111,12 +111,26 @@ const UK_REACH_PARAMS = {
   sky_linear: { maxReachPct: 0.401, k: 0.9 },
 };
 
-export const BUDGET_PRESETS = [
+const US_BUDGET_PRESETS = [
   { value: 50000 },
   { value: 150000 },
   { value: 500000 },
   { value: 1000000 },
 ];
+
+const UK_BUDGET_PRESETS = [
+  { value: 25000 },
+  { value: 100000 },
+  { value: 250000 },
+  { value: 500000 },
+];
+
+export function getBudgetPresets(countryCode = 'US') {
+  return countryCode === 'UK' ? UK_BUDGET_PRESETS : US_BUDGET_PRESETS;
+}
+
+// Keep default export for backward compat
+export const BUDGET_PRESETS = US_BUDGET_PRESETS;
 
 export function getProviderPlanning(countryCode = 'US') {
   return countryCode === 'UK' ? UK_PROVIDER_PLANNING : US_PROVIDER_PLANNING;

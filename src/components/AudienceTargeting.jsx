@@ -3,6 +3,7 @@ import AudienceSelector from './AudienceSelector';
 import USAMapWithAudience from './USAMapWithAudience';
 import CustomAudienceBuilder from './CustomAudienceBuilder';
 import { generateRecommendations, scoreZIPsForAudience } from '../data/audienceDefinitions';
+import { usePlatform } from '../context/PlatformContext.jsx';
 
 const PRESETS = [
   { label: '60/40 Split', minScore: 40, exposedRatio: 0.6 },
@@ -11,21 +12,29 @@ const PRESETS = [
 ];
 
 const AudienceTargeting = () => {
+  const { countryCode, countryConfig } = usePlatform();
   const [selectedAudience, setSelectedAudience] = useState(null);
   const [demographicsData, setDemographicsData] = useState(null);
   const [recommendations, setRecommendations] = useState(null);
   const [loading, setLoading] = useState(true);
+  const maxZipsLimit = countryCode === 'UK' ? 1500 : 500;
   const [settings, setSettings] = useState({
     exposedRatio: 0.6,
     minScore: 50,
-    maxZips: 500
+    maxZips: countryCode === 'UK' ? 1500 : 500
   });
   const [customAudiences, setCustomAudiences] = useState([]);
   const [showBuilder, setShowBuilder] = useState(false);
 
-  // Load demographics data
+  // Load demographics data (country-appropriate)
   useEffect(() => {
-    fetch('/data/zip3-demographics.json')
+    setLoading(true);
+    setDemographicsData(null);
+    setRecommendations(null);
+    const url = countryCode === 'UK'
+      ? '/data/uk/uk-postcode-demographics.json'
+      : '/data/zip3-demographics.json';
+    fetch(url)
       .then(response => response.json())
       .then(data => {
         setDemographicsData(data);
@@ -35,12 +44,14 @@ const AudienceTargeting = () => {
         console.error('Error loading demographics:', error);
         setLoading(false);
       });
-  }, []);
+    // Reset maxZips for the new country
+    setSettings(prev => ({ ...prev, maxZips: countryCode === 'UK' ? 1500 : 500 }));
+  }, [countryCode]);
 
   // Generate recommendations when audience changes
   useEffect(() => {
     if (selectedAudience && demographicsData) {
-      const recs = generateRecommendations(demographicsData, selectedAudience, settings);
+      const recs = generateRecommendations(demographicsData, selectedAudience, { ...settings, countryCode });
       setRecommendations(recs);
     } else {
       setRecommendations(null);
@@ -126,7 +137,7 @@ const AudienceTargeting = () => {
       <div className="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg shadow-lg p-6 text-white">
         <h1 className="text-2xl font-bold mb-2">Intelligent Audience Targeting</h1>
         <p className="text-blue-100">
-          Select your target audience and get AI-powered ZIP code recommendations for exposed and holdout groups
+          Select your target audience and get AI-powered {countryConfig.geoUnit} recommendations for exposed and holdout groups
         </p>
       </div>
 
@@ -224,7 +235,7 @@ const AudienceTargeting = () => {
           {sliderStats && (
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-5">
               <div className="bg-emerald-50 rounded-lg p-3 border border-emerald-200 text-center">
-                <div className="text-xs text-emerald-700 font-medium mb-1">Selected ZIPs</div>
+                <div className="text-xs text-emerald-700 font-medium mb-1">Selected {countryConfig.geoUnitPlural}</div>
                 <div className="text-xl font-bold text-emerald-600">
                   {sliderStats.selectedCount}
                 </div>
@@ -280,7 +291,7 @@ const AudienceTargeting = () => {
           {/* Secondary Controls */}
           <details className="group">
             <summary className="cursor-pointer text-sm text-gray-500 hover:text-blue-600 transition-colors flex items-center gap-2">
-              <span>Exposed/Holdout Ratio & Max ZIPs</span>
+              <span>Exposed/Holdout Ratio & Max {countryConfig.geoUnitPlural}</span>
               <span className="text-xs group-open:hidden">(click to expand)</span>
             </summary>
 
@@ -310,7 +321,7 @@ const AudienceTargeting = () => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Max ZIP Regions
+                  Max {countryConfig.geoUnit} Regions
                   <span className="ml-2 text-xs text-gray-500">
                     ({settings.maxZips})
                   </span>
@@ -318,7 +329,7 @@ const AudienceTargeting = () => {
                 <input
                   type="range"
                   min="50"
-                  max="500"
+                  max={maxZipsLimit}
                   step="10"
                   value={settings.maxZips}
                   onChange={(e) => handleSettingsChange('maxZips', parseInt(e.target.value))}
@@ -326,8 +337,8 @@ const AudienceTargeting = () => {
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
                   <span>50</span>
-                  <span>250</span>
-                  <span>500</span>
+                  <span>{Math.round(maxZipsLimit / 2)}</span>
+                  <span>{maxZipsLimit}</span>
                 </div>
               </div>
             </div>
@@ -353,7 +364,7 @@ const AudienceTargeting = () => {
               <div className="text-sm font-medium text-green-800 mb-2">Exposed Group</div>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">ZIP Regions:</span>
+                  <span className="text-gray-600">{countryConfig.geoUnit} Regions:</span>
                   <span className="font-semibold text-gray-900">{recommendations.stats.exposedCount}</span>
                 </div>
                 <div className="flex justify-between">
@@ -381,7 +392,7 @@ const AudienceTargeting = () => {
               <div className="text-sm font-medium text-yellow-800 mb-2">Holdout Group</div>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">ZIP Regions:</span>
+                  <span className="text-gray-600">{countryConfig.geoUnit} Regions:</span>
                   <span className="font-semibold text-gray-900">{recommendations.stats.holdoutCount}</span>
                 </div>
                 <div className="flex justify-between">
@@ -409,7 +420,7 @@ const AudienceTargeting = () => {
               <div className="text-sm font-medium text-blue-800 mb-2">Overall Campaign</div>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Total ZIPs:</span>
+                  <span className="text-gray-600">Total {countryConfig.geoUnitPlural}:</span>
                   <span className="font-semibold text-gray-900">
                     {recommendations.stats.exposedCount + recommendations.stats.holdoutCount}
                   </span>
@@ -421,7 +432,7 @@ const AudienceTargeting = () => {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Qualified ZIPs:</span>
+                  <span className="text-gray-600">Qualified {countryConfig.geoUnitPlural}:</span>
                   <span className="font-semibold text-gray-900">{recommendations.stats.totalQualified}</span>
                 </div>
                 <div className="flex justify-between">
@@ -460,7 +471,7 @@ const AudienceTargeting = () => {
             <button
               onClick={() => {
                 const csv = [
-                  ['ZIP3', 'Type', 'Score', 'Population', 'Households'],
+                  [countryConfig.geoUnit, 'Type', 'Score', 'Population', 'Households'],
                   ...recommendations.exposed.map(z => [z.zip3, 'Exposed', z.score, z.demographics.population, z.demographics.households]),
                   ...recommendations.holdout.map(z => [z.zip3, 'Holdout', z.score, z.demographics.population, z.demographics.households])
                 ].map(row => row.join(',')).join('\n');
@@ -469,12 +480,12 @@ const AudienceTargeting = () => {
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = `zip-targeting-${selectedAudience.id}.csv`;
+                a.download = `${countryConfig.geoUnit.toLowerCase()}-targeting-${selectedAudience.id}.csv`;
                 a.click();
               }}
               className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium"
             >
-              Export ZIP List (CSV)
+              Export {countryConfig.geoUnit} List (CSV)
             </button>
           </div>
         </div>

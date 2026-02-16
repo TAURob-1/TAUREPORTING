@@ -1,7 +1,9 @@
 import React from 'react';
 import { AUDIENCES } from '../data/audienceDefinitions';
+import { usePlatform } from '../context/PlatformContext.jsx';
 
 const AudienceSelector = ({ selectedAudience, onAudienceChange, recommendations, customAudiences, onOpenBuilder, onRemoveCustomAudience }) => {
+  const { countryConfig } = usePlatform();
   const audienceList = Object.values(AUDIENCES);
 
   return (
@@ -139,7 +141,7 @@ const AudienceSelector = ({ selectedAudience, onAudienceChange, recommendations,
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
             <div className="bg-white rounded-lg p-3 shadow-sm">
-              <div className="text-xs text-gray-600 mb-1">Exposed ZIPs</div>
+              <div className="text-xs text-gray-600 mb-1">Exposed {countryConfig.geoUnitPlural}</div>
               <div className="text-xl font-bold text-green-600">
                 {recommendations.stats.exposedCount}
               </div>
@@ -149,7 +151,7 @@ const AudienceSelector = ({ selectedAudience, onAudienceChange, recommendations,
             </div>
 
             <div className="bg-white rounded-lg p-3 shadow-sm">
-              <div className="text-xs text-gray-600 mb-1">Holdout ZIPs</div>
+              <div className="text-xs text-gray-600 mb-1">Holdout {countryConfig.geoUnitPlural}</div>
               <div className="text-xl font-bold text-yellow-600">
                 {recommendations.stats.holdoutCount}
               </div>
@@ -217,8 +219,8 @@ const AudienceSelector = ({ selectedAudience, onAudienceChange, recommendations,
       {!selectedAudience && (
         <div className="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
           <div className="text-sm text-gray-600">
-            <strong>How it works:</strong> Select an audience segment to automatically get ZIP code recommendations
-            based on demographic fit. The system will suggest which 3-digit ZIP regions to target (exposed) vs use as
+            <strong>How it works:</strong> Select an audience segment to automatically get {countryConfig.geoUnit.toLowerCase()} recommendations
+            based on demographic fit. The system will suggest which {countryConfig.geoUnit.toLowerCase()} regions to target (exposed) vs use as
             holdout controls for measurement.
           </div>
         </div>

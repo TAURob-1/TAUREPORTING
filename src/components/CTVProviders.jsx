@@ -20,7 +20,7 @@ const CTVProviders = ({ providers }) => {
   return (
     <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-900">CTV Provider Mix</h2>
+        <h2 className="text-lg font-semibold text-gray-900">Media Provider Mix</h2>
         <span className="text-xs text-gray-400 font-medium">{providers.length} providers</span>
       </div>
 

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { MapContainer, TileLayer, GeoJSON, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { getUkPostcodeDemographic } from '../data/ukPostcodeDemographics';
 import { usePlatform } from '../context/PlatformContext.jsx';
 
 function SetMapBounds({ geoJsonData, center, zoom }) {
@@ -43,22 +44,38 @@ const USAMapWithAudience = ({ recommendations, selectedAudience }) => {
       });
   }, [countryConfig]);
 
+  // Build O(1) lookup maps from recommendation arrays
+  const exposedMap = useMemo(() => {
+    if (!recommendations) return new Map();
+    return new Map(recommendations.exposed.map((z) => [z.zip3, z]));
+  }, [recommendations]);
+
+  const holdoutMap = useMemo(() => {
+    if (!recommendations) return new Map();
+    return new Map(recommendations.holdout.map((z) => [z.zip3, z]));
+  }, [recommendations]);
+
+  const notRecommendedMap = useMemo(() => {
+    if (!recommendations) return new Map();
+    return new Map(recommendations.notRecommended.map((z) => [z.zip3, z]));
+  }, [recommendations]);
+
   const getZIPInfo = (zipCode) => {
-    if (countryCode !== 'US' || !recommendations) {
+    if (!recommendations) {
       return { type: 'none', score: 0 };
     }
 
-    const exposed = recommendations.exposed.find((z) => z.zip3 === zipCode);
+    const exposed = exposedMap.get(zipCode);
     if (exposed) {
       return { type: 'exposed', score: exposed.score, data: exposed };
     }
 
-    const holdout = recommendations.holdout.find((z) => z.zip3 === zipCode);
+    const holdout = holdoutMap.get(zipCode);
     if (holdout) {
       return { type: 'holdout', score: holdout.score, data: holdout };
     }
 
-    const notRecommended = recommendations.notRecommended.find((z) => z.zip3 === zipCode);
+    const notRecommended = notRecommendedMap.get(zipCode);
     if (notRecommended) {
       return { type: 'not-recommended', score: notRecommended.score, data: notRecommended };
     }
@@ -71,16 +88,6 @@ const USAMapWithAudience = ({ recommendations, selectedAudience }) => {
     const zipInfo = getZIPInfo(zipCode);
     const isHovered = hoveredZIP === zipCode;
     const isSelected = selectedZIP?.zipCode === zipCode;
-
-    if (countryCode === 'UK') {
-      return {
-        fillColor: isSelected ? '#2563eb' : '#e5e7eb',
-        fillOpacity: isSelected ? 0.7 : isHovered ? 0.5 : 0.35,
-        weight: isSelected ? 2 : isHovered ? 1.5 : 0.8,
-        opacity: 1,
-        color: isSelected ? '#1e40af' : '#9ca3af',
-      };
-    }
 
     let fillColor;
     let fillOpacity;
@@ -137,11 +144,16 @@ const USAMapWithAudience = ({ recommendations, selectedAudience }) => {
       },
     });
 
-    const tooltipContent = countryCode === 'UK'
-      ? `<div style="text-align: center;"><strong>${countryConfig.geoUnit} ${zipCode}</strong></div>`
-      : zipInfo.type !== 'none'
-        ? `<div style="text-align: center;"><strong>ZIP ${zipCode}</strong><br/><span style="font-size: 11px; color: #666;">Score: ${zipInfo.score}</span></div>`
-        : `<div style="text-align: center;"><strong>ZIP ${zipCode}</strong><br/><span style="font-size: 11px; color: #999;">No data</span></div>`;
+    const ukDemo = countryCode === 'UK' ? getUkPostcodeDemographic(zipCode) : null;
+    let tooltipContent;
+    if (zipInfo.type !== 'none') {
+      const extra = ukDemo ? `<br/><span style="font-size: 10px; color: #888;">${ukDemo.region}</span>` : '';
+      tooltipContent = `<div style="text-align: center;"><strong>${countryConfig.geoUnit} ${zipCode}</strong><br/><span style="font-size: 11px; color: #666;">Score: ${zipInfo.score} (${zipInfo.type})</span>${extra}</div>`;
+    } else if (ukDemo) {
+      tooltipContent = `<div style="text-align: center;"><strong>${countryConfig.geoUnit} ${zipCode}</strong><br/><span style="font-size: 11px; color: #666;">${ukDemo.segment}</span><br/><span style="font-size: 10px; color: #888;">${ukDemo.region}</span></div>`;
+    } else {
+      tooltipContent = `<div style="text-align: center;"><strong>${countryConfig.geoUnit} ${zipCode}</strong><br/><span style="font-size: 11px; color: #999;">No data</span></div>`;
+    }
 
     layer.bindTooltip(tooltipContent, {
       permanent: false,
@@ -155,7 +167,7 @@ const USAMapWithAudience = ({ recommendations, selectedAudience }) => {
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold text-gray-900">
           Geographic Targeting Map
-          {selectedAudience && countryCode === 'US' && (
+          {selectedAudience && (
             <span className="ml-2 text-sm font-normal text-gray-500">{selectedAudience.name}</span>
           )}
         </h2>
@@ -169,14 +181,14 @@ const USAMapWithAudience = ({ recommendations, selectedAudience }) => {
               <div className="text-gray-600">Loading {countryConfig.geoUnit} map...</div>
             </div>
           </div>
-        ) : countryCode === 'US' && !recommendations ? (
+        ) : !recommendations ? (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-50">
             <div className="text-center p-8">
               <div className="text-4xl mb-3">🎯</div>
               <div className="text-lg font-semibold text-gray-900 mb-2">Select an Audience</div>
               <div className="text-sm text-gray-600">
                 Choose a target audience segment above to see<br />
-                recommended ZIP code targeting
+                recommended {countryConfig.geoUnit.toLowerCase()} targeting
               </div>
             </div>
           </div>
@@ -198,11 +210,6 @@ const USAMapWithAudience = ({ recommendations, selectedAudience }) => {
         )}
       </div>
 
-      {countryCode === 'UK' && (
-        <div className="mt-4 text-xs text-gray-500 text-center">
-          UK audience recommendations are pending UK demographic model ingest.
-        </div>
-      )}
     </div>
   );
 };

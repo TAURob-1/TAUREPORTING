@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
-  BUDGET_PRESETS,
+  getBudgetPresets,
   getProviderPlanning,
   calcProviderReach,
   calcCombinedMetrics,
@@ -29,6 +29,7 @@ const BudgetAllocator = ({ onMetricsChange }) => {
   const [enabledProviders, setEnabledProviders] = useState(new Set());
   const [allocations, setAllocations] = useState({});
 
+  const budgetPresets = useMemo(() => getBudgetPresets(countryCode), [countryCode]);
   const providerPlanning = useMemo(() => getProviderPlanning(countryCode), [countryCode]);
   const providers = useMemo(() => {
     const inventory = getChannelInventory(countryCode);
@@ -45,6 +46,9 @@ const BudgetAllocator = ({ onMetricsChange }) => {
   useEffect(() => {
     setEnabledProviders(new Set(providers.map((provider) => provider.providerId)));
     setAllocations({});
+    const defaultBudget = countryCode === 'UK' ? 250000 : 500000;
+    setTotalBudget(defaultBudget);
+    setBudgetInput(defaultBudget.toLocaleString());
   }, [countryCode, providers]);
 
   const enabledIds = useMemo(() => Array.from(enabledProviders), [enabledProviders]);
@@ -160,7 +164,7 @@ const BudgetAllocator = ({ onMetricsChange }) => {
         </div>
 
         <div className="flex flex-wrap gap-2 mt-4 sm:mt-0">
-          {BUDGET_PRESETS.map((preset) => (
+          {budgetPresets.map((preset) => (
             <button
               key={preset.value}
               onClick={() => handlePreset(preset.value)}
