@@ -1,5 +1,5 @@
 """
-CarShield CTV Strategic Advisor — Chat API
+TAU Reporting Strategic Advisor — Chat API
 Powered by Claude Haiku with real TAU Signal intelligence data.
 
 Run: uvicorn server:app --port 3002 --reload
@@ -26,9 +26,13 @@ logger = logging.getLogger(__name__)
 # Configuration
 # ===================
 
+DEFAULT_COMPANY = os.getenv("DEFAULT_COMPANY", "demo-advertiser")
+DISPLAY_COMPANY = os.getenv("DISPLAY_COMPANY", "Demo Advertiser")
+ADVISOR_TITLE = os.getenv("ADVISOR_TITLE", "TAU Reporting Strategic Advisor")
+
 SIGNAL_DATA_DIR = Path(os.getenv(
     "SIGNAL_DATA_DIR",
-    os.path.expanduser("~/Signal/companies/carshield-com")
+    os.path.expanduser(f"~/Signal/companies/{DEFAULT_COMPANY}")
 ))
 
 # Provider selection: anthropic or openai
@@ -215,15 +219,15 @@ CTV_KNOWLEDGE = """
 # System Prompt
 # ===================
 
-SYSTEM_PROMPT = f"""You are the CarShield CTV Strategic Advisor — an AI analyst embedded in a campaign intelligence platform built by TAU Signal.
+SYSTEM_PROMPT = f"""You are the {DISPLAY_COMPANY} CTV Strategic Advisor — an AI analyst embedded in the TAU Reporting Platform built by TAU Signal.
 
 ## Your Role
-You are advising CarShield's marketing leadership (CTO/CMO level) on their Connected TV and television advertising strategy. You have access to comprehensive real-time intelligence data about CarShield, their competitors, and the market.
+You are advising {DISPLAY_COMPANY}'s marketing leadership (CTO/CMO level) on their Connected TV and television advertising strategy. You have access to comprehensive real-time intelligence data about the advertiser, their competitors, and the market.
 
 ## Your Expertise
 - **CTV & TV Planning:** Deep knowledge of every major CTV platform, their audiences, CPMs, and optimal use cases
 - **Audience Strategy:** Can build and recommend detailed audience personas based on real data
-- **Competitive Intelligence:** Understand CarShield's market position relative to Endurance, CarCHEX, Protect My Car
+- **Competitive Intelligence:** Understand advertiser market position relative to key competitors
 - **Measurement:** Expert in incrementality testing, geo holdouts, iROAS methodology
 - **Media Mix:** Can recommend optimal budget allocation across CTV providers
 
@@ -251,9 +255,9 @@ When recommending CTV strategy:
 
 ## What You Know
 You have access to:
-1. CarShield's complete competitive intelligence (traffic, SEO, trends, news, customer reviews)
+1. Advertiser complete competitive intelligence (traffic, SEO, trends, news, customer reviews)
 2. Detailed CTV/TV platform knowledge (CPMs, audiences, targeting capabilities)
-3. CarShield's customer demographics and geographic footprint
+3. Advertiser customer demographics and geographic footprint
 4. Competitor advertising intelligence and spend estimates
 
 ## Important Rules
@@ -261,7 +265,7 @@ You have access to:
 - If you don't know something specific, say so and suggest how to find out
 - Format responses with headers, bullets, and tables for executive readability
 - Keep responses focused — don't dump everything, answer what was asked
-- When discussing budgets, use realistic ranges based on CarShield's apparent scale
+- When discussing budgets, use realistic ranges based on the advertiser's apparent scale
 
 {CTV_KNOWLEDGE}
 """
@@ -271,7 +275,7 @@ You have access to:
 # App Setup
 # ===================
 
-app = FastAPI(title="CarShield CTV Strategic Advisor")
+app = FastAPI(title=ADVISOR_TITLE)
 
 app.add_middleware(
     CORSMiddleware,
@@ -300,7 +304,7 @@ class ChatMessage(BaseModel):
 class ChatRequest(BaseModel):
     message: str
     history: list[ChatMessage] = []
-    company: str = "carshield"
+    company: str = DEFAULT_COMPANY
 
 class ChatResponse(BaseModel):
     response: str
@@ -333,7 +337,7 @@ async def chat(req: ChatRequest):
     messages = []
 
     # Add Signal data as first user message (context injection)
-    context_message = f"""Here is the current intelligence data for CarShield from TAU Signal:
+    context_message = f"""Here is the current intelligence data for {DISPLAY_COMPANY} from TAU Signal:
 
 {signal_context}
 
@@ -341,7 +345,7 @@ async def chat(req: ChatRequest):
 Use this data to inform your responses. Reference specific data points when relevant."""
 
     messages.append({"role": "user", "content": context_message})
-    messages.append({"role": "assistant", "content": "Understood. I have the full CarShield intelligence briefing loaded. I can see traffic data, competitive positioning, customer sentiment, SEO metrics, ad intelligence, and market trends. Ready to advise on CTV strategy, audience personas, and media planning. What would you like to explore?"})
+    messages.append({"role": "assistant", "content": f"Understood. I have the full {DISPLAY_COMPANY} intelligence briefing loaded. I can see traffic data, competitive positioning, customer sentiment, SEO metrics, ad intelligence, and market trends. Ready to advise on CTV strategy, audience personas, and media planning. What would you like to explore?"})
 
     # Add conversation history (trimmed)
     for msg in req.history[-MAX_HISTORY:]:
@@ -385,7 +389,7 @@ Use this data to inform your responses. Reference specific data points when rele
 async def context_summary():
     """Return a summary of loaded intelligence data."""
     return {
-        "company": "CarShield",
+        "company": DISPLAY_COMPANY,
         "data_dir": str(SIGNAL_DATA_DIR),
         "context_chars": len(signal_context),
         "sections": [line.replace("## ", "").strip()

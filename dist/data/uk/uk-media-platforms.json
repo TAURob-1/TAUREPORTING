@@ -1,0 +1,95 @@
+{
+  "metadata": {
+    "source": "BARB 4-Screen Dashboard, Ofcom",
+    "period": "December 2025",
+    "universe": "64.9M UK Individuals",
+    "updated": "2026-02"
+  },
+  "platforms": [
+    { "name": "YouTube", "reach": 51.9, "reachPct": 80.0, "tvReach": 37.5, "tvPct": 57.8, "share": 17.0, "dailyMins": 41, "adPct": 95, "adReach": 49.3, "category": "Digital Video", "color": "#ff0000" },
+    { "name": "BBC", "reach": 50.9, "reachPct": 78.4, "tvReach": 50.0, "tvPct": 77.1, "share": 19.8, "dailyMins": 48, "adPct": 0, "adReach": 0, "category": "PSB", "color": "#bb1919" },
+    { "name": "Netflix", "reach": 47.1, "reachPct": 72.6, "tvReach": 45.3, "tvPct": 69.8, "share": 10.8, "dailyMins": 27, "adPct": 40, "adReach": 18.8, "category": "SVOD", "color": "#e50914" },
+    { "name": "ITV Linear", "reach": 45.0, "reachPct": 69.4, "tvReach": 44.7, "tvPct": 68.9, "share": 10.5, "dailyMins": 28, "adPct": 100, "adReach": 45.0, "category": "PSB", "color": "#1d78c1" },
+    { "name": "Channel 4", "reach": 42.5, "reachPct": 65.5, "tvReach": 42.2, "tvPct": 65.0, "share": 5.2, "dailyMins": 14, "adPct": 100, "adReach": 42.5, "category": "PSB", "color": "#6a1b9a" },
+    { "name": "Channel 5", "reach": 37.3, "reachPct": 57.5, "tvReach": 37.0, "tvPct": 57.0, "share": 3.1, "dailyMins": 10, "adPct": 100, "adReach": 37.3, "category": "PSB", "color": "#5c068c" },
+    { "name": "Sky", "reach": 37.2, "reachPct": 57.3, "tvReach": 36.8, "tvPct": 56.7, "share": 6.5, "dailyMins": 18, "adPct": 70, "adReach": 26.0, "category": "Pay TV", "color": "#0072c9" },
+    { "name": "Amazon Prime", "reach": 35.7, "reachPct": 55.1, "tvReach": 34.2, "tvPct": 52.7, "share": 5.2, "dailyMins": 16, "adPct": 87, "adReach": 31.1, "category": "SVOD", "color": "#00a8e1" },
+    { "name": "UKTV", "reach": 28.5, "reachPct": 43.9, "tvReach": 28.2, "tvPct": 43.5, "share": 2.8, "dailyMins": 12, "adPct": 100, "adReach": 28.5, "category": "Pay TV", "color": "#444466" },
+    { "name": "Disney+", "reach": 22.8, "reachPct": 35.1, "tvReach": 21.5, "tvPct": 33.1, "share": 2.8, "dailyMins": 12, "adPct": 44, "adReach": 10.0, "category": "SVOD", "color": "#113ccf" },
+    { "name": "ITVX", "reach": 22.5, "reachPct": 34.7, "tvReach": 12.8, "tvPct": 19.7, "share": 1.8, "dailyMins": 9, "adPct": 100, "adReach": 22.5, "category": "BVOD", "color": "#1d78c1" },
+    { "name": "C4 Streaming", "reach": 18.2, "reachPct": 28.0, "tvReach": 9.5, "tvPct": 14.6, "share": 1.2, "dailyMins": 7, "adPct": 100, "adReach": 18.2, "category": "BVOD", "color": "#6a1b9a" },
+    { "name": "TikTok", "reach": 15.4, "reachPct": 23.8, "tvReach": 2.2, "tvPct": 3.4, "share": 4.3, "dailyMins": 52, "adPct": 100, "adReach": 15.4, "category": "Digital Video", "color": "#fe2c55" },
+    { "name": "My5", "reach": 12.1, "reachPct": 18.6, "tvReach": 5.8, "tvPct": 8.9, "share": 0.6, "dailyMins": 5, "adPct": 100, "adReach": 12.1, "category": "BVOD", "color": "#5c068c" },
+    { "name": "Sky Go/NOW", "reach": 8.5, "reachPct": 13.1, "tvReach": 3.2, "tvPct": 4.9, "share": 0.5, "dailyMins": 6, "adPct": 50, "adReach": 4.3, "category": "BVOD", "color": "#0072c9" },
+    { "name": "Apple TV+", "reach": 8.2, "reachPct": 12.6, "tvReach": 7.5, "tvPct": 11.6, "share": 0.6, "dailyMins": 6, "adPct": 0, "adReach": 0, "category": "SVOD", "color": "#999999" },
+    { "name": "Paramount+", "reach": 7.8, "reachPct": 12.0, "tvReach": 7.1, "tvPct": 10.9, "share": 0.5, "dailyMins": 5, "adPct": 60, "adReach": 4.7, "category": "SVOD", "color": "#0068bf" }
+  ],
+  "audienceIndices": {
+    "16-24": [
+      { "platform": "TikTok", "index": 285, "action": "PRIMARY" },
+      { "platform": "YouTube", "index": 175, "action": "PRIMARY" },
+      { "platform": "Instagram", "index": 195, "action": "PRIMARY" },
+      { "platform": "Snapchat", "index": 320, "action": "STRONG" },
+      { "platform": "Netflix", "index": 145, "action": "STRONG" },
+      { "platform": "ITV Linear", "index": 25, "action": "AVOID" },
+      { "platform": "BBC Linear", "index": 35, "action": "AVOID" }
+    ],
+    "25-34": [
+      { "platform": "YouTube", "index": 155, "action": "PRIMARY" },
+      { "platform": "Netflix", "index": 165, "action": "PRIMARY" },
+      { "platform": "TikTok", "index": 175, "action": "STRONG" },
+      { "platform": "Prime Video", "index": 125, "action": "STRONG" },
+      { "platform": "ITVX", "index": 115, "action": "GOOD" },
+      { "platform": "ITV Linear", "index": 45, "action": "WEAK" }
+    ],
+    "35-44": [
+      { "platform": "Netflix", "index": 135, "action": "PRIMARY" },
+      { "platform": "Prime Video", "index": 130, "action": "STRONG" },
+      { "platform": "YouTube", "index": 125, "action": "STRONG" },
+      { "platform": "Disney+", "index": 135, "action": "STRONG" },
+      { "platform": "ITV Linear", "index": 75, "action": "MODERATE" }
+    ],
+    "45-54": [
+      { "platform": "ITV Linear", "index": 105, "action": "PRIMARY" },
+      { "platform": "Sky", "index": 115, "action": "STRONG" },
+      { "platform": "Netflix", "index": 105, "action": "GOOD" },
+      { "platform": "TikTok", "index": 55, "action": "WEAK" }
+    ],
+    "55-64": [
+      { "platform": "ITV Linear", "index": 135, "action": "PRIMARY" },
+      { "platform": "BBC Linear", "index": 125, "action": "PRIMARY" },
+      { "platform": "Channel 5", "index": 125, "action": "STRONG" },
+      { "platform": "TikTok", "index": 25, "action": "AVOID" }
+    ],
+    "65+": [
+      { "platform": "BBC Linear", "index": 175, "action": "PRIMARY" },
+      { "platform": "ITV Linear", "index": 165, "action": "PRIMARY" },
+      { "platform": "Channel 5", "index": 145, "action": "STRONG" },
+      { "platform": "Netflix", "index": 55, "action": "WEAK" },
+      { "platform": "TikTok", "index": 10, "action": "AVOID" }
+    ],
+    "sports-m": [
+      { "platform": "Sky Sports", "index": 285, "action": "PRIMARY" },
+      { "platform": "YouTube", "index": 145, "action": "STRONG" },
+      { "platform": "Prime Video", "index": 155, "action": "STRONG" }
+    ],
+    "abc1-prof": [
+      { "platform": "Netflix", "index": 135, "action": "PRIMARY" },
+      { "platform": "LinkedIn", "index": 285, "action": "PRIMARY" },
+      { "platform": "C4 Streaming", "index": 125, "action": "STRONG" },
+      { "platform": "Channel 5", "index": 55, "action": "WEAK" }
+    ]
+  },
+  "adTierAdoption": {
+    "Amazon Prime": 87,
+    "Paramount+": 60,
+    "Disney+": 44,
+    "Netflix": 40
+  },
+  "ctvMarket": {
+    "adSpend2026": 2.31,
+    "ctvHouseholds": 19.2,
+    "ctvPenetration": 67,
+    "bvodCompletion": "90-98%"
+  }
+}

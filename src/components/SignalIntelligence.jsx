@@ -5,13 +5,18 @@ import {
 } from 'recharts';
 import MetricCard from './MetricCard';
 import { signalData } from '../data/signalData';
+import { usePlatform } from '../context/PlatformContext.jsx';
 
 function SignalIntelligence() {
+  const { advertiser } = usePlatform();
   const { traffic, seo, competitive, aiReadiness, spend, insights, summary } = signalData;
+  const replaceAdvertiser = (value) => value.replaceAll('Advertiser', advertiser.name);
 
   // Prepare data for market share pie chart
   const marketShareData = Object.entries(traffic.marketShare).map(([key, data]) => ({
-    name: key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1'),
+    name: key === 'advertiser'
+      ? advertiser.name
+      : key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1'),
     value: data.visits,
     share: data.share
   }));
@@ -49,14 +54,14 @@ function SignalIntelligence() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
           <MetricCard
             title="Market Share"
-            value="88.4%"
+            value={`${traffic.marketShare.advertiser.share}%`}
             subtext="Dominant leader"
             positive={true}
           />
           <MetricCard
             title="Monthly Visits"
-            value="452K"
-            subtext="+32.5% vs Nov"
+            value={`${(traffic.currentMonth.visits / 1000).toFixed(0)}K`}
+            subtext={`${traffic.currentMonth.change} vs Nov`}
             positive={true}
           />
           <MetricCard
@@ -72,7 +77,7 @@ function SignalIntelligence() {
           />
           <MetricCard
             title="Ad Spend"
-            value="$150K"
+            value={`$${(spend.advertiser.estimated.average / 1000).toFixed(0)}K`}
             subtext="High efficiency"
           />
         </div>
@@ -229,8 +234,8 @@ function SignalIntelligence() {
             </div>
             <div className="mt-4 grid grid-cols-2 gap-4">
               <div className="p-3 bg-blue-50 rounded-lg">
-                <div className="text-sm text-gray-600">CarShield CPA</div>
-                <div className="text-xl font-bold text-blue-600">$42-$58</div>
+                <div className="text-sm text-gray-600">{advertiser.name} CPA</div>
+                <div className="text-xl font-bold text-blue-600">{spend.advertiser.cpa}</div>
               </div>
               <div className="p-3 bg-green-50 rounded-lg">
                 <div className="text-sm text-gray-600">Efficiency Score</div>
@@ -246,12 +251,12 @@ function SignalIntelligence() {
           <div className="bg-white rounded-lg shadow-sm p-6">
             <h3 className="text-lg font-bold text-gray-900 mb-4">AI Visibility Score</h3>
             
-            {/* CarShield Score */}
+            {/* Advertiser Score */}
             <div className="mb-6 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
               <div className="text-center">
-                <div className="text-5xl font-bold text-red-600 mb-2">{aiReadiness.carshield.score}%</div>
-                <div className="text-sm font-semibold text-red-800">CarShield</div>
-                <div className="text-xs text-red-600 mt-1">{aiReadiness.carshield.status}</div>
+                <div className="text-5xl font-bold text-red-600 mb-2">{aiReadiness.advertiser.score}%</div>
+                <div className="text-sm font-semibold text-red-800">{advertiser.name}</div>
+                <div className="text-xs text-red-600 mt-1">{aiReadiness.advertiser.status}</div>
               </div>
             </div>
 
@@ -327,7 +332,7 @@ function SignalIntelligence() {
                                insight.urgency === 'Medium' ? '#f59e0b' : '#10b981'
                 }}>
                   <div className="text-xs font-semibold text-gray-500 mb-1">{insight.category}</div>
-                  <div className="text-sm text-gray-700">{insight.insight}</div>
+                  <div className="text-sm text-gray-700">{replaceAdvertiser(insight.insight)}</div>
                   <div className="flex gap-2 mt-2">
                     <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
                       insight.impact === 'Critical' ? 'bg-red-100 text-red-800' :
@@ -359,7 +364,7 @@ function SignalIntelligence() {
                 {competitive.strengths.map((strength, idx) => (
                   <div key={idx} className="text-xs text-gray-700 flex items-start">
                     <span className="text-green-600 mr-2">•</span>
-                    <span>{strength}</span>
+                    <span>{replaceAdvertiser(strength)}</span>
                   </div>
                 ))}
               </div>
@@ -371,7 +376,7 @@ function SignalIntelligence() {
                 {competitive.weaknesses.map((weakness, idx) => (
                   <div key={idx} className="text-xs text-gray-700 flex items-start">
                     <span className="text-orange-600 mr-2">•</span>
-                    <span>{weakness}</span>
+                    <span>{replaceAdvertiser(weakness)}</span>
                   </div>
                 ))}
               </div>

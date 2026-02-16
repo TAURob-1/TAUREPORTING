@@ -7,21 +7,30 @@ import BudgetAllocator from './BudgetAllocator';
 import ReachFrequency from './ReachFrequency';
 import ScenarioComparison from './ScenarioComparison';
 import { PROVIDER_PLANNING, US_TV_HOUSEHOLDS } from '../data/planningConfig';
+import { usePlatform } from '../context/PlatformContext.jsx';
 
 // Component to handle map bounds setting
-function SetMapBounds({ geoJsonData }) {
+function SetMapBounds({ geoJsonData, center, zoom }) {
   const map = useMap();
 
   useEffect(() => {
     if (geoJsonData && geoJsonData.features.length > 0) {
-      map.setView([39.8283, -98.5795], 4);
+      map.setView(center, zoom);
     }
-  }, [geoJsonData, map]);
+  }, [geoJsonData, map, center, zoom]);
 
   return null;
 }
 
+function getGeoCode(feature, countryCode) {
+  if (countryCode === 'US') {
+    return feature?.properties?.['3dig_zip'];
+  }
+  return feature?.properties?.postcode || feature?.properties?.region_id || feature?.properties?.name;
+}
+
 const CampaignPlanning = () => {
+  const { advertiser, countryCode, countryConfig } = usePlatform();
   const [selectedZIPs, setSelectedZIPs] = useState(new Set());
   const [hoveredZIP, setHoveredZIP] = useState(null);
   const [geoJsonData, setGeoJsonData] = useState(null);
@@ -34,8 +43,10 @@ const CampaignPlanning = () => {
     if (!budgetMetrics) return;
     const reachPct = US_TV_HOUSEHOLDS > 0 ? (budgetMetrics.reach / US_TV_HOUSEHOLDS) * 100 : 0;
     const plan = {
-      planName: 'CarShield CTV Campaign',
+      planName: `${advertiser.name} ${countryConfig.shortLabel} CTV Campaign`,
       exportDate: new Date().toISOString().split('T')[0],
+      advertiser: advertiser.name,
+      country: countryCode,
       budget: {
         total: budgetMetrics.totalBudget,
         allocations: budgetMetrics.allocations || {},
@@ -51,6 +62,7 @@ const CampaignPlanning = () => {
       }),
       geographicTargeting: {
         selectedZIPs: Array.from(selectedZIPs).sort(),
+        geoUnit: countryConfig.geoUnit,
         totalGeoReach: totalReach,
       },
     };
@@ -58,7 +70,7 @@ const CampaignPlanning = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `carshield-campaign-plan-${plan.exportDate}.json`;
+    a.download = `${advertiser.slug}-campaign-plan-${countryCode.toLowerCase()}-${plan.exportDate}.json`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -66,15 +78,16 @@ const CampaignPlanning = () => {
   const copySummary = () => {
     if (!budgetMetrics) return;
     const lines = [
-      '=== CarShield CTV Campaign Plan ===',
+      `=== ${advertiser.name} CTV Campaign Plan ===`,
       `Date: ${new Date().toISOString().split('T')[0]}`,
+      `Country: ${countryConfig.label}`,
       '',
-      `Budget: $${budgetMetrics.totalBudget.toLocaleString()}`,
-      `Blended CPM: $${budgetMetrics.blendedCPM.toFixed(2)}`,
+      `Budget: ${countryConfig.currencySymbol}${budgetMetrics.totalBudget.toLocaleString()}`,
+      `Blended CPM: ${countryConfig.currencySymbol}${budgetMetrics.blendedCPM.toFixed(2)}`,
       `Deduped Reach: ${formatHH(budgetMetrics.reach)} households`,
       `Avg Frequency: ${budgetMetrics.frequency}x`,
       `Active Providers: ${budgetMetrics.enabledProviders?.length || 0}`,
-      `Geographic Markets: ${selectedZIPs.size} ZIPs`,
+      `Geographic Markets: ${selectedZIPs.size} ${countryConfig.geoUnitPlural}`,
       totalReach > 0 ? `Geo Market Reach: ${formatHH(totalReach)} households` : '',
     ].filter(Boolean).join('\n');
     navigator.clipboard.writeText(lines).then(() => {
@@ -85,15 +98,17 @@ const CampaignPlanning = () => {
 
   useEffect(() => {
     // Load the GeoJSON data
-    fetch('/data/us-zip3-simplified.json')
+    setGeoJsonData(null);
+    setSelectedZIPs(new Set());
+    fetch(countryConfig.planningGeoJson)
       .then(response => response.json())
       .then(data => {
         setGeoJsonData(data);
       })
       .catch(error => {
-        console.error('Error loading ZIP code data:', error);
+        console.error(`Error loading ${countryConfig.geoUnit} data:`, error);
       });
-  }, []);
+  }, [countryConfig]);
 
   const toggleZIP = (zipCode) => {
     const newSelected = new Set(selectedZIPs);
@@ -116,7 +131,7 @@ const CampaignPlanning = () => {
   };
 
   const getFeatureStyle = (feature) => {
-    const zipCode = feature.properties['3dig_zip'];
+    const zipCode = getGeoCode(feature, countryCode);
     const isSelected = selectedZIPs.has(zipCode);
     const isHovered = hoveredZIP === zipCode;
 
@@ -130,7 +145,7 @@ const CampaignPlanning = () => {
   };
 
   const onEachFeature = (feature, layer) => {
-    const zipCode = feature.properties['3dig_zip'];
+    const zipCode = getGeoCode(feature, countryCode);
 
     layer.on({
       mouseover: (e) => {
@@ -151,10 +166,10 @@ const CampaignPlanning = () => {
       }
     });
 
-    const demographic = getZipDemographic(zipCode);
+    const demographic = countryCode === 'US' ? getZipDemographic(zipCode) : { segment: 'UK postcode area' };
     layer.bindTooltip(
       `<div style="text-align: center;">
-        <strong>ZIP ${zipCode}</strong><br/>
+        <strong>${countryConfig.geoUnit} ${zipCode}</strong><br/>
         <span style="font-size: 11px; color: #666;">${demographic.segment}</span>
       </div>`,
       {
@@ -167,7 +182,8 @@ const CampaignPlanning = () => {
 
   // Calculate summary stats
   const totalReach = Array.from(selectedZIPs).reduce((sum, zip) => {
-    return sum + estimateZipReach(zip);
+    if (countryCode === 'US') return sum + estimateZipReach(zip);
+    return sum;
   }, 0);
 
   const selectedChannelList = [
@@ -250,7 +266,7 @@ const CampaignPlanning = () => {
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-lg font-semibold text-gray-900">Geographic Targeting</h2>
                 <div className="text-sm text-gray-600">
-                  {selectedZIPs.size} ZIP{selectedZIPs.size !== 1 ? 's' : ''} selected
+                  {selectedZIPs.size} {countryConfig.geoUnit}{selectedZIPs.size !== 1 ? 's' : ''} selected
                 </div>
               </div>
 
@@ -260,13 +276,13 @@ const CampaignPlanning = () => {
                   <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
                     <div className="text-center">
                       <div className="text-2xl mb-2">🗺️</div>
-                      <div className="text-gray-600">Loading ZIP code map...</div>
+                      <div className="text-gray-600">Loading {countryConfig.geoUnit} map...</div>
                     </div>
                   </div>
                 ) : (
                   <MapContainer
-                    center={[39.8283, -98.5795]}
-                    zoom={4}
+                    center={countryConfig.planningMapCenter}
+                    zoom={countryConfig.planningMapZoom}
                     style={{ height: '100%', width: '100%' }}
                     zoomControl={true}
                     scrollWheelZoom={true}
@@ -280,13 +296,17 @@ const CampaignPlanning = () => {
                       style={getFeatureStyle}
                       onEachFeature={onEachFeature}
                     />
-                    <SetMapBounds geoJsonData={geoJsonData} />
+                    <SetMapBounds
+                      geoJsonData={geoJsonData}
+                      center={countryConfig.planningMapCenter}
+                      zoom={countryConfig.planningMapZoom}
+                    />
                   </MapContainer>
                 )}
               </div>
 
               <div className="mt-4 text-xs text-gray-500 text-center">
-                Click ZIP regions to add/remove from campaign • Blue = Selected
+                Click {countryConfig.geoUnit} regions to add/remove from campaign • Blue = Selected
               </div>
             </div>
 
@@ -299,8 +319,10 @@ const CampaignPlanning = () => {
 
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3 max-h-96 overflow-y-auto">
                   {Array.from(selectedZIPs).sort().map(zipCode => {
-                    const demographic = getZipDemographic(zipCode);
-                    const reach = estimateZipReach(zipCode);
+                    const demographic = countryCode === 'US'
+                      ? getZipDemographic(zipCode)
+                      : { segment: 'UK postcode area', income: 'Pending UK dataset', autoOwnership: 'Pending UK dataset' };
+                    const reach = countryCode === 'US' ? estimateZipReach(zipCode) : 0;
 
                     return (
                       <div
@@ -308,7 +330,7 @@ const CampaignPlanning = () => {
                         className="border border-gray-200 rounded-lg p-3 hover:border-blue-400 transition-colors"
                       >
                         <div className="flex justify-between items-start mb-2">
-                          <div className="font-semibold text-blue-900">ZIP {zipCode}</div>
+                          <div className="font-semibold text-blue-900">{countryConfig.geoUnit} {zipCode}</div>
                           <button
                             onClick={() => toggleZIP(zipCode)}
                             className="text-red-500 hover:text-red-700 text-xs"
@@ -320,9 +342,13 @@ const CampaignPlanning = () => {
                           <div><strong>Segment:</strong> {demographic.segment}</div>
                           <div><strong>Income:</strong> {demographic.income}</div>
                           <div><strong>Auto Own:</strong> {demographic.autoOwnership}</div>
-                          <div className="text-blue-600 font-medium">
-                            ~{(reach / 1000).toFixed(1)}K reach
-                          </div>
+                          {countryCode === 'US' ? (
+                            <div className="text-blue-600 font-medium">
+                              ~{(reach / 1000).toFixed(1)}K reach
+                            </div>
+                          ) : (
+                            <div className="text-blue-600 font-medium">Reach model pending UK demographics ingest</div>
+                          )}
                         </div>
                       </div>
                     );
@@ -345,7 +371,7 @@ const CampaignPlanning = () => {
                   <div className="bg-white rounded-lg p-3">
                     <div className="text-xs text-gray-600">Budget</div>
                     <div className="text-2xl font-bold text-gray-900">
-                      ${budgetMetrics.totalBudget >= 1000000
+                      {countryConfig.currencySymbol}{budgetMetrics.totalBudget >= 1000000
                         ? `${(budgetMetrics.totalBudget / 1000000).toFixed(1)}M`
                         : `${(budgetMetrics.totalBudget / 1000).toFixed(0)}K`}
                     </div>
@@ -358,7 +384,7 @@ const CampaignPlanning = () => {
                   <div className="bg-white rounded-lg p-3">
                     <div className="text-xs text-gray-600">Blended CPM</div>
                     <div className="text-2xl font-bold text-green-900">
-                      ${budgetMetrics.blendedCPM.toFixed(2)}
+                      {countryConfig.currencySymbol}{budgetMetrics.blendedCPM.toFixed(2)}
                     </div>
                     <div className="text-xs text-gray-500">Weighted avg cost per 1K</div>
                   </div>
@@ -392,8 +418,8 @@ const CampaignPlanning = () => {
                   <div className="text-2xl font-bold text-gray-900">{selectedZIPs.size}</div>
                   <div className="text-xs text-gray-500">
                     {selectedZIPs.size > 0
-                      ? `${selectedZIPs.size} ZIP${selectedZIPs.size !== 1 ? 's' : ''} selected`
-                      : 'No ZIPs selected'}
+                      ? `${selectedZIPs.size} ${countryConfig.geoUnit}${selectedZIPs.size !== 1 ? 's' : ''} selected`
+                      : `No ${countryConfig.geoUnitPlural} selected`}
                   </div>
                 </div>
 
@@ -404,7 +430,7 @@ const CampaignPlanning = () => {
                     <div className="text-2xl font-bold text-blue-900">
                       {(totalReach / 1000000).toFixed(1)}M
                     </div>
-                    <div className="text-xs text-gray-500">Households in selected ZIPs</div>
+                    <div className="text-xs text-gray-500">Households in selected {countryConfig.geoUnitPlural}</div>
                   </div>
                 )}
 
@@ -485,7 +511,7 @@ const CampaignPlanning = () => {
                                 </div>
                               </div>
                               <div className="text-right">
-                                <div className="text-xs text-gray-500">${channel.cpm} CPM</div>
+                                <div className="text-xs text-gray-500">{countryConfig.currencySymbol}{channel.cpm} CPM</div>
                                 <div className="text-xs text-gray-400">{channel.reach}</div>
                               </div>
                             </div>
@@ -530,7 +556,7 @@ const CampaignPlanning = () => {
                                 </div>
                               </div>
                               <div className="text-right">
-                                <div className="text-xs text-gray-500">${channel.cpm} CPM</div>
+                                <div className="text-xs text-gray-500">{countryConfig.currencySymbol}{channel.cpm} CPM</div>
                                 <div className="text-xs text-gray-400">{channel.reach}</div>
                               </div>
                             </div>

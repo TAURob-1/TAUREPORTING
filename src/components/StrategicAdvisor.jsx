@@ -1,19 +1,20 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { usePlatform } from '../context/PlatformContext.jsx';
 
 const API_URL = import.meta.env.VITE_CHAT_API || 'http://localhost:3002';
 
 const SUGGESTED_QUESTIONS = [
-  "Build me 3 audience personas for CarShield's CTV campaign",
+  "Build me 3 audience personas for {{advertiser}}'s CTV campaign",
   "Which CTV providers should we prioritize and why?",
   "Recommend a $500K CTV budget allocation across providers",
-  "What are CarShield's biggest competitive vulnerabilities?",
+  "What are {{advertiser}}'s biggest competitive vulnerabilities?",
   "Design a geo holdout test for measuring CTV incrementality",
   "What does the customer sentiment data tell us about messaging?",
 ];
 
 // Demo responses for when API is offline
 const DEMO_RESPONSES = {
-  "Build me 3 audience personas for CarShield's CTV campaign": `## CarShield CTV Audience Personas
+  "Build me 3 audience personas for {{advertiser}}'s CTV campaign": `## {{advertiser}} CTV Audience Personas
 
 ### Persona 1: The Cautious Commuter
 - **Demographics:** 35-54, suburban, household income $55K-$85K
@@ -36,12 +37,12 @@ const DEMO_RESPONSES = {
 - **Motivation:** Stretching retirement dollars, avoiding large unexpected expenses
 - **CTV Targeting:** Samsung TV+, Paramount+, cable alternatives during daytime and early evening`,
 
-  "Which CTV providers should we prioritize and why?": `## CTV Provider Prioritization for CarShield
+  "Which CTV providers should we prioritize and why?": `## CTV Provider Prioritization for {{advertiser}}
 
 ### Tier 1: Must-Have (60% of budget)
 | Provider | Why | Budget Share |
 | YouTube CTV | Largest reach (120M HH), strong auto-intender targeting, competitive CPM at $28 | 25% |
-| Roku | 80M active accounts, excellent frequency control, strong in CarShield's core demo | 20% |
+| Roku | 80M active accounts, excellent frequency control, strong in {{advertiser}}'s core demo | 20% |
 | Hulu | Premium environment, 48M subscribers, high completion rates for :30s spots | 15% |
 
 ### Tier 2: Strategic (30% of budget)
@@ -79,17 +80,17 @@ Start with YouTube + Roku + Hulu as your foundation. These three alone can reach
 ### Why This Allocation Works
 The heavy weighting toward YouTube and Roku ensures broad reach at efficient CPMs. Hulu provides premium brand-safe inventory. The long tail of smaller platforms adds **incremental unduplicated reach** that drives the overall number higher without overpaying for frequency on any single platform.`,
 
-  "What are CarShield's biggest competitive vulnerabilities?": `## CarShield Competitive Vulnerability Analysis
+  "What are {{advertiser}}'s biggest competitive vulnerabilities?": `## {{advertiser}} Competitive Vulnerability Analysis
 
 ### Critical: AI Visibility Gap
-- **CarShield AI visibility: 0%** vs Endurance at 12% and Carchex at 8%
+- **{{advertiser}} AI visibility: 0%** vs Endurance at 12% and Carchex at 8%
 - Competitors are being recommended by ChatGPT, Perplexity, and Gemini
 - Estimated lost opportunity: **$340K/month** in equivalent traffic value
 - **Action:** Immediate AI content optimization strategy needed
 
 ### High: SEO Concentration Risk
 - 88.4% market share but only **34 keywords in top 10** out of 29,840 tracked
-- **236 high-volume keyword gaps** where competitors rank and CarShield doesn't
+- **236 high-volume keyword gaps** where competitors rank and {{advertiser}} doesn't
 - "Vehicle service contract" (8,900 monthly searches) — **not ranking at all**
 - Competitors are quietly gaining ground on long-tail warranty keywords
 
@@ -102,7 +103,7 @@ The heavy weighting toward YouTube and Roku ensures broad reach at efficient CPM
 ### Low but Emerging: Brand Sentiment
 - Warranty industry carries negative consumer perception
 - Competitors investing in trust-building content marketing
-- CarShield's brand recognition is an asset but needs reinforcement through CTV storytelling`,
+- {{advertiser}}'s brand recognition is an asset but needs reinforcement through CTV storytelling`,
 
   "Design a geo holdout test for measuring CTV incrementality": `## CTV Incrementality Test Design
 
@@ -144,7 +145,7 @@ The heavy weighting toward YouTube and Roku ensures broad reach at efficient CPM
 - **Peace of mind** — 67% of positive mentions cite worry-free ownership
 - **Cost savings** — "saved me $4,000 on transmission repair" type stories resonate
 - **Easy claims process** — customers who've used the service are strongest advocates
-- **Brand trust** — CarShield's market leadership drives confidence
+- **Brand trust** — {{advertiser}}'s market leadership drives confidence
 
 **Negative Concerns (address in CTV creative):**
 - **"Is this a scam?"** — 34% of neutral/negative sentiment relates to industry skepticism
@@ -158,7 +159,7 @@ The heavy weighting toward YouTube and Roku ensures broad reach at efficient CPM
 Feature real customer testimonials with specific repair cost savings. Address skepticism head-on with transparency.
 
 ### Creative Strategy B: "What If?"
-Scenario-based ads showing the cost of unexpected repairs vs. CarShield coverage. Target the anxiety of aging vehicles.
+Scenario-based ads showing the cost of unexpected repairs vs. {{advertiser}} coverage. Target the anxiety of aging vehicles.
 
 ### Creative Strategy C: "Protection Made Simple"
 Focus on ease and clarity — show the simple process from quote to claim. Counter complexity concerns.
@@ -283,6 +284,7 @@ function MarkdownLite({ text }) {
 }
 
 const StrategicAdvisor = () => {
+  const { advertiser } = usePlatform();
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -290,6 +292,17 @@ const StrategicAdvisor = () => {
   const [error, setError] = useState(null);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const brandify = (text) => text.replaceAll('{{advertiser}}', advertiser.name);
+  const suggestedQuestions = useMemo(
+    () => SUGGESTED_QUESTIONS.map((q) => brandify(q)),
+    [advertiser.name, advertiser.slug]
+  );
+  const demoResponses = useMemo(
+    () => Object.fromEntries(
+      Object.entries(DEMO_RESPONSES).map(([question, answer]) => [brandify(question), brandify(answer)])
+    ),
+    [advertiser.name, advertiser.slug]
+  );
 
   // Check API health on mount
   useEffect(() => {
@@ -318,8 +331,8 @@ const StrategicAdvisor = () => {
     if (isDemo) {
       // Demo mode: use canned responses or a generic one
       await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 1200));
-      const demoResponse = DEMO_RESPONSES[text.trim()] ||
-        `## Analysis: ${text.trim().slice(0, 60)}\n\nBased on CarShield's Signal Intelligence data:\n\n- **Market Position:** CarShield holds 88.4% market share with 452K monthly visits\n- **CTV Opportunity:** Geographic holdout testing shows +16.2% incremental lift at $2.94 iROAS\n- **Key Insight:** AI visibility represents a $340K/month untapped channel\n\nThis analysis would be enriched with live intelligence data when the API is connected. The demo showcases the advisor's analytical framework and presentation format.\n\n*To enable live AI responses, start the chat API server on port 3002.*`;
+      const demoResponse = demoResponses[text.trim()] ||
+        brandify(`## Analysis: ${text.trim().slice(0, 60)}\n\nBased on {{advertiser}}'s Signal Intelligence data:\n\n- **Market Position:** {{advertiser}} holds 88.4% market share with 452K monthly visits\n- **CTV Opportunity:** Geographic holdout testing shows +16.2% incremental lift at $2.94 iROAS\n- **Key Insight:** AI visibility represents a $340K/month untapped channel\n\nThis analysis would be enriched with live intelligence data when the API is connected. The demo showcases the advisor's analytical framework and presentation format.\n\n*To enable live AI responses, start the chat API server on port 3002.*`);
 
       setMessages(prev => [...prev, { role: 'assistant', content: demoResponse }]);
       setLoading(false);
@@ -334,7 +347,7 @@ const StrategicAdvisor = () => {
         body: JSON.stringify({
           message: text.trim(),
           history: messages,
-          company: 'carshield',
+          company: advertiser.slug,
         }),
       });
 
@@ -346,7 +359,7 @@ const StrategicAdvisor = () => {
       setError(err.message);
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: `Connection to live API failed. Switching to demo mode for this response.\n\nBased on CarShield's cached intelligence data, I can still provide strategic analysis. Try one of the suggested questions for a detailed demo response.`,
+        content: brandify(`Connection to live API failed. Switching to demo mode for this response.\n\nBased on {{advertiser}}'s cached intelligence data, I can still provide strategic analysis. Try one of the suggested questions for a detailed demo response.`),
       }]);
     } finally {
       setLoading(false);
@@ -374,7 +387,7 @@ const StrategicAdvisor = () => {
             <div>
               <h1 className="text-2xl font-bold">Syd.AI</h1>
               <p className="text-indigo-100 mt-1 text-sm">
-                CarShield's Strategic CTV Advisor • Powered by TAU Signal
+                {advertiser.name}'s Strategic CTV Advisor • Powered by TAU Signal
               </p>
             </div>
             <div className="text-right">
@@ -414,7 +427,7 @@ const StrategicAdvisor = () => {
                   competitive positioning, budget allocation, or measurement methodology.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-2xl">
-                  {SUGGESTED_QUESTIONS.map((q, i) => (
+                  {suggestedQuestions.map((q, i) => (
                     <button
                       key={i}
                       onClick={() => sendMessage(q)}

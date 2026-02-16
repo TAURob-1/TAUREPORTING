@@ -1,4 +1,4 @@
-// Signal Intelligence Data for CarShield
+// Signal Intelligence Data for Advertiser
 // Source: TAU Signal competitive intelligence platform
 
 export const signalData = {
@@ -15,7 +15,7 @@ export const signalData = {
       { month: 'Dec', visits: 452000 }
     ],
     marketShare: {
-      carshield: { visits: 452000, share: 88.4, trend: 'up' },
+      advertiser: { visits: 452000, share: 88.4, trend: 'up' },
       endurance: { visits: 37000, share: 7.2, trend: 'stable' },
       carchex: { visits: 20000, share: 3.9, trend: 'down' },
       protectmycar: { visits: 2000, share: 0.4, trend: 'down' }
@@ -70,7 +70,7 @@ export const signalData = {
   competitive: {
     competitors: [
       {
-        name: 'CarShield',
+        name: 'Advertiser',
         traffic: 452000,
         keywords: 29840,
         spend: 150000,
@@ -122,7 +122,7 @@ export const signalData = {
 
   // AI Readiness & Visibility
   aiReadiness: {
-    carshield: {
+    advertiser: {
       score: 0,
       citations: 0,
       coverage: '0%',
@@ -174,7 +174,7 @@ export const signalData = {
 
   // Spend Analysis
   spend: {
-    carshield: {
+    advertiser: {
       estimated: { min: 75000, max: 224000, average: 150000 },
       channels: [
         { name: 'Search', amount: 65000, share: 43 },
@@ -186,7 +186,7 @@ export const signalData = {
       cpa: '$42-$58'
     },
     competitive: [
-      { name: 'CarShield', spend: 150000, traffic: 452000, efficiency: 100 },
+      { name: 'Advertiser', spend: 150000, traffic: 452000, efficiency: 100 },
       { name: 'Endurance', spend: 45000, traffic: 37000, efficiency: 82 },
       { name: 'Carchex', spend: 28000, traffic: 20000, efficiency: 71 },
       { name: 'ProtectMyCar', spend: 12000, traffic: 2000, efficiency: 17 }
@@ -203,7 +203,7 @@ export const signalData = {
   insights: [
     {
       category: 'Market Position',
-      insight: 'CarShield dominates with 88.4% market share, but competitors are investing in AI visibility',
+      insight: 'Advertiser dominates with 88.4% market share, but competitors are investing in AI visibility',
       impact: 'High',
       urgency: 'Medium'
     },
@@ -215,13 +215,13 @@ export const signalData = {
     },
     {
       category: 'SEO Gaps',
-      insight: '236 high-volume keywords where competitors rank but CarShield doesn\'t',
+      insight: '236 high-volume keywords where competitors rank but Advertiser doesn\'t',
       impact: 'High',
       urgency: 'Medium'
     },
     {
       category: 'Spend Efficiency',
-      insight: 'CarShield leads efficiency metrics, but AI optimization could reduce CPA 15-20%',
+      insight: 'Advertiser leads efficiency metrics, but AI optimization could reduce CPA 15-20%',
       impact: 'Medium',
       urgency: 'Low'
     }
