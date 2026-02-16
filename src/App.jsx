@@ -41,41 +41,43 @@ function App() {
   }, [currentPage]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-slate-950">
+      <nav className="bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-gray-200 dark:border-slate-800 shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3">
           <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center shadow-sm">
-                <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
+              <div className="h-10 w-10 rounded-lg bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-sm flex items-center justify-center p-1.5">
+                <img
+                  src="/TAU_Logo.png"
+                  alt="TAU logo"
+                  className="h-full w-full object-contain"
+                />
               </div>
               <div>
-                <div className="text-lg font-bold text-gray-900 leading-tight">{PLATFORM_BRAND.name}</div>
-                <div className="text-[10px] text-gray-400 font-medium tracking-wider uppercase leading-tight">
+                <div className="text-lg font-bold text-gray-900 dark:text-white leading-tight">{PLATFORM_BRAND.name}</div>
+                <div className="text-[10px] text-gray-400 dark:text-slate-400 font-medium tracking-wider uppercase leading-tight">
                   {advertiser.name} • {countryConfig.shortLabel}
                 </div>
               </div>
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
-              <label className="text-xs text-gray-500 font-medium">Country</label>
+              <label className="text-xs text-gray-500 dark:text-slate-300 font-medium">Country</label>
               <select
                 value={countryCode}
                 onChange={(e) => setCountryCode(e.target.value)}
-                className="px-3 py-1.5 rounded-md border border-gray-300 text-sm bg-white text-gray-700"
+                className="px-3 py-1.5 rounded-md border border-gray-300 dark:border-slate-700 text-sm bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-200"
               >
                 {COUNTRY_OPTIONS.map((country) => (
                   <option key={country.id} value={country.id}>{country.label}</option>
                 ))}
               </select>
 
-              <label className="text-xs text-gray-500 font-medium ml-2">Client</label>
+              <label className="text-xs text-gray-500 dark:text-slate-300 font-medium ml-2">Client</label>
               <select
                 value={advertiserId}
                 onChange={(e) => setAdvertiserId(e.target.value)}
-                className="px-3 py-1.5 rounded-md border border-gray-300 text-sm bg-white text-gray-700"
+                className="px-3 py-1.5 rounded-md border border-gray-300 dark:border-slate-700 text-sm bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-200"
               >
                 {ADVERTISER_OPTIONS.map((entry) => (
                   <option key={entry.id} value={entry.id}>{entry.name}</option>
@@ -84,7 +86,7 @@ function App() {
 
               <button
                 type="button"
-                className="ml-1 p-2 rounded-md border border-gray-300 text-gray-500 hover:text-gray-700 hover:bg-gray-50"
+                className="ml-1 p-2 rounded-md border border-gray-300 dark:border-slate-700 text-gray-500 dark:text-slate-300 hover:text-gray-700 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
                 title="Settings"
                 aria-label="Settings"
               >
@@ -97,15 +99,15 @@ function App() {
           </div>
 
           <div className="mt-3 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <div className="flex space-x-1 bg-gray-100 rounded-lg p-1">
+            <div className="flex space-x-1 bg-gray-100 dark:bg-slate-800 rounded-lg p-1">
               {PAGES.map((page) => (
                 <button
                   key={page.key}
                   onClick={() => setCurrentPage(page.key)}
                   className={`px-3 md:px-5 py-2 md:py-2.5 rounded-md text-xs md:text-sm font-medium transition-all ${
                     currentPage === page.key
-                      ? 'bg-white text-blue-700 shadow-sm ring-1 ring-blue-100'
-                      : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50'
+                      ? 'bg-white dark:bg-slate-900 text-blue-700 dark:text-blue-300 shadow-sm ring-1 ring-blue-100 dark:ring-slate-700'
+                      : 'text-gray-500 dark:text-slate-300 hover:text-gray-800 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-700'
                   }`}
                 >
                   <span className="hidden md:inline">{page.fullLabel}</span>
@@ -114,10 +116,10 @@ function App() {
               ))}
             </div>
 
-            <div className="flex items-center gap-2 text-[11px] text-gray-500">
+            <div className="flex items-center gap-2 text-[11px] text-gray-500 dark:text-slate-300">
               <span className="font-medium">Platforms:</span>
               <span>{countryConfig.platforms.join(', ')}</span>
-              <span className="text-gray-300">|</span>
+              <span className="text-gray-300 dark:text-slate-600">|</span>
               <span>Regulation: {regulationSummary}</span>
             </div>
           </div>
@@ -140,10 +142,10 @@ function App() {
         </div>
       </div>
 
-      <footer className="border-t border-gray-200 bg-white py-3">
+      <footer className="border-t border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 py-3">
         <div className="max-w-7xl mx-auto px-4 md:px-6 flex items-center justify-between">
-          <div className="text-[11px] text-gray-400">
-            Powered by <span className="font-semibold text-gray-500">TAU Signal Architecture</span>
+          <div className="text-[11px] text-gray-400 dark:text-slate-400">
+            Powered by <span className="font-semibold text-gray-500 dark:text-slate-300">TAU Signal Architecture</span>
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5">
@@ -153,9 +155,9 @@ function App() {
                 currentPage === 'results' ? 'bg-green-500' :
                 currentPage === 'signal' ? 'bg-orange-500' : 'bg-indigo-500'
               }`} />
-              <div className="text-[11px] font-medium text-gray-400">{statusLabel}</div>
+              <div className="text-[11px] font-medium text-gray-400 dark:text-slate-400">{statusLabel}</div>
             </div>
-            <div className="text-[10px] text-gray-300">{PLATFORM_BRAND.product} v2.0</div>
+            <div className="text-[10px] text-gray-300 dark:text-slate-600">{PLATFORM_BRAND.product} v2.0</div>
           </div>
         </div>
       </footer>
