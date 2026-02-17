@@ -1,0 +1,19 @@
+platform,owner,type,subscribers,demographics,avg_cpm,ad_load_mins_per_hour,buying_process,min_spend,targeting,measurement,monthly_users,channels,data_date
+Netflix (Ad-Supported),Netflix,SVOD with Ads,15000000.0,Adults 18-49,45,4.0,Microsoft Xandr,20000,"['Demographic', 'Genre', 'Daypart']",Nielsen ONE,,,20250826
+Disney+,Disney,SVOD with Ads,8000000.0,Families 25-54,50,4.0,Disney Ad Sales,25000,"['Demographic', 'Content Type']",Nielsen,,,20250826
+Hulu,Disney,SVOD with Ads,35000000.0,Adults 18-49,32,10.0,Disney Ad Sales/Programmatic,15000,"['Behavioral', 'Demographic', 'Show-level']",Nielsen,,,20250826
+Max (HBO Max),Warner Bros Discovery,SVOD with Ads,20000000.0,Adults 25-54,42,4.0,WBD Ad Sales,20000,"['Demographic', 'Content Genre']",Nielsen,,,20250826
+Peacock,Comcast/NBCU,SVOD with Ads,28000000.0,Adults 18-54,28,5.0,NBCU One Platform,10000,"['Behavioral', 'Contextual']",Nielsen,,,20250826
+Paramount+,Paramount,SVOD with Ads,20000000.0,Adults 25-54,32,6.0,Paramount Ad Sales,15000,"['Demographic', 'Show-level']",Nielsen,,,20250826
+Amazon Prime Video (Ads),Amazon,SVOD with Ads,115000000.0,Adults 25-54,38,3.5,Amazon DSP,15000,"['Shopping Behavior', 'Demo', 'Interest']",Amazon Attribution,,,20250826
+Apple TV+,Apple,SVOD,25000000.0,Adults 25-54 High Income,55,0.0,No ads currently,0,[],N/A,,,20250826
+Tubi,Fox Corp,FAST/AVOD,,Adults 18-49,11,9.0,Direct/Programmatic,5000,"['Genre', 'Demographic']",Nielsen,70000000.0,,20250826
+Pluto TV,Paramount,FAST/AVOD,,Adults 25-54,14,12.0,Paramount Ad Sales,10000,"['Channel', 'Demographic']",Nielsen,80000000.0,,20250826
+The Roku Channel,Roku,FAST/AVOD,,Adults 25-54,20,9.0,Roku OneView,5000,"['ACR Data', 'Demographic']",Roku Attribution,80000000.0,,20250826
+Amazon Freevee,Amazon,FAST/AVOD,,Adults 18-49,16,9.0,Amazon DSP,10000,"['Shopping Data', 'Demo']",Amazon Attribution,65000000.0,,20250826
+Xumo Play,Comcast/Charter,FAST/AVOD,,Adults 25-54,14,10.0,FreeWheel,10000,"['Demographic', 'Geographic']",Comscore,30000000.0,,20250826
+YouTube TV,Google,vMVPD,8000000.0,Adults 25-54,28,,Google Ads/YouTube Reserve,10000,"['Google Audience', 'Demo', 'Interest']",Google Analytics,,100.0,20250826
+Hulu + Live TV,Disney,vMVPD,4000000.0,Adults 25-54,32,,Disney Ad Sales,15000,"['Behavioral', 'Demo']",Nielsen,,85.0,20250826
+Sling TV,DISH,vMVPD,2000000.0,Adults 25-54,20,,DISH Media,5000,"['Package-based', 'Demo']",Comscore,,50.0,20250826
+FuboTV,FuboTV Inc,vMVPD,1500000.0,Sports Fans 25-54,25,,Direct Sales,10000,"['Sports Interest', 'Demo']",Nielsen,,200.0,20250826
+DirecTV Stream,DirecTV,vMVPD,1500000.0,Adults 35-64,22,,Direct Sales,10000,"['Geographic', 'Demo']",Nielsen,,140.0,20250826

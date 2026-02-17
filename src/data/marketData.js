@@ -186,6 +186,29 @@ const US_GENERAL_RULES = [
   },
 ];
 
+const US_GAMBLING_RULES = [
+  {
+    title: 'State-by-State Gambling Advertising Rules',
+    description: 'Creative, targeting, and offer language must comply with each licensed state jurisdiction.',
+    source: 'State Gaming Commissions',
+  },
+  {
+    title: 'Age-Gating and Audience Exclusions',
+    description: 'Campaign delivery must enforce 21+ targeting, suppress underage audiences, and apply youth-safe placements.',
+    source: 'Platform policy + state regulatory guidance',
+  },
+  {
+    title: 'Responsible Gambling Disclosures',
+    description: 'Include required responsible gambling messaging and clear terms for promotions and bonus offers.',
+    source: 'State regulations + operator compliance standards',
+  },
+  {
+    title: 'FTC and Consumer Protection Standards',
+    description: 'Claims must be truthful, not misleading, and transparent about eligibility, risks, and material terms.',
+    source: 'FTC',
+  },
+];
+
 export function getRegulations(countryCode = 'US', advertiser = {}) {
   const vertical = (advertiser.vertical || '').toLowerCase();
   const advertiserName = advertiser.name || 'Advertiser';
@@ -204,6 +227,14 @@ export function getRegulations(countryCode = 'US', advertiser = {}) {
       title: 'UK Media & Data Compliance',
       tone: 'medium',
       rules: UK_GENERAL_RULES,
+    };
+  }
+
+  if (isGambling) {
+    return {
+      title: `${advertiserName}: US Gambling Advertising Compliance`,
+      tone: 'high',
+      rules: US_GAMBLING_RULES,
     };
   }
 

@@ -25,6 +25,7 @@ const AudienceTargeting = () => {
   });
   const [customAudiences, setCustomAudiences] = useState([]);
   const [showBuilder, setShowBuilder] = useState(false);
+  const [isSegmentSelectorExpanded, setIsSegmentSelectorExpanded] = useState(true);
 
   // Load demographics data (country-appropriate)
   useEffect(() => {
@@ -90,6 +91,9 @@ const AudienceTargeting = () => {
 
   const handleAudienceChange = (audience) => {
     setSelectedAudience(audience);
+    if (audience) {
+      setIsSegmentSelectorExpanded(false);
+    }
   };
 
   const handleSettingsChange = (key, value) => {
@@ -114,6 +118,7 @@ const AudienceTargeting = () => {
     setCustomAudiences(prev => prev.filter(a => a.id !== audienceId));
     if (selectedAudience?.id === audienceId) {
       setSelectedAudience(null);
+      setIsSegmentSelectorExpanded(true);
     }
   };
 
@@ -149,6 +154,8 @@ const AudienceTargeting = () => {
         customAudiences={customAudiences}
         onOpenBuilder={() => setShowBuilder(true)}
         onRemoveCustomAudience={handleRemoveCustomAudience}
+        isExpanded={isSegmentSelectorExpanded}
+        onToggleExpanded={setIsSegmentSelectorExpanded}
       />
 
       {/* Custom Audience Builder Modal */}

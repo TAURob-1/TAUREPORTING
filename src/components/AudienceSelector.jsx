@@ -2,7 +2,16 @@ import React from 'react';
 import { AUDIENCES } from '../data/audienceDefinitions';
 import { usePlatform } from '../context/PlatformContext.jsx';
 
-const AudienceSelector = ({ selectedAudience, onAudienceChange, recommendations, customAudiences, onOpenBuilder, onRemoveCustomAudience }) => {
+const AudienceSelector = ({
+  selectedAudience,
+  onAudienceChange,
+  recommendations,
+  customAudiences,
+  onOpenBuilder,
+  onRemoveCustomAudience,
+  isExpanded,
+  onToggleExpanded
+}) => {
   const { countryConfig, countryCode } = usePlatform();
   
   // Filter audiences by country
@@ -30,108 +39,133 @@ const AudienceSelector = ({ selectedAudience, onAudienceChange, recommendations,
           Select your target audience segment:
         </label>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {audienceList.map(audience => {
-            const isSelected = selectedAudience?.id === audience.id;
+        {selectedAudience && !isExpanded && (
+          <div className="mb-3 rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <div className="text-xs font-semibold uppercase tracking-wide text-blue-700 mb-1">
+                Selected Segment
+              </div>
+              <div className="text-sm font-semibold text-blue-900 truncate">
+                <span className="mr-2">{selectedAudience.icon}</span>
+                {selectedAudience.name}
+                {selectedAudience.isCustom && (
+                  <span className="ml-2 px-1.5 py-0.5 bg-indigo-100 text-indigo-700 text-[10px] font-semibold rounded">Custom</span>
+                )}
+              </div>
+            </div>
+            <button
+              onClick={() => onToggleExpanded(true)}
+              className="shrink-0 px-3 py-1.5 rounded-md text-xs font-semibold border border-blue-300 bg-white text-blue-700 hover:bg-blue-100 transition-colors"
+            >
+              Change
+            </button>
+          </div>
+        )}
 
-            return (
-              <button
-                key={audience.id}
-                onClick={() => onAudienceChange(audience)}
-                className={`p-3 md:p-4 rounded-lg border-2 text-left transition-all hover:shadow-md hover:-translate-y-0.5 ${
-                  isSelected
-                    ? 'border-blue-500 bg-blue-50 shadow-md'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
-                }`}
-              >
-                <div className="flex items-start gap-3">
-                  <div className="text-2xl">{audience.icon}</div>
-                  <div className="flex-1 min-w-0">
-                    <div className={`font-semibold text-sm mb-1 ${
-                      isSelected ? 'text-blue-900' : 'text-gray-900'
-                    }`}>
-                      {audience.name}
-                    </div>
-                    <div className={`text-xs leading-relaxed ${
-                      isSelected ? 'text-blue-700' : 'text-gray-600'
-                    }`}>
-                      {audience.description}
-                    </div>
-                  </div>
-                  {isSelected && (
-                    <div className="text-blue-500 text-xl">&#x2713;</div>
-                  )}
-                </div>
-              </button>
-            );
-          })}
+        {(isExpanded || !selectedAudience) && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {audienceList.map(audience => {
+              const isSelected = selectedAudience?.id === audience.id;
 
-          {/* Custom Audience Cards */}
-          {customAudiences && customAudiences.map(audience => {
-            const isSelected = selectedAudience?.id === audience.id;
-            const criteriaCount = audience.isCSVBased ? 'CSV data' : `${audience.criteria.length} criteria`;
-
-            return (
-              <button
-                key={audience.id}
-                onClick={() => onAudienceChange(audience)}
-                className={`p-4 rounded-lg border-2 text-left transition-all hover:shadow-md relative ${
-                  isSelected
-                    ? 'border-indigo-500 bg-indigo-50 shadow-md'
-                    : 'border-gray-200 bg-white hover:border-gray-300'
-                }`}
-              >
-                {/* Remove button */}
-                <div
-                  className="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-sm cursor-pointer z-10 w-5 h-5 flex items-center justify-center rounded-full hover:bg-red-50"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onRemoveCustomAudience(audience.id);
-                  }}
+              return (
+                <button
+                  key={audience.id}
+                  onClick={() => onAudienceChange(audience)}
+                  className={`p-3 md:p-4 rounded-lg border-2 text-left transition-all hover:shadow-md hover:-translate-y-0.5 ${
+                    isSelected
+                      ? 'border-blue-500 bg-blue-50 shadow-md'
+                      : 'border-gray-200 bg-white hover:border-gray-300'
+                  }`}
                 >
-                  &times;
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="text-2xl">{audience.icon}</div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <div className={`font-semibold text-sm ${
-                        isSelected ? 'text-indigo-900' : 'text-gray-900'
+                  <div className="flex items-start gap-3">
+                    <div className="text-2xl">{audience.icon}</div>
+                    <div className="flex-1 min-w-0">
+                      <div className={`font-semibold text-sm mb-1 ${
+                        isSelected ? 'text-blue-900' : 'text-gray-900'
                       }`}>
                         {audience.name}
                       </div>
-                      <span className="px-1.5 py-0.5 bg-indigo-100 text-indigo-700 text-[10px] font-semibold rounded">Custom</span>
+                      <div className={`text-xs leading-relaxed ${
+                        isSelected ? 'text-blue-700' : 'text-gray-600'
+                      }`}>
+                        {audience.description}
+                      </div>
                     </div>
-                    <div className={`text-xs leading-relaxed ${
-                      isSelected ? 'text-indigo-700' : 'text-gray-600'
-                    }`}>
-                      {criteriaCount} &middot; {audience.description}
-                    </div>
+                    {isSelected && (
+                      <div className="text-blue-500 text-xl">&#x2713;</div>
+                    )}
                   </div>
-                  {isSelected && (
-                    <div className="text-indigo-500 text-xl">&#x2713;</div>
-                  )}
-                </div>
-              </button>
-            );
-          })}
+                </button>
+              );
+            })}
 
-          {/* Create Custom Audience Card */}
-          <button
-            onClick={onOpenBuilder}
-            className="p-4 rounded-lg border-2 border-dashed border-gray-300 text-center transition-all hover:shadow-md hover:border-indigo-400 hover:bg-indigo-50 group"
-          >
-            <div className="flex flex-col items-center justify-center h-full gap-2 py-2">
-              <div className="text-2xl text-gray-400 group-hover:text-indigo-500 transition-colors">&#x2795;</div>
-              <div className="font-semibold text-sm text-gray-600 group-hover:text-indigo-700 transition-colors">
-                Create Custom Audience
+            {/* Custom Audience Cards */}
+            {customAudiences && customAudiences.map(audience => {
+              const isSelected = selectedAudience?.id === audience.id;
+              const criteriaCount = audience.isCSVBased ? 'CSV data' : `${audience.criteria.length} criteria`;
+
+              return (
+                <button
+                  key={audience.id}
+                  onClick={() => onAudienceChange(audience)}
+                  className={`p-4 rounded-lg border-2 text-left transition-all hover:shadow-md relative ${
+                    isSelected
+                      ? 'border-indigo-500 bg-indigo-50 shadow-md'
+                      : 'border-gray-200 bg-white hover:border-gray-300'
+                  }`}
+                >
+                  {/* Remove button */}
+                  <div
+                    className="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-sm cursor-pointer z-10 w-5 h-5 flex items-center justify-center rounded-full hover:bg-red-50"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onRemoveCustomAudience(audience.id);
+                    }}
+                  >
+                    &times;
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="text-2xl">{audience.icon}</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className={`font-semibold text-sm ${
+                          isSelected ? 'text-indigo-900' : 'text-gray-900'
+                        }`}>
+                          {audience.name}
+                        </div>
+                        <span className="px-1.5 py-0.5 bg-indigo-100 text-indigo-700 text-[10px] font-semibold rounded">Custom</span>
+                      </div>
+                      <div className={`text-xs leading-relaxed ${
+                        isSelected ? 'text-indigo-700' : 'text-gray-600'
+                      }`}>
+                        {criteriaCount} &middot; {audience.description}
+                      </div>
+                    </div>
+                    {isSelected && (
+                      <div className="text-indigo-500 text-xl">&#x2713;</div>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+
+            {/* Create Custom Audience Card */}
+            <button
+              onClick={onOpenBuilder}
+              className="p-4 rounded-lg border-2 border-dashed border-gray-300 text-center transition-all hover:shadow-md hover:border-indigo-400 hover:bg-indigo-50 group"
+            >
+              <div className="flex flex-col items-center justify-center h-full gap-2 py-2">
+                <div className="text-2xl text-gray-400 group-hover:text-indigo-500 transition-colors">&#x2795;</div>
+                <div className="font-semibold text-sm text-gray-600 group-hover:text-indigo-700 transition-colors">
+                  Create Custom Audience
+                </div>
+                <div className="text-xs text-gray-400 group-hover:text-indigo-500 transition-colors">
+                  Upload data, describe, or build from demographics
+                </div>
               </div>
-              <div className="text-xs text-gray-400 group-hover:text-indigo-500 transition-colors">
-                Upload data, describe, or build from demographics
-              </div>
-            </div>
-          </button>
-        </div>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Recommendations Summary */}

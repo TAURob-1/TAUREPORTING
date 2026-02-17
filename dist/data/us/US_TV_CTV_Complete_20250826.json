@@ -1,0 +1,987 @@
+{
+  "tv_networks": [
+    {
+      "network": "ABC",
+      "owner": "Disney",
+      "type": "Broadcast",
+      "coverage": "National",
+      "households_reach": 120000000,
+      "demographics": "Adults 25-54",
+      "avg_cpm": 35,
+      "dayparts": [
+        "Early Morning",
+        "Morning",
+        "Daytime",
+        "Prime",
+        "Late Night"
+      ],
+      "buying_process": "Upfront/Scatter",
+      "lead_time_days": 21
+    },
+    {
+      "network": "CBS",
+      "owner": "Paramount",
+      "type": "Broadcast",
+      "coverage": "National",
+      "households_reach": 120000000,
+      "demographics": "Adults 35-64",
+      "avg_cpm": 32,
+      "dayparts": [
+        "Early Morning",
+        "Morning",
+        "Daytime",
+        "Prime",
+        "Late Night"
+      ],
+      "buying_process": "Upfront/Scatter",
+      "lead_time_days": 21
+    },
+    {
+      "network": "NBC",
+      "owner": "Comcast/NBCU",
+      "type": "Broadcast",
+      "coverage": "National",
+      "households_reach": 120000000,
+      "demographics": "Adults 18-49",
+      "avg_cpm": 35,
+      "dayparts": [
+        "Early Morning",
+        "Morning",
+        "Daytime",
+        "Prime",
+        "Late Night"
+      ],
+      "buying_process": "Upfront/Scatter",
+      "lead_time_days": 21
+    },
+    {
+      "network": "FOX",
+      "owner": "Fox Corp",
+      "type": "Broadcast",
+      "coverage": "National",
+      "households_reach": 120000000,
+      "demographics": "Adults 25-54",
+      "avg_cpm": 30,
+      "dayparts": [
+        "Morning",
+        "Daytime",
+        "Prime",
+        "Sports",
+        "Late Night"
+      ],
+      "buying_process": "Upfront/Scatter",
+      "lead_time_days": 21
+    },
+    {
+      "network": "The CW",
+      "owner": "Nexstar",
+      "type": "Broadcast",
+      "coverage": "National",
+      "households_reach": 100000000,
+      "demographics": "Adults 18-34",
+      "avg_cpm": 12,
+      "dayparts": [
+        "Prime",
+        "Late Night"
+      ],
+      "buying_process": "Direct",
+      "lead_time_days": 14
+    },
+    {
+      "network": "PBS",
+      "owner": "Public",
+      "type": "Broadcast",
+      "coverage": "National",
+      "households_reach": 100000000,
+      "demographics": "Adults 35-64",
+      "avg_cpm": 20,
+      "dayparts": [
+        "Morning",
+        "Afternoon",
+        "Prime"
+      ],
+      "buying_process": "Sponsorship",
+      "lead_time_days": 30
+    },
+    {
+      "network": "CNN",
+      "owner": "Warner Bros Discovery",
+      "type": "Cable News",
+      "coverage": "National",
+      "households_reach": 80000000,
+      "demographics": "Adults 35-64",
+      "avg_cpm": 15,
+      "dayparts": [
+        "24/7 News"
+      ],
+      "buying_process": "Direct/Programmatic",
+      "lead_time_days": 7
+    },
+    {
+      "network": "Fox News",
+      "owner": "Fox Corp",
+      "type": "Cable News",
+      "coverage": "National",
+      "households_reach": 85000000,
+      "demographics": "Adults 50+",
+      "avg_cpm": 18,
+      "dayparts": [
+        "24/7 News"
+      ],
+      "buying_process": "Direct",
+      "lead_time_days": 7
+    },
+    {
+      "network": "MSNBC",
+      "owner": "Comcast/NBCU",
+      "type": "Cable News",
+      "coverage": "National",
+      "households_reach": 80000000,
+      "demographics": "Adults 35-64",
+      "avg_cpm": 14,
+      "dayparts": [
+        "24/7 News"
+      ],
+      "buying_process": "Direct/Programmatic",
+      "lead_time_days": 7
+    },
+    {
+      "network": "ESPN",
+      "owner": "Disney",
+      "type": "Cable Sports",
+      "coverage": "National",
+      "households_reach": 75000000,
+      "demographics": "Men 18-54",
+      "avg_cpm": 22,
+      "dayparts": [
+        "Live Sports",
+        "Sports News"
+      ],
+      "buying_process": "Upfront/Scatter",
+      "lead_time_days": 14
+    },
+    {
+      "network": "FS1",
+      "owner": "Fox Corp",
+      "type": "Cable Sports",
+      "coverage": "National",
+      "households_reach": 70000000,
+      "demographics": "Men 18-54",
+      "avg_cpm": 18,
+      "dayparts": [
+        "Live Sports",
+        "Sports Talk"
+      ],
+      "buying_process": "Direct",
+      "lead_time_days": 14
+    },
+    {
+      "network": "USA Network",
+      "owner": "Comcast/NBCU",
+      "type": "Cable Entertainment",
+      "coverage": "National",
+      "households_reach": 85000000,
+      "demographics": "Adults 25-54",
+      "avg_cpm": 15,
+      "dayparts": [
+        "Prime",
+        "Off-Prime"
+      ],
+      "buying_process": "Upfront/Scatter",
+      "lead_time_days": 14
+    },
+    {
+      "network": "TNT",
+      "owner": "Warner Bros Discovery",
+      "type": "Cable Entertainment",
+      "coverage": "National",
+      "households_reach": 85000000,
+      "demographics": "Adults 25-54",
+      "avg_cpm": 18,
+      "dayparts": [
+        "Prime",
+        "Sports"
+      ],
+      "buying_process": "Upfront/Scatter",
+      "lead_time_days": 14
+    },
+    {
+      "network": "TBS",
+      "owner": "Warner Bros Discovery",
+      "type": "Cable Entertainment",
+      "coverage": "National",
+      "households_reach": 85000000,
+      "demographics": "Adults 18-49",
+      "avg_cpm": 12,
+      "dayparts": [
+        "Comedy Block",
+        "Sports"
+      ],
+      "buying_process": "Upfront/Scatter",
+      "lead_time_days": 14
+    },
+    {
+      "network": "FX",
+      "owner": "Disney",
+      "type": "Cable Entertainment",
+      "coverage": "National",
+      "households_reach": 80000000,
+      "demographics": "Adults 18-49",
+      "avg_cpm": 20,
+      "dayparts": [
+        "Prime Drama"
+      ],
+      "buying_process": "Upfront",
+      "lead_time_days": 21
+    },
+    {
+      "network": "AMC",
+      "owner": "AMC Networks",
+      "type": "Cable Entertainment",
+      "coverage": "National",
+      "households_reach": 75000000,
+      "demographics": "Adults 25-54",
+      "avg_cpm": 15,
+      "dayparts": [
+        "Prime Drama"
+      ],
+      "buying_process": "Direct",
+      "lead_time_days": 14
+    },
+    {
+      "network": "HGTV",
+      "owner": "Warner Bros Discovery",
+      "type": "Cable Lifestyle",
+      "coverage": "National",
+      "households_reach": 85000000,
+      "demographics": "Women 25-54",
+      "avg_cpm": 12,
+      "dayparts": [
+        "Daytime",
+        "Prime"
+      ],
+      "buying_process": "Upfront/Direct",
+      "lead_time_days": 14
+    },
+    {
+      "network": "Food Network",
+      "owner": "Warner Bros Discovery",
+      "type": "Cable Lifestyle",
+      "coverage": "National",
+      "households_reach": 85000000,
+      "demographics": "Adults 25-54",
+      "avg_cpm": 11,
+      "dayparts": [
+        "Daytime",
+        "Prime"
+      ],
+      "buying_process": "Upfront/Direct",
+      "lead_time_days": 14
+    },
+    {
+      "network": "Discovery",
+      "owner": "Warner Bros Discovery",
+      "type": "Cable Factual",
+      "coverage": "National",
+      "households_reach": 80000000,
+      "demographics": "Men 25-54",
+      "avg_cpm": 10,
+      "dayparts": [
+        "Prime",
+        "Off-Prime"
+      ],
+      "buying_process": "Direct",
+      "lead_time_days": 14
+    },
+    {
+      "network": "Bravo",
+      "owner": "Comcast/NBCU",
+      "type": "Cable Lifestyle",
+      "coverage": "National",
+      "households_reach": 80000000,
+      "demographics": "Women 25-54",
+      "avg_cpm": 14,
+      "dayparts": [
+        "Reality Block"
+      ],
+      "buying_process": "Upfront/Direct",
+      "lead_time_days": 14
+    },
+    {
+      "network": "E!",
+      "owner": "Comcast/NBCU",
+      "type": "Cable Entertainment",
+      "coverage": "National",
+      "households_reach": 75000000,
+      "demographics": "Women 18-49",
+      "avg_cpm": 10,
+      "dayparts": [
+        "Celebrity/Reality"
+      ],
+      "buying_process": "Direct",
+      "lead_time_days": 14
+    },
+    {
+      "network": "MTV",
+      "owner": "Paramount",
+      "type": "Cable Youth",
+      "coverage": "National",
+      "households_reach": 75000000,
+      "demographics": "Adults 18-34",
+      "avg_cpm": 8,
+      "dayparts": [
+        "Reality/Music"
+      ],
+      "buying_process": "Direct/Programmatic",
+      "lead_time_days": 7
+    },
+    {
+      "network": "Comedy Central",
+      "owner": "Paramount",
+      "type": "Cable Comedy",
+      "coverage": "National",
+      "households_reach": 75000000,
+      "demographics": "Adults 18-34",
+      "avg_cpm": 10,
+      "dayparts": [
+        "Late Night",
+        "Prime Comedy"
+      ],
+      "buying_process": "Direct",
+      "lead_time_days": 14
+    },
+    {
+      "network": "Adult Swim",
+      "owner": "Warner Bros Discovery",
+      "type": "Cable Adult Animation",
+      "coverage": "National",
+      "households_reach": 70000000,
+      "demographics": "Adults 18-34",
+      "avg_cpm": 12,
+      "dayparts": [
+        "Late Night"
+      ],
+      "buying_process": "Direct",
+      "lead_time_days": 14
+    },
+    {
+      "network": "Nickelodeon",
+      "owner": "Paramount",
+      "type": "Cable Kids",
+      "coverage": "National",
+      "households_reach": 75000000,
+      "demographics": "Kids 2-11",
+      "avg_cpm": 15,
+      "dayparts": [
+        "Morning",
+        "After School"
+      ],
+      "buying_process": "Upfront",
+      "lead_time_days": 21
+    },
+    {
+      "network": "Disney Channel",
+      "owner": "Disney",
+      "type": "Cable Kids",
+      "coverage": "National",
+      "households_reach": 70000000,
+      "demographics": "Kids 2-11",
+      "avg_cpm": 18,
+      "dayparts": [
+        "Morning",
+        "After School"
+      ],
+      "buying_process": "Upfront",
+      "lead_time_days": 21
+    },
+    {
+      "network": "Cartoon Network",
+      "owner": "Warner Bros Discovery",
+      "type": "Cable Kids",
+      "coverage": "National",
+      "households_reach": 70000000,
+      "demographics": "Kids 6-11",
+      "avg_cpm": 12,
+      "dayparts": [
+        "Morning",
+        "After School"
+      ],
+      "buying_process": "Direct",
+      "lead_time_days": 14
+    }
+  ],
+  "ctv_platforms": [
+    {
+      "platform": "Netflix (Ad-Supported)",
+      "owner": "Netflix",
+      "type": "SVOD with Ads",
+      "subscribers": 15000000,
+      "demographics": "Adults 18-49",
+      "avg_cpm": 45,
+      "ad_load_mins_per_hour": 4,
+      "buying_process": "Microsoft Xandr",
+      "min_spend": 20000,
+      "targeting": [
+        "Demographic",
+        "Genre",
+        "Daypart"
+      ],
+      "measurement": "Nielsen ONE"
+    },
+    {
+      "platform": "Disney+",
+      "owner": "Disney",
+      "type": "SVOD with Ads",
+      "subscribers": 8000000,
+      "demographics": "Families 25-54",
+      "avg_cpm": 50,
+      "ad_load_mins_per_hour": 4,
+      "buying_process": "Disney Ad Sales",
+      "min_spend": 25000,
+      "targeting": [
+        "Demographic",
+        "Content Type"
+      ],
+      "measurement": "Nielsen"
+    },
+    {
+      "platform": "Hulu",
+      "owner": "Disney",
+      "type": "SVOD with Ads",
+      "subscribers": 35000000,
+      "demographics": "Adults 18-49",
+      "avg_cpm": 32,
+      "ad_load_mins_per_hour": 10,
+      "buying_process": "Disney Ad Sales/Programmatic",
+      "min_spend": 15000,
+      "targeting": [
+        "Behavioral",
+        "Demographic",
+        "Show-level"
+      ],
+      "measurement": "Nielsen"
+    },
+    {
+      "platform": "Max (HBO Max)",
+      "owner": "Warner Bros Discovery",
+      "type": "SVOD with Ads",
+      "subscribers": 20000000,
+      "demographics": "Adults 25-54",
+      "avg_cpm": 42,
+      "ad_load_mins_per_hour": 4,
+      "buying_process": "WBD Ad Sales",
+      "min_spend": 20000,
+      "targeting": [
+        "Demographic",
+        "Content Genre"
+      ],
+      "measurement": "Nielsen"
+    },
+    {
+      "platform": "Peacock",
+      "owner": "Comcast/NBCU",
+      "type": "SVOD with Ads",
+      "subscribers": 28000000,
+      "demographics": "Adults 18-54",
+      "avg_cpm": 28,
+      "ad_load_mins_per_hour": 5,
+      "buying_process": "NBCU One Platform",
+      "min_spend": 10000,
+      "targeting": [
+        "Behavioral",
+        "Contextual"
+      ],
+      "measurement": "Nielsen"
+    },
+    {
+      "platform": "Paramount+",
+      "owner": "Paramount",
+      "type": "SVOD with Ads",
+      "subscribers": 20000000,
+      "demographics": "Adults 25-54",
+      "avg_cpm": 32,
+      "ad_load_mins_per_hour": 6,
+      "buying_process": "Paramount Ad Sales",
+      "min_spend": 15000,
+      "targeting": [
+        "Demographic",
+        "Show-level"
+      ],
+      "measurement": "Nielsen"
+    },
+    {
+      "platform": "Amazon Prime Video (Ads)",
+      "owner": "Amazon",
+      "type": "SVOD with Ads",
+      "subscribers": 115000000,
+      "demographics": "Adults 25-54",
+      "avg_cpm": 38,
+      "ad_load_mins_per_hour": 3.5,
+      "buying_process": "Amazon DSP",
+      "min_spend": 15000,
+      "targeting": [
+        "Shopping Behavior",
+        "Demo",
+        "Interest"
+      ],
+      "measurement": "Amazon Attribution"
+    },
+    {
+      "platform": "Apple TV+",
+      "owner": "Apple",
+      "type": "SVOD",
+      "subscribers": 25000000,
+      "demographics": "Adults 25-54 High Income",
+      "avg_cpm": 55,
+      "ad_load_mins_per_hour": 0,
+      "buying_process": "No ads currently",
+      "min_spend": 0,
+      "targeting": [],
+      "measurement": "N/A"
+    },
+    {
+      "platform": "Tubi",
+      "owner": "Fox Corp",
+      "type": "FAST/AVOD",
+      "monthly_users": 70000000,
+      "demographics": "Adults 18-49",
+      "avg_cpm": 11,
+      "ad_load_mins_per_hour": 9,
+      "buying_process": "Direct/Programmatic",
+      "min_spend": 5000,
+      "targeting": [
+        "Genre",
+        "Demographic"
+      ],
+      "measurement": "Nielsen"
+    },
+    {
+      "platform": "Pluto TV",
+      "owner": "Paramount",
+      "type": "FAST/AVOD",
+      "monthly_users": 80000000,
+      "demographics": "Adults 25-54",
+      "avg_cpm": 14,
+      "ad_load_mins_per_hour": 12,
+      "buying_process": "Paramount Ad Sales",
+      "min_spend": 10000,
+      "targeting": [
+        "Channel",
+        "Demographic"
+      ],
+      "measurement": "Nielsen"
+    },
+    {
+      "platform": "The Roku Channel",
+      "owner": "Roku",
+      "type": "FAST/AVOD",
+      "monthly_users": 80000000,
+      "demographics": "Adults 25-54",
+      "avg_cpm": 20,
+      "ad_load_mins_per_hour": 9,
+      "buying_process": "Roku OneView",
+      "min_spend": 5000,
+      "targeting": [
+        "ACR Data",
+        "Demographic"
+      ],
+      "measurement": "Roku Attribution"
+    },
+    {
+      "platform": "Amazon Freevee",
+      "owner": "Amazon",
+      "type": "FAST/AVOD",
+      "monthly_users": 65000000,
+      "demographics": "Adults 18-49",
+      "avg_cpm": 16,
+      "ad_load_mins_per_hour": 9,
+      "buying_process": "Amazon DSP",
+      "min_spend": 10000,
+      "targeting": [
+        "Shopping Data",
+        "Demo"
+      ],
+      "measurement": "Amazon Attribution"
+    },
+    {
+      "platform": "Xumo Play",
+      "owner": "Comcast/Charter",
+      "type": "FAST/AVOD",
+      "monthly_users": 30000000,
+      "demographics": "Adults 25-54",
+      "avg_cpm": 14,
+      "ad_load_mins_per_hour": 10,
+      "buying_process": "FreeWheel",
+      "min_spend": 10000,
+      "targeting": [
+        "Demographic",
+        "Geographic"
+      ],
+      "measurement": "Comscore"
+    },
+    {
+      "platform": "YouTube TV",
+      "owner": "Google",
+      "type": "vMVPD",
+      "subscribers": 8000000,
+      "demographics": "Adults 25-54",
+      "avg_cpm": 28,
+      "channels": 100,
+      "buying_process": "Google Ads/YouTube Reserve",
+      "min_spend": 10000,
+      "targeting": [
+        "Google Audience",
+        "Demo",
+        "Interest"
+      ],
+      "measurement": "Google Analytics"
+    },
+    {
+      "platform": "Hulu + Live TV",
+      "owner": "Disney",
+      "type": "vMVPD",
+      "subscribers": 4000000,
+      "demographics": "Adults 25-54",
+      "avg_cpm": 32,
+      "channels": 85,
+      "buying_process": "Disney Ad Sales",
+      "min_spend": 15000,
+      "targeting": [
+        "Behavioral",
+        "Demo"
+      ],
+      "measurement": "Nielsen"
+    },
+    {
+      "platform": "Sling TV",
+      "owner": "DISH",
+      "type": "vMVPD",
+      "subscribers": 2000000,
+      "demographics": "Adults 25-54",
+      "avg_cpm": 20,
+      "channels": 50,
+      "buying_process": "DISH Media",
+      "min_spend": 5000,
+      "targeting": [
+        "Package-based",
+        "Demo"
+      ],
+      "measurement": "Comscore"
+    },
+    {
+      "platform": "FuboTV",
+      "owner": "FuboTV Inc",
+      "type": "vMVPD",
+      "subscribers": 1500000,
+      "demographics": "Sports Fans 25-54",
+      "avg_cpm": 25,
+      "channels": 200,
+      "buying_process": "Direct Sales",
+      "min_spend": 10000,
+      "targeting": [
+        "Sports Interest",
+        "Demo"
+      ],
+      "measurement": "Nielsen"
+    },
+    {
+      "platform": "DirecTV Stream",
+      "owner": "DirecTV",
+      "type": "vMVPD",
+      "subscribers": 1500000,
+      "demographics": "Adults 35-64",
+      "avg_cpm": 22,
+      "channels": 140,
+      "buying_process": "Direct Sales",
+      "min_spend": 10000,
+      "targeting": [
+        "Geographic",
+        "Demo"
+      ],
+      "measurement": "Nielsen"
+    }
+  ],
+  "dma_markets": [
+    {
+      "dma_rank": 1,
+      "dma_name": "New York",
+      "households": 7452000,
+      "pct_us": 6.377,
+      "abc_affiliate": "WABC-TV",
+      "cbs_affiliate": "WCBS-TV",
+      "nbc_affiliate": "WNBC",
+      "fox_affiliate": "WNYW",
+      "local_news_cpm": 45
+    },
+    {
+      "dma_rank": 2,
+      "dma_name": "Los Angeles",
+      "households": 5735000,
+      "pct_us": 4.909,
+      "abc_affiliate": "KABC-TV",
+      "cbs_affiliate": "KCBS-TV",
+      "nbc_affiliate": "KNBC",
+      "fox_affiliate": "KTTV",
+      "local_news_cpm": 38
+    },
+    {
+      "dma_rank": 3,
+      "dma_name": "Chicago",
+      "households": 3516000,
+      "pct_us": 3.01,
+      "abc_affiliate": "WLS-TV",
+      "cbs_affiliate": "WBBM-TV",
+      "nbc_affiliate": "WMAQ-TV",
+      "fox_affiliate": "WFLD",
+      "local_news_cpm": 30
+    },
+    {
+      "dma_rank": 4,
+      "dma_name": "Philadelphia",
+      "households": 3020000,
+      "pct_us": 2.586,
+      "abc_affiliate": "WPVI-TV",
+      "cbs_affiliate": "KYW-TV",
+      "nbc_affiliate": "WCAU",
+      "fox_affiliate": "WTXF-TV",
+      "local_news_cpm": 28
+    },
+    {
+      "dma_rank": 5,
+      "dma_name": "Dallas-Ft. Worth",
+      "households": 2962000,
+      "pct_us": 2.536,
+      "abc_affiliate": "WFAA",
+      "cbs_affiliate": "KTVT",
+      "nbc_affiliate": "KXAS-TV",
+      "fox_affiliate": "KDFW",
+      "local_news_cpm": 26
+    },
+    {
+      "dma_rank": 6,
+      "dma_name": "San Francisco-Oakland-San Jose",
+      "households": 2650000,
+      "pct_us": 2.269,
+      "abc_affiliate": "KGO-TV",
+      "cbs_affiliate": "KPIX-TV",
+      "nbc_affiliate": "KNTV",
+      "fox_affiliate": "KTVU",
+      "local_news_cpm": 35
+    },
+    {
+      "dma_rank": 7,
+      "dma_name": "Atlanta",
+      "households": 2648000,
+      "pct_us": 2.267,
+      "abc_affiliate": "WSB-TV",
+      "cbs_affiliate": "WANF",
+      "nbc_affiliate": "WXIA-TV",
+      "fox_affiliate": "WAGA-TV",
+      "local_news_cpm": 25
+    },
+    {
+      "dma_rank": 8,
+      "dma_name": "Houston",
+      "households": 2569000,
+      "pct_us": 2.199,
+      "abc_affiliate": "KTRK-TV",
+      "cbs_affiliate": "KHOU",
+      "nbc_affiliate": "KPRC-TV",
+      "fox_affiliate": "KRIV",
+      "local_news_cpm": 24
+    },
+    {
+      "dma_rank": 9,
+      "dma_name": "Washington DC",
+      "households": 2565000,
+      "pct_us": 2.196,
+      "abc_affiliate": "WJLA-TV",
+      "cbs_affiliate": "WUSA",
+      "nbc_affiliate": "WRC-TV",
+      "fox_affiliate": "WTTG",
+      "local_news_cpm": 32
+    },
+    {
+      "dma_rank": 10,
+      "dma_name": "Boston",
+      "households": 2489000,
+      "pct_us": 2.131,
+      "abc_affiliate": "WCVB-TV",
+      "cbs_affiliate": "WBZ-TV",
+      "nbc_affiliate": "WBTS-CD",
+      "fox_affiliate": "WFXT",
+      "local_news_cpm": 30
+    },
+    {
+      "dma_rank": 11,
+      "dma_name": "Phoenix",
+      "households": 2194000,
+      "pct_us": 1.878,
+      "abc_affiliate": "KNXV-TV",
+      "cbs_affiliate": "KPHO-TV",
+      "nbc_affiliate": "KPNX",
+      "fox_affiliate": "KSAZ-TV",
+      "local_news_cpm": 20
+    },
+    {
+      "dma_rank": 12,
+      "dma_name": "Tampa-St Petersburg",
+      "households": 2079000,
+      "pct_us": 1.78,
+      "abc_affiliate": "WFTS-TV",
+      "cbs_affiliate": "WTSP",
+      "nbc_affiliate": "WFLA-TV",
+      "fox_affiliate": "WTVT",
+      "local_news_cpm": 18
+    },
+    {
+      "dma_rank": 13,
+      "dma_name": "Seattle-Tacoma",
+      "households": 2060000,
+      "pct_us": 1.764,
+      "abc_affiliate": "KOMO-TV",
+      "cbs_affiliate": "KIRO-TV",
+      "nbc_affiliate": "KING-TV",
+      "fox_affiliate": "KCPQ",
+      "local_news_cpm": 28
+    },
+    {
+      "dma_rank": 14,
+      "dma_name": "Detroit",
+      "households": 1876000,
+      "pct_us": 1.606,
+      "abc_affiliate": "WXYZ-TV",
+      "cbs_affiliate": "WWJ-TV",
+      "nbc_affiliate": "WDIV-TV",
+      "fox_affiliate": "WJBK",
+      "local_news_cpm": 22
+    },
+    {
+      "dma_rank": 15,
+      "dma_name": "Minneapolis-St Paul",
+      "households": 1814000,
+      "pct_us": 1.553,
+      "abc_affiliate": "KSTP-TV",
+      "cbs_affiliate": "WCCO-TV",
+      "nbc_affiliate": "KARE",
+      "fox_affiliate": "KMSP-TV",
+      "local_news_cpm": 24
+    },
+    {
+      "dma_rank": 16,
+      "dma_name": "Miami-Ft Lauderdale",
+      "households": 1758000,
+      "pct_us": 1.505,
+      "abc_affiliate": "WPLG",
+      "cbs_affiliate": "WFOR-TV",
+      "nbc_affiliate": "WTVJ",
+      "fox_affiliate": "WSVN",
+      "local_news_cpm": 22
+    },
+    {
+      "dma_rank": 17,
+      "dma_name": "Orlando-Daytona Beach",
+      "households": 1730000,
+      "pct_us": 1.481,
+      "abc_affiliate": "WFTV",
+      "cbs_affiliate": "WKMG-TV",
+      "nbc_affiliate": "WESH",
+      "fox_affiliate": "WOFL",
+      "local_news_cpm": 16
+    },
+    {
+      "dma_rank": 18,
+      "dma_name": "Denver",
+      "households": 1720000,
+      "pct_us": 1.472,
+      "abc_affiliate": "KMGH-TV",
+      "cbs_affiliate": "KCNC-TV",
+      "nbc_affiliate": "KUSA",
+      "fox_affiliate": "KDVR",
+      "local_news_cpm": 25
+    },
+    {
+      "dma_rank": 19,
+      "dma_name": "Cleveland-Akron",
+      "households": 1490000,
+      "pct_us": 1.276,
+      "abc_affiliate": "WEWS-TV",
+      "cbs_affiliate": "WOIO",
+      "nbc_affiliate": "WKYC",
+      "fox_affiliate": "WJW",
+      "local_news_cpm": 18
+    },
+    {
+      "dma_rank": 20,
+      "dma_name": "Sacramento-Stockton",
+      "households": 1423000,
+      "pct_us": 1.218,
+      "abc_affiliate": "KXTV",
+      "cbs_affiliate": "KOVR",
+      "nbc_affiliate": "KCRA-TV",
+      "fox_affiliate": "KTXL",
+      "local_news_cpm": 20
+    },
+    {
+      "dma_rank": 21,
+      "dma_name": "St Louis",
+      "households": 1267000,
+      "pct_us": 1.085,
+      "abc_affiliate": "KSDK",
+      "cbs_affiliate": "KMOV",
+      "nbc_affiliate": "KSDK",
+      "fox_affiliate": "KTVI",
+      "local_news_cpm": 16
+    },
+    {
+      "dma_rank": 22,
+      "dma_name": "Charlotte",
+      "households": 1263000,
+      "pct_us": 1.081,
+      "abc_affiliate": "WSOC-TV",
+      "cbs_affiliate": "WBTV",
+      "nbc_affiliate": "WCNC-TV",
+      "fox_affiliate": "WJZY",
+      "local_news_cpm": 18
+    },
+    {
+      "dma_rank": 23,
+      "dma_name": "Portland OR",
+      "households": 1236000,
+      "pct_us": 1.058,
+      "abc_affiliate": "KATU",
+      "cbs_affiliate": "KOIN",
+      "nbc_affiliate": "KGW",
+      "fox_affiliate": "KPTV",
+      "local_news_cpm": 22
+    },
+    {
+      "dma_rank": 24,
+      "dma_name": "Pittsburgh",
+      "households": 1199000,
+      "pct_us": 1.027,
+      "abc_affiliate": "WTAE-TV",
+      "cbs_affiliate": "KDKA-TV",
+      "nbc_affiliate": "WPXI",
+      "fox_affiliate": "WPGH-TV",
+      "local_news_cpm": 16
+    },
+    {
+      "dma_rank": 25,
+      "dma_name": "Raleigh-Durham",
+      "households": 1195000,
+      "pct_us": 1.023,
+      "abc_affiliate": "WTVD",
+      "cbs_affiliate": "WNCN",
+      "nbc_affiliate": "WRAL-TV",
+      "fox_affiliate": "WRAZ",
+      "local_news_cpm": 15
+    }
+  ],
+  "metadata": {
+    "created": "20250826",
+    "total_tv_networks": 27,
+    "total_ctv_platforms": 18,
+    "total_dmas": 25
+  }
+}
