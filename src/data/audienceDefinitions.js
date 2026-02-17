@@ -253,6 +253,156 @@ export const AUDIENCES = {
       { field: 'income_under_50k', weight: 25, min: 30, target: 45 },
       { field: 'households_young_pct', weight: 30, min: 20, target: 35 }
     ]
+  },
+
+  // UK Segments (from Old_projects/Atlas improved segments)
+  tech_workers_startup: {
+    id: 'tech_workers_startup',
+    name: 'Tech Workers - Startup',
+    description: 'Early-stage tech workers, entrepreneurs, startup employees',
+    icon: '💻',
+    color: '#8b5cf6',
+    ukSegment: true,
+    targetPostcodes: ['EC1A', 'EC2A', 'N1', 'E2', 'E8', 'E9'],
+    areas: ['Old Street', 'Shoreditch', 'King\'s Cross', 'Hackney Wick'],
+    criteria: [
+      { field: 'sum_age_25_29', weight: 30, min: 500, target: 1000 },
+      { field: 'sum_age_30_34', weight: 30, min: 500, target: 1000 },
+      { field: 'med_inc', weight: 40, min: 40000, target: 60000 }
+    ]
+  },
+
+  tech_workers_corporate: {
+    id: 'tech_workers_corporate',
+    name: 'Tech Workers - Corporate',
+    description: 'Corporate tech workers, large company employees',
+    icon: '🏢',
+    color: '#3b82f6',
+    ukSegment: true,
+    targetPostcodes: ['E14', 'EC1', 'EC2', 'EC3', 'EC4', 'W2'],
+    areas: ['Canary Wharf', 'City', 'King\'s Cross', 'Paddington'],
+    criteria: [
+      { field: 'sum_age_30_34', weight: 25, min: 500, target: 1000 },
+      { field: 'sum_age_35_39', weight: 25, min: 500, target: 1000 },
+      { field: 'med_inc', weight: 50, min: 60000, target: 90000 }
+    ]
+  },
+
+  students_undergraduate: {
+    id: 'students_undergraduate',
+    name: 'Students - Undergraduate',
+    description: 'University undergraduate students',
+    icon: '🎓',
+    color: '#10b981',
+    ukSegment: true,
+    targetPostcodes: ['NW1', 'NW5', 'N1', 'N7', 'E15', 'SE1'],
+    areas: ['Camden', 'Islington', 'Stratford', 'Elephant & Castle'],
+    criteria: [
+      { field: 'sum_age_20_24', weight: 50, min: 800, target: 1200 },
+      { field: 'med_inc', weight: 30, min: 0, target: 15000 },
+      { field: 'sum_total', weight: 20, min: 8000, target: 12000 }
+    ]
+  },
+
+  students_postgraduate: {
+    id: 'students_postgraduate',
+    name: 'Students - Postgraduate',
+    description: 'University postgraduate students',
+    icon: '🎓',
+    color: '#14b8a6',
+    ukSegment: true,
+    targetPostcodes: ['WC1', 'WC2', 'SW7', 'N1', 'N7'],
+    areas: ['Bloomsbury', 'South Kensington', 'King\'s Cross', 'Camden'],
+    criteria: [
+      { field: 'sum_age_20_24', weight: 30, min: 600, target: 1000 },
+      { field: 'sum_age_25_29', weight: 30, min: 600, target: 1000 },
+      { field: 'med_inc', weight: 40, min: 0, target: 25000 }
+    ]
+  },
+
+  indian_community: {
+    id: 'indian_community',
+    name: 'Indian Community',
+    description: 'Indian/Punjabi community members',
+    icon: '🇮🇳',
+    color: '#f59e0b',
+    ukSegment: true,
+    targetPostcodes: ['UB1', 'UB2', 'HA0', 'HA9', 'HA1', 'HA2', 'W5', 'W13'],
+    areas: ['Southall', 'Wembley', 'Harrow', 'Ealing'],
+    criteria: [
+      { field: 'med_inc', weight: 40, min: 25000, target: 55000 },
+      { field: 'sum_total', weight: 30, min: 8000, target: 11000 },
+      { field: 'sum_age_25_29', weight: 15, min: 400, target: 800 },
+      { field: 'sum_age_30_34', weight: 15, min: 400, target: 800 }
+    ]
+  },
+
+  bangladeshi_community: {
+    id: 'bangladeshi_community',
+    name: 'Bangladeshi Community',
+    description: 'Bangladeshi community members',
+    icon: '🇧🇩',
+    color: '#06b6d4',
+    ukSegment: true,
+    targetPostcodes: ['E1', 'E2', 'E3', 'E6', 'E7', 'E10', 'E11'],
+    areas: ['Tower Hamlets', 'Newham', 'Redbridge'],
+    criteria: [
+      { field: 'med_inc', weight: 40, min: 20000, target: 45000 },
+      { field: 'sum_total', weight: 30, min: 8000, target: 11000 },
+      { field: 'sum_age_30_34', weight: 15, min: 400, target: 800 },
+      { field: 'sum_age_35_39', weight: 15, min: 400, target: 800 }
+    ]
+  },
+
+  caribbean_community: {
+    id: 'caribbean_community',
+    name: 'Caribbean Community',
+    description: 'Caribbean community members',
+    icon: '🇯🇲',
+    color: '#84cc16',
+    ukSegment: true,
+    targetPostcodes: ['SW2', 'SW9', 'SE1', 'SE5', 'E8', 'E9', 'N15', 'N17'],
+    areas: ['Lambeth', 'Southwark', 'Hackney', 'Tottenham'],
+    criteria: [
+      { field: 'med_inc', weight: 40, min: 20000, target: 45000 },
+      { field: 'sum_total', weight: 30, min: 8000, target: 11000 },
+      { field: 'sum_age_30_34', weight: 15, min: 400, target: 700 },
+      { field: 'sum_age_35_39', weight: 15, min: 400, target: 700 }
+    ]
+  },
+
+  regeneration_pioneers: {
+    id: 'regeneration_pioneers',
+    name: 'Regeneration Pioneers',
+    description: 'Early adopters in regenerating areas',
+    icon: '🏗️',
+    color: '#ec4899',
+    ukSegment: true,
+    targetPostcodes: ['SE8', 'SE15', 'E9', 'SE18'],
+    areas: ['Deptford', 'Peckham', 'Hackney Wick', 'Woolwich'],
+    criteria: [
+      { field: 'sum_age_25_29', weight: 25, min: 500, target: 900 },
+      { field: 'sum_age_30_34', weight: 25, min: 500, target: 900 },
+      { field: 'sum_age_35_39', weight: 25, min: 400, target: 800 },
+      { field: 'med_inc', weight: 25, min: 35000, target: 55000 }
+    ]
+  },
+
+  nappy_valley_families: {
+    id: 'nappy_valley_families',
+    name: 'Nappy Valley Families',
+    description: 'Young families with children',
+    icon: '👶',
+    color: '#f472b6',
+    ukSegment: true,
+    targetPostcodes: ['SW4', 'SW11', 'SW12', 'SW15', 'SW17', 'SW18'],
+    areas: ['Clapham', 'Battersea', 'Wandsworth', 'Putney'],
+    criteria: [
+      { field: 'sum_age_30_34', weight: 25, min: 600, target: 1000 },
+      { field: 'sum_age_35_39', weight: 25, min: 600, target: 1000 },
+      { field: 'sum_age_40_44', weight: 20, min: 500, target: 900 },
+      { field: 'med_inc', weight: 30, min: 50000, target: 75000 }
+    ]
   }
 };
 

@@ -1,0 +1,28 @@
+network,owner,type,coverage,households_reach,demographics,avg_cpm,dayparts,buying_process,lead_time_days,data_date
+ABC,Disney,Broadcast,National,120000000,Adults 25-54,35,"['Early Morning', 'Morning', 'Daytime', 'Prime', 'Late Night']",Upfront/Scatter,21,20250826
+CBS,Paramount,Broadcast,National,120000000,Adults 35-64,32,"['Early Morning', 'Morning', 'Daytime', 'Prime', 'Late Night']",Upfront/Scatter,21,20250826
+NBC,Comcast/NBCU,Broadcast,National,120000000,Adults 18-49,35,"['Early Morning', 'Morning', 'Daytime', 'Prime', 'Late Night']",Upfront/Scatter,21,20250826
+FOX,Fox Corp,Broadcast,National,120000000,Adults 25-54,30,"['Morning', 'Daytime', 'Prime', 'Sports', 'Late Night']",Upfront/Scatter,21,20250826
+The CW,Nexstar,Broadcast,National,100000000,Adults 18-34,12,"['Prime', 'Late Night']",Direct,14,20250826
+PBS,Public,Broadcast,National,100000000,Adults 35-64,20,"['Morning', 'Afternoon', 'Prime']",Sponsorship,30,20250826
+CNN,Warner Bros Discovery,Cable News,National,80000000,Adults 35-64,15,['24/7 News'],Direct/Programmatic,7,20250826
+Fox News,Fox Corp,Cable News,National,85000000,Adults 50+,18,['24/7 News'],Direct,7,20250826
+MSNBC,Comcast/NBCU,Cable News,National,80000000,Adults 35-64,14,['24/7 News'],Direct/Programmatic,7,20250826
+ESPN,Disney,Cable Sports,National,75000000,Men 18-54,22,"['Live Sports', 'Sports News']",Upfront/Scatter,14,20250826
+FS1,Fox Corp,Cable Sports,National,70000000,Men 18-54,18,"['Live Sports', 'Sports Talk']",Direct,14,20250826
+USA Network,Comcast/NBCU,Cable Entertainment,National,85000000,Adults 25-54,15,"['Prime', 'Off-Prime']",Upfront/Scatter,14,20250826
+TNT,Warner Bros Discovery,Cable Entertainment,National,85000000,Adults 25-54,18,"['Prime', 'Sports']",Upfront/Scatter,14,20250826
+TBS,Warner Bros Discovery,Cable Entertainment,National,85000000,Adults 18-49,12,"['Comedy Block', 'Sports']",Upfront/Scatter,14,20250826
+FX,Disney,Cable Entertainment,National,80000000,Adults 18-49,20,['Prime Drama'],Upfront,21,20250826
+AMC,AMC Networks,Cable Entertainment,National,75000000,Adults 25-54,15,['Prime Drama'],Direct,14,20250826
+HGTV,Warner Bros Discovery,Cable Lifestyle,National,85000000,Women 25-54,12,"['Daytime', 'Prime']",Upfront/Direct,14,20250826
+Food Network,Warner Bros Discovery,Cable Lifestyle,National,85000000,Adults 25-54,11,"['Daytime', 'Prime']",Upfront/Direct,14,20250826
+Discovery,Warner Bros Discovery,Cable Factual,National,80000000,Men 25-54,10,"['Prime', 'Off-Prime']",Direct,14,20250826
+Bravo,Comcast/NBCU,Cable Lifestyle,National,80000000,Women 25-54,14,['Reality Block'],Upfront/Direct,14,20250826
+E!,Comcast/NBCU,Cable Entertainment,National,75000000,Women 18-49,10,['Celebrity/Reality'],Direct,14,20250826
+MTV,Paramount,Cable Youth,National,75000000,Adults 18-34,8,['Reality/Music'],Direct/Programmatic,7,20250826
+Comedy Central,Paramount,Cable Comedy,National,75000000,Adults 18-34,10,"['Late Night', 'Prime Comedy']",Direct,14,20250826
+Adult Swim,Warner Bros Discovery,Cable Adult Animation,National,70000000,Adults 18-34,12,['Late Night'],Direct,14,20250826
+Nickelodeon,Paramount,Cable Kids,National,75000000,Kids 2-11,15,"['Morning', 'After School']",Upfront,21,20250826
+Disney Channel,Disney,Cable Kids,National,70000000,Kids 2-11,18,"['Morning', 'After School']",Upfront,21,20250826
+Cartoon Network,Warner Bros Discovery,Cable Kids,National,70000000,Kids 6-11,12,"['Morning', 'After School']",Direct,14,20250826
