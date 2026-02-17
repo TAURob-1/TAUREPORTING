@@ -403,6 +403,244 @@ export const AUDIENCES = {
       { field: 'income_150k_plus', weight: 20, min: 12, target: 28 },
       { field: 'households_middle_pct', weight: 10, min: 38, target: 50 }
     ]
+  },
+
+  affluent_retirees: {
+    id: 'affluent_retirees',
+    name: 'Affluent Retirees',
+    description: 'Wealthy seniors in premium retirement areas',
+    icon: '🏌️',
+    color: '#059669',
+    ukSegment: true,
+    targetPostcodes: ['RH', 'GU', 'HP', 'OX', 'BA', 'TN'],
+    areas: ['Surrey', 'Sussex', 'Cotswolds', 'Bath', 'Tunbridge Wells'],
+    criteria: [
+      { field: 'age_65_plus_pct', weight: 45, min: 22, target: 35 },
+      { field: 'income_75_100k', weight: 25, min: 18, target: 30 },
+      { field: 'income_100k_plus', weight: 20, min: 15, target: 30 },
+      { field: 'households_senior_pct', weight: 10, min: 28, target: 40 }
+    ]
+  },
+
+  commuter_belt_families: {
+    id: 'commuter_belt_families',
+    name: 'Commuter Belt Families',
+    description: 'Dual-income families in suburban commuter towns',
+    icon: '🚂',
+    color: '#7c3aed',
+    ukSegment: true,
+    targetPostcodes: ['AL', 'WD', 'SL', 'RG', 'GU', 'TN', 'BR'],
+    areas: ['St Albans', 'Watford', 'Reading', 'Guildford', 'Sevenoaks'],
+    criteria: [
+      { field: 'age_25_44_pct', weight: 35, min: 28, target: 40 },
+      { field: 'income_75_100k', weight: 30, min: 20, target: 32 },
+      { field: 'income_100k_plus', weight: 25, min: 20, target: 35 },
+      { field: 'households_middle_pct', weight: 10, min: 42, target: 55 }
+    ]
+  },
+
+  working_class_urban: {
+    id: 'working_class_urban',
+    name: 'Working Class Urban',
+    description: 'Blue-collar workers in urban and suburban areas',
+    icon: '🏭',
+    color: '#dc2626',
+    ukSegment: true,
+    targetPostcodes: ['RM', 'DA', 'SE', 'E6', 'E7', 'IG', 'EN'],
+    areas: ['Romford', 'Dartford', 'Barking', 'Enfield'],
+    criteria: [
+      { field: 'income_under_50k', weight: 40, min: 38, target: 52 },
+      { field: 'income_50_75k', weight: 30, min: 20, target: 30 },
+      { field: 'age_25_44_pct', weight: 20, min: 28, target: 42 },
+      { field: 'households_middle_pct', weight: 10, min: 38, target: 50 }
+    ]
+  },
+
+  metro_millennials: {
+    id: 'metro_millennials',
+    name: 'Metro Millennials',
+    description: 'Young urban professionals in trendy neighborhoods',
+    icon: '🎨',
+    color: '#f59e0b',
+    ukSegment: true,
+    targetPostcodes: ['E2', 'E8', 'E9', 'N4', 'N16', 'SE15', 'SW9'],
+    areas: ['Shoreditch', 'Hackney', 'Dalston', 'Peckham', 'Brixton'],
+    criteria: [
+      { field: 'age_25_44_pct', weight: 45, min: 35, target: 50 },
+      { field: 'income_50_75k', weight: 30, min: 20, target: 32 },
+      { field: 'income_75_100k', weight: 15, min: 15, target: 25 },
+      { field: 'households_young_pct', weight: 10, min: 32, target: 45 }
+    ]
+  },
+
+  suburban_seniors: {
+    id: 'suburban_seniors',
+    name: 'Suburban Seniors',
+    description: 'Middle-income retirees in established suburbs',
+    icon: '👴',
+    color: '#0891b2',
+    ukSegment: true,
+    targetPostcodes: ['HA', 'UB', 'KT', 'CR', 'SM', 'BR', 'TW'],
+    areas: ['Harrow', 'Kingston', 'Croydon', 'Sutton', 'Bromley'],
+    criteria: [
+      { field: 'age_65_plus_pct', weight: 45, min: 20, target: 32 },
+      { field: 'age_45_64_pct', weight: 25, min: 25, target: 38 },
+      { field: 'income_50_75k', weight: 20, min: 18, target: 28 },
+      { field: 'households_senior_pct', weight: 10, min: 28, target: 40 }
+    ]
+  },
+
+  young_renters: {
+    id: 'young_renters',
+    name: 'Young Renters',
+    description: 'Entry-level professionals in flat-shares',
+    icon: '🏠',
+    color: '#14b8a6',
+    ukSegment: true,
+    targetPostcodes: ['SW16', 'SW17', 'SE22', 'SE23', 'N19', 'NW6'],
+    areas: ['Streatham', 'Tooting', 'Dulwich', 'Archway', 'Kilburn'],
+    criteria: [
+      { field: 'age_25_44_pct', weight: 45, min: 32, target: 48 },
+      { field: 'income_under_50k', weight: 30, min: 28, target: 42 },
+      { field: 'income_50_75k', weight: 15, min: 18, target: 28 },
+      { field: 'households_young_pct', weight: 10, min: 30, target: 45 }
+    ]
+  },
+
+  affluent_suburbanites: {
+    id: 'affluent_suburbanites',
+    name: 'Affluent Suburbanites',
+    description: 'High-income families in leafy suburbs',
+    icon: '🌳',
+    color: '#10b981',
+    ukSegment: true,
+    targetPostcodes: ['SW19', 'SW20', 'KT', 'TW', 'HA', 'N20', 'EN'],
+    areas: ['Wimbledon', 'Kingston', 'Richmond', 'Barnet'],
+    criteria: [
+      { field: 'income_100k_plus', weight: 40, min: 28, target: 45 },
+      { field: 'income_150k_plus', weight: 30, min: 15, target: 30 },
+      { field: 'age_25_44_pct', weight: 20, min: 25, target: 38 },
+      { field: 'households_middle_pct', weight: 10, min: 42, target: 55 }
+    ]
+  },
+
+  university_towns: {
+    id: 'university_towns',
+    name: 'University Towns',
+    description: 'Student populations in university cities',
+    icon: '🎓',
+    color: '#8b5cf6',
+    ukSegment: true,
+    targetPostcodes: ['OX', 'CB', 'BS', 'NG', 'LE', 'CV', 'M13', 'EH'],
+    areas: ['Oxford', 'Cambridge', 'Bristol', 'Nottingham', 'Leicester'],
+    criteria: [
+      { field: 'age_under_25_pct', weight: 50, min: 20, target: 35 },
+      { field: 'age_25_44_pct', weight: 30, min: 30, target: 45 },
+      { field: 'income_under_50k', weight: 15, min: 35, target: 50 },
+      { field: 'households_young_pct', weight: 5, min: 30, target: 45 }
+    ]
+  },
+
+  coastal_retirees: {
+    id: 'coastal_retirees',
+    name: 'Coastal Retirees',
+    description: 'Seniors in seaside towns and coastal areas',
+    icon: '🌊',
+    color: '#06b6d4',
+    ukSegment: true,
+    targetPostcodes: ['BN', 'PO', 'SO', 'TQ', 'TR', 'EX', 'TN'],
+    areas: ['Brighton', 'Portsmouth', 'Bournemouth', 'Torquay', 'Eastbourne'],
+    criteria: [
+      { field: 'age_65_plus_pct', weight: 45, min: 22, target: 38 },
+      { field: 'age_45_64_pct', weight: 25, min: 28, target: 40 },
+      { field: 'income_50_75k', weight: 20, min: 18, target: 28 },
+      { field: 'households_senior_pct', weight: 10, min: 32, target: 45 }
+    ]
+  },
+
+  northern_working_class: {
+    id: 'northern_working_class',
+    name: 'Northern Working Class',
+    description: 'Traditional working-class communities in northern England',
+    icon: '⚒️',
+    color: '#991b1b',
+    ukSegment: true,
+    targetPostcodes: ['L', 'M', 'S', 'BD', 'LS', 'NE', 'TS', 'DL'],
+    areas: ['Liverpool', 'Manchester', 'Sheffield', 'Leeds', 'Newcastle'],
+    criteria: [
+      { field: 'income_under_50k', weight: 45, min: 40, target: 55 },
+      { field: 'income_50_75k', weight: 25, min: 18, target: 28 },
+      { field: 'age_25_44_pct', weight: 20, min: 25, target: 38 },
+      { field: 'households_middle_pct', weight: 10, min: 40, target: 52 }
+    ]
+  },
+
+  city_singles: {
+    id: 'city_singles',
+    name: 'City Singles',
+    description: 'Young single professionals in city centers',
+    icon: '🎯',
+    color: '#c026d3',
+    ukSegment: true,
+    targetPostcodes: ['M1', 'M2', 'LS1', 'B1', 'EH1', 'G1'],
+    areas: ['Manchester City', 'Leeds City', 'Birmingham City', 'Edinburgh City'],
+    criteria: [
+      { field: 'age_25_44_pct', weight: 50, min: 35, target: 50 },
+      { field: 'income_50_75k', weight: 25, min: 20, target: 32 },
+      { field: 'income_75_100k', weight: 15, min: 15, target: 25 },
+      { field: 'households_young_pct', weight: 10, min: 35, target: 50 }
+    ]
+  },
+
+  rural_communities: {
+    id: 'rural_communities',
+    name: 'Rural Communities',
+    description: 'Mixed-age populations in countryside and rural towns',
+    icon: '🌾',
+    color: '#65a30d',
+    ukSegment: true,
+    targetPostcodes: ['SY', 'LD', 'HR', 'DT', 'TA', 'CA', 'YO', 'NR'],
+    areas: ['Shropshire', 'Herefordshire', 'Dorset', 'Somerset', 'North Yorkshire'],
+    criteria: [
+      { field: 'age_45_64_pct', weight: 35, min: 28, target: 40 },
+      { field: 'age_65_plus_pct', weight: 25, min: 18, target: 28 },
+      { field: 'income_under_50k', weight: 25, min: 35, target: 50 },
+      { field: 'households_senior_pct', weight: 15, min: 28, target: 40 }
+    ]
+  },
+
+  scottish_urban: {
+    id: 'scottish_urban',
+    name: 'Scottish Urban',
+    description: 'Mixed demographics in Scottish cities',
+    icon: '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+    color: '#1e40af',
+    ukSegment: true,
+    targetPostcodes: ['G', 'EH', 'AB', 'DD', 'PA', 'KY'],
+    areas: ['Glasgow', 'Edinburgh', 'Aberdeen', 'Dundee'],
+    criteria: [
+      { field: 'age_25_44_pct', weight: 40, min: 28, target: 42 },
+      { field: 'income_50_75k', weight: 30, min: 18, target: 28 },
+      { field: 'income_75_100k', weight: 20, min: 15, target: 25 },
+      { field: 'households_middle_pct', weight: 10, min: 38, target: 50 }
+    ]
+  },
+
+  welsh_valleys: {
+    id: 'welsh_valleys',
+    name: 'Welsh Valleys',
+    description: 'Working-class communities in Welsh towns and valleys',
+    icon: '🏴󠁧󠁢󠁷󠁬󠁳󠁿',
+    color: '#dc2626',
+    ukSegment: true,
+    targetPostcodes: ['CF', 'NP', 'SA', 'LL', 'SY'],
+    areas: ['Cardiff', 'Newport', 'Swansea', 'Rhondda', 'Valleys'],
+    criteria: [
+      { field: 'income_under_50k', weight: 45, min: 40, target: 55 },
+      { field: 'income_50_75k', weight: 25, min: 20, target: 30 },
+      { field: 'age_25_44_pct', weight: 20, min: 25, target: 38 },
+      { field: 'households_middle_pct', weight: 10, min: 42, target: 55 }
+    ]
   }
 };
 
