@@ -266,9 +266,9 @@ export const AUDIENCES = {
     targetPostcodes: ['EC1A', 'EC2A', 'N1', 'E2', 'E8', 'E9'],
     areas: ['Old Street', 'Shoreditch', 'King\'s Cross', 'Hackney Wick'],
     criteria: [
-      { field: 'sum_age_25_29', weight: 30, min: 500, target: 1000 },
-      { field: 'sum_age_30_34', weight: 30, min: 500, target: 1000 },
-      { field: 'med_inc', weight: 40, min: 40000, target: 60000 }
+      { field: 'age_25_44_pct', weight: 45, min: 35, target: 50 },
+      { field: 'income_75_100k', weight: 30, min: 18, target: 30 },
+      { field: 'income_100k_plus', weight: 25, min: 15, target: 30 }
     ]
   },
 
@@ -282,9 +282,9 @@ export const AUDIENCES = {
     targetPostcodes: ['E14', 'EC1', 'EC2', 'EC3', 'EC4', 'W2'],
     areas: ['Canary Wharf', 'City', 'King\'s Cross', 'Paddington'],
     criteria: [
-      { field: 'sum_age_30_34', weight: 25, min: 500, target: 1000 },
-      { field: 'sum_age_35_39', weight: 25, min: 500, target: 1000 },
-      { field: 'med_inc', weight: 50, min: 60000, target: 90000 }
+      { field: 'age_25_44_pct', weight: 40, min: 30, target: 45 },
+      { field: 'income_100k_plus', weight: 35, min: 25, target: 45 },
+      { field: 'income_150k_plus', weight: 25, min: 10, target: 25 }
     ]
   },
 
@@ -298,9 +298,9 @@ export const AUDIENCES = {
     targetPostcodes: ['NW1', 'NW5', 'N1', 'N7', 'E15', 'SE1'],
     areas: ['Camden', 'Islington', 'Stratford', 'Elephant & Castle'],
     criteria: [
-      { field: 'sum_age_20_24', weight: 50, min: 800, target: 1200 },
-      { field: 'med_inc', weight: 30, min: 0, target: 15000 },
-      { field: 'sum_total', weight: 20, min: 8000, target: 12000 }
+      { field: 'age_under_25_pct', weight: 50, min: 18, target: 30 },
+      { field: 'income_under_50k', weight: 30, min: 35, target: 55 },
+      { field: 'households_young_pct', weight: 20, min: 30, target: 45 }
     ]
   },
 
@@ -314,9 +314,9 @@ export const AUDIENCES = {
     targetPostcodes: ['WC1', 'WC2', 'SW7', 'N1', 'N7'],
     areas: ['Bloomsbury', 'South Kensington', 'King\'s Cross', 'Camden'],
     criteria: [
-      { field: 'sum_age_20_24', weight: 30, min: 600, target: 1000 },
-      { field: 'sum_age_25_29', weight: 30, min: 600, target: 1000 },
-      { field: 'med_inc', weight: 40, min: 0, target: 25000 }
+      { field: 'age_25_44_pct', weight: 40, min: 35, target: 50 },
+      { field: 'age_under_25_pct', weight: 30, min: 20, target: 35 },
+      { field: 'income_under_50k', weight: 30, min: 30, target: 45 }
     ]
   },
 
@@ -330,10 +330,10 @@ export const AUDIENCES = {
     targetPostcodes: ['UB1', 'UB2', 'HA0', 'HA9', 'HA1', 'HA2', 'W5', 'W13'],
     areas: ['Southall', 'Wembley', 'Harrow', 'Ealing'],
     criteria: [
-      { field: 'med_inc', weight: 40, min: 25000, target: 55000 },
-      { field: 'sum_total', weight: 30, min: 8000, target: 11000 },
-      { field: 'sum_age_25_29', weight: 15, min: 400, target: 800 },
-      { field: 'sum_age_30_34', weight: 15, min: 400, target: 800 }
+      { field: 'age_25_44_pct', weight: 35, min: 30, target: 45 },
+      { field: 'income_50_75k', weight: 30, min: 18, target: 28 },
+      { field: 'income_75_100k', weight: 20, min: 15, target: 25 },
+      { field: 'households_middle_pct', weight: 15, min: 38, target: 50 }
     ]
   },
 
@@ -347,10 +347,10 @@ export const AUDIENCES = {
     targetPostcodes: ['E1', 'E2', 'E3', 'E6', 'E7', 'E10', 'E11'],
     areas: ['Tower Hamlets', 'Newham', 'Redbridge'],
     criteria: [
-      { field: 'med_inc', weight: 40, min: 20000, target: 45000 },
-      { field: 'sum_total', weight: 30, min: 8000, target: 11000 },
-      { field: 'sum_age_30_34', weight: 15, min: 400, target: 800 },
-      { field: 'sum_age_35_39', weight: 15, min: 400, target: 800 }
+      { field: 'age_25_44_pct', weight: 40, min: 32, target: 45 },
+      { field: 'income_under_50k', weight: 30, min: 28, target: 42 },
+      { field: 'income_50_75k', weight: 20, min: 18, target: 28 },
+      { field: 'households_young_pct', weight: 10, min: 28, target: 40 }
     ]
   },
 
@@ -364,10 +364,10 @@ export const AUDIENCES = {
     targetPostcodes: ['SW2', 'SW9', 'SE1', 'SE5', 'E8', 'E9', 'N15', 'N17'],
     areas: ['Lambeth', 'Southwark', 'Hackney', 'Tottenham'],
     criteria: [
-      { field: 'med_inc', weight: 40, min: 20000, target: 45000 },
-      { field: 'sum_total', weight: 30, min: 8000, target: 11000 },
-      { field: 'sum_age_30_34', weight: 15, min: 400, target: 700 },
-      { field: 'sum_age_35_39', weight: 15, min: 400, target: 700 }
+      { field: 'age_25_44_pct', weight: 40, min: 30, target: 42 },
+      { field: 'income_under_50k', weight: 30, min: 25, target: 40 },
+      { field: 'income_50_75k', weight: 20, min: 18, target: 28 },
+      { field: 'households_young_pct', weight: 10, min: 28, target: 40 }
     ]
   },
 
@@ -381,10 +381,10 @@ export const AUDIENCES = {
     targetPostcodes: ['SE8', 'SE15', 'E9', 'SE18'],
     areas: ['Deptford', 'Peckham', 'Hackney Wick', 'Woolwich'],
     criteria: [
-      { field: 'sum_age_25_29', weight: 25, min: 500, target: 900 },
-      { field: 'sum_age_30_34', weight: 25, min: 500, target: 900 },
-      { field: 'sum_age_35_39', weight: 25, min: 400, target: 800 },
-      { field: 'med_inc', weight: 25, min: 35000, target: 55000 }
+      { field: 'age_25_44_pct', weight: 45, min: 32, target: 45 },
+      { field: 'income_50_75k', weight: 25, min: 18, target: 28 },
+      { field: 'income_75_100k', weight: 20, min: 15, target: 25 },
+      { field: 'households_young_pct', weight: 10, min: 28, target: 40 }
     ]
   },
 
@@ -398,10 +398,10 @@ export const AUDIENCES = {
     targetPostcodes: ['SW4', 'SW11', 'SW12', 'SW15', 'SW17', 'SW18'],
     areas: ['Clapham', 'Battersea', 'Wandsworth', 'Putney'],
     criteria: [
-      { field: 'sum_age_30_34', weight: 25, min: 600, target: 1000 },
-      { field: 'sum_age_35_39', weight: 25, min: 600, target: 1000 },
-      { field: 'sum_age_40_44', weight: 20, min: 500, target: 900 },
-      { field: 'med_inc', weight: 30, min: 50000, target: 75000 }
+      { field: 'age_25_44_pct', weight: 40, min: 32, target: 45 },
+      { field: 'income_100k_plus', weight: 30, min: 25, target: 45 },
+      { field: 'income_150k_plus', weight: 20, min: 12, target: 28 },
+      { field: 'households_middle_pct', weight: 10, min: 38, target: 50 }
     ]
   }
 };

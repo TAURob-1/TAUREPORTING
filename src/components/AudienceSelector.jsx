@@ -3,8 +3,16 @@ import { AUDIENCES } from '../data/audienceDefinitions';
 import { usePlatform } from '../context/PlatformContext.jsx';
 
 const AudienceSelector = ({ selectedAudience, onAudienceChange, recommendations, customAudiences, onOpenBuilder, onRemoveCustomAudience }) => {
-  const { countryConfig } = usePlatform();
-  const audienceList = Object.values(AUDIENCES);
+  const { countryConfig, countryCode } = usePlatform();
+  
+  // Filter audiences by country
+  const audienceList = Object.values(AUDIENCES).filter(audience => {
+    if (countryCode === 'UK') {
+      return audience.ukSegment === true;
+    } else {
+      return !audience.ukSegment;
+    }
+  });
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-6">
