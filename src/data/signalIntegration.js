@@ -1,11 +1,35 @@
-import tombolaConfig from '@signal/tombola-co-uk/config.json';
-import tombolaStatus from '@signal/tombola-co-uk/status.json';
-import tombolaTraffic from '@signal/tombola-co-uk/summary/traffic_intelligence.json';
-import tombolaSeo from '@signal/tombola-co-uk/summary/seo_intelligence.json';
-import tombolaAiVisibility from '@signal/tombola-co-uk/summary/ai_visibility.json';
-import tombolaInsights from '@signal/tombola-co-uk/summary/insights_and_actions.json';
-import tombolaTrends from '@signal/tombola-co-uk/summary/trends_intelligence.json';
-import tombolaSpend from '@signal/tombola-co-uk/data/spend/spend_estimation.json';
+const SIGNAL_ROOT = '/home/r2/Signal/companies';
+
+const SIGNAL_FILES = {
+  config: import.meta.glob('/home/r2/Signal/companies/*/config.json', { import: 'default' }),
+  status: import.meta.glob('/home/r2/Signal/companies/*/status.json', { import: 'default' }),
+  summaryRoot: import.meta.glob('/home/r2/Signal/companies/*/summary.json', { import: 'default' }),
+  summaryNested: import.meta.glob('/home/r2/Signal/companies/*/summary/summary.json', { import: 'default' }),
+  traffic: import.meta.glob('/home/r2/Signal/companies/*/summary/traffic_intelligence.json', { import: 'default' }),
+  seo: import.meta.glob('/home/r2/Signal/companies/*/summary/seo_intelligence.json', { import: 'default' }),
+  aiVisibility: import.meta.glob('/home/r2/Signal/companies/*/summary/ai_visibility.json', { import: 'default' }),
+  insights: import.meta.glob('/home/r2/Signal/companies/*/summary/insights_and_actions.json', { import: 'default' }),
+  trends: import.meta.glob('/home/r2/Signal/companies/*/summary/trends_intelligence.json', { import: 'default' }),
+  spend: import.meta.glob('/home/r2/Signal/companies/*/data/spend/spend_estimation.json', { import: 'default' }),
+};
+
+const ADVERTISER_SLUG_HINTS = {
+  demo: ['tombola-co-uk', 'tombola-uk', 'tombola', 'midnite-com', 'midnite-uk', 'midnite'],
+  tombola: ['tombola-co-uk', 'tombola-uk', 'tombola'],
+  experian: ['experian-uk', 'experian-us', 'experian'],
+  flutter: ['flutter', 'flutter-uk', 'betfair', 'paddypower'],
+};
+
+const SIGNAL_DATA_CACHE = new Map();
+const SIGNAL_SLUGS = Array.from(new Set(
+  Object.keys(SIGNAL_FILES.traffic)
+    .concat(Object.keys(SIGNAL_FILES.config))
+    .map((path) => {
+      const match = path.match(/\/companies\/([^/]+)\//);
+      return match ? match[1] : null;
+    })
+    .filter(Boolean)
+));
 
 function monthLabel(isoDate) {
   const [year, month] = isoDate.split('-');
@@ -16,6 +40,71 @@ function monthLabel(isoDate) {
 function num(value, fallback = 0) {
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : fallback;
+}
+
+function slugify(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '');
+}
+
+function buildCompanyPath(slug, relative) {
+  return `${SIGNAL_ROOT}/${slug}/${relative}`;
+}
+
+async function loadJson(globMap, slug, relativePath) {
+  const key = buildCompanyPath(slug, relativePath);
+  const loader = globMap[key];
+  if (!loader) return null;
+  try {
+    return await loader();
+  } catch (error) {
+    return null;
+  }
+}
+
+function buildSlugCandidates(advertiserId, countryCode, advertiser = {}) {
+  const id = slugify(advertiserId);
+  const nameSlug = slugify(advertiser.name);
+  const contextSlug = slugify(advertiser.slug);
+  const countrySuffix = countryCode === 'UK' ? 'uk' : 'us';
+
+  const hints = ADVERTISER_SLUG_HINTS[id] || [];
+  const candidates = [
+    ...hints,
+    contextSlug,
+    nameSlug,
+    id,
+    `${contextSlug}-${countrySuffix}`,
+    `${nameSlug}-${countrySuffix}`,
+    `${id}-${countrySuffix}`,
+  ].filter(Boolean);
+
+  return Array.from(new Set(candidates));
+}
+
+function chooseSignalSlug(advertiserId, countryCode, advertiser = {}) {
+  const candidates = buildSlugCandidates(advertiserId, countryCode, advertiser);
+  const exact = candidates.find((candidate) => SIGNAL_SLUGS.includes(candidate));
+  if (exact) return exact;
+
+  for (const candidate of candidates) {
+    const countrySpecific = SIGNAL_SLUGS.find((slug) =>
+      slug.startsWith(`${candidate}-`) && (countryCode === 'UK' ? slug.endsWith('uk') : slug.endsWith('us'))
+    );
+    if (countrySpecific) return countrySpecific;
+  }
+
+  for (const candidate of candidates) {
+    const prefix = SIGNAL_SLUGS.find((slug) => slug.startsWith(candidate));
+    if (prefix) return prefix;
+  }
+
+  if (countryCode === 'UK') {
+    return SIGNAL_SLUGS.find((slug) => slug.endsWith('co-uk') || slug.endsWith('-uk')) || 'tombola-co-uk';
+  }
+  return SIGNAL_SLUGS.find((slug) => slug.endsWith('-us')) || 'tombola-co-uk';
 }
 
 function formatDomainName(domain) {
@@ -95,13 +184,43 @@ function extractPlanningPriorities(insights = {}) {
   return (insights.next_steps || []).slice(0, 3);
 }
 
-function loadRealSignalData(countryCode = 'UK') {
-  const advertiserDomain = tombolaConfig.domain || 'tombola.co.uk';
-  const estimatedMonthlyVisits = tombolaTraffic?.main_company?.raw_metrics?.estimated_monthly_visits || {};
-  const comparisonTable = Array.isArray(tombolaTraffic?.competitor_comparison_table)
-    ? tombolaTraffic.competitor_comparison_table
+async function loadRealSignalData(slug, countryCode = 'UK') {
+  const cacheKey = `${slug}:${countryCode}`;
+  if (SIGNAL_DATA_CACHE.has(cacheKey)) {
+    return SIGNAL_DATA_CACHE.get(cacheKey);
+  }
+
+  const [
+    config,
+    status,
+    summaryRoot,
+    summaryNested,
+    traffic,
+    seo,
+    aiVisibility,
+    insights,
+    trends,
+    spend,
+  ] = await Promise.all([
+    loadJson(SIGNAL_FILES.config, slug, 'config.json'),
+    loadJson(SIGNAL_FILES.status, slug, 'status.json'),
+    loadJson(SIGNAL_FILES.summaryRoot, slug, 'summary.json'),
+    loadJson(SIGNAL_FILES.summaryNested, slug, 'summary/summary.json'),
+    loadJson(SIGNAL_FILES.traffic, slug, 'summary/traffic_intelligence.json'),
+    loadJson(SIGNAL_FILES.seo, slug, 'summary/seo_intelligence.json'),
+    loadJson(SIGNAL_FILES.aiVisibility, slug, 'summary/ai_visibility.json'),
+    loadJson(SIGNAL_FILES.insights, slug, 'summary/insights_and_actions.json'),
+    loadJson(SIGNAL_FILES.trends, slug, 'summary/trends_intelligence.json'),
+    loadJson(SIGNAL_FILES.spend, slug, 'data/spend/spend_estimation.json'),
+  ]);
+
+  const summary = summaryRoot || summaryNested || {};
+  const advertiserDomain = config?.domain || traffic?.main_company?.domain || `${slug}.com`;
+  const estimatedMonthlyVisits = traffic?.main_company?.raw_metrics?.estimated_monthly_visits || {};
+  const comparisonTable = Array.isArray(traffic?.competitor_comparison_table)
+    ? traffic.competitor_comparison_table
     : [];
-  const competitorDetails = tombolaTraffic?.competitor_details || {};
+  const competitorDetails = traffic?.competitor_details || {};
 
   const trafficComparison = comparisonTable
     .map((entry) => {
@@ -116,7 +235,7 @@ function loadRealSignalData(countryCode = 'UK') {
     })
     .filter((entry) => entry.domain && num(entry.visits) > 0);
 
-  const gapGroups = tombolaSeo?.keyword_gaps || {};
+  const gapGroups = seo?.keyword_gaps || {};
   const opportunities = flattenKeywordGaps(gapGroups)
     .sort((a, b) => num(b.volume) - num(a.volume))
     .slice(0, 8);
@@ -126,32 +245,33 @@ function loadRealSignalData(countryCode = 'UK') {
     0
   );
 
-  const aiScores = tombolaAiVisibility?.competitor_comparison?.scores || {};
-  const aiRankings = Array.isArray(tombolaAiVisibility?.competitor_comparison?.rankings)
-    ? tombolaAiVisibility.competitor_comparison.rankings
+  const aiScores = aiVisibility?.competitor_comparison?.scores || {};
+  const aiRankings = Array.isArray(aiVisibility?.competitor_comparison?.rankings)
+    ? aiVisibility.competitor_comparison.rankings
     : [];
-  const companyKey = tombolaConfig.company_name || 'Tombola';
-  const aiScore = num(aiScores?.[companyKey]?.overall, num(tombolaAiVisibility?.overall_score, 0));
+  const companyKey = config?.company_name || summary?.company_name || slug;
+  const aiScore = num(aiScores?.[companyKey]?.overall, num(aiVisibility?.overall_score, 0));
 
-  const spendRange = tombolaSpend?.estimated_annual_spend?.total_range || {};
+  const spendRange = spend?.estimated_annual_spend?.total_range || {};
   const sourceDate = (
-    tombolaTraffic?.generated_at ||
-    tombolaStatus?.completed_at ||
-    tombolaConfig?.created_at ||
+    traffic?.generated_at ||
+    status?.completed_at ||
+    config?.created_at ||
+    summary?.generated_at ||
     new Date().toISOString()
   ).slice(0, 10);
 
-  const strengths = tombolaInsights?.swot_analysis?.strengths || [];
-  const opportunitiesNotes = tombolaInsights?.swot_analysis?.opportunities || [];
-  const trendInterpretation = tombolaTrends?.brand_trend_summary?.interpretation;
-  const trendDirection = tombolaTrends?.brand_trend_summary?.['12_month_trend'];
+  const strengths = insights?.swot_analysis?.strengths || [];
+  const opportunitiesNotes = insights?.swot_analysis?.opportunities || [];
+  const trendInterpretation = trends?.brand_trend_summary?.interpretation;
+  const trendDirection = trends?.brand_trend_summary?.['12_month_trend'];
 
-  return {
+  const dataset = {
     source: {
-      slug: tombolaConfig.slug || 'tombola-co-uk',
-      company: tombolaConfig.company_name || 'Tombola',
+      slug: config?.slug || slug,
+      company: config?.company_name || summary?.company_name || formatDomainName(advertiserDomain),
       domain: advertiserDomain,
-      country: tombolaConfig.country || 'GB',
+      country: config?.country || summary?.country || (countryCode === 'US' ? 'US' : 'GB'),
       updatedAt: sourceDate,
     },
     trafficMain: {
@@ -159,8 +279,8 @@ function loadRealSignalData(countryCode = 'UK') {
     },
     trafficComparison,
     seoSummary: {
-      trackedKeywords: num(tombolaSeo?.summary?.total_keywords),
-      estimatedRankingKeywords: num(tombolaSeo?.summary?.top_10_generic),
+      trackedKeywords: num(seo?.summary?.total_keywords),
+      estimatedRankingKeywords: num(seo?.summary?.top_10_generic),
       highVolumeGapCount,
       topKeywordVolume: num(opportunities[0]?.volume),
       opportunities,
@@ -176,7 +296,7 @@ function loadRealSignalData(countryCode = 'UK') {
     spend: {
       annualMin: num(spendRange.min, null),
       annualMax: num(spendRange.max, null),
-      currency: countryCode === 'US' ? 'USD' : (tombolaSpend.currency || 'GBP'),
+      currency: countryCode === 'US' ? 'USD' : (spend?.currency || 'GBP'),
     },
     insights: [
       strengths[0]?.point,
@@ -187,9 +307,12 @@ function loadRealSignalData(countryCode = 'UK') {
         : trendInterpretation,
     ].filter(Boolean).slice(0, 4),
     advisorBrief: {
-      planningPriorities: extractPlanningPriorities(tombolaInsights),
+      planningPriorities: extractPlanningPriorities(insights),
     },
   };
+
+  SIGNAL_DATA_CACHE.set(cacheKey, dataset);
+  return dataset;
 }
 
 function computeChangePercent(trend) {
@@ -200,16 +323,14 @@ function computeChangePercent(trend) {
   return Number((((current - previous) / previous) * 100).toFixed(1));
 }
 
-function resolveDataset(advertiserId = 'demo', countryCode = 'US') {
+async function resolveDataset(advertiserId = 'demo', countryCode = 'US', advertiser = {}) {
   const normalizedCountry = countryCode === 'UK' ? 'UK' : 'US';
-  if (advertiserId === 'tombola' || advertiserId === 'demo' || advertiserId === 'experian') {
-    return loadRealSignalData(normalizedCountry);
-  }
-  return loadRealSignalData(normalizedCountry);
+  const slug = chooseSignalSlug(advertiserId, normalizedCountry, advertiser);
+  return loadRealSignalData(slug, normalizedCountry);
 }
 
-export function getSignalDataset(advertiserId = 'demo', countryCode = 'US') {
-  const dataset = resolveDataset(advertiserId, countryCode);
+export async function getSignalDataset(advertiserId = 'demo', countryCode = 'US', advertiser = {}) {
+  const dataset = await resolveDataset(advertiserId, countryCode, advertiser);
   const trend = toTrend(dataset.trafficMain.estimated_monthly_visits);
   const marketShare = buildShareRows(dataset.trafficComparison, dataset.source.domain);
   const advertiserRow = marketShare.find((row) => row.isAdvertiser) || marketShare[0];
@@ -234,8 +355,8 @@ export function getSignalDataset(advertiserId = 'demo', countryCode = 'US') {
   };
 }
 
-export function getAdvisorContext(advertiserId = 'demo', countryCode = 'US') {
-  const data = getSignalDataset(advertiserId, countryCode);
+export async function getAdvisorContext(advertiserId = 'demo', countryCode = 'US', advertiser = {}) {
+  const data = await getSignalDataset(advertiserId, countryCode, advertiser);
   return {
     signalSource: data.source,
     competitiveSnapshot: {

@@ -33,7 +33,7 @@ function renderCurrency(countryCode) {
 
 function buildDemoResponse(question, context) {
   const { advertiser, countryCode, planningState, advisorContext } = context;
-  const snapshot = advisorContext.competitiveSnapshot;
+  const snapshot = advisorContext.competitiveSnapshot || {};
   const budget = planningState.totalBudget || 500000;
   const currency = renderCurrency(countryCode);
 
@@ -50,10 +50,10 @@ ${selectedLayers.map((layer) => `- ${layer}`).join('\n')}
 
 ### Competitive Context Snapshot
 - **Advertiser share in Signal cohort:** ${snapshot.advertiserShare}%
-- **Monthly visits (latest):** ${snapshot.monthlyVisits.toLocaleString()}
-- **SEO gap count:** ${snapshot.seoGapCount.toLocaleString()}
+- **Monthly visits (latest):** ${(snapshot.monthlyVisits || 0).toLocaleString()}
+- **SEO gap count:** ${(snapshot.seoGapCount || 0).toLocaleString()}
 - **AI visibility score:** ${snapshot.aiVisibilityScore}%
-- **Top competitors:** ${snapshot.topCompetitors.map((c) => `${c.name} (${c.share}%)`).join(', ')}
+- **Top competitors:** ${(snapshot.topCompetitors || []).map((c) => `${c.name} (${c.share}%)`).join(', ') || 'Loading competitor set'}
 
 ### 90-Day Strategic Recommendation
 - **Budget frame:** ${currency}${budget.toLocaleString()} across high-attention video + high-intent capture.
@@ -62,7 +62,7 @@ ${selectedLayers.map((layer) => `- ${layer}`).join('\n')}
 - **Measurement design:** geo holdout with pre-period baseline; target 95% confidence and decision thresholds every 2 weeks.
 
 ### Context-Aware Priorities
-${advisorContext.planningPriorities.map((priority) => `- ${priority}`).join('\n')}
+${(advisorContext.planningPriorities || []).map((priority) => `- ${priority}`).join('\n')}
 
 ### Next Input Needed (minimum required)
 Please confirm:
@@ -180,13 +180,47 @@ const StrategicAdvisor = () => {
   const [loading, setLoading] = useState(false);
   const [apiStatus, setApiStatus] = useState(null);
   const [error, setError] = useState(null);
+  const [advisorContext, setAdvisorContext] = useState(null);
+  const [contextError, setContextError] = useState(null);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  const advisorContext = useMemo(
-    () => getAdvisorContext(advertiserId, countryCode),
-    [advertiserId, countryCode]
-  );
+  useEffect(() => {
+    let active = true;
+    setContextError(null);
+    setAdvisorContext(null);
+
+    getAdvisorContext(advertiserId, countryCode, advertiser)
+      .then((ctx) => {
+        if (active) setAdvisorContext(ctx);
+      })
+      .catch((loadErr) => {
+        if (active) setContextError(loadErr?.message || 'Unable to load advisor context');
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [advertiser, advertiserId, countryCode]);
+
+  const resolvedAdvisorContext = useMemo(() => {
+    if (advisorContext) return advisorContext;
+    return {
+      signalSource: {
+        slug: advertiser.slug,
+        company: advertiser.name,
+        country: countryCode,
+      },
+      competitiveSnapshot: {
+        advertiserShare: 0,
+        monthlyVisits: 0,
+        seoGapCount: 0,
+        aiVisibilityScore: 0,
+        topCompetitors: [],
+      },
+      planningPriorities: ['Loading Signal priorities...'],
+    };
+  }, [advisorContext, advertiser.name, advertiser.slug, countryCode]);
 
   const suggestedQuestions = useMemo(
     () => buildSuggestedQuestions(advertiser.name, countryCode),
@@ -221,7 +255,7 @@ const StrategicAdvisor = () => {
         vertical: advertiser.vertical,
       },
       planningState,
-      advisorContext,
+      advisorContext: resolvedAdvisorContext,
       planningLayers: PLANNING_LAYERS,
       operatingMode: 'strategic_planner',
       responseStyle: 'minimum-input layered planning with budget rationale and KPI clarity',
@@ -235,7 +269,7 @@ const StrategicAdvisor = () => {
         advertiser,
         countryCode,
         planningState,
-        advisorContext,
+        advisorContext: resolvedAdvisorContext,
       });
       setMessages((prev) => [...prev, { role: 'assistant', content: response }]);
       setLoading(false);
@@ -266,7 +300,7 @@ const StrategicAdvisor = () => {
         advertiser,
         countryCode,
         planningState,
-        advisorContext,
+        advisorContext: resolvedAdvisorContext,
       });
       setMessages((prev) => [...prev, { role: 'assistant', content: fallback }]);
     } finally {
@@ -298,6 +332,9 @@ const StrategicAdvisor = () => {
               <p className="text-xs text-indigo-200 mt-2">
                 Layered planning model: {PLANNING_LAYERS.length} modules with minimum-input workflow.
               </p>
+              <p className="text-xs text-indigo-200 mt-1">
+                Signal source: {resolvedAdvisorContext.signalSource.slug}
+              </p>
             </div>
             <div className="text-right">
               <div className="flex items-center gap-2 justify-end">
@@ -311,6 +348,12 @@ const StrategicAdvisor = () => {
             </div>
           </div>
         </div>
+
+        {contextError && (
+          <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-900">
+            Advisor context fallback enabled: {contextError}
+          </div>
+        )}
 
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col" style={{ height: 'calc(100vh - 280px)', minHeight: '500px' }}>
           <div className="flex-1 overflow-y-auto p-4 space-y-4">

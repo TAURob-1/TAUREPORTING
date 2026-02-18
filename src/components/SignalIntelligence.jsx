@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   PieChart,
   Pie,
@@ -32,31 +32,76 @@ function formatVisits(value) {
 
 function SignalIntelligence() {
   const { advertiser, advertiserId, countryCode } = usePlatform();
-  const signal = getSignalDataset(advertiserId, countryCode);
+  const [signal, setSignal] = useState(null);
+  const [loadError, setLoadError] = useState(null);
   const marketContext = getCountryMarketContext(countryCode);
   const mediaReachTable = getMediaReachTable(countryCode);
 
-  const marketShareData = signal.traffic.marketShare.map((row) => ({
-    name: row.isAdvertiser ? advertiser.name : row.name,
-    visits: row.visits,
-    share: row.share,
-    isAdvertiser: row.isAdvertiser,
-  }));
+  useEffect(() => {
+    let active = true;
+    setLoadError(null);
+    setSignal(null);
 
-  const competitorBars = signal.traffic.marketShare
-    .map((row) => ({
+    getSignalDataset(advertiserId, countryCode, advertiser)
+      .then((dataset) => {
+        if (active) setSignal(dataset);
+      })
+      .catch((error) => {
+        if (active) setLoadError(error?.message || 'Unable to load Signal dataset');
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [advertiser, advertiserId, countryCode]);
+
+  const marketShareData = useMemo(() => {
+    if (!signal) return [];
+    return signal.traffic.marketShare.map((row) => ({
       name: row.isAdvertiser ? advertiser.name : row.name,
-      visits: Math.round(row.visits / 1000),
-      pages: Number(row.pagesPerVisit.toFixed(1)),
-      bounce: Number((row.bounceRate * 100).toFixed(1)),
-      advertiser: row.isAdvertiser,
-    }))
-    .sort((a, b) => b.visits - a.visits)
-    .slice(0, 6);
+      visits: row.visits,
+      share: row.share,
+      isAdvertiser: row.isAdvertiser,
+    }));
+  }, [advertiser.name, signal]);
+
+  const competitorBars = useMemo(() => {
+    if (!signal) return [];
+    return signal.traffic.marketShare
+      .map((row) => ({
+        name: row.isAdvertiser ? advertiser.name : row.name,
+        visits: Math.round(row.visits / 1000),
+        pages: Number(row.pagesPerVisit.toFixed(1)),
+        bounce: Number((row.bounceRate * 100).toFixed(1)),
+        advertiser: row.isAdvertiser,
+      }))
+      .sort((a, b) => b.visits - a.visits)
+      .slice(0, 6);
+  }, [advertiser.name, signal]);
 
   const palette = ['#1d4ed8', '#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444'];
 
-  const seoOpportunities = signal.seoSummary.opportunities;
+  const seoOpportunities = signal?.seoSummary?.opportunities || [];
+
+  if (loadError) {
+    return (
+      <div className="min-h-screen bg-gray-50 p-4 md:p-6">
+        <div className="max-w-7xl mx-auto bg-red-50 border border-red-200 text-red-800 rounded-lg p-4 text-sm">
+          Signal dataset failed to load for {advertiser.name}: {loadError}
+        </div>
+      </div>
+    );
+  }
+
+  if (!signal) {
+    return (
+      <div className="min-h-screen bg-gray-50 p-4 md:p-6">
+        <div className="max-w-7xl mx-auto bg-white border border-gray-200 rounded-lg p-4 text-sm text-gray-600">
+          Loading Signal intelligence dataset...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
@@ -174,7 +219,7 @@ function SignalIntelligence() {
             <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
               <h3 className="text-lg font-bold text-gray-900 mb-3">SEO Opportunity Gaps</h3>
               <div className="space-y-2">
-                {seoOpportunities.map((row) => (
+                {seoOpportunities.slice(0, 8).map((row) => (
                   <div key={`${row.keyword}-${row.competitor}`} className="p-3 bg-slate-50 rounded-md border border-slate-100">
                     <div className="text-sm font-semibold text-gray-900">{row.keyword}</div>
                     <div className="text-xs text-gray-600 mt-1">Competitor: {row.competitor}</div>
