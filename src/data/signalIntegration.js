@@ -86,15 +86,22 @@ function buildSlugCandidates(advertiserId, countryCode, advertiser = {}) {
 
 function chooseSignalSlug(advertiserId, countryCode, advertiser = {}) {
   const candidates = buildSlugCandidates(advertiserId, countryCode, advertiser);
-  const exact = candidates.find((candidate) => SIGNAL_SLUGS.includes(candidate));
-  if (exact) return exact;
+  const countrySuffix = countryCode === 'UK' ? ['-co-uk', '-uk'] : ['-us'];
+
+  for (const candidate of candidates) {
+    const countryExact = SIGNAL_SLUGS.find((slug) => slug === candidate && countrySuffix.some((suffix) => slug.endsWith(suffix)));
+    if (countryExact) return countryExact;
+  }
 
   for (const candidate of candidates) {
     const countrySpecific = SIGNAL_SLUGS.find((slug) =>
-      slug.startsWith(`${candidate}-`) && (countryCode === 'UK' ? slug.endsWith('uk') : slug.endsWith('us'))
+      slug.startsWith(`${candidate}-`) && countrySuffix.some((suffix) => slug.endsWith(suffix))
     );
     if (countrySpecific) return countrySpecific;
   }
+
+  const exact = candidates.find((candidate) => SIGNAL_SLUGS.includes(candidate));
+  if (exact) return exact;
 
   for (const candidate of candidates) {
     const prefix = SIGNAL_SLUGS.find((slug) => slug.startsWith(candidate));

@@ -1,6 +1,11 @@
 import React, { useMemo } from 'react';
 import { usePlatform } from '../context/PlatformContext.jsx';
-import { getCountryMarketContext, getMediaReachTable } from '../data/marketData';
+import {
+  getCountryMarketContext,
+  getMediaReachTable,
+  getMediaDataQuality,
+  getMediaIntelligenceSummary,
+} from '../data/marketData';
 
 function toNumber(value) {
   if (typeof value === 'number') return value;
@@ -30,6 +35,8 @@ function MediaReach() {
   const { countryCode } = usePlatform();
   const marketContext = useMemo(() => getCountryMarketContext(countryCode), [countryCode]);
   const mediaReach = useMemo(() => getMediaReachTable(countryCode), [countryCode]);
+  const dataQuality = useMemo(() => getMediaDataQuality(countryCode), [countryCode]);
+  const intelligenceSummary = useMemo(() => getMediaIntelligenceSummary(countryCode), [countryCode]);
 
   const rows = useMemo(() => {
     return mediaReach.rows.map((row) => ({
@@ -58,8 +65,38 @@ function MediaReach() {
             <p className="mt-2 text-sm text-slate-200">
               {mediaReach.subtitle} for {marketContext.marketLabel}. Household-normalized planning view with key demographic fit.
             </p>
+            <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] text-slate-300">
+              <span className="px-2 py-1 rounded-full border border-slate-500/60 bg-slate-800/30">
+                Data QA: {dataQuality.grade} ({dataQuality.passed}/{dataQuality.total})
+              </span>
+              {intelligenceSummary.generatedAt && (
+                <span className="px-2 py-1 rounded-full border border-slate-500/60 bg-slate-800/30">
+                  Signal refresh: {intelligenceSummary.generatedAt.slice(0, 10)}
+                </span>
+              )}
+            </div>
           </div>
         </section>
+
+        {intelligenceSummary.keyMetrics && (
+          <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <article className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+              <div className="text-xs uppercase tracking-wide text-slate-500 font-semibold">Top Broadcaster</div>
+              <div className="text-2xl font-bold text-slate-900 mt-1">{intelligenceSummary.keyMetrics.top_broadcaster}</div>
+              <div className="text-xs text-slate-500 mt-1">{intelligenceSummary.keyMetrics.broadcaster_share}% viewing share</div>
+            </article>
+            <article className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+              <div className="text-xs uppercase tracking-wide text-slate-500 font-semibold">Top Streaming Service</div>
+              <div className="text-2xl font-bold text-slate-900 mt-1">{intelligenceSummary.keyMetrics.top_svod}</div>
+              <div className="text-xs text-slate-500 mt-1">{intelligenceSummary.keyMetrics.streaming_share}% streaming share</div>
+            </article>
+            <article className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+              <div className="text-xs uppercase tracking-wide text-slate-500 font-semibold">Top Video Platform</div>
+              <div className="text-2xl font-bold text-slate-900 mt-1">{intelligenceSummary.keyMetrics.top_video_platform}</div>
+              <div className="text-xs text-slate-500 mt-1">{intelligenceSummary.keyMetrics.video_sharing_share}% video-sharing share</div>
+            </article>
+          </section>
+        )}
 
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <article className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
@@ -80,6 +117,19 @@ function MediaReach() {
             <div className="text-xs text-slate-400 mt-1">Across {rows.length} listed platforms</div>
           </article>
         </section>
+
+        {intelligenceSummary.highlights?.length > 0 && (
+          <section className="bg-white rounded-2xl border border-gray-200 shadow-sm p-5 mb-6">
+            <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">Signal Highlights</div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {intelligenceSummary.highlights.map((item) => (
+                <div key={item} className="text-sm text-slate-700 bg-slate-50 rounded-lg border border-slate-100 px-3 py-2">
+                  {item}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         <section className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
           <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 bg-slate-50">
@@ -118,6 +168,10 @@ function MediaReach() {
               </tbody>
             </table>
           </div>
+        </section>
+
+        <section className="mt-4 text-[11px] text-slate-500">
+          Source: {intelligenceSummary.source || (countryCode === 'UK' ? 'BARB references' : 'Nielsen references')}
         </section>
       </div>
     </div>

@@ -1,21 +1,14 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { usePlatform } from '../context/PlatformContext.jsx';
 import { getAdvisorContext } from '../data/signalIntegration';
+import { getRegulations } from '../data/marketData';
+import {
+  STRATEGIC_PLANNING_LAYERS,
+  CHANNEL_IMPLEMENTATION_BLUEPRINT,
+  buildPlanningProtocol,
+} from '../data/planningPlaybook';
 
 const API_URL = import.meta.env.VITE_CHAT_API || 'http://localhost:3002';
-
-const PLANNING_LAYERS = [
-  'Strategic Comms Planning',
-  'Comms Channel Planning',
-  'Channel Planning',
-  'Audience and Data Planning',
-  'Measurement Planning',
-  'Message and Creative Planning',
-  'Flighting and Phasing',
-  'Martech and Ops Planning',
-  'AI and Simulation Layer',
-  'Continuous Optimisation',
-];
 
 function buildSuggestedQuestions(advertiserName, countryCode) {
   return [
@@ -38,9 +31,9 @@ function buildDemoResponse(question, context) {
   const currency = renderCurrency(countryCode);
 
   const selectedLayers = [
-    '1. Strategic Comms Planning',
-    '3. Channel Planning',
-    '5. Measurement Planning',
+    `1. ${STRATEGIC_PLANNING_LAYERS[0]}`,
+    `3. ${STRATEGIC_PLANNING_LAYERS[2]}`,
+    `5. ${STRATEGIC_PLANNING_LAYERS[4]}`,
   ];
 
   return `## Strategic Planning Response: ${advertiser.name}
@@ -60,6 +53,8 @@ ${selectedLayers.map((layer) => `- ${layer}`).join('\n')}
 - **Channel mix (starting point):** 45% CTV, 25% Linear TV, 20% Search, 10% Social/retargeting.
 - **Primary KPI stack:** incremental reach, qualified traffic, conversion rate, and iROAS.
 - **Measurement design:** geo holdout with pre-period baseline; target 95% confidence and decision thresholds every 2 weeks.
+- **Layer 3 extension:** 3.A strategic channel route + 3.B implementation blueprint.
+- **3.B mandatory fields:** ${CHANNEL_IMPLEMENTATION_BLUEPRINT.slice(0, 4).join(', ')} (+${CHANNEL_IMPLEMENTATION_BLUEPRINT.length - 4} more).
 
 ### Context-Aware Priorities
 ${(advisorContext.planningPriorities || []).map((priority) => `- ${priority}`).join('\n')}
@@ -226,6 +221,11 @@ const StrategicAdvisor = () => {
     () => buildSuggestedQuestions(advertiser.name, countryCode),
     [advertiser.name, countryCode]
   );
+  const regulations = useMemo(() => getRegulations(countryCode, advertiser), [countryCode, advertiser]);
+  const planningProtocol = useMemo(
+    () => buildPlanningProtocol(countryCode, planningState),
+    [countryCode, planningState]
+  );
 
   useEffect(() => {
     fetch(`${API_URL}/health`, { signal: AbortSignal.timeout(3000) })
@@ -256,7 +256,8 @@ const StrategicAdvisor = () => {
       },
       planningState,
       advisorContext: resolvedAdvisorContext,
-      planningLayers: PLANNING_LAYERS,
+      planningLayers: STRATEGIC_PLANNING_LAYERS,
+      planningProtocol,
       operatingMode: 'strategic_planner',
       responseStyle: 'minimum-input layered planning with budget rationale and KPI clarity',
     };
@@ -330,7 +331,7 @@ const StrategicAdvisor = () => {
                 {advertiser.name} • {countryCode} • Signal-informed media planning advisor
               </p>
               <p className="text-xs text-indigo-200 mt-2">
-                Layered planning model: {PLANNING_LAYERS.length} modules with minimum-input workflow.
+                Layered planning model: {STRATEGIC_PLANNING_LAYERS.length} modules with minimum-input workflow.
               </p>
               <p className="text-xs text-indigo-200 mt-1">
                 Signal source: {resolvedAdvisorContext.signalSource.slug}
@@ -352,6 +353,22 @@ const StrategicAdvisor = () => {
         {contextError && (
           <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-900">
             Advisor context fallback enabled: {contextError}
+          </div>
+        )}
+
+        {regulations.tone === 'high' && (
+          <div className="mb-4 rounded-lg border border-rose-200 bg-rose-50 px-4 py-3">
+            <div className="text-xs font-semibold uppercase tracking-wide text-rose-800 mb-2">
+              Compliance Context: {regulations.title}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              {regulations.rules.slice(0, 4).map((rule) => (
+                <div key={rule.title} className="text-xs text-rose-900 bg-white/80 border border-rose-100 rounded px-2.5 py-2">
+                  <div className="font-semibold">{rule.title}</div>
+                  <div className="mt-1">{rule.description}</div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 

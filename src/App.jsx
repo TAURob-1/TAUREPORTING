@@ -7,6 +7,7 @@ import StrategicAdvisor from './components/StrategicAdvisor';
 import MediaReach from './components/MediaReach';
 import { usePlatform } from './context/PlatformContext.jsx';
 import { ADVERTISER_OPTIONS, COUNTRY_OPTIONS, PLATFORM_BRAND } from './config/platformConfig';
+import { getRegulations } from './data/marketData';
 
 const PAGES = [
   { key: 'targeting', label: 'Audience', fullLabel: 'Audience Targeting' },
@@ -27,6 +28,7 @@ function App() {
     setAdvertiserId,
     advertiser,
   } = usePlatform();
+  const regulations = useMemo(() => getRegulations(countryCode, advertiser), [countryCode, advertiser]);
 
   const statusLabel = useMemo(() => {
     if (currentPage === 'targeting') return 'Audience Setup';
@@ -41,82 +43,77 @@ function App() {
     <div className="min-h-screen bg-gray-50 dark:bg-slate-950">
       <nav className="bg-white/95 dark:bg-slate-900/95 backdrop-blur border-b border-gray-200 dark:border-slate-800 shadow-sm sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 md:px-6 py-3">
-          <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-            <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-lg bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-sm flex items-center justify-center p-1.5">
-                <img
-                  src="/TAU_Logo.png"
-                  alt="TAU logo"
-                  className="h-full w-full object-contain"
-                />
-              </div>
-              <div>
-                <div className="text-lg font-bold text-gray-900 dark:text-white leading-tight">{PLATFORM_BRAND.name}</div>
-                <div className="text-[10px] text-gray-400 dark:text-slate-400 font-medium tracking-wider uppercase leading-tight">
-                  {advertiser.name} • {countryConfig.shortLabel}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 flex-wrap">
-              <label className="text-xs text-gray-500 dark:text-slate-300 font-medium">Country</label>
-              <select
-                value={countryCode}
-                onChange={(e) => setCountryCode(e.target.value)}
-                className="px-3 py-1.5 rounded-md border border-gray-300 dark:border-slate-700 text-sm bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-200"
-              >
-                {COUNTRY_OPTIONS.map((country) => (
-                  <option key={country.id} value={country.id}>{country.label}</option>
-                ))}
-              </select>
-
-              <label className="text-xs text-gray-500 dark:text-slate-300 font-medium ml-2">Client</label>
-              <select
-                value={advertiserId}
-                onChange={(e) => setAdvertiserId(e.target.value)}
-                className="px-3 py-1.5 rounded-md border border-gray-300 dark:border-slate-700 text-sm bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-200"
-              >
-                {ADVERTISER_OPTIONS.map((entry) => (
-                  <option key={entry.id} value={entry.id}>{entry.name}</option>
-                ))}
-              </select>
-
+          <div className="flex space-x-1 bg-gray-100 dark:bg-slate-800 rounded-lg p-1">
+            {PAGES.map((page) => (
               <button
-                type="button"
-                className="ml-1 p-2 rounded-md border border-gray-300 dark:border-slate-700 text-gray-500 dark:text-slate-300 hover:text-gray-700 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-800"
-                title="Settings"
-                aria-label="Settings"
+                key={page.key}
+                onClick={() => setCurrentPage(page.key)}
+                className={`px-3 md:px-5 py-2 md:py-2.5 rounded-md text-xs md:text-sm font-medium transition-all ${
+                  currentPage === page.key
+                    ? 'bg-white dark:bg-slate-900 text-blue-700 dark:text-blue-300 shadow-sm ring-1 ring-blue-100 dark:ring-slate-700'
+                    : 'text-gray-500 dark:text-slate-300 hover:text-gray-800 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-700'
+                }`}
               >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.757.426 1.757 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.757-2.924 1.757-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.757-.426-1.757-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
+                <span className="hidden md:inline">{page.fullLabel}</span>
+                <span className="md:hidden">{page.label}</span>
               </button>
-            </div>
-          </div>
-
-          <div className="mt-3">
-            <div className="flex space-x-1 bg-gray-100 dark:bg-slate-800 rounded-lg p-1">
-              {PAGES.map((page) => (
-                <button
-                  key={page.key}
-                  onClick={() => setCurrentPage(page.key)}
-                  className={`px-3 md:px-5 py-2 md:py-2.5 rounded-md text-xs md:text-sm font-medium transition-all ${
-                    currentPage === page.key
-                      ? 'bg-white dark:bg-slate-900 text-blue-700 dark:text-blue-300 shadow-sm ring-1 ring-blue-100 dark:ring-slate-700'
-                      : 'text-gray-500 dark:text-slate-300 hover:text-gray-800 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-slate-700'
-                  }`}
-                >
-                  <span className="hidden md:inline">{page.fullLabel}</span>
-                  <span className="md:hidden">{page.label}</span>
-                </button>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
       </nav>
 
       <div className="pb-16">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-4">
+          <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-xl p-4">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-lg bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 shadow-sm flex items-center justify-center p-1.5">
+                  <img
+                    src="/TAU_Logo.png"
+                    alt="TAU logo"
+                    className="h-full w-full object-contain"
+                  />
+                </div>
+                <div>
+                  <div className="text-base font-bold text-gray-900 dark:text-white">{PLATFORM_BRAND.name}</div>
+                  <div className="text-[11px] text-gray-500 dark:text-slate-400">
+                    {advertiser.name} • {countryConfig.shortLabel}
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <label className="text-xs text-gray-500 dark:text-slate-300 font-medium">Country</label>
+                <select
+                  value={countryCode}
+                  onChange={(e) => setCountryCode(e.target.value)}
+                  className="px-3 py-1.5 rounded-md border border-gray-300 dark:border-slate-700 text-sm bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-200"
+                >
+                  {COUNTRY_OPTIONS.map((country) => (
+                    <option key={country.id} value={country.id}>{country.label}</option>
+                  ))}
+                </select>
+                <label className="text-xs text-gray-500 dark:text-slate-300 font-medium ml-2">Client</label>
+                <select
+                  value={advertiserId}
+                  onChange={(e) => setAdvertiserId(e.target.value)}
+                  className="px-3 py-1.5 rounded-md border border-gray-300 dark:border-slate-700 text-sm bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-200"
+                >
+                  {ADVERTISER_OPTIONS.map((entry) => (
+                    <option key={entry.id} value={entry.id}>{entry.name}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="mt-3 flex flex-wrap gap-2">
+              <span className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-blue-50 text-blue-700 border border-blue-200">
+                Platforms: {countryConfig.platforms.join(', ')}
+              </span>
+              <span className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-amber-50 text-amber-700 border border-amber-200">
+                Regulation: {regulations.title}
+              </span>
+            </div>
+          </div>
+        </div>
         <div key={`${currentPage}-${countryCode}-${advertiserId}`} className="animate-fadeIn">
           {currentPage === 'targeting' ? (
             <AudienceTargeting />
