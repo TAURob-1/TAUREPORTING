@@ -160,12 +160,69 @@ function extractPersonas(text) {
   return personas;
 }
 
+function parseCurrencyAmount(value) {
+  if (!value) return null;
+  const clean = String(value).replace(/,/g, '').trim();
+  const moneyMatch = clean.match(/(?:[$£€]\s*)?(\d+(?:\.\d+)?)\s*([kmb])?/i);
+  if (!moneyMatch) return null;
+
+  const base = Number.parseFloat(moneyMatch[1]);
+  if (Number.isNaN(base)) return null;
+
+  const unit = (moneyMatch[2] || '').toLowerCase();
+  if (unit === 'm') return Math.round(base * 1000000);
+  if (unit === 'k') return Math.round(base * 1000);
+  if (unit === 'b') return Math.round(base * 1000000000);
+  return Math.round(base);
+}
+
+function extractBudgetSignals(text) {
+  const lines = text.split('\n');
+  let campaignBudget = null;
+  const mediaBudgets = {};
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim().replace(/^[-*]\s*/, '');
+    if (!line) continue;
+
+    const campaignMatch = line.match(/^(?:total\s+)?campaign\s+budget\s*[:=-]\s*(.+)$/i);
+    if (campaignMatch) {
+      const amount = parseCurrencyAmount(campaignMatch[1]);
+      if (amount && amount > 0) campaignBudget = amount;
+      continue;
+    }
+
+    const genericBudgetMatch = line.match(/^budget\s*[:=-]\s*(.+)$/i);
+    if (genericBudgetMatch && campaignBudget == null) {
+      const amount = parseCurrencyAmount(genericBudgetMatch[1]);
+      if (amount && amount > 0) campaignBudget = amount;
+      continue;
+    }
+
+    const channelBudgetMatch = line.match(/^([a-z0-9&/+\- .]{2,40})\s*(?:budget|allocation)?\s*[:=-]\s*(.+)$/i);
+    if (!channelBudgetMatch) continue;
+
+    const channel = channelBudgetMatch[1].trim().toLowerCase().replace(/\s+/g, '_');
+    const amount = parseCurrencyAmount(channelBudgetMatch[2]);
+    if (channel && amount && amount > 0) {
+      mediaBudgets[channel] = amount;
+    }
+  }
+
+  return {
+    campaignBudget,
+    mediaBudgets,
+    mediaBudgetsDetected: Object.keys(mediaBudgets).length > 0,
+  };
+}
+
 export function parseAIResponse(responseText) {
   const text = typeof responseText === 'string' ? responseText : '';
   const layersDetected = extractLayerNumbers(text);
   const hasLayerHeaders = /##\s*Layer\s*\d+/i.test(text);
   const flightingData = extractFlights(text);
   const personasData = extractPersonas(text);
+  const budgetSignals = extractBudgetSignals(text);
 
   return {
     mediaPlanDetected: hasLayerHeaders,
@@ -175,6 +232,8 @@ export function parseAIResponse(responseText) {
     personasDetected: personasData.length > 0,
     personasData,
     layersDetected,
+    campaignBudget: budgetSignals.campaignBudget,
+    mediaBudgets: budgetSignals.mediaBudgets,
+    mediaBudgetsDetected: budgetSignals.mediaBudgetsDetected,
   };
 }
-

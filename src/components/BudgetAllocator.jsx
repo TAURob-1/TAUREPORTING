@@ -22,7 +22,7 @@ function formatHouseholds(n) {
 }
 
 const BudgetAllocator = ({ onMetricsChange }) => {
-  const { countryCode, countryConfig } = usePlatform();
+  const { countryCode, countryConfig, planningState } = usePlatform();
   const [totalBudget, setTotalBudget] = useState(500000);
   const [budgetInput, setBudgetInput] = useState('500,000');
   const [mode, setMode] = useState('auto');
@@ -50,6 +50,34 @@ const BudgetAllocator = ({ onMetricsChange }) => {
     setTotalBudget(defaultBudget);
     setBudgetInput(defaultBudget.toLocaleString());
   }, [countryCode, providers]);
+
+  useEffect(() => {
+    if (!planningState?.campaignBudget || planningState.campaignBudget <= 0) return;
+    setTotalBudget(planningState.campaignBudget);
+    setBudgetInput(planningState.campaignBudget.toLocaleString());
+  }, [planningState?.campaignBudget]);
+
+  useEffect(() => {
+    const mediaBudgets = planningState?.mediaBudgets || {};
+    const entries = Object.entries(mediaBudgets).filter(([, value]) => Number(value) > 0);
+    if (entries.length === 0) return;
+
+    const nextAllocations = {};
+    const nextEnabled = new Set();
+    entries.forEach(([providerId, value]) => {
+      const amount = Number(value) || 0;
+      if (amount > 0) {
+        nextAllocations[providerId] = amount;
+        nextEnabled.add(providerId);
+      }
+    });
+
+    if (Object.keys(nextAllocations).length > 0) {
+      setMode('custom');
+      setAllocations(nextAllocations);
+      setEnabledProviders(nextEnabled);
+    }
+  }, [planningState?.mediaBudgets]);
 
   const enabledIds = useMemo(() => Array.from(enabledProviders), [enabledProviders]);
 

@@ -45,7 +45,9 @@ function buildContextEnvelope(message, plannerContext) {
     country,
     signalContext,
     layerProgress,
-    mediaPlan
+    mediaPlan,
+    campaignConfig,
+    planningState,
   } = plannerContext;
 
   // Build rich context prefix
@@ -59,6 +61,15 @@ ${signalContext || 'No Signal data selected'}
 [Planning State]
 Layers completed: ${Object.keys(layerProgress || {}).length} of 7
 Media plan status: ${mediaPlan?.markdown ? `In progress (${mediaPlan.markdown.length} chars)` : 'Not started'}
+
+[Campaign Configuration]
+Campaign Name: ${campaignConfig?.campaignName || 'Unknown'}
+Dates: ${campaignConfig?.startDate || 'Unknown'} to ${campaignConfig?.endDate || 'Unknown'}
+Primary Audience: ${campaignConfig?.primaryAudience || 'Unknown'}
+Campaign Budget: ${planningState?.campaignBudget ? `${country?.currencySymbol || '$'}${planningState.campaignBudget.toLocaleString()}` : 'Not set'}
+Media Budgets: ${planningState?.mediaBudgets && Object.keys(planningState.mediaBudgets).length > 0
+    ? JSON.stringify(planningState.mediaBudgets)
+    : 'Not set'}
 
 [System Instructions]
 ${systemPrompt}

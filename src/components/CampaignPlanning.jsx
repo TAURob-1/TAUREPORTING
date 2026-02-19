@@ -31,7 +31,7 @@ function getGeoCode(feature, countryCode) {
 }
 
 const CampaignPlanning = () => {
-  const { advertiser, countryCode, countryConfig, setPlanningState } = usePlatform();
+  const { advertiser, countryCode, countryConfig, campaignConfig, planningState, setPlanningState } = usePlatform();
   const [selectedZIPs, setSelectedZIPs] = useState(new Set());
   const [hoveredZIP, setHoveredZIP] = useState(null);
   const [geoJsonData, setGeoJsonData] = useState(null);
@@ -231,6 +231,22 @@ const CampaignPlanning = () => {
           <p className="text-sm text-gray-600 mt-1">
             Allocate budget, optimize reach, and select target markets
           </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <span className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-blue-50 text-blue-700 border border-blue-200">
+              {campaignConfig.campaignName}
+            </span>
+            <span className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-gray-50 text-gray-700 border border-gray-200">
+              {campaignConfig.startDate} to {campaignConfig.endDate}
+            </span>
+            <span className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-indigo-50 text-indigo-700 border border-indigo-200">
+              Primary Audience: {campaignConfig.primaryAudience}
+            </span>
+            {!!planningState.campaignBudget && (
+              <span className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                AI Budget: {countryConfig.currencySymbol}{planningState.campaignBudget.toLocaleString()}
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Budget Allocator — full width */}

@@ -4,6 +4,7 @@ import USAMapWithAudience from './USAMapWithAudience';
 import CustomAudienceBuilder from './CustomAudienceBuilder';
 import { generateRecommendations, scoreZIPsForAudience } from '../data/audienceDefinitions';
 import { usePlatform } from '../context/PlatformContext.jsx';
+import { AUDIENCES } from '../data/audienceDefinitions';
 
 const PRESETS = [
   { label: '60/40 Split', minScore: 40, exposedRatio: 0.6 },
@@ -12,7 +13,7 @@ const PRESETS = [
 ];
 
 const AudienceTargeting = () => {
-  const { countryCode, countryConfig } = usePlatform();
+  const { countryCode, countryConfig, campaignConfig, updateCampaignConfig } = usePlatform();
   const [selectedAudience, setSelectedAudience] = useState(null);
   const [demographicsData, setDemographicsData] = useState(null);
   const [recommendations, setRecommendations] = useState(null);
@@ -26,6 +27,13 @@ const AudienceTargeting = () => {
   const [customAudiences, setCustomAudiences] = useState([]);
   const [showBuilder, setShowBuilder] = useState(false);
   const [isSegmentSelectorExpanded, setIsSegmentSelectorExpanded] = useState(true);
+
+  const countryAudiences = useMemo(() => {
+    return Object.values(AUDIENCES).filter((audience) => {
+      if (countryCode === 'UK') return audience.ukSegment === true;
+      return !audience.ukSegment;
+    });
+  }, [countryCode]);
 
   // Load demographics data (country-appropriate)
   useEffect(() => {
@@ -58,6 +66,17 @@ const AudienceTargeting = () => {
       setRecommendations(null);
     }
   }, [selectedAudience, demographicsData, settings]);
+
+  useEffect(() => {
+    if (selectedAudience) return;
+    const primaryName = String(campaignConfig.primaryAudience || '').trim().toLowerCase();
+    if (!primaryName) return;
+    const match = countryAudiences.find((audience) => audience.name.toLowerCase() === primaryName);
+    if (match) {
+      setSelectedAudience(match);
+      setIsSegmentSelectorExpanded(false);
+    }
+  }, [campaignConfig.primaryAudience, countryAudiences, selectedAudience]);
 
   // Compute live slider stats from scored ZIPs
   const sliderStats = useMemo(() => {
@@ -144,6 +163,25 @@ const AudienceTargeting = () => {
         <p className="text-blue-100">
           Select your target audience and get AI-powered {countryConfig.geoUnit} recommendations for exposed and holdout groups
         </p>
+        <div className="mt-4">
+          <label className="block text-xs font-semibold text-blue-100 uppercase tracking-wide mb-1">
+            Primary Audience
+          </label>
+          <input
+            type="text"
+            list="audience-primary-options"
+            value={campaignConfig.primaryAudience}
+            onChange={(e) => updateCampaignConfig({ primaryAudience: e.target.value })}
+            className="w-full md:w-96 px-3 py-2 rounded-md text-sm text-gray-900"
+          />
+          <datalist id="audience-primary-options">
+            <option value="Men 18-35" />
+            <option value="Women 25-54" />
+            <option value="Adults 18-49" />
+            <option value="Parents 25-44" />
+            <option value="Seniors 55+" />
+          </datalist>
+        </div>
       </div>
 
       {/* Audience Selector */}

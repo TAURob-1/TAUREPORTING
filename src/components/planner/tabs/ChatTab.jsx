@@ -4,14 +4,57 @@ import { usePlatform } from '../../../context/PlatformContext';
 import { sendPlannerMessage } from '../../../services/plannerChat';
 import { getSelectedSignalContext } from '../../../data/signalIntegration';
 import { parseAIResponse } from '../../../utils/plannerResponseParser';
+import { getProviderPlanning } from '../../../data/countryPlanning';
+
+function normalizeBudgetKey(value) {
+  return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/(^_|_$)/g, '');
+}
 
 export default function ChatTab() {
   const { state, addChatMessage, updateMediaPlan, updateLayerProgress, addFlightingData, addPersonasData } = usePlanner();
-  const { advertiser, countryConfig } = usePlatform();
+  const {
+    advertiser,
+    countryCode,
+    countryConfig,
+    campaignConfig,
+    planningState,
+    setPlanningState,
+    addAdvertiser,
+  } = usePlatform();
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [notification, setNotification] = useState(null);
+
+  const mapMediaBudgetsToProviders = (mediaBudgets) => {
+    const entries = Object.entries(mediaBudgets || {});
+    if (entries.length === 0) return {};
+
+    const providerPlanning = getProviderPlanning(countryCode);
+    const providerNameToId = Object.values(providerPlanning).reduce((acc, provider) => {
+      acc[normalizeBudgetKey(provider.name)] = provider.id;
+      acc[normalizeBudgetKey(provider.id)] = provider.id;
+      return acc;
+    }, {});
+
+    return entries.reduce((acc, [channelKey, budget]) => {
+      const normalized = normalizeBudgetKey(channelKey);
+      const providerId = providerNameToId[normalized];
+      if (providerId && budget > 0) {
+        acc[providerId] = budget;
+      }
+      return acc;
+    }, {});
+  };
+
+  const handleAddAdvertiser = () => {
+    const name = window.prompt('Enter new advertiser name');
+    if (!name) return;
+    const created = addAdvertiser(name);
+    if (!created) return;
+    setNotification(`Advertiser created: ${created.name}`);
+    setTimeout(() => setNotification(null), 4000);
+  };
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
@@ -39,6 +82,8 @@ export default function ChatTab() {
         signalContext: getSelectedSignalContext(state.selectedDataSources, state.signalData),
         layerProgress: state.layerProgress,
         mediaPlan: state.mediaPlan,
+        campaignConfig,
+        planningState,
       };
 
       const responseText = await sendPlannerMessage(messageText, plannerContext);
@@ -75,6 +120,22 @@ export default function ChatTab() {
         updates.push(`${parsed.personasData.length} persona(s) saved`);
       }
 
+      const providerBudgets = mapMediaBudgetsToProviders(parsed.mediaBudgets);
+      if (parsed.campaignBudget || Object.keys(providerBudgets).length > 0) {
+        setPlanningState((prev) => ({
+          ...prev,
+          campaignBudget: parsed.campaignBudget || prev.campaignBudget || 0,
+          mediaBudgets: Object.keys(providerBudgets).length > 0 ? providerBudgets : (prev.mediaBudgets || {}),
+        }));
+
+        if (parsed.campaignBudget) {
+          updates.push(`Campaign budget synced: ${countryConfig.currencySymbol}${parsed.campaignBudget.toLocaleString()}`);
+        }
+        if (Object.keys(providerBudgets).length > 0) {
+          updates.push(`Media budgets synced: ${Object.keys(providerBudgets).length} provider(s)`);
+        }
+      }
+
       if (updates.length > 0) {
         setNotification(updates.join(' • '));
       } else {
@@ -102,6 +163,19 @@ export default function ChatTab() {
 
   return (
     <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <div className="text-sm text-gray-500 dark:text-slate-400">
+          Active advertiser: <span className="font-medium text-gray-800 dark:text-slate-200">{advertiser.name}</span>
+        </div>
+        <button
+          type="button"
+          onClick={handleAddAdvertiser}
+          className="px-3 py-1.5 text-sm border border-gray-300 dark:border-slate-700 rounded-md hover:bg-gray-50 dark:hover:bg-slate-800 transition-colors"
+        >
+          + New Advertiser
+        </button>
+      </div>
+
       {notification && (
         <div className="bg-green-50 border border-green-200 rounded p-2 text-sm text-green-700">
           ✅ {notification}

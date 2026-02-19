@@ -6,7 +6,7 @@ import SignalIntelligence from './components/SignalIntelligence';
 import StrategicAdvisor from './components/StrategicAdvisor';
 import MediaReach from './components/MediaReach';
 import { usePlatform } from './context/PlatformContext.jsx';
-import { ADVERTISER_OPTIONS, COUNTRY_OPTIONS, PLATFORM_BRAND } from './config/platformConfig';
+import { COUNTRY_OPTIONS, PLATFORM_BRAND } from './config/platformConfig';
 import { getRegulations } from './data/marketData';
 
 const PAGES = [
@@ -24,9 +24,12 @@ function App() {
     countryCode,
     setCountryCode,
     countryConfig,
+    advertisers,
     advertiserId,
     setAdvertiserId,
     advertiser,
+    campaignConfig,
+    updateCampaignConfig,
   } = usePlatform();
   const regulations = useMemo(() => getRegulations(countryCode, advertiser), [countryCode, advertiser]);
 
@@ -99,10 +102,56 @@ function App() {
                   onChange={(e) => setAdvertiserId(e.target.value)}
                   className="px-3 py-1.5 rounded-md border border-gray-300 dark:border-slate-700 text-sm bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-200"
                 >
-                  {ADVERTISER_OPTIONS.map((entry) => (
+                  {advertisers.map((entry) => (
                     <option key={entry.id} value={entry.id}>{entry.name}</option>
                   ))}
                 </select>
+              </div>
+            </div>
+            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-2">
+              <div className="lg:col-span-2">
+                <label className="text-[11px] text-gray-500 dark:text-slate-300 font-medium">Campaign Name</label>
+                <input
+                  type="text"
+                  value={campaignConfig.campaignName}
+                  onChange={(e) => updateCampaignConfig({ campaignName: e.target.value })}
+                  className="mt-1 w-full px-3 py-1.5 rounded-md border border-gray-300 dark:border-slate-700 text-sm bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-200"
+                />
+              </div>
+              <div>
+                <label className="text-[11px] text-gray-500 dark:text-slate-300 font-medium">Start Date</label>
+                <input
+                  type="date"
+                  value={campaignConfig.startDate}
+                  onChange={(e) => updateCampaignConfig({ startDate: e.target.value })}
+                  className="mt-1 w-full px-3 py-1.5 rounded-md border border-gray-300 dark:border-slate-700 text-sm bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-200"
+                />
+              </div>
+              <div>
+                <label className="text-[11px] text-gray-500 dark:text-slate-300 font-medium">End Date</label>
+                <input
+                  type="date"
+                  value={campaignConfig.endDate}
+                  onChange={(e) => updateCampaignConfig({ endDate: e.target.value })}
+                  className="mt-1 w-full px-3 py-1.5 rounded-md border border-gray-300 dark:border-slate-700 text-sm bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-200"
+                />
+              </div>
+              <div>
+                <label className="text-[11px] text-gray-500 dark:text-slate-300 font-medium">Primary Audience</label>
+                <input
+                  type="text"
+                  list="primary-audience-options"
+                  value={campaignConfig.primaryAudience}
+                  onChange={(e) => updateCampaignConfig({ primaryAudience: e.target.value })}
+                  className="mt-1 w-full px-3 py-1.5 rounded-md border border-gray-300 dark:border-slate-700 text-sm bg-white dark:bg-slate-900 text-gray-700 dark:text-slate-200"
+                />
+                <datalist id="primary-audience-options">
+                  <option value="Men 18-35" />
+                  <option value="Women 25-54" />
+                  <option value="Adults 18-49" />
+                  <option value="Parents 25-44" />
+                  <option value="Seniors 55+" />
+                </datalist>
               </div>
             </div>
             <div className="mt-3 flex flex-wrap gap-2">
