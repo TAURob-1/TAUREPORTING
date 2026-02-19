@@ -10,16 +10,16 @@ import { ADVERTISER_OPTIONS, COUNTRY_OPTIONS, PLATFORM_BRAND } from './config/pl
 import { getRegulations } from './data/marketData';
 
 const PAGES = [
+  { key: 'advisor', label: 'Planner', fullLabel: 'AI Planner' },
   { key: 'targeting', label: 'Audience', fullLabel: 'Audience Targeting' },
   { key: 'planning', label: 'Planning', fullLabel: 'Campaign Planning' },
   { key: 'results', label: 'Results', fullLabel: 'Campaign Results' },
   { key: 'media', label: 'Media', fullLabel: 'Media Reach' },
   { key: 'signal', label: 'Intelligence', fullLabel: 'Signal Intelligence' },
-  { key: 'advisor', label: 'AI', fullLabel: 'AI Advisor' },
 ];
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('targeting');
+  const [currentPage, setCurrentPage] = useState('advisor');
   const {
     countryCode,
     setCountryCode,
@@ -31,12 +31,13 @@ function App() {
   const regulations = useMemo(() => getRegulations(countryCode, advertiser), [countryCode, advertiser]);
 
   const statusLabel = useMemo(() => {
+    if (currentPage === 'advisor') return 'AI Planning';
     if (currentPage === 'targeting') return 'Audience Setup';
     if (currentPage === 'planning') return 'Pre-Campaign';
     if (currentPage === 'results') return 'Live Campaign';
     if (currentPage === 'media') return 'Media Reach';
     if (currentPage === 'signal') return 'Intelligence';
-    return 'AI Advisor';
+    return 'AI Planning';
   }, [currentPage]);
 
   return (

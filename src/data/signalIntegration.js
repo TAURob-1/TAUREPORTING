@@ -1,3 +1,5 @@
+import { formatSignalForPlanner } from '../services/signalDataLoader';
+
 const SIGNAL_ROOT = '/home/r2/Signal/companies';
 
 const SIGNAL_FILES = {
@@ -378,4 +380,24 @@ export async function getAdvisorContext(advertiserId = 'demo', countryCode = 'US
     },
     planningPriorities: data.advisorBrief.planningPriorities,
   };
+}
+
+export function getSelectedSignalContext(selectedDataSources = [], signalDataOrAdvertiser = null) {
+  if (!selectedDataSources || selectedDataSources.length === 0) {
+    return 'No Signal data sources selected. Enable data sources in the menu to include competitive intelligence.';
+  }
+
+  if (
+    signalDataOrAdvertiser &&
+    typeof signalDataOrAdvertiser === 'object' &&
+    'available' in signalDataOrAdvertiser
+  ) {
+    return formatSignalForPlanner(signalDataOrAdvertiser, selectedDataSources);
+  }
+
+  if (typeof signalDataOrAdvertiser === 'string' && signalDataOrAdvertiser.trim()) {
+    return `Signal data requested for advertiser: ${signalDataOrAdvertiser}`;
+  }
+
+  return 'Signal data loading...';
 }
