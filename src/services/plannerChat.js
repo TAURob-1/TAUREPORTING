@@ -13,12 +13,11 @@ export async function sendPlannerMessage(message, plannerContext) {
   console.log('[Planner] Context preview:', envelope.messages[0].content.substring(0, 300));
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    // Use local proxy server to avoid CORS issues
+    const response = await fetch('http://localhost:5176/api/chat', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
