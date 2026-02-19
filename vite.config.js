@@ -12,6 +12,12 @@ export default defineConfig({
     port: 5174,
     host: '0.0.0.0',
     allowedHosts: true,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5176',
+        changeOrigin: true,
+      },
+    },
     fs: {
       allow: [
         searchForWorkspaceRoot(process.cwd()),

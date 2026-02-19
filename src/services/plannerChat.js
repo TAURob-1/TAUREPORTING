@@ -9,7 +9,7 @@ export async function sendPlannerMessage(message, plannerContext) {
 
   try {
     // Use local proxy server to avoid CORS issues
-    const response = await fetch('http://localhost:5176/api/chat', {
+    const response = await fetch('/api/chat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
