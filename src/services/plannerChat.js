@@ -1,12 +1,7 @@
 // TAU-Reporting Planner Chat Service
 // Uses Anthropic API directly for AI planning conversations
 
-const ANTHROPIC_API_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY;
-
 export async function sendPlannerMessage(message, plannerContext) {
-  if (!ANTHROPIC_API_KEY) {
-    throw new Error('ANTHROPIC_API_KEY not configured. Add VITE_ANTHROPIC_API_KEY to .env file.');
-  }
 
   const envelope = buildContextEnvelope(message, plannerContext);
   console.log('[Planner] Sending to Anthropic API');
