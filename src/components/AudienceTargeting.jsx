@@ -12,6 +12,92 @@ const PRESETS = [
   { label: '80/20', minScore: 60, exposedRatio: 0.8 },
 ];
 
+function normalizeText(value) {
+  return String(value || '').trim().toLowerCase();
+}
+
+function getAgeCriteria(primaryAudienceText) {
+  const text = normalizeText(primaryAudienceText);
+  const criteria = [];
+  const rangeMatch = text.match(/(\d{1,2})\s*-\s*(\d{1,2})/);
+  const plusMatch = text.match(/(\d{1,2})\s*\+/);
+
+  if (rangeMatch) {
+    const min = Number.parseInt(rangeMatch[1], 10);
+    const max = Number.parseInt(rangeMatch[2], 10);
+    if (min <= 24) criteria.push({ field: 'age_under_25_pct', weight: 20, min: 10, target: 22 });
+    if (min <= 44 && max >= 25) criteria.push({ field: 'age_25_44_pct', weight: 40, min: 22, target: 35 });
+    if (min <= 64 && max >= 45) criteria.push({ field: 'age_45_64_pct', weight: 35, min: 22, target: 35 });
+    if (max >= 65) criteria.push({ field: 'age_65_plus_pct', weight: 35, min: 15, target: 28 });
+  } else if (plusMatch) {
+    const min = Number.parseInt(plusMatch[1], 10);
+    if (min >= 55) {
+      criteria.push({ field: 'age_65_plus_pct', weight: 45, min: 15, target: 30 });
+      criteria.push({ field: 'households_senior_pct', weight: 25, min: 20, target: 35 });
+    } else if (min >= 45) {
+      criteria.push({ field: 'age_45_64_pct', weight: 45, min: 22, target: 36 });
+      criteria.push({ field: 'age_65_plus_pct', weight: 20, min: 12, target: 24 });
+    } else {
+      criteria.push({ field: 'age_25_44_pct', weight: 45, min: 22, target: 38 });
+    }
+  }
+
+  return criteria;
+}
+
+function buildPlannerAudience(primaryAudienceText, countryCode) {
+  const audienceName = String(primaryAudienceText || '').trim();
+  if (!audienceName) return null;
+
+  const text = normalizeText(primaryAudienceText);
+  const criteria = [...getAgeCriteria(text)];
+
+  if (/\b(men|male)\b/.test(text)) {
+    criteria.push({ field: 'age_45_64_pct', weight: 20, min: 20, target: 32 });
+  }
+  if (/\b(women|female)\b/.test(text)) {
+    criteria.push({ field: 'age_25_44_pct', weight: 20, min: 24, target: 38 });
+  }
+
+  if (/\b(affluent|wealthy|luxury|high\s*net\s*worth|rich)\b/.test(text)) {
+    criteria.push({ field: 'income_100k_plus', weight: 40, min: 20, target: 38 });
+    criteria.push({ field: 'income_150k_plus', weight: 25, min: 10, target: 24 });
+  } else if (/\b(budget|value|working class|mass)\b/.test(text)) {
+    criteria.push({ field: 'income_under_50k', weight: 40, min: 28, target: 42 });
+    criteria.push({ field: 'income_50_75k', weight: 25, min: 18, target: 28 });
+  } else {
+    criteria.push({ field: 'income_50_75k', weight: 25, min: 16, target: 28 });
+    criteria.push({ field: 'income_75_100k', weight: 20, min: 14, target: 24 });
+  }
+
+  if (/\b(parent|family|kids?|children)\b/.test(text)) {
+    criteria.push({ field: 'households_middle_pct', weight: 25, min: 35, target: 50 });
+    criteria.push({ field: 'households_young_pct', weight: 15, min: 15, target: 28 });
+  }
+
+  if (/\b(student|gen z|youth|young)\b/.test(text)) {
+    criteria.push({ field: 'age_under_25_pct', weight: 30, min: 12, target: 24 });
+    criteria.push({ field: 'households_young_pct', weight: 20, min: 16, target: 30 });
+  }
+
+  if (criteria.length < 3) {
+    criteria.push({ field: 'age_25_44_pct', weight: 35, min: 22, target: 36 });
+    criteria.push({ field: 'households_middle_pct', weight: 20, min: 35, target: 50 });
+  }
+
+  return {
+    id: `planner_primary_${countryCode.toLowerCase()}`,
+    name: audienceName,
+    description: `Planner primary audience from campaign setup: ${audienceName}`,
+    icon: '🎯',
+    color: '#1d4ed8',
+    isCustom: true,
+    isPlannerPrimary: true,
+    locked: true,
+    criteria: criteria.slice(0, 5),
+  };
+}
+
 const AudienceTargeting = () => {
   const { countryCode, countryConfig, campaignConfig, updateCampaignConfig } = usePlatform();
   const [selectedAudience, setSelectedAudience] = useState(null);
@@ -34,6 +120,19 @@ const AudienceTargeting = () => {
       return !audience.ukSegment;
     });
   }, [countryCode]);
+
+  const plannerAudience = useMemo(
+    () => buildPlannerAudience(campaignConfig.primaryAudience, countryCode),
+    [campaignConfig.primaryAudience, countryCode]
+  );
+
+  useEffect(() => {
+    setCustomAudiences((prev) => {
+      const withoutPlanner = prev.filter((audience) => !audience.isPlannerPrimary);
+      if (!plannerAudience) return withoutPlanner;
+      return [plannerAudience, ...withoutPlanner];
+    });
+  }, [plannerAudience]);
 
   // Load demographics data (country-appropriate)
   useEffect(() => {
@@ -75,8 +174,14 @@ const AudienceTargeting = () => {
     if (match) {
       setSelectedAudience(match);
       setIsSegmentSelectorExpanded(false);
+      return;
     }
-  }, [campaignConfig.primaryAudience, countryAudiences, selectedAudience]);
+
+    if (plannerAudience) {
+      setSelectedAudience(plannerAudience);
+      setIsSegmentSelectorExpanded(false);
+    }
+  }, [campaignConfig.primaryAudience, countryAudiences, plannerAudience, selectedAudience]);
 
   // Compute live slider stats from scored ZIPs
   const sliderStats = useMemo(() => {
@@ -134,6 +239,7 @@ const AudienceTargeting = () => {
   };
 
   const handleRemoveCustomAudience = (audienceId) => {
+    if (audienceId === plannerAudience?.id) return;
     setCustomAudiences(prev => prev.filter(a => a.id !== audienceId));
     if (selectedAudience?.id === audienceId) {
       setSelectedAudience(null);

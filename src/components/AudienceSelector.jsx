@@ -114,16 +114,17 @@ const AudienceSelector = ({
                       : 'border-gray-200 bg-white hover:border-gray-300'
                   }`}
                 >
-                  {/* Remove button */}
-                  <div
-                    className="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-sm cursor-pointer z-10 w-5 h-5 flex items-center justify-center rounded-full hover:bg-red-50"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onRemoveCustomAudience(audience.id);
-                    }}
-                  >
-                    &times;
-                  </div>
+                  {!audience.locked && (
+                    <div
+                      className="absolute top-2 right-2 text-gray-400 hover:text-red-500 text-sm cursor-pointer z-10 w-5 h-5 flex items-center justify-center rounded-full hover:bg-red-50"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onRemoveCustomAudience(audience.id);
+                      }}
+                    >
+                      &times;
+                    </div>
+                  )}
                   <div className="flex items-start gap-3">
                     <div className="text-2xl">{audience.icon}</div>
                     <div className="flex-1 min-w-0">
