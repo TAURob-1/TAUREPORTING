@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { ADVERTISER_OPTIONS, COUNTRY_CONFIG } from '../config/platformConfig';
+import { segmentAudience } from '../lib/campaign/smartDefaults';
 
 const PlatformContext = createContext(null);
 const ADVERTISERS_STORAGE_KEY = 'tau_advertisers';
@@ -97,6 +98,10 @@ export function PlatformProvider({ children }) {
   const countryConfig = COUNTRY_CONFIG[countryCode] || COUNTRY_CONFIG.US;
   const advertiser = advertisers.find((entry) => entry.id === advertiserId) || advertisers[0] || ADVERTISER_OPTIONS[0];
   const campaignStorageKey = `tau_campaign_${advertiserId}_${countryCode}`;
+  const audienceStrategy = useMemo(
+    () => segmentAudience(campaignConfig.primaryAudience, countryCode),
+    [campaignConfig.primaryAudience, countryCode]
+  );
 
   useEffect(() => {
     setCustomAdvertisers(readStoredAdvertisers());
@@ -239,6 +244,7 @@ export function PlatformProvider({ children }) {
     updateCampaignConfig,
     planningState,
     setPlanningState,
+    audienceStrategy,
     advertiser: {
       ...advertiser,
       slug: slugify(advertiser?.name || 'advertiser'),
@@ -254,6 +260,7 @@ export function PlatformProvider({ children }) {
     updateCampaignConfig,
     planningState,
     setPlanningState,
+    audienceStrategy,
     advertiser,
   ]);
 

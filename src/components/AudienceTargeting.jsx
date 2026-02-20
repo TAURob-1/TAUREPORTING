@@ -99,7 +99,7 @@ function buildPlannerAudience(primaryAudienceText, countryCode) {
 }
 
 const AudienceTargeting = () => {
-  const { countryCode, countryConfig, campaignConfig, updateCampaignConfig } = usePlatform();
+  const { countryCode, countryConfig, campaignConfig, updateCampaignConfig, audienceStrategy } = usePlatform();
   const [selectedAudience, setSelectedAudience] = useState(null);
   const [demographicsData, setDemographicsData] = useState(null);
   const [recommendations, setRecommendations] = useState(null);
@@ -122,8 +122,8 @@ const AudienceTargeting = () => {
   }, [countryCode]);
 
   const plannerAudience = useMemo(
-    () => buildPlannerAudience(campaignConfig.primaryAudience, countryCode),
-    [campaignConfig.primaryAudience, countryCode]
+    () => buildPlannerAudience(audienceStrategy.primaryAudience, countryCode),
+    [audienceStrategy.primaryAudience, countryCode]
   );
 
   useEffect(() => {
@@ -168,7 +168,7 @@ const AudienceTargeting = () => {
 
   useEffect(() => {
     if (selectedAudience) return;
-    const primaryName = String(campaignConfig.primaryAudience || '').trim().toLowerCase();
+    const primaryName = String(audienceStrategy.primaryAudience || '').trim().toLowerCase();
     if (!primaryName) return;
     const match = countryAudiences.find((audience) => audience.name.toLowerCase() === primaryName);
     if (match) {
@@ -181,7 +181,7 @@ const AudienceTargeting = () => {
       setSelectedAudience(plannerAudience);
       setIsSegmentSelectorExpanded(false);
     }
-  }, [campaignConfig.primaryAudience, countryAudiences, plannerAudience, selectedAudience]);
+  }, [audienceStrategy.primaryAudience, countryAudiences, plannerAudience, selectedAudience]);
 
   // Compute live slider stats from scored ZIPs
   const sliderStats = useMemo(() => {
@@ -286,7 +286,24 @@ const AudienceTargeting = () => {
             <option value="Adults 18-49" />
             <option value="Parents 25-44" />
             <option value="Seniors 55+" />
+            <option value="Affluent UK Adults" />
+            <option value="UK Ultra High Net Worth Individuals" />
           </datalist>
+        </div>
+        <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="bg-white/90 rounded-md px-3 py-2 text-xs text-gray-800">
+            <span className="font-semibold text-gray-900">Primary (Geo):</span> {audienceStrategy.primaryAudience}
+            {Number.isFinite(audienceStrategy.sizeEstimate) && (
+              <span className="ml-2 text-gray-600">~{audienceStrategy.sizeEstimate.toLocaleString()} UK</span>
+            )}
+          </div>
+          <div className="bg-white/90 rounded-md px-3 py-2 text-xs text-gray-800">
+            <span className="font-semibold text-gray-900">Secondary (Refinement):</span>{' '}
+            {audienceStrategy.secondaryAudience || 'None'}
+          </div>
+          <div className="md:col-span-2 bg-blue-100/80 rounded-md px-3 py-2 text-xs text-blue-900">
+            {audienceStrategy.reasoning}
+          </div>
         </div>
       </div>
 

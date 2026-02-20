@@ -17,6 +17,7 @@ export default function ChatTab() {
     countryCode,
     countryConfig,
     campaignConfig,
+    audienceStrategy,
     planningState,
     setPlanningState,
     addAdvertiser,
@@ -174,6 +175,18 @@ export default function ChatTab() {
         >
           + New Advertiser
         </button>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div className="bg-blue-50 border border-blue-200 rounded p-2 text-sm text-blue-900">
+          <span className="font-semibold">Primary (Geo):</span> {audienceStrategy.primaryAudience}
+        </div>
+        <div className="bg-indigo-50 border border-indigo-200 rounded p-2 text-sm text-indigo-900">
+          <span className="font-semibold">Secondary:</span> {audienceStrategy.secondaryAudience || 'None'}
+        </div>
+      </div>
+      <div className="bg-gray-50 border border-gray-200 rounded p-2 text-xs text-gray-700">
+        {audienceStrategy.reasoning}
       </div>
 
       {notification && (
