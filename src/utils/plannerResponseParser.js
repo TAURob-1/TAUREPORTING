@@ -216,6 +216,47 @@ function extractBudgetSignals(text) {
   };
 }
 
+function extractMediaMixSignals(text) {
+  const lines = text.split('\n');
+  const mediaMix = {};
+  const pairRegex = /([a-z][a-z0-9 &/+\-]{1,30})\s*[:=-]?\s*(\d{1,3})\s*%/gi;
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim().replace(/^[-*]\s*/, '');
+    if (!line) continue;
+
+    let matchedAny = false;
+    const pairs = [...line.matchAll(pairRegex)];
+    pairs.forEach((match) => {
+      const rawKey = String(match[1] || '').trim().toLowerCase();
+      const value = Number.parseInt(match[2], 10);
+      if (!rawKey || Number.isNaN(value) || value <= 0) return;
+      const key = rawKey.replace(/\s+/g, '_');
+      mediaMix[key] = value;
+      matchedAny = true;
+    });
+
+    if (matchedAny) continue;
+
+    if (!/media mix|channel mix|allocation/i.test(line)) continue;
+    const inlinePairs = [...line.matchAll(/(\d{1,3})\s*%\s*([a-z][a-z0-9 &/+\-]{1,30})/gi)];
+    inlinePairs.forEach((match) => {
+      const value = Number.parseInt(match[1], 10);
+      const rawKey = String(match[2] || '').trim().toLowerCase();
+      if (!rawKey || Number.isNaN(value) || value <= 0) return;
+      const key = rawKey.replace(/\s+/g, '_');
+      mediaMix[key] = value;
+    });
+  }
+
+  const totalPct = Object.values(mediaMix).reduce((sum, value) => sum + value, 0);
+  return {
+    mediaMix,
+    mediaMixDetected: Object.keys(mediaMix).length > 0,
+    mediaMixTotalPct: totalPct,
+  };
+}
+
 export function parseAIResponse(responseText) {
   const text = typeof responseText === 'string' ? responseText : '';
   const layersDetected = extractLayerNumbers(text);
@@ -223,6 +264,7 @@ export function parseAIResponse(responseText) {
   const flightingData = extractFlights(text);
   const personasData = extractPersonas(text);
   const budgetSignals = extractBudgetSignals(text);
+  const mediaMixSignals = extractMediaMixSignals(text);
 
   return {
     mediaPlanDetected: hasLayerHeaders,
@@ -235,5 +277,8 @@ export function parseAIResponse(responseText) {
     campaignBudget: budgetSignals.campaignBudget,
     mediaBudgets: budgetSignals.mediaBudgets,
     mediaBudgetsDetected: budgetSignals.mediaBudgetsDetected,
+    mediaMix: mediaMixSignals.mediaMix,
+    mediaMixDetected: mediaMixSignals.mediaMixDetected,
+    mediaMixTotalPct: mediaMixSignals.mediaMixTotalPct,
   };
 }

@@ -79,6 +79,72 @@ export function buildCampaignInheritance({
   };
 }
 
+const CATEGORY_PROVIDER_MAP = {
+  UK: {
+    digital: ['youtube_ctv_uk', 'itvx', 'c4_streaming'],
+    tv: ['itv_linear', 'channel4_linear', 'sky_linear'],
+    audio: ['youtube_ctv_uk'],
+    social: ['youtube_ctv_uk'],
+    search: ['youtube_ctv_uk'],
+  },
+  US: {
+    digital: ['youtube_ctv', 'roku', 'tiktok_ctv', 'tubi'],
+    tv: ['hulu', 'peacock', 'paramount_plus', 'netflix', 'max_hbo'],
+    audio: ['youtube_ctv'],
+    social: ['tiktok_ctv', 'youtube_ctv'],
+    search: ['youtube_ctv'],
+  },
+};
+
+function normalizeChannelKey(key) {
+  return String(key || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '')
+    .trim();
+}
+
+function mapChannelToCategory(key) {
+  const normalized = normalizeChannelKey(key);
+  if (!normalized) return null;
+  if (normalized.includes('digit')) return 'digital';
+  if (normalized.includes('tv') || normalized.includes('linear') || normalized.includes('broadcast')) return 'tv';
+  if (normalized.includes('audio') || normalized.includes('radio')) return 'audio';
+  if (normalized.includes('social') || normalized.includes('meta') || normalized.includes('tiktok')) return 'social';
+  if (normalized.includes('search') || normalized.includes('google')) return 'search';
+  return null;
+}
+
+function distributeEvenly(amount, providerIds = []) {
+  if (!providerIds.length || amount <= 0) return {};
+  const perProvider = Math.floor(amount / providerIds.length);
+  const remainder = amount - perProvider * providerIds.length;
+  return providerIds.reduce((acc, id, index) => {
+    acc[id] = perProvider + (index === 0 ? remainder : 0);
+    return acc;
+  }, {});
+}
+
+export function mapMediaMixToProviderBudgets(mediaMix, campaignBudget, countryCode = 'US') {
+  const totalBudget = Number(campaignBudget) || 0;
+  if (totalBudget <= 0 || !mediaMix || typeof mediaMix !== 'object') return {};
+
+  const categoryMap = CATEGORY_PROVIDER_MAP[countryCode] || CATEGORY_PROVIDER_MAP.US;
+  const allocations = {};
+  const entries = Object.entries(mediaMix).filter(([, pct]) => Number(pct) > 0);
+
+  entries.forEach(([channel, pct]) => {
+    const category = mapChannelToCategory(channel);
+    const providerIds = (category && categoryMap[category]) || categoryMap.digital || [];
+    const amount = Math.round((Number(pct) / 100) * totalBudget);
+    const split = distributeEvenly(amount, providerIds);
+    Object.entries(split).forEach(([providerId, budget]) => {
+      allocations[providerId] = (allocations[providerId] || 0) + budget;
+    });
+  });
+
+  return allocations;
+}
+
 export function getAudienceMediaRecommendations(audienceName = '') {
   const text = String(audienceName || '').toLowerCase();
 

@@ -43,6 +43,7 @@ function getDefaultPlanningState() {
     totalImpressions: 0,
     campaignBudget: 0,
     mediaBudgets: {},
+    mediaMixRecommendations: {},
   };
 }
 

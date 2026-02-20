@@ -5,6 +5,7 @@ import { sendPlannerMessage } from '../../../services/plannerChat';
 import { getSelectedSignalContext } from '../../../data/signalIntegration';
 import { parseAIResponse } from '../../../utils/plannerResponseParser';
 import { getProviderPlanning } from '../../../data/countryPlanning';
+import { buildCampaignInheritance, mapMediaMixToProviderBudgets } from '../../../lib/campaign/smartDefaults';
 
 function normalizeBudgetKey(value) {
   return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/(^_|_$)/g, '');
@@ -122,18 +123,32 @@ export default function ChatTab() {
       }
 
       const providerBudgets = mapMediaBudgetsToProviders(parsed.mediaBudgets);
-      if (parsed.campaignBudget || Object.keys(providerBudgets).length > 0) {
+      const inheritance = buildCampaignInheritance({
+        aiBudget: parsed.campaignBudget,
+        aiMediaBudgets: parsed.mediaMix,
+        fallbackBudget: planningState?.campaignBudget || 0,
+      });
+      const derivedProviderBudgets =
+        Object.keys(providerBudgets).length > 0
+          ? providerBudgets
+          : mapMediaMixToProviderBudgets(inheritance.mediaMix, inheritance.campaignBudget, countryCode);
+
+      if (parsed.campaignBudget || Object.keys(derivedProviderBudgets).length > 0 || parsed.mediaMixDetected) {
         setPlanningState((prev) => ({
           ...prev,
-          campaignBudget: parsed.campaignBudget || prev.campaignBudget || 0,
-          mediaBudgets: Object.keys(providerBudgets).length > 0 ? providerBudgets : (prev.mediaBudgets || {}),
+          campaignBudget: inheritance.campaignBudget || prev.campaignBudget || 0,
+          mediaBudgets: Object.keys(derivedProviderBudgets).length > 0 ? derivedProviderBudgets : (prev.mediaBudgets || {}),
+          mediaMixRecommendations: inheritance.mediaMix || prev.mediaMixRecommendations || {},
         }));
 
         if (parsed.campaignBudget) {
           updates.push(`Campaign budget synced: ${countryConfig.currencySymbol}${parsed.campaignBudget.toLocaleString()}`);
         }
-        if (Object.keys(providerBudgets).length > 0) {
-          updates.push(`Media budgets synced: ${Object.keys(providerBudgets).length} provider(s)`);
+        if (parsed.mediaMixDetected) {
+          updates.push(`Media mix captured: ${Object.keys(parsed.mediaMix).length} channel(s)`);
+        }
+        if (Object.keys(derivedProviderBudgets).length > 0) {
+          updates.push(`Media budgets synced: ${Object.keys(derivedProviderBudgets).length} provider(s)`);
         }
       }
 

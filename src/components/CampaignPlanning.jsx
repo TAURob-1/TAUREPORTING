@@ -246,6 +246,11 @@ const CampaignPlanning = () => {
                 AI Budget: {countryConfig.currencySymbol}{planningState.campaignBudget.toLocaleString()}
               </span>
             )}
+            {!!planningState.mediaMixRecommendations && Object.keys(planningState.mediaMixRecommendations).length > 0 && (
+              <span className="px-2.5 py-1 rounded-full text-[11px] font-medium bg-purple-50 text-purple-700 border border-purple-200">
+                AI Mix: {Object.entries(planningState.mediaMixRecommendations).map(([channel, pct]) => `${channel.replace(/_/g, ' ')} ${pct}%`).join(' • ')}
+              </span>
+            )}
           </div>
         </div>
 
