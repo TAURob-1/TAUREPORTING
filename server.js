@@ -4,6 +4,8 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
+import fs from 'node:fs/promises';
+import path from 'node:path';
 
 const app = express();
 const PORT = process.env.API_PORT || 5176;
@@ -11,6 +13,32 @@ const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || process.env.VITE_ANTH
 
 app.use(cors());
 app.use(express.json());
+
+const MEDIA_ROOT = '/home/r2/Signal/Media';
+
+async function tryReadJson(filePath) {
+  try {
+    const raw = await fs.readFile(filePath, 'utf8');
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+app.get('/api/media/:resource', async (req, res) => {
+  const resource = String(req.params.resource || '').toLowerCase();
+  if (!['channels', 'ctv', 'radio'].includes(resource)) {
+    return res.status(400).json({ error: 'Unsupported media resource' });
+  }
+
+  const direct = await tryReadJson(path.join(MEDIA_ROOT, `${resource}.json`));
+  if (direct) return res.json(Array.isArray(direct) ? direct : (direct.items || []));
+
+  const ukMedia = await tryReadJson(path.join(MEDIA_ROOT, 'uk-media', `${resource}.json`));
+  if (ukMedia) return res.json(Array.isArray(ukMedia) ? ukMedia : (ukMedia.items || []));
+
+  return res.json([]);
+});
 
 // Proxy endpoint for Anthropic API
 app.post('/api/chat', async (req, res) => {

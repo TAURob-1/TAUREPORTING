@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { usePlatform } from '../context/PlatformContext.jsx';
 import {
   getCountryMarketContext,
@@ -6,6 +6,7 @@ import {
   getMediaDataQuality,
   getMediaIntelligenceSummary,
 } from '../data/marketData';
+import { loadSignalMediaData } from '../lib/media/signalDataLoader';
 
 function toNumber(value) {
   if (typeof value === 'number') return value;
@@ -33,6 +34,25 @@ function deriveHouseholdReach(row, households) {
 
 function MediaReach() {
   const { countryCode } = usePlatform();
+  const [signalMedia, setSignalMedia] = useState({
+    channels: [],
+    ctv: [],
+    radio: [],
+    hasSignalData: false,
+    source: 'Loading...',
+  });
+
+  useEffect(() => {
+    let mounted = true;
+    loadSignalMediaData().then((data) => {
+      if (!mounted) return;
+      setSignalMedia(data);
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   const marketContext = useMemo(() => getCountryMarketContext(countryCode), [countryCode]);
   const mediaReach = useMemo(() => getMediaReachTable(countryCode), [countryCode]);
   const dataQuality = useMemo(() => getMediaDataQuality(countryCode), [countryCode]);
@@ -74,6 +94,9 @@ function MediaReach() {
                   Signal refresh: {intelligenceSummary.generatedAt.slice(0, 10)}
                 </span>
               )}
+              <span className="px-2 py-1 rounded-full border border-slate-500/60 bg-slate-800/30">
+                Signal media: {signalMedia.channels.length + signalMedia.ctv.length + signalMedia.radio.length} records
+              </span>
             </div>
           </div>
         </section>
