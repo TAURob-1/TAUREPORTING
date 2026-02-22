@@ -131,17 +131,29 @@ ${docContent}`
 
 **Go beyond paid media:** Use Signal intelligence to identify strategic advantages competitors lack.
 
-Consider:
-1. **Owned channel leverage** (direct traffic %, engaged user base, reactivation opportunities)
-2. **AI visibility gaps** (where we show up vs competitors)
-3. **Reactivation vs acquisition economics** (existing player database)
-4. **Market timing windows** (competitor activity, seasonal gaps)
-5. **Creative differentiation** (unique positioning angles)
-6. **Emerging platform advantages** (where competitors aren't yet)
-7. **Data & targeting precision** (proprietary audience insights)
-8. **Geographic arbitrage** (focus vs broad reach)
+**Standard Strategic Levers:**
+1. Owned channel leverage (direct traffic %, reactivation opportunities)
+2. AI visibility gaps (where we show up vs competitors)
+3. Reactivation vs acquisition economics (warm audience first)
+4. Market timing windows (competitor gaps, seasonal opportunities)
+5. Creative differentiation (unique positioning angles)
+6. Emerging platform advantages (where competitors aren't yet)
+7. Data & targeting precision (proprietary insights)
+8. Geographic arbitrage (legendary in 1 city vs famous in 8)
 
-Then provide the conventional paid media plan separately.`
+**Advanced Provocations (Gaming/Gambling):**
+9. Positioning psychology: Own an uncomfortable truth ("honest about odds" vs generic "fun")
+10. Product experience > media spend (first 90 seconds in app matters more than £4.2M media)
+11. Turn compliance into brand (responsible gambling message AS the ad, not small print)
+12. Geographic cultural embedding (become part of a city's identity, let story spread)
+13. Reframe competitive set (competing against Netflix/boredom, not other casinos)
+14. Make social competition real (shareable mechanics that generate organic content)
+15. Age restriction as positioning ("not for kids" = premium signal, not constraint)
+16. Price as quality signal (premium tier makes free tier feel valuable)
+17. Optimize for memorability (500K remarkable > 5M ordinary)
+18. Define the brand blank ("${advertiserName} is the one that ___" - what goes there?)
+
+Prioritize the 3-4 most distinctive strategic advantages, then provide conventional paid media plan separately.`
   }
 ];
 
