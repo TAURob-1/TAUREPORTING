@@ -232,6 +232,12 @@ export function PlatformProvider({ children }) {
     });
   }, []);
 
+  const resetPlanningSession = useCallback(() => {
+    setCampaignConfig(getDefaultCampaignConfig());
+    setPlanningStateRaw(getDefaultPlanningState());
+    setCustomSecondary('');
+  }, []);
+
   const addAdvertiser = useCallback((name) => {
     const trimmed = String(name || '').trim();
     if (!trimmed) return null;
@@ -272,6 +278,7 @@ export function PlatformProvider({ children }) {
     audienceStrategy,
     customSecondary,
     setCustomSecondary,
+    resetPlanningSession,
     advertiser: {
       ...advertiser,
       slug: slugify(advertiser?.name || 'advertiser'),
@@ -289,6 +296,7 @@ export function PlatformProvider({ children }) {
     setPlanningState,
     audienceStrategy,
     customSecondary,
+    resetPlanningSession,
     advertiser,
   ]);
 

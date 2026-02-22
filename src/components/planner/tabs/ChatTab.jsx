@@ -26,7 +26,7 @@ const CHAT_MODES = [
 ];
 
 export default function ChatTab() {
-  const { state, addChatMessage, updateMediaPlan, updateLayerProgress, addFlightingData, addPersonasData, clearChatHistory } = usePlanner();
+  const { state, addChatMessage, updateMediaPlan, updateLayerProgress, addFlightingData, addPersonasData, resetToDefaults } = usePlanner();
   const {
     advertiser,
     countryCode,
@@ -36,6 +36,7 @@ export default function ChatTab() {
     planningState,
     setPlanningState,
     addAdvertiser,
+    resetPlanningSession,
   } = usePlatform();
   const [activeMode, setActiveMode] = useState('7-stage');
   const [input, setInput] = useState('');
@@ -357,7 +358,8 @@ export default function ChatTab() {
           {state.chatHistory.length > 0 && (
             <button
               onClick={() => {
-                clearChatHistory();
+                resetToDefaults();
+                resetPlanningSession();
                 setUploadedFile(null);
                 setDocumentContent(null);
                 setError(null);
