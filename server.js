@@ -150,18 +150,25 @@ app.post('/api/chat', requireAuth, async (req, res) => {
   }
 });
 
-// Serve static files from dist directory in production (AFTER all API routes)
-if (process.env.NODE_ENV === 'production') {
-  const __dirname = path.dirname(new URL(import.meta.url).pathname);
-  const distPath = path.join(__dirname, 'dist');
-  
-  // Serve static files
-  app.use(express.static(distPath));
-  
-  // SPA fallback - serve index.html for any unmatched routes
-  app.use((req, res) => {
-    res.sendFile(path.join(distPath, 'index.html'));
-  });
+// Serve static files from dist directory (AFTER all API routes)
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+const distPath = path.join(__dirname, 'dist');
+
+try {
+  const distExists = await fs.access(distPath).then(() => true).catch(() => false);
+  if (distExists) {
+    app.use(express.static(distPath));
+
+    // SPA fallback - serve index.html for any unmatched routes
+    app.use((req, res) => {
+      res.sendFile(path.join(distPath, 'index.html'));
+    });
+    console.log('Static files served from dist/');
+  } else {
+    console.log('No dist/ folder found — run npm run build or use vite dev server');
+  }
+} catch {
+  console.log('No dist/ folder found — run npm run build or use vite dev server');
 }
 
 app.listen(PORT, '0.0.0.0', () => {
