@@ -1,6 +1,5 @@
-// Signal data - only available in local development
-// import ukMediaIntelligence from '/home/r2/Signal/markets/uk/media/summary/uk_media_intelligence.json';
-const ukMediaIntelligence = null; // Fallback for production deployment
+// Signal data - disabled for Railway deployment
+const ukMediaIntelligence = null;
 
 export const COUNTRY_MARKET_CONTEXT = {
   UK: {
