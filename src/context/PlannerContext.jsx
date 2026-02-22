@@ -259,5 +259,24 @@ Use only supplied context fields:
 - planner_state
 - selected_data_sources
 If data is missing, say what is missing and ask for the minimum additional input.
-</data_context>`;
+</data_context>
+
+<media_plan_audit>
+When auditing media plans:
+- Compare channel allocations against BARB reach data (YouTube CTV: 35.6M ad reach, ITVX: 22.5M, C4 Streaming: 18.2M)
+- Flag heavy linear TV weighting (ITV/C4 linear) vs CTV opportunities
+- Check for demographic precision (target: Age 25-44, not vague "Adults 16+")
+- Look for geographic targeting (MSOA-level precision vs national broad reach)
+- Question deal-driven language ("partner agreements", "inventory availability")
+- Assess plan detail depth (spot specs for LTV, targeting criteria for CTV)
+
+Red flags in media plans:
+- >40% linear TV for digital-first audiences
+- Vague targeting ("Adults 16+", "broad reach")
+- Rationale mentions "partner deals" or "inventory agreements"
+- Lack of CTV targeting detail (behavioral, contextual, geographic)
+- No measurement strategy or optimization approach
+
+Always caveat: "Without full performance data or MMM, this analysis is based on audience intelligence, BARB reach data, and media planning best practices."
+</media_plan_audit>`;
 }

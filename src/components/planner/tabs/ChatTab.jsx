@@ -31,6 +31,42 @@ const QUICK_ACTIONS = [
       `Based on this brief for ${advertiserName} ${campaignName}, please provide a detailed paid media plan with budget recommendations:\n\n${docContent}`
   },
   {
+    id: 'audit-plan',
+    label: '🔍 Audit Media Plan',
+    requiresDoc: true,
+    template: (advertiserName, campaignName, docContent) => 
+      `Please audit this media plan for ${advertiserName} ${campaignName}.
+
+Focus your analysis on:
+1. **Audience Alignment** - Does the channel mix reach the right demographic? (Spin Masters = Age 25-44, slots-led, mobile-first)
+2. **Budget Allocation** - Is spend weighted toward high-performing channels or potential agency deals?
+3. **Plan Detail** - Are targeting specs sufficient? Do we have spot details, CTV targeting criteria, geographic strategy?
+4. **Red Flags** - Anything that suggests deal-driven vs performance-driven allocation?
+
+Use BARB data context (YouTube CTV: 35.6M reach, ITVX: 22.5M, C4: 18.2M) and Tombola's audience (71.58% direct traffic, engaged base, mobile-first).
+
+Caveat your analysis: "We don't have full performance data or MMM, but based on available intelligence..."
+
+Media Plan:
+${docContent}`
+  },
+  {
+    id: 'agency-questions',
+    label: '❓ Questions for Agency',
+    requiresDoc: true,
+    template: (advertiserName, campaignName, docContent) =>
+      `Based on this media plan for ${advertiserName} ${campaignName}, generate a list of specific questions to ask the agency (Mediacom) to:
+1. Understand their rationale
+2. Uncover any deal-driven vs performance-driven decisions
+3. Get missing targeting details
+4. Clarify measurement strategy
+
+Focus on areas where the plan lacks specificity or seems misaligned with the Spin Masters target audience.
+
+Media Plan:
+${docContent}`
+  },
+  {
     id: 'competitive',
     label: '🎯 Competitive Analysis',
     requiresDoc: false,
@@ -113,6 +149,11 @@ export default function ChatTab() {
     return await file.text();
   };
 
+  const extractTextFromCSV = async (file) => {
+    const text = await file.text();
+    return text; // Simple pass-through, AI can parse CSV format
+  };
+
   const handleFileUpload = async (event) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -125,10 +166,10 @@ export default function ChatTab() {
     }
 
     // Validate file type
-    const validTypes = ['.pdf', '.txt', '.docx'];
+    const validTypes = ['.pdf', '.txt', '.docx', '.csv'];
     const fileExt = '.' + file.name.split('.').pop().toLowerCase();
     if (!validTypes.includes(fileExt)) {
-      setError('Please upload PDF, DOCX, or TXT files');
+      setError('Please upload PDF, DOCX, TXT, or CSV files');
       setTimeout(() => setError(null), 5000);
       return;
     }
@@ -143,9 +184,11 @@ export default function ChatTab() {
         extractedText = await extractTextFromPDF(file);
       } else if (fileExt === '.txt') {
         extractedText = await extractTextFromTxt(file);
+      } else if (fileExt === '.csv') {
+        extractedText = await extractTextFromCSV(file);
       } else if (fileExt === '.docx') {
         // For now, show an error for DOCX - can be implemented later
-        throw new Error('DOCX support coming soon. Please use PDF or TXT for now.');
+        throw new Error('DOCX support coming soon. Please use PDF, TXT, or CSV for now.');
       }
 
       // Truncate if too long (limit to ~50k characters to stay within token limits)
@@ -158,10 +201,11 @@ export default function ChatTab() {
       setUploadedFile({
         name: file.name,
         size: file.size,
-        wordCount
+        wordCount,
+        type: fileExt
       });
       setDocumentContent(extractedText);
-      setNotification(`✅ Document loaded - ${wordCount.toLocaleString()} words processed`);
+      setNotification(`✅ ${fileExt === '.csv' ? 'Media plan' : 'Document'} loaded - ${wordCount.toLocaleString()} words processed`);
       setTimeout(() => setNotification(null), 5000);
     } catch (err) {
       setError(err.message || 'Failed to process document');
@@ -374,21 +418,37 @@ export default function ChatTab() {
 
       {/* Document Upload Badge */}
       {uploadedFile && (
-        <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-lg p-3 flex items-center justify-between">
+        <div className={`${
+          uploadedFile.type === '.csv' 
+            ? 'bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800' 
+            : 'bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800'
+        } rounded-lg p-3 flex items-center justify-between`}>
           <div className="flex items-center gap-2">
-            <span className="text-2xl">📄</span>
+            <span className="text-2xl">{uploadedFile.type === '.csv' ? '📊' : '📄'}</span>
             <div>
-              <p className="text-sm font-medium text-purple-900 dark:text-purple-100">
-                Document attached: {uploadedFile.name}
+              <p className={`text-sm font-medium ${
+                uploadedFile.type === '.csv'
+                  ? 'text-orange-900 dark:text-orange-100'
+                  : 'text-purple-900 dark:text-purple-100'
+              }`}>
+                {uploadedFile.type === '.csv' ? 'Media Plan' : 'Document'} attached: {uploadedFile.name}
               </p>
-              <p className="text-xs text-purple-700 dark:text-purple-300">
+              <p className={`text-xs ${
+                uploadedFile.type === '.csv'
+                  ? 'text-orange-700 dark:text-orange-300'
+                  : 'text-purple-700 dark:text-purple-300'
+              }`}>
                 {uploadedFile.wordCount.toLocaleString()} words • {(uploadedFile.size / 1024).toFixed(1)} KB
               </p>
             </div>
           </div>
           <button
             onClick={handleRemoveDocument}
-            className="px-2 py-1 text-xs text-purple-700 dark:text-purple-300 hover:text-purple-900 dark:hover:text-purple-100 transition-colors"
+            className={`px-2 py-1 text-xs ${
+              uploadedFile.type === '.csv'
+                ? 'text-orange-700 dark:text-orange-300 hover:text-orange-900 dark:hover:text-orange-100'
+                : 'text-purple-700 dark:text-purple-300 hover:text-purple-900 dark:hover:text-purple-100'
+            } transition-colors`}
           >
             ✕ Remove
           </button>
@@ -467,7 +527,7 @@ export default function ChatTab() {
           type="file"
           ref={fileInputRef}
           onChange={handleFileUpload}
-          accept=".pdf,.txt,.docx"
+          accept=".pdf,.txt,.docx,.csv"
           className="hidden"
         />
         <button
