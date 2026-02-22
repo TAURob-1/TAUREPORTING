@@ -1,0 +1,18 @@
+Channel,Sub-Channel,Budget (£),% of Total,Reach (M),CPM (£),Rationale,Targeting Detail,Flight Dates
+CTV,YouTube CTV,1500000,35.7,35.6,42.13,"Hero channel, 57.8% UK reach, 17% SOV, 41 min/day. Age 25-44 indexing high","Age 25-44, gaming/entertainment affinities, MSOA geo-targeting (500 priority areas)",Apr-Jun 2026
+CTV,ITVX,600000,14.3,22.5,26.67,"BVOD efficiency, 34.7% reach, 100% ad-supported. Slots-led content adjacencies","Age 25-44, catch-up + on-demand, contextual targeting (entertainment, gaming)",Apr-Jun 2026
+CTV,Channel 4 Streaming,400000,9.5,18.2,21.98,"Younger demo strength, 28% reach. E4 + Film4 adjacencies for Spin Masters","Age 25-44, VOD premium environments, gaming/reality programming",Apr-Jun 2026
+Linear TV,Targeted Spots (C4/Sky Sports),300000,7.1,N/A,N/A,"Gaming moments only: Horse racing, football pre-match. Not mass dayparts","Male 25-54, gaming events, weekend slots only. 15-30 sec spots",Apr-Jun 2026
+Digital Display,Programmatic Display (MSOA-targeted),800000,19.0,N/A,N/A,"Geographic concentration: 500 priority MSOAs. Age/income/occupation filters","Age 25-44, £30-60K income, urban, professional/skilled trades. Retargeting + prospecting",Apr-Jun 2026
+Social,Meta (Facebook/Instagram),400000,9.5,N/A,N/A,"Mobile-first Spin Masters. Gaming interest targeting, lookalikes from high-LTV players","Age 25-44, mobile gaming affinities, casino/slots interests, video creative",Apr-Jun 2026
+Programmatic Audio,Spotify + Podcast,200000,4.8,N/A,N/A,"Mobile contextual: gaming podcasts, sports, entertainment. Commute dayparts","Age 25-44, gaming/sports/entertainment listeners, geo-targeted to priority MSOAs",Apr-Jun 2026
+
+Total,N/A,4200000,100.0,N/A,N/A,N/A,N/A,N/A
+
+Notes:
+- CTV-first strategy (59.5% allocation vs 53.5% linear TV in alternative plan)
+- YouTube CTV hero (35.7% vs 14.3%) based on 35.6M ad reach, highest SOV
+- MSOA geographic targeting: 500 priority areas (Age 25-44, £30-60K income, urban)
+- Contextual + behavioral precision (gaming affinities, slots interests)
+- Linear TV minimized to targeted moments only (gaming events, not mass dayparts)
+- 20-30% efficiency gain expected vs national campaigns through geo-concentration
