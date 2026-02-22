@@ -7,7 +7,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 
 const app = express();
-const PORT = process.env.PORT || process.env.API_PORT || 5176;
+const PORT = process.env.PORT || 5176;
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || process.env.VITE_ANTHROPIC_API_KEY;
 const SESSION_SECRET = process.env.SESSION_SECRET || 'tau-reporting-secret-change-in-production';
 
@@ -149,7 +149,7 @@ app.post('/api/chat', requireAuth, async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 TAU-Reporting API proxy running on port ${PORT}`);
   console.log(`   API key configured: ${ANTHROPIC_API_KEY ? 'YES' : 'NO'}`);
   console.log(`   Auth enabled: ${Object.keys(USERS).length} users`);
