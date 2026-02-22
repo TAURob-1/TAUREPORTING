@@ -124,10 +124,24 @@ ${docContent}`
   },
   {
     id: 'competitive',
-    label: '🎯 Competitive Analysis',
+    label: '🎯 How to Compete',
     requiresDoc: false,
     template: (advertiserName, campaignName) =>
-      `Please provide a competitive analysis for ${advertiserName} using available Signal data. Focus on market positioning and competitor media strategies.`
+      `How should ${advertiserName} compete in this crowded market?
+
+**Go beyond paid media:** Use Signal intelligence to identify strategic advantages competitors lack.
+
+Consider:
+1. **Owned channel leverage** (direct traffic %, engaged user base, reactivation opportunities)
+2. **AI visibility gaps** (where we show up vs competitors)
+3. **Reactivation vs acquisition economics** (existing player database)
+4. **Market timing windows** (competitor activity, seasonal gaps)
+5. **Creative differentiation** (unique positioning angles)
+6. **Emerging platform advantages** (where competitors aren't yet)
+7. **Data & targeting precision** (proprietary audience insights)
+8. **Geographic arbitrage** (focus vs broad reach)
+
+Then provide the conventional paid media plan separately.`
   }
 ];
 
