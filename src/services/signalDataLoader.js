@@ -17,6 +17,7 @@ const SIGNAL_FILES = {
   summaryStrategic: import.meta.glob('/home/r2/Signal/companies/*/summary/strategic_brief.md', { query: '?raw', import: 'default' }),
   summaryJsonRoot: import.meta.glob('/home/r2/Signal/companies/*/summary.json', { import: 'default' }),
   summaryJsonSummary: import.meta.glob('/home/r2/Signal/companies/*/summary/summary.json', { import: 'default' }),
+  strategicBrief: import.meta.glob('/home/r2/Signal/companies/*/strategic_brief/*.txt', { query: '?raw', import: 'default' }),
 };
 
 const ADVERTISER_SLUG_HINTS = {
@@ -69,12 +70,14 @@ function createEmptySignalData(slug = null) {
     competitive: null,
     spend: null,
     summary: null,
+    strategicBrief: null,
     available: {
       traffic: false,
       seo: false,
       spend: false,
       insights: false,
       summary: false,
+      strategicBrief: false,
     },
   };
 }
@@ -345,6 +348,24 @@ export async function loadSignalData(advertiserSlug, countryCode = 'US') {
   }
   data.available.summary = Boolean(data.summary);
 
+  // Load strategic brief files (multi-part text files)
+  const strategicBriefParts = [];
+  for (let i = 1; i <= 4; i++) {
+    const part = await loadFromPaths(
+      SIGNAL_FILES.strategicBrief,
+      resolvedSlug,
+      [`strategic_brief/tombola_co_uk_strategic_brief_part${i}.txt`]
+    );
+    if (part) {
+      strategicBriefParts.push(part);
+    }
+  }
+  
+  if (strategicBriefParts.length > 0) {
+    data.strategicBrief = strategicBriefParts.join('\n\n---\n\n');
+    data.available.strategicBrief = true;
+  }
+
   SIGNAL_CACHE.set(cacheKey, data);
   return data;
 }
@@ -355,6 +376,11 @@ export function formatSignalForPlanner(signalData, selectedSources = []) {
   }
 
   const sections = [];
+
+  // Strategic brief takes priority if available
+  if (signalData.strategicBrief && (selectedSources.length === 0 || selectedSources.includes('strategicBrief'))) {
+    sections.push('**Strategic Intelligence Brief:**\n\n' + signalData.strategicBrief);
+  }
 
   if (selectedSources.includes('traffic') && signalData.traffic) {
     sections.push(formatTrafficData(signalData.traffic));
