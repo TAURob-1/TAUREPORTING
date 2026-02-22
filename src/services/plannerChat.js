@@ -48,10 +48,11 @@ function buildContextEnvelope(message, plannerContext) {
     mediaPlan,
     campaignConfig,
     planningState,
+    documentContent,
   } = plannerContext;
 
   // Build rich context prefix
-  const contextPrefix = `[Platform Context]
+  let contextPrefix = `[Platform Context]
 Advertiser: ${advertiser?.name || 'Unknown'}
 Country: ${country?.shortLabel || 'Unknown'}
 
@@ -76,13 +77,21 @@ ${systemPrompt}
 
 ---
 
-User message: `;
+`;
+
+  // If document content is provided, include it in the message
+  let fullMessage = message;
+  if (documentContent) {
+    // The message already contains the document content from the template,
+    // so we just pass it through
+    fullMessage = message;
+  }
 
   return {
     messages: [
       {
         role: 'user',
-        content: contextPrefix + message
+        content: contextPrefix + 'User message: ' + fullMessage
       }
     ]
   };
