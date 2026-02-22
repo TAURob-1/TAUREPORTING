@@ -23,19 +23,21 @@ const QUICK_ACTIONS = [
     template: (advertiserName, campaignName, docContent) => 
       `Here is our planning brief for ${advertiserName} ${campaignName}. Please analyze:
 
-**1) What do you think of the brief and how can it be improved?**
+**1) What do you think of the brief and how can it be improved?** (MODE 1: Consultative)
 - Acknowledge what's strong first
 - If target audience is broad (e.g., "18-44 men" = 11M+ people), note that budget + frequency constraints mean only partial reach is possible
-- Suggest sub-segmentation beneath broad demographics (behavioral, contextual, geographic, attitudinal)
+- SUGGEST clarifying sub-segmentation: "You might want to clarify: what sub-segment prioritization exists beneath this broad demographic?"
 - Use Signal data as SUPPORTING context (e.g., "Signal shows ${advertiserName}'s current strength is [demographic], so this brief represents audience expansion")
-- If geographic targeting is absent, SUGGEST it as an option: "A geo-focused approach COULD help maximize budget and enable holdout testing" (don't mandate)
+- If geographic targeting is absent, SUGGEST it as an option: "A geo-focused approach COULD help maximize budget and enable holdout testing"
 
-**2) What would you recommend as a plan? Paid media only.**
-- Provide channel allocation with rationale
-- Cite BARB reach data where relevant (YouTube CTV: 35.6M, ITVX: 22.5M, C4: 18.2M)
-- Include targeting precision (not vague "Adults 18+" but behavioral/contextual/geographic)
-- Acknowledge if brief lacks detail: "We'd need to clarify [X] with the client before finalizing allocation"
-- Always caveat: "Indicative plan based on available data. [Client/Agency] to validate with proprietary sources."
+**2) What would you recommend as a plan? Paid media only.** (MODE 2: Directive - Take Ownership)
+- Be confident and specific: "We recommend..." not "You could consider..."
+- **Geographic strategy:** If appropriate, be forthright: "We recommend starting focused: concentrate Month 1 spend on 500 high-propensity MSOAs (20-30% CPM reduction, enables holdout testing). Prove-out, then scale Month 2-3 if CPA targets hold."
+- **Targeting precision:** Specify behavioral, contextual, geographic (not vague "Adults 18+")
+  - "Target: Gaming app users, competitor site visitors, lookalike from top 20% existing players, mobile moments (commute/lunch/evening)"
+- **Channel mix:** Take a position: "This plan prioritizes mobile-first platforms (38% TikTok + Meta) where 'Spin Masters' spend media time, vs CTV (35% for scale, not dominance)"
+- Cite BARB reach data for credibility (YouTube CTV: 35.6M, ITVX: 22.5M, C4: 18.2M)
+- Always caveat: "Indicative plan based on available data. Performance to be validated in-flight."
 
 Planning Brief:
 ${docContent}`
@@ -45,7 +47,22 @@ ${docContent}`
     label: '📊 Media Plan Only',
     requiresDoc: true,
     template: (advertiserName, campaignName, docContent) =>
-      `Based on this brief for ${advertiserName} ${campaignName}, please provide a detailed paid media plan with budget recommendations:\n\n${docContent}`
+      `Based on this brief for ${advertiserName} ${campaignName}, please provide a detailed paid media plan with budget recommendations.
+
+**MODE 2: Directive - Take ownership of the recommendation**
+
+Be confident and specific:
+- "We recommend..." not "You could consider..."
+- **Geographic strategy:** If appropriate: "We recommend starting focused: concentrate Month 1 spend on 500 high-propensity MSOAs (20-30% CPM reduction, enables holdout testing). Prove-out, then scale Month 2-3."
+- **Targeting beneath demographics:** Specify behavioral, contextual, geographic (not vague "Adults 18+")
+  - Example: "Target: Gaming app users, competitor site visitors, lookalike from top 20% existing players, mobile moments (commute/lunch/evening)"
+- **Channel mix:** Take a position: "This plan prioritizes mobile-first platforms (38%) where target spends media time, vs CTV (35% for scale)"
+- Cite BARB reach data for credibility (YouTube CTV: 35.6M, ITVX: 22.5M, C4: 18.2M)
+- Include testing budget (10%) for creative/channel validation
+- Always caveat: "Indicative plan based on available data. Performance to be validated in-flight."
+
+Brief:
+${docContent}`
   },
   {
     id: 'audit-plan',
@@ -53,6 +70,8 @@ ${docContent}`
     requiresDoc: true,
     template: (advertiserName, campaignName, docContent) => 
       `Please audit this media plan for ${advertiserName} ${campaignName}.
+
+**MODE 1: Consultative - Help client evaluate and hold agency accountable**
 
 **Your Analysis Should:**
 1. **Acknowledge what's strong first** - What does this plan get right?
