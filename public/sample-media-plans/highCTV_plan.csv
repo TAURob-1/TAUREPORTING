@@ -1,0 +1,23 @@
+Channel,Sub-Channel,Budget (£),% of Total,Reach (M),CPM (£),Rationale,Targeting Detail,Flight Dates
+CTV,YouTube CTV,1200000,28.6,35.6,33.71,"Largest CTV platform, premium inventory, brand-safe environment","Adults 18+, connected TV households, broad reach",Apr-Jun 2026
+CTV,ITVX,800000,19.0,12.8,62.50,"BVOD leader, quality content adjacency, premium audience","Adults 18+, catch-up viewers, entertainment programming",Apr-Jun 2026
+CTV,Channel 4 Streaming,650000,15.5,9.5,68.42,"Young audience skew, on-demand growth, first-party data","Adults 18-44, streaming households",Apr-Jun 2026
+CTV,Sky AdSmart,350000,8.3,8.2,42.68,"Addressable TV, household targeting, Sky ecosystem","Sky households, postcode targeting",Apr-Jun 2026
+VOD,Netflix (when available),200000,4.8,N/A,N/A,"Premium inventory opportunity, awaiting confirmation","TBC - depends on Netflix ad tier availability",TBC
+Social,TikTok,250000,6.0,18.0,13.89,"Younger demographic reach, video engagement","Age 18-34, gaming interests, video format",Apr-Jun 2026
+Social,Meta (Facebook/Instagram),300000,7.1,N/A,N/A,"Social presence, retargeting capabilities","Age 25-54, lookalike audiences, gaming interests",Apr-Jun 2026
+Display,Programmatic Display,250000,6.0,N/A,N/A,"Prospecting and retargeting, programmatic efficiency","Behavioral targeting, in-market audiences",Apr-Jun 2026
+Audio,Spotify Audio,200000,4.8,N/A,N/A,"Mobile moments, commuting audiences","Age 25-44, gaming/entertainment playlists",Apr-Jun 2026
+
+Total,N/A,4200000,100.0,N/A,N/A,N/A,N/A,N/A
+
+Notes:
+- CTV allocation (71.4%) prioritizes brand-safe, premium inventory with TV-like viewing experiences
+- YouTube CTV represents largest single allocation due to scale and targeting capabilities
+- BVOD platforms (ITVX, C4) provide quality content adjacency and first-party data
+- Social media allocation conservative pending brand safety review and creative readiness
+- TikTok and Meta combined represent 13.1% - lower risk exposure for new platform
+- Netflix allocation contingent on ad tier rollout timeline
+- Programmatic display provides flexibility for retargeting and prospecting
+- All targeting specifications to be refined during campaign setup phase
+- Performance framework and optimization strategy to follow in detailed media plan

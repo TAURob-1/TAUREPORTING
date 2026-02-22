@@ -1,0 +1,39 @@
+Channel,Sub-Channel,Budget (£),% of Total,Reach (M),CPM (£),Rationale,Targeting Detail,Flight Dates
+CTV,YouTube CTV,630000,15.0,35.6,17.70,"Scale + targeting precision, gaming content adjacency","Gaming content viewers (slots/casino channels), competitor app users (Sky Vegas/888), Age 25-44, connected TV + mobile app cross-device",Apr-Jun 2026
+CTV,ITVX,420000,10.0,12.8,32.81,"BVOD efficiency, entertainment context","Age 25-44, entertainment programming viewers, MSOA high-propensity markets (500 areas)",Apr-Jun 2026
+CTV,Channel 4 Streaming,420000,10.0,9.5,44.21,"Young demo skew, first-party data","Age 25-44, gaming-adjacent content (comedy/action), lookalike from existing players",Apr-Jun 2026
+Social,TikTok,756000,18.0,18.0,42.00,"#1 mobile platform Age 25-34, gaming vertical, UGC social proof","Lookalike from top 20% Arcade players, gaming vertical, slots hashtag engagers, Age 25-44 (not broad 18-34), Spark Ads from real winners",Apr-Jun 2026
+Social,Meta (Instagram 70% / Facebook 30%),630000,15.0,N/A,N/A,"Instagram Reels = mobile-first, Facebook gaming groups targeting","Custom audience: 175K existing players, lookalike 1-3%, Reels placement priority, gaming interest + income £30K+, Instagram 70% weighting",Apr-Jun 2026
+Digital Video,Twitch,210000,5.0,1.5,140.00,"Gaming affinity audience, live streaming, slots category","Slots streamers sponsorships, pre-roll on casino content, Age 25-44 UK viewers",Apr-Jun 2026
+Display,Programmatic Display,420000,10.0,N/A,N/A,"Retargeting + prospecting, DSP efficiency","Retargeting: site visitors, Prospecting: in-market gambling + lookalike, MSOA geo-fencing 500 high-propensity areas",Apr-Jun 2026
+Audio,Spotify + Podcast,210000,5.0,N/A,N/A,"Mobile moments (commuting), passive listening","Gaming/entertainment playlists, true crime/comedy podcasts (gambling affinity crossover), Age 25-44 commuters",Apr-Jun 2026
+Testing,Creative + Channel Testing,420000,10.0,N/A,N/A,"10 creative variants, 3 geo strategies, 5 channel mixes - April testing window","Split: £200K creative testing (10 variants, March 1-27 pre-launch), £120K geo testing (500 MSOA vs national), £100K channel mix (TikTok 20% vs YouTube 20%)",Mar-Apr 2026
+Contingency,Optimization Reserve,84000,2.0,N/A,N/A,"Scale winners from testing, fill underperforming channels","Allocated in real-time based on Week 1-2 CPA performance by channel",Apr-Jun 2026
+
+Total,N/A,4200000,100.0,N/A,N/A,N/A,N/A,N/A
+
+Targeting Precision (All Channels):
+- Age: 25-44 (not vague "18+" or "18-34")
+- Income: £30-60K (disposable income for gaming)
+- Geography: 500 high-propensity MSOAs (20-30% CPM reduction vs national)
+- Behavioral: Gaming content viewers, competitor app users, existing player lookalikes
+- Daypart: Mobile = lunch (12-2pm), commute (7-9am/5-7pm), evening (8-11pm)
+- Frequency: 3-5 exposures optimal (capped at 7 to avoid fatigue)
+
+Performance Framework:
+- Target CPA: £254 (41K NDPs = £4.2M budget / 41K target)
+- Attribution: Multi-touch, 30-day window, view-through + click-through
+- Incrementality: 10% MSOA holdout for lift testing
+- Creative Testing: 10 variants March 1-27, kill bottom 5, scale top 5 in April
+- Channel Optimization: Weekly CPA review, reallocate from >£300 CPA to <£200 CPA channels
+- Geo Strategy: Month 1 = 500 MSOAs, Month 2 = expand 1,000 MSOAs if CPA <£250, Month 3 = national if CPA holds
+
+Why This Beats Mediacom's Plan:
+1. Mobile-first (33% TikTok+Meta vs 13% Mediacom) = reaches "Spin Masters" where they are
+2. Testing budget (10% = £420K) = validates before scaling, not assumes
+3. Precision targeting (Age 25-44, income, MSOA, lookalike) vs vague "Adults 18+"
+4. Diversification (no channel >18%, no format >40%) vs Mediacom 71% CTV concentration
+5. Data leverage (175K existing players for lookalike) vs generic interest targeting
+6. Platform mix (includes Twitch, Spotify) vs Mediacom missing mobile-native platforms
+7. Performance accountability (CPA targets, weekly optimization) vs reach metrics only
+8. Geo strategy (500 MSOA concentration) vs national spray-and-pray
