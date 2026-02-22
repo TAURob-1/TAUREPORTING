@@ -26,7 +26,7 @@ function getDefaultCampaignConfig() {
     campaignName: getCurrentMonthCampaignName(),
     startDate,
     endDate,
-    primaryAudience: 'Men 18-35',
+    primaryAudience: '',
   };
 }
 
@@ -62,7 +62,7 @@ function readStoredAdvertisers() {
 
 function normalizePrimaryAudience(value) {
   const input = String(value || '').trim();
-  if (!input) return 'Men 18-35';
+  if (!input) return '';
 
   const rangeMatch = input.match(/(\d{1,2})\s*-\s*(\d{1,2})/);
   if (rangeMatch) {
@@ -109,6 +109,19 @@ export function PlatformProvider({ children }) {
   const campaignStorageKey = `tau_campaign_${advertiserId}_${countryCode}`;
   const audienceStrategy = useMemo(
     () => {
+      if (!campaignConfig.primaryAudience) {
+        return {
+          inputAudience: '',
+          primaryAudience: '',
+          secondaryAudience: customSecondary.trim() || null,
+          sizeEstimate: null,
+          category: null,
+          isNiche: false,
+          reasoning: '',
+          source: null,
+          matchedLabel: null,
+        };
+      }
       const strategy = segmentAudience(campaignConfig.primaryAudience, countryCode);
       if (customSecondary.trim()) {
         strategy.customSecondary = customSecondary.trim();

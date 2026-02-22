@@ -329,15 +329,17 @@ export default function ChatTab() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         <div className="bg-blue-50 border border-blue-200 rounded p-2 text-sm text-blue-900">
-          <span className="font-semibold">Primary (Geo):</span> {audienceStrategy.primaryAudience}
+          <span className="font-semibold">Primary (Geo):</span> {audienceStrategy.primaryAudience || <span className="italic text-gray-400">Not set yet</span>}
         </div>
         <div className="bg-indigo-50 border border-indigo-200 rounded p-2 text-sm text-indigo-900">
-          <span className="font-semibold">Secondary:</span> {audienceStrategy.secondaryAudience || 'None'}
+          <span className="font-semibold">Secondary:</span> {audienceStrategy.secondaryAudience || <span className="italic text-gray-400">Not set yet</span>}
         </div>
       </div>
-      <div className="bg-gray-50 border border-gray-200 rounded p-2 text-xs text-gray-700">
-        {audienceStrategy.reasoning}
-      </div>
+      {audienceStrategy.reasoning && audienceStrategy.primaryAudience && (
+        <div className="bg-gray-50 border border-gray-200 rounded p-2 text-xs text-gray-700">
+          {audienceStrategy.reasoning}
+        </div>
+      )}
 
       {/* Mode Toggle */}
       <div className="space-y-1">
