@@ -1,0 +1,270 @@
+Arcade 2.0 – Media Planning Response
+A Recommended Approach to Reaching Spin Masters
+Prepared by TAU  |  February 2026
+DRAFT – Indicative plan based on available data. Mediacom to validate with proprietary audience and pricing data.
+
+
+Executive Summary
+This document responds to the tombola Arcade 2.0 planning brief dated December 2025. It provides a recommended media approach for the relaunch of tombola arcade, targeting the Spin Masters audience (18–35, 58% male) with a £4.2m media budget across Q2–Q4 2026.
+The plan is built on three principles: go where the audience already lives, use formats that match the brand’s energy, and make every pound work harder through creative distinctiveness rather than outspending competitors.
+Key recommendation: A video-first, mobile-first media plan weighted heavily toward YouTube and TikTok, supplemented by premium addressable video (BVOD via ITVX, All4, Sky AdSmart alongside Netflix and Amazon ad tiers) and programmatic display. This is backed by BARB viewing data showing that video-sharing platforms now command 21.5% of all identified UK viewing time, with consumption patterns that precisely match Spin Masters’ “dip in and out” behaviour.
+
+
+1. Audience & Media Insights
+1.1 Where Spin Masters Spend Their Screen Time
+The brief defines Spin Masters as 18–35, majority male, fun-first gamers who dip in and out for quick entertainment. Understanding where this audience consumes media is the foundation of any effective plan. BARB’s December 2025 four-screen viewing data provides a clear picture.
+The Rise of Video-Sharing Platforms
+BARB’s December 2025 data reveals a structural shift in UK viewing that directly benefits this campaign:
+YouTube now reaches 80% of UK broadband/TV households across all devices, with 41 minutes of daily viewing per person and a 17% share of total identified viewing. In December 2025, YouTube overtook the BBC on monthly reach for the first time.
+TikTok reaches 24% of UK households on four-screen with 10.5 minutes daily and a 4.3% share. But the critical insight is the device split: TikTok reaches 24% on four-screen vs just 3.4% on TV sets. This is an almost entirely mobile-first, personal-device behaviour – exactly how Spin Masters consume content.
+Combined, video-sharing platforms now hold 21.5% of all identified UK viewing time across four screens, versus just 8.7% on TV sets alone. For an 18–35 male audience, this skew will be even more pronounced.
+
+The 4-Screen vs TV-Set Gap: Why It Matters
+BARB measures both four-screen (all devices) and TV-set-only viewing. The gap between the two reveals where consumption is happening on personal, mobile devices – the exact environment where Spin Masters engage with gambling apps.
+Source: BARB Four-Screen Dashboard & TV Sets Dashboard, December 2025
+
+The platforms with the largest four-screen-to-TV-set gaps – YouTube and TikTok – are precisely the ones where our audience is most reachable on the devices they use to play casino games. This is not coincidental; it reflects the mobile-first, short-session behaviour that defines Spin Masters.
+The Premium Addressable Video Opportunity
+The brief rules out linear TV, and rightly so at this budget. But that doesn’t mean ruling out broadcaster inventory. BVOD (broadcaster video-on-demand) and SVOD ad tiers together represent the fastest-growing premium video opportunity in UK media:
+BVOD: Broadcaster Inventory, Addressable Buying
+ITVX, All4 and Sky AdSmart allow age, gender and interest-based targeting against broadcaster content – meaning you can buy ITV and Channel 4 environments without the waste of linear schedules. For 18–35 males, BVOD offers:
+ITVX: ITV reaches 69% of UK households (BARB Dec 2025). ITVX provides addressable access to this audience with demographic and behavioural targeting, including sports, entertainment and gaming-adjacent content. Love Island, I’m a Celebrity catch-up, and live sport all index strongly with the Spin Masters demo.
+All4 (Channel 4): Channel 4 reaches 65% of UK households. All4 has historically skewed younger than other BVOD platforms, with strong 16–34 indexing. Its registered user base enables deterministic targeting.
+Sky AdSmart: Addressable TV advertising across Sky’s 57% UK household reach. Allows postcode, demographic and lifestyle targeting – particularly effective for reaching younger male sports viewers.
+SVOD Ad Tiers: Scale and Attention
+BARB subscription data (Q3 2025) shows significant ad-tier adoption:
+Netflix: 17.6m UK homes (59.5% penetration), with 35% now on ad-supported tiers – approximately 6.2m addressable homes.
+Amazon Prime Video: 13.6m homes (46% penetration), with 87% on ad-supported tiers – approximately 11.8m addressable homes.
+Disney+: 7.5m homes (25.4% penetration), with 30% on ad tiers – approximately 2.3m addressable homes.
+Combined, BVOD and SVOD ad tiers offer premium, brand-safe, high-attention video at a fraction of linear TV cost, with targeting capabilities that eliminate the waste that makes linear unviable at this budget. Amazon’s near-universal ad tier is particularly notable for scale, while BVOD gives tombola arcade presence in the UK’s most-watched entertainment environments – something a purely social-and-YouTube plan would miss.
+
+1.2 The Competitive Media Landscape
+UK licensed gambling operators spent approximately £1.15bn on advertising between October 2023 and September 2024, with £768m (67%) directed to digital channels and £341m (30%) to broadcast. Overall gambling ad spend has declined at -1.7% annually since 2021, driven largely by reduced TV spend.
+What this means for tombola arcade: The £4.2m media budget is modest relative to the competitive set. Major operators like bet365, Sky Bet, and Paddy Power each spend multiples of this figure. The plan cannot rely on outspending competitors – it must achieve disproportionate impact through channel selection, creative distinctiveness, and earned media amplification. The April tax increases may create a short-term opportunity as some smaller LTO competitors reduce spend or exit the market.
+
+
+1.3 Publisher vs Audience Grid: Reaching 18–35 Males
+The table below maps each recommended publisher against its ability to reach the Spin Masters audience (18–35 males), the targeting mechanisms available, and the key content environments that index highest for this demo. This is the core planning tool for channel selection.
+
+Video Platforms
+
+Premium Addressable Video (BVOD & SVOD)
+
+Programmatic & Other Digital
+
+Key Takeaways from the Grid
+All4 is the standout BVOD platform for this demo. It has the youngest commercial BVOD audience in the UK, with 53% of its 16–34 viewing now via streaming. It should receive the largest share of the BVOD allocation.
+ITVX and All4 both offer deterministic age targeting from registered user login data. This means yes, we can target 25+ males specifically on both platforms – unlike linear TV where we’re buying broad demographics with significant waste. This is the core argument for BVOD over linear.
+Amazon Prime Video is the SVOD priority. 87% ad-tier penetration gives near-universal reach, and Amazon’s first-party purchase data targeting is a capability no other SVOD can match.
+Meta has the most sophisticated targeting infrastructure of any social platform – Lookalike audiences, Conversions API, Advantage+ optimisation, CRM upload. It compensates for its lower 18–25 reach compared to TikTok with far superior retargeting and conversion tracking.
+Sky AdSmart’s sports inventory is uniquely valuable for reaching 18–35 males in a lean-back viewing environment, but household-level targeting means some waste. Best used for Sky Sports-specific buys around football and F1.
+
+
+2. Channel Roles & Media Architecture
+2.1 Recommended Channel Allocation
+The following allocation is designed for the £4.2m media budget. It prioritises channels where the 18–35 male audience is most concentrated, where the “For Fun’s Sake” creative platform will land with most impact, and where the budget can achieve efficient reach.
+
+
+2.2 Why This Split – Channel by Channel
+YouTube (35% / £1.47m)
+Why the largest allocation: YouTube is the single largest video platform in the UK by reach, having overtaken the BBC in December 2025 (BARB). Its 80% four-screen reach and 41 minutes of daily viewing give it unmatched scale for video brand-building among our target demo. The 22 percentage point gap between four-screen and TV-set reach confirms heavy mobile/tablet consumption – matching Spin Masters’ device behaviour.
+How we use it: A mix of 6-second bumper ads for frequency and brand recognition, 15-second non-skippable pre-rolls for message delivery, and 30-second skippable TrueView for full storytelling. YouTube Shorts inventory should be prioritised given the audience’s short-form consumption habits.
+Expected performance: At an estimated UK CPM of £3–£6 for the 18–35 male demo, £1.47m should deliver approximately 245–490m impressions across the campaign. We estimate 65–70% reach of the target audience with an average frequency of 8–12 over the nine-month campaign period (April–December). These are indicative estimates; Mediacom should validate with current YouTube auction data for the gambling vertical.
+
+TikTok (20% / £840k)
+Why 20%: TikTok’s four-screen reach of 24% (BARB, Dec 2025) understates its importance for 18–35 males, where penetration is significantly higher. BARB measures via home Wi-Fi only, meaning out-of-home and mobile data consumption is not captured. The 20pp gap between four-screen and TV-set reach (24% vs 3.4%) confirms this is consumed almost exclusively on personal mobile devices – the same device Spin Masters use to play.
+How we use it: Spark Ads (boosted organic-style content) for authenticity. In-Feed ads with native creative that matches the platform’s energy. Creator partnerships handled through That Lot’s social/PR workstream should be amplified with paid support here. TikTok’s lower CPMs (£4–£7 estimated for UK) make it efficient for building frequency among engaged users.
+Expected performance: At £4–£7 CPM, £840k should deliver approximately 120–210m impressions. TikTok’s engagement rates (5–16% average) significantly outperform other social platforms, making it particularly effective for the “For Fun’s Sake” creative which needs to land with energy and personality. Indicative CTR of 0.8–1.0%.
+
+Meta / Instagram (15% / £630k)
+Why 15%: Instagram remains the highest-penetration social platform among 18–35 UK adults. Reels inventory provides TikTok-comparable short-form video reach at scale, while Meta’s targeting infrastructure is more mature. Critically, Meta’s retargeting capabilities allow us to re-engage people who have seen YouTube or TikTok creative but haven’t yet visited the app.
+How we use it: Reels-first creative strategy. Stories placements for high-frequency messaging. Conversion-optimised campaigns for app install retargeting (coordinating with the £4.1m acquisition budget). Estimated UK CPM of £6–£10 for the 18–35 male demo.
+
+Premium Addressable Video (15% / £630k)
+Why this is in the plan: The brief correctly rules out linear TV due to budget constraints. But linear TV and broadcaster inventory are not the same thing. BVOD platforms (ITVX, All4, Sky AdSmart) offer addressable buying against broadcaster content, eliminating the waste of buying a full linear schedule. Combined with SVOD ad tiers (Netflix at 73% reach, Amazon at 55%), this channel delivers the premium video quality and brand credibility of broadcast without the minimum spend problem.
+How we use it: We recommend a 60/40 split within this allocation: approximately £380k on BVOD and £250k on SVOD ad tiers. BVOD provides presence in the UK’s most-watched entertainment environments – ITVX for sport and entertainment catch-up, All4 for its younger-skewing audience, Sky AdSmart for addressable sports inventory. SVOD provides high-attention, unskippable 15–30 second placements in lean-forward viewing environments.
+Why BVOD specifically: A plan that only uses YouTube, TikTok and social risks being invisible in the living room. BVOD gives tombola arcade presence alongside established entertainment brands, lending credibility to a challenger in a market dominated by bet365, Sky Bet and Paddy Power. It also reaches Spin Masters in a different mindset – relaxed, entertained, receptive – complementing the high-energy social touchpoints.
+Expected performance: Blended CPMs across BVOD and SVOD are estimated at £12–£25. £630k should deliver approximately 25–53m impressions in premium environments. Attention quality is significantly higher than standard programmatic – Lumen and TVision research consistently shows BVOD and SVOD deliver 3–5x the active attention seconds of social video. Mediacom should validate with current ITVX, All4 and Amazon rate cards.
+
+Programmatic Display (10% / £420k)
+Why 10%: Display plays a frequency and retargeting role. The brief identifies that comms across at least three touchpoints will help drive consideration – programmatic display is the most efficient way to deliver the third, fourth and fifth touchpoint at low cost after video has done the heavy lifting.
+How we use it: High-impact rich media formats (interscrollers, skin placements) on gaming, entertainment and sports sites. Standard IAB display for retargeting users who have engaged with video but not yet visited the app or site. At estimated CPMs of £2–£5, this delivers high-frequency supplementary reach.
+
+Testing Budget (5% / £210k)
+Why ring-fence 5%: The brief acknowledges 400+ casino brands in market. Finding undiscovered channels where tombola arcade can stand out is as important as optimising known channels. Candidates for testing include:
+Snapchat – strong 18–25 male reach, AR lens formats could bring the “playful competition” positioning to life
+Twitch – gaming-adjacent audience, sponsorship of trending streamers
+Reddit – targeted subreddit sponsorships (r/gambling, r/slots, r/CasualUK)
+Podcast sponsorship – gaming, football, and entertainment pods
+Each test runs for 4 weeks with pre-defined success criteria. Winning channels get scaled into the main plan; underperformers are cut.
+
+
+2.3 Platform Targeting & Compliance Requirements
+Gambling advertising is one of the most heavily regulated categories in UK digital media. Every channel in this plan has specific compliance requirements that constrain how we target, what creative we can run, and who can see it. This section specifies the targeting approach per platform and flags the regulatory requirements Mediacom and Brothers & Sisters need to build into execution.
+UK-wide requirement (since September 2025): All digital gambling campaigns must use 25+ age targeting as a minimum. This is mandated by the updated IGRG industry code and applies across all platforms. While most platforms enforce 18+ as a baseline, tombola should apply 25+ as standard across all channels to comply with the industry code and provide additional protection.
+
+YouTube – Targeting & Compliance
+Age protection: YouTube’s gambling advertising policy automatically prevents ads from serving to users under 18 or those who are signed out. Gambling content is age-gated at platform level. However, this alone is insufficient – tombola must also apply 25+ age targeting within Google Ads to comply with the IGRG code. This is a manual setting in campaign configuration, not an automatic platform default.
+Kids content exclusion: Google’s certification system for gambling advertisers already excludes gambling ads from content classified as “made for kids” under YouTube’s content rating system. This means tombola’s ads should not appear alongside children’s content even if watched by an adult on their logged-in account. That said, we recommend additionally applying content exclusions for “Families” content labels and excluding YouTube Kids inventory as a belt-and-braces measure.
+Certification: tombola will need Google Ads gambling certification for the UK (if not already held). This requires proof of a valid UKGC licence. Certification is website-specific as of April 2025 – if the arcade site URL differs from the main tombola URL, a separate certification may be required. Mediacom should confirm this with Google’s UK gambling ads team.
+Targeting approach: Age 25+, UK geo, male-skewed (65/35 M/F) with interest targeting layered on: gaming, entertainment, competitive sports, casino. Affinity audiences: “Gambling Enthusiasts”, “Mobile Gamers”, “Sports Fans”. Custom intent audiences built around competitor search terms (bet365 casino, sky vegas slots, paddy power games). Placement exclusions for kids content, family content, and sensitive content categories.
+
+TikTok – Targeting & Compliance
+Regulatory position: TikTok permits gambling advertising in the UK for licensed operators, but only through its Industry Pilot Program. This requires direct engagement with a TikTok sales representative and submission of UKGC licence documentation. tombola cannot simply self-serve gambling ads through TikTok Ads Manager – prior certification and explicit permission are required.
+Age protection: TikTok enforces 18+ as a platform minimum for gambling ads, but the IGRG code requires 25+. Apply 25+ age targeting on all campaigns. TikTok’s content policy also prohibits gambling creative that uses “playful or cartoonish visuals” that might appeal to minors – the creative team should be aware of this given the “playful sidekick” brand personality. The energy and tone can be fun and cheeky, but the visual execution must clearly read as adult entertainment.
+Content restrictions: TikTok prohibits direct calls-to-action like “Bet now” or “Join to win.” All gambling ads must include responsible gambling messaging. Direct links to gambling apps from organic content are not permitted – paid ads can link to app stores, but organic/creator content cannot include direct URLs. This is important for the That Lot social strategy: influencer and creator content should drive to a soft funnel (e.g. tombola arcade social profile or landing page) rather than direct app download links.
+Targeting approach: Age 25+, UK geo, interest targeting via entertainment, gaming, competitive content, and lifestyle categories. TikTok’s targeting is less granular than Meta or Google – the algorithm does the heavy lifting based on creative engagement. Invest in creative testing (3–4 variants per flight) and let the algorithm optimise toward the best-performing creative with the right audience.
+Creator/influencer compliance: Updated ASA guidance (2025) classifies influencers with 100k+ followers under 18 as having “strong appeal” to minors. Any creator partnerships must be vetted for audience age demographics – avoid creators whose audience skews under 25. Football and esports personalities are specifically flagged as high-risk by the ASA. That Lot should document audience demographic verification for every creator partnership.
+
+Meta (Instagram/Facebook) – Targeting & Compliance
+Authorisation: Meta requires prior written authorisation via the Permissions and Verifications tab in Meta Business Suite before any gambling ads can run. tombola must provide proof of UKGC licence and the specific website/app being promoted. As of July 2025, this is enforced more strictly – authorisation is per-jurisdiction and per-gambling type.
+Age protection: Meta enforces 18+ as a platform minimum. Apply 25+ to comply with the IGRG code. Meta’s targeting does not allow gambling ads to target under-18s regardless of advertiser settings, but the 25+ floor is the advertiser’s responsibility.
+Targeting approach: Age 25+, UK geo. Interest-based targeting: casino, mobile gaming, competitive gaming, entertainment. Custom Audiences from tombola’s first-party data (existing players who haven’t tried arcade, lapsed players, registered-but-not-deposited). Lookalike audiences built from highest-LTV arcade players. Exclude existing active arcade players to avoid wasted spend.
+iOS / ATT impact on retargeting: This is a genuine constraint. Apple’s App Tracking Transparency has reduced retargeting pool sizes by 10–30% on average since iOS 14.5 (2021), and this continues to tighten. Less than half of iOS users opt in to tracking. For Meta retargeting specifically, this means:
+Smaller retargeting audiences: Custom Audiences built from website visitors or app events will be incomplete for iOS users who declined tracking. The audience exists but it’s smaller than it should be.
+Mitigation: Use Meta’s Conversions API (CAPI) alongside the pixel to capture server-side events that the pixel misses. This recovers a significant portion of lost iOS conversions. tombola’s tech team should implement CAPI on both the website and app.
+On-platform engagement audiences: iOS restrictions do NOT affect on-platform data. Users who watched a video ad, engaged with a post, or visited the tombola Instagram profile can still be retargeted within Meta’s ecosystem. Build retargeting sequences from video viewers (25%, 50%, 75% completion) rather than relying solely on website/app visit data.
+Broad targeting: Meta’s Advantage+ audience tools are specifically designed to compensate for ATT signal loss. For prospecting campaigns, broader targeting with strong creative often outperforms narrow interest stacks in the post-ATT landscape. Let the algorithm work.
+
+Premium Addressable Video (BVOD/SVOD) – Targeting & Compliance
+BVOD targeting: ITVX and All4 use registered user data for deterministic demographic targeting – age, gender, location. This is more reliable than probabilistic targeting on the open web. Set 25+ age floor, male-skewed, and apply content genre targeting (entertainment, sport, gaming). Sky AdSmart offers household-level targeting by demographics, postcode and lifestyle data.
+SVOD targeting: Netflix and Amazon ad tiers offer demographic and interest-based targeting. Amazon’s targeting is particularly strong given its first-party purchase and browsing data. Target 25+ males interested in gaming, entertainment and sport.
+Compliance: BVOD gambling advertising must comply with BCAP broadcast codes. 72% of all UK gambling TV advertising is already broadcast post-watershed. BVOD equivalents apply similar content scheduling rules. Confirm with each BVOD platform that tombola’s 15–30s spots can be served against post-watershed or age-verified inventory only.
+
+Programmatic Display – Targeting & Compliance
+Mobile-first: Given that 47% of arcade registrations come via app and the Spin Masters audience is mobile-native, programmatic display should weight at least 70% to mobile inventory. But this needs to be managed carefully in execution:
+iOS retargeting limitation: The same ATT restrictions that affect Meta also affect open-web programmatic. iOS users who declined tracking cannot be retargeted via IDFA-based programmatic. For display retargeting, weight toward Android inventory where device IDs remain available, and use first-party cookie-based retargeting (tombola’s own site cookies) where possible for web-based retargeting.
+Contextual targeting as primary: Given signal loss from both ATT and the ongoing deprecation of third-party cookies, contextual targeting is more reliable than behavioural for prospecting. Target gaming sites, sports content, entertainment sites, and casino review/affiliate sites. Use semantic contextual tools (e.g. GumGum, IAS Context Control, Grapeshot) to ensure contextual relevance without reliance on user-level data.
+Private marketplace deals: Negotiate PMPs with premium gaming and entertainment publishers (e.g. GamesRadar, IGN, LADbible, UNILAD, JOE, SportBible) for guaranteed brand-safe inventory at fixed CPMs. PMPs are preferable to open exchange for a regulated category – more brand control, better viewability, and easier compliance documentation.
+Frequency capping: Set a cross-platform frequency cap. In the absence of universal IDs, this will be imperfect, but cap at 3–4 exposures per user per week within programmatic to avoid ad fatigue and responsible gambling concerns.
+
+2.4 Format Suitability for Mobile-First Delivery
+Since the majority of Spin Masters will see this campaign on a mobile device, every recommended format must be evaluated for mobile effectiveness:
+
+
+Key creative requirement: All hero creative must be built in 9:16 vertical format as the primary asset, with 16:9 landscape as a secondary cut for YouTube pre-roll and BVOD/SVOD. Do NOT create landscape first and crop to vertical – this produces inferior mobile creative. Brothers & Sisters should brief production on a vertical-first shoot.
+
+
+3. Comms Architecture & Ecosystem Design
+3.1 Paid / Owned / Earned / Shared Framework
+
+
+3.2 Message Hierarchy by Funnel Stage
+Each channel plays a specific role in moving Spin Masters from awareness to registration:
+Awareness (top): "For Fun’s Sake" brand creative. 6–15s video on YouTube, TikTok, BVOD and SVOD ad tiers. Establish that tombola arcade exists, it’s different, and it’s built for people who want fun, not just wins. Lead with energy and personality.
+Consideration (mid): Product-led creative showcasing exclusive games, social competition features, jackpots. 15–30s video on YouTube, Meta Reels, programmatic. Deliver the reasons to believe: games you can’t get elsewhere, playful competition, quality over quantity.
+Conversion (bottom): App install and first deposit offers via Meta, programmatic retargeting, App Store search. Coordinated with the internal £4.1m acquisition budget to avoid duplication and ensure seamless handoff.
+
+
+4. Media Plan & Laydown
+4.1 Budget Allocation by Quarter
+Following the brief’s phasing with £0 media in Q1, the £4.2m media budget is distributed across Q2–Q4. We recommend a launch-heavy weighting in Q2 to maximise relaunch impact, sustained presence through Q3, and a competitive Q4 push.
+
+
+Phasing Rationale
+Q2 heaviest (43%): The relaunch moment. Brand and product creative at full weight across all channels simultaneously. First impressions with Spin Masters must be bold and multi-touchpoint. The April tax increase may also reduce competitor presence – we want to fill that gap.
+Q3 sustained (23%): Summer maintenance. Lighter weight but continuous presence. Focus shifts from pure awareness to consideration and retargeting. Testing budget active to identify new opportunities for Q4.
+Q4 competitive (34%): Q4 is peak casino season. CPMs rise but so does player intent and value. Heavier weighting to compete during the highest-value acquisition period and drive toward the 190k AMPS target.
+
+A Note on Q1 / Pre-Launch
+The brief allocates £0 to media in Q1. We understand the product may not be ready until April. However, we’d recommend the team considers whether a small allocation (£100–150k) from the Social/PR budget could fund a teaser campaign in March on TikTok and Instagram – building curiosity before the relaunch. This is a decision for tombola, but the creative production budget is already active in Q1 (£324k) so assets could be available.
+
+
+5. Provisional Performance Targets
+Important note: The targets below are estimates based on publicly available UK digital advertising benchmarks and BARB data. They are not modelled against tombola’s proprietary data. Mediacom should validate and refine these using their auction data, historical campaign performance, and TGI/Mediacom audience planning tools. These exist to give the business a framework for evaluating the plan, not as contractual commitments.
+
+5.1 Estimated Reach & Impressions
+* Estimated reach of UK 18–35 male casino-interested audience across full campaign (Apr–Dec 2026). Based on publicly available platform data and BARB figures. Mediacom to validate.
+
+5.2 Comms Objectives – Proposed Targets
+The brief notes that Tracksuit baseline data is expected in January 2026. Pending those results, we propose the following working targets based on the LadBible research data already available (tombola at 4% spontaneous awareness among 18–44 M&F open to online gambling):
+
+These should be recalibrated once Tracksuit delivers baseline data. We recommend Tracksuit waves at launch, +3 months, +6 months, and +9 months.
+
+
+6. Optimisation & Testing Plan
+6.1 Continuous Optimisation Approach
+With a modest budget in a competitive landscape, agile optimisation is essential. We recommend the following cadence:
+Weekly: Channel-level performance review. Rebalance spend between YouTube, TikTok and Meta based on CPM, CTR, and VTR (video-through-rate) trends. Pause underperforming creative.
+Fortnightly: Creative performance review with Brothers & Sisters. Identify top and bottom performing assets. Brief new iterations based on learnings.
+Monthly: Cross-channel attribution review. Assess how paid channels interact with owned (app installs, CRM) and earned (PR coverage, social mentions). Adjust channel mix if certain combinations over-deliver.
+Quarterly: Full performance review against commercial objectives (NDPs, AMPS, NGR). Reallocate budget between quarters if Q2 learnings suggest different Q3/Q4 weighting.
+
+6.2 Testing Plan (5% Budget / £210k)
+The 5% testing budget is structured as a series of controlled experiments:
+Q2 Tests: Snapchat Lens (playful competition mechanic), Twitch sponsorship (2–3 streamers, 4-week trial), Reddit sponsored posts.
+Q3 Tests: Podcast sponsorship (3–5 pods targeting gaming/football/entertainment verticals), YouTube Shorts-only campaign (isolating short-form vs long-form performance).
+Q4 Tests: Connected TV on free ad-supported services (FAST channels), audio streaming (Spotify).
+Success criteria defined upfront: Each test has a pre-agreed CPM, CTR, and (where trackable) cost-per-NDP benchmark. Tests that beat or match main-plan channels within 4 weeks get scaled. Tests that miss by more than 30% are killed.
+
+
+7. Measurement & Evaluation Framework
+7.1 KPI Framework
+
+
+7.2 Attribution Approach
+Given the multi-channel, multi-agency structure, attribution requires careful design:
+Last-click won’t work here. Brand activity drives awareness that is converted by acquisition channels. A last-click model would credit the acquisition budget for brand-generated demand. We recommend a data-driven multi-touch attribution model, or at minimum, a test-and-control framework where brand media is paused in specific regions to measure incremental lift.
+Brand lift studies: YouTube and Meta both offer free brand lift studies. These should be activated from launch to provide in-flight measurement of ad recall, awareness, and consideration lift.
+Tracksuit cadence: Quarterly waves aligned with campaign phases to track shifts in awareness and consideration.
+
+
+8. What ROI Should You Expect
+The brief asks: “What performance across key metrics or ROI should you expect from your investment in these digital channels & how will these help deliver your overall objectives?”
+Here’s our honest assessment:
+
+The Media Investment Case
+The £4.2m media budget is being deployed against a £600m+ addressable market opportunity (Spin Masters segment). Arcade currently generates £79.2m NGR YTD with zero dedicated marketing. Even a modest uplift in player acquisition and retention should deliver significant return.
+If the plan delivers 12–18k brand-driven NDPs at the current estimated Y1 LTV of £150–£200 per NDP, that’s £1.8–£3.6m in first-year value from the brand investment alone.
+The ongoing player base growth from 175k to 190k average monthly players, combined with rising ARPUs (currently £42), compounds the return over time.
+Brand activity also lifts acquisition efficiency: higher awareness reduces CPA on the £4.1m acquisition budget by making paid search, app store, and social acquisition cheaper.
+
+Caveat: These projections are estimates based on the performance data in the brief and publicly available benchmarks. Mediacom should model these more precisely using tombola’s historical cohort data and their own econometric tools. The Y1 LTV trend (now exceeding bingo NDPs) suggests the ROI case is strengthening, but the brand investment will take 3–6 months to fully materialise in player numbers.
+
+
+9. Creative Considerations from the Media Team
+This is a media response, not a creative brief. But media and creative are inseparable – the best media plan in the world fails if the creative doesn’t land in the environments we’re buying. These are the insights from the media planning process that should feed into Brothers & Sisters’ creative development.
+
+9.1 Vertical-First Production is Non-Negotiable
+Over 70% of paid impressions in this plan will be served on mobile devices in vertical or full-screen formats (TikTok, Instagram Reels, YouTube Shorts, Stories, mobile programmatic). The hero creative must be conceived and shot in 9:16 vertical as the primary format, with 16:9 landscape as a secondary adaptation for BVOD, SVOD and YouTube pre-roll.
+What this means for production: Brief the shoot for vertical. Frame the action, supers, and branding for a tall frame. Do not shoot landscape and crop – the result is always compromised. The 16:9 cut is the adaptation, not the primary.
+
+9.2 The First 3 Seconds Decide Everything
+On YouTube TrueView, users can skip after 5 seconds. On TikTok and Reels, users scroll past in under 2 seconds if the content doesn’t grab them. This means the creative must hook within the first 2–3 seconds on social and 3–5 seconds on YouTube. The “For Fun’s Sake” brand reveal, the tombola arcade logo, and the core value proposition cannot be saved for the end of the ad.
+Recommendation: Front-load brand identity. The tombola arcade brand mark should appear within the first 2 seconds on all social formats. On YouTube 6-second bumpers, the brand should be present throughout. Test opening hooks: start with the punchline, the competitive moment, the unexpected – not a slow build.
+
+9.3 Sound-On and Sound-Off Are Different Briefs
+TikTok and YouTube Shorts are overwhelmingly sound-on environments. Instagram Stories and feed are mixed. Programmatic display is silent. BVOD and SVOD are sound-on, lean-back. This means the creative needs to work in at least two audio states:
+Sound-on (TikTok, YouTube, BVOD, SVOD): Music, sound effects and dialogue carry the energy. The “playful sidekick” personality lives in the audio as much as the visual. Consider using trending audio or original sound that feels native to each platform.
+Sound-off (Instagram feed, programmatic): The message must land visually. Bold text supers, expressive animation, clear visual storytelling. If the ad doesn’t make sense on mute, it fails in these environments.
+
+9.4 Platform-Native Beats Repurposed
+The biggest risk in a multi-channel campaign is running the same 30-second TV-style ad across every platform. This approach consistently underperforms on social. BARB data confirms the device split: YouTube and TikTok are consumed on personal devices in short, interruptible sessions. BVOD is lean-back, living-room viewing. These are fundamentally different attention contexts.
+Recommendation: Produce a modular creative toolkit rather than a single hero ad. The core campaign idea (“For Fun’s Sake”) stays consistent, but the execution adapts:
+TikTok/Reels: Raw, fast, lo-fi energy. Creator-style content. Spark Ads that feel native, not like ads. The “up for it” personality at full volume. Use TikTok’s native editing tools and transitions.
+YouTube pre-roll: More structured storytelling. Can afford a slightly longer setup but still needs to hook before the skip button. 15s non-skippable is the workhorse format.
+BVOD/SVOD: Highest production quality. These sit alongside broadcast-standard content from ITV, Channel 4 and Netflix. The ad must match the quality of the environment or it will feel cheap and damage brand perception. Sound design, colour grading and pacing should be broadcast-level.
+6s bumpers: One single message. One visual. Brand throughout. These are for frequency and recognition, not storytelling. Don’t try to compress a 30s narrative into 6 seconds.
+
+9.5 The TikTok Compliance Tension
+TikTok’s policy prohibits gambling creative that uses “playful or cartoonish visuals” that might appeal to minors. The brief’s brand personality is described as a “playful sidekick with up-for-it energy.” These are not in conflict, but the creative team needs to navigate the line carefully. The tone and energy can be playful and cheeky – but the visual execution must unambiguously read as adult entertainment, not children’s content.
+Specifically avoid: Cartoon mascots, primary colour palettes associated with children’s brands, game interfaces that resemble children’s mobile games, overly cute or juvenile animation styles. The visual language should be closer to Paddy Power or PokerStars than Candy Crush.
+
+9.6 Creative Refresh Rate Matters
+TikTok creative fatigue sets in after 7–14 days. Instagram Reels after 14–21 days. YouTube pre-roll has a longer shelf life (4–6 weeks) but still degrades. BVOD/SVOD has the longest effective life at 6–8 weeks.
+Implication for Brothers & Sisters: The campaign needs a steady pipeline of creative variants, not just one hero execution. Plan for 3–4 TikTok/Reels variants per flight, refreshed every 2–3 weeks. YouTube and BVOD creative can run longer. Build a “creative operating model” where the production team delivers fresh variants on a rolling basis throughout the campaign, not just at launch.
+
+9.7 Competitive Creative Context
+With 400+ casino brands in market, tombola arcade will sit alongside competitor ads on every platform. The media team’s observation: the casino category is creatively monotonous. Most ads use the same visual language – neon lights, spinning reels, gold coins, win amounts. The “For Fun’s Sake” positioning deliberately breaks from this, which is the single biggest creative advantage the campaign has.
+Recommendation to creative: Lean hard into distinctiveness. If the ad could be mistaken for bet365, Sky Vegas or any other casino brand with the logo removed, it has failed. The creative must be instantly, unmistakably tombola arcade. Use the competitive monotony as a foil – the more every other casino ad looks the same, the more tombola’s difference stands out.
+
+9.8 Responsible Gambling Messaging Integration
+UK regulation requires responsible gambling messaging in all gambling advertising. The updated IGRG code mandates that 20% of advertising must carry safer gambling messages. Rather than treating this as a compliance afterthought bolted onto the end of the ad, the media team recommends integrating responsible gambling into the brand’s voice from the start.
+Opportunity: tombola’s positioning as “fun-first” (not win-first) is naturally aligned with responsible gambling messaging. The campaign can frame responsible play as part of the Spin Masters identity: “it’s about the game, not the stakes.” This turns a compliance requirement into a brand differentiator in a category where most operators treat responsible gambling disclaimers as small print.
+
+10. Summary of Recommendations
+In responding to the brief, we believe the following decisions will most impact success:
+
+
+
+This plan is indicative and designed to be pressure-tested by Mediacom with their proprietary data and planning tools. The strategic direction – video-first, mobile-first, skewed to platforms where the 18–35 male audience is most concentrated – is grounded in BARB data and should hold even as specific CPMs and forecasts are refined.

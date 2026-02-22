@@ -1,0 +1,49 @@
+How the Planning Brief Can Be Improved
+Arcade 2.0 – 2026 Planning Brief Review
+Prepared by TAU  |  February 2026
+
+This is a strong brief. The commercial logic is clear, the market sizing is compelling, the brand positioning work is well-researched across multiple sources, and the For Fun’s Sake creative platform has real legs. What follows isn’t a critique of the strategy – it’s a set of observations on where the brief could be tightened to give the agencies the best possible foundation to build from.
+We recognise that some of these points may reflect known constraints or decisions already in motion. Where that’s the case, we’ve tried to offer constructive alternatives rather than simply flagging the gap.
+1. Measurement Targets Need to Be in the Brief
+The brief sets a comms objective to drive awareness and consideration of tombola arcade, but notes the Tracksuit baseline data won’t be available until January 2026. We appreciate the timing challenge – nobody wants to wait for data that isn’t ready yet.
+However, Mediacom need a target to plan against. Without one, they can’t model the reach and frequency required to shift the dial, and you’ll end up evaluating a plan without knowing what “good” looks like.
+Recommendation:
+Use the existing LadBible and YouGov data to set interim targets. You already know tombola has 4% spontaneous awareness among the target demographic – that’s a usable baseline.
+Set a working range – e.g. “Move spontaneous awareness from ~4% to 8–12% among 18–35 male casino players by end of 2026” – and commit to recalibrating once the Tracksuit data lands.
+This gives the agencies a planning anchor without pretending precision that doesn’t exist yet.
+2. The Core Brand / Arcade Relationship Needs a Direction
+The brief rightly identifies that core tombola brand activity drives a halo for arcade. It then asks the agencies: “How can arcade continue to benefit from the bigger budget and brand equity?”
+This is a strategic input the agencies need from tombola, not a question for them to answer. Without a clear steer, you risk Brothers & Sisters optimising for arcade brand separation while Mediacom plans for maximum halo leverage – and the two approaches pulling in different directions.
+Recommendation:
+Define a clear position: Is arcade a standalone brand that benefits incidentally from core tombola awareness? Or is there an intentional handoff in the customer journey from core brand to arcade consideration?
+Specify whether any proportion of the core tombola media plan will feature or reference arcade, and whether co-branded assets are in scope.
+Even a simple principle – “arcade leads with its own identity, tombola provides reassurance” – would align all three agencies around a shared model.
+3. Budget Phasing Rationale Should Be Made Explicit
+The budget shows £0 media spend in Q1, with the full weight landing in Q2 from the April launch. There may be good reasons for this – the product isn’t ready, the creative isn’t built, or the strategy is deliberately designed around a big-bang launch moment.
+But the brief doesn’t explain the rationale, which means Mediacom will either assume it’s fixed (and plan around it) or challenge it (which costs time). For a brand with 4% spontaneous awareness targeting an audience that doesn’t currently associate tombola with casino, going from silence to full launch carries risk.
+Recommendation:
+If the Q1 media blackout is a deliberate choice, state why. This saves the agency from spending time proposing alternatives that were already considered and rejected.
+If there’s flexibility, explicitly invite Mediacom to propose alternative phasing – including the option of a low-cost teaser/hype phase in March using social channels to prime the Spin Masters audience ahead of launch.
+4. The NDP Target Needs a Brand vs Acquisition Split
+The brief sets a target of 41k additional NDPs in 2026, with a total marketing budget of £10.4m split between £6.26m brand and £4.1m acquisition. But it doesn’t specify how many NDPs are expected from each pot.
+This matters because brand and acquisition activity work on different timescales and deliver NDPs through different mechanisms. Without a split, there’s no way for Mediacom to assess whether the brand budget is sized correctly for the awareness job, or for the acquisition team to know what’s expected of them independently.
+Recommendation:
+Provide a working assumption of how the 41k NDPs are expected to split between brand-driven and acquisition-driven activity. Even a directional split (e.g. 60/40 acquisition/brand) helps everyone plan.
+Clarify the expected brand-to-performance lag. The brief’s own data shows arcade Y1 LTV trending upward – the agencies should understand whether the 2026 NDP target is expected to be hit within the calendar year or whether there’s an accepted ramp period.
+5. The Timeline Has Very Tight Approval Windows
+The RTB timeline gives one week between the strategic RTB presentation (16 Jan) and the LT review and sign-off (23 Jan), and one week between the execution RTB (6 Feb) and LT sign-off (13 Feb). In a regulated gambling market where compliance review is required, these windows are tight.
+The brief also notes that the 15 December briefing meeting hasn’t been booked yet, which compresses the agency alignment window over the Christmas period.
+Recommendation:
+Build in a contingency mechanism – even a half-day buffer or a pre-alignment call before each LT presentation would reduce the risk of a full reset if feedback is significant.
+Confirm whether LT sign-off is a formality or a genuine gate. If it’s the latter, consider giving agencies a heads-up on likely LT concerns in advance so they can pre-address them.
+Ensure the December briefing is locked in urgently – every day of slippage here cascades directly into the agency alignment window.
+6. Competitive Context Would Strengthen the Brief
+The brand positioning section does a good job mapping the competitive landscape qualitatively – showing how neo brands like Midnite, MrQ, and Paddy Power Games are carving out distinctive positions. However, the brief doesn’t include any data on competitor media spend or share of voice.
+Mediacom will have access to this data, but including even a top-level view in the brief would help frame the scale of the challenge. Launching into a market with 400+ casino brands on a £6.26m brand budget requires a clear acknowledgement of the SOV deficit and an explicit expectation that the plan needs to over-index on creative distinctiveness and earned media to compensate.
+Recommendation:
+Add a line that explicitly acknowledges the budget is modest relative to the established competitive set and that the plan needs to achieve disproportionate impact. This isn’t defeatist – it’s an honest framing that will push the agencies toward bolder, more efficient thinking.
+
+Summary
+The Arcade 2.0 brief has a strong foundation: a well-evidenced market opportunity, a clear brand positioning built on solid research, and a creative platform that differentiates meaningfully from the casino category’s visual and tonal norms.
+The areas above are about giving the agencies sharper inputs so they can do their best work. In particular, providing interim measurement targets, clarifying the core brand/arcade relationship, and being transparent about budget constraints will help Mediacom, Brothers & Sisters, and That Lot build a plan that’s ambitious but grounded.
+This relaunch is a one-shot moment. These refinements are about making sure the brief gives the agencies every advantage to land it.
