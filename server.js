@@ -30,20 +30,6 @@ app.use(session({
   }
 }));
 
-// Serve static files from dist directory in production
-if (process.env.NODE_ENV === 'production') {
-  const __dirname = path.dirname(new URL(import.meta.url).pathname);
-  const distPath = path.join(__dirname, 'dist');
-  
-  // Serve static files
-  app.use(express.static(distPath));
-  
-  // SPA fallback - serve index.html for any unmatched routes
-  app.use((req, res) => {
-    res.sendFile(path.join(distPath, 'index.html'));
-  });
-}
-
 // Auth middleware
 function requireAuth(req, res, next) {
   if (!req.session?.user) {
@@ -162,6 +148,20 @@ app.post('/api/chat', requireAuth, async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+// Serve static files from dist directory in production (AFTER all API routes)
+if (process.env.NODE_ENV === 'production') {
+  const __dirname = path.dirname(new URL(import.meta.url).pathname);
+  const distPath = path.join(__dirname, 'dist');
+  
+  // Serve static files
+  app.use(express.static(distPath));
+  
+  // SPA fallback - serve index.html for any unmatched routes
+  app.use((req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 TAU-Reporting API proxy running on port ${PORT}`);
