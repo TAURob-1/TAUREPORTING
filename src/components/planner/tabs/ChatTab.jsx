@@ -21,7 +21,24 @@ const QUICK_ACTIONS = [
     label: '📋 Analyze Brief',
     requiresDoc: true,
     template: (advertiserName, campaignName, docContent) => 
-      `Here is our brief for ${advertiserName} ${campaignName}. Please analyze:\n\n1) What do you think of the brief and how can it be improved?\n2) What would you recommend as a plan? Paid media only.\n\n${docContent}`
+      `Here is our planning brief for ${advertiserName} ${campaignName}. Please analyze:
+
+**1) What do you think of the brief and how can it be improved?**
+- Acknowledge what's strong first
+- If target audience is broad (e.g., "18-44 men" = 11M+ people), note that budget + frequency constraints mean only partial reach is possible
+- Suggest sub-segmentation beneath broad demographics (behavioral, contextual, geographic, attitudinal)
+- Use Signal data as SUPPORTING context (e.g., "Signal shows ${advertiserName}'s current strength is [demographic], so this brief represents audience expansion")
+- If geographic targeting is absent, SUGGEST it as an option: "A geo-focused approach COULD help maximize budget and enable holdout testing" (don't mandate)
+
+**2) What would you recommend as a plan? Paid media only.**
+- Provide channel allocation with rationale
+- Cite BARB reach data where relevant (YouTube CTV: 35.6M, ITVX: 22.5M, C4: 18.2M)
+- Include targeting precision (not vague "Adults 18+" but behavioral/contextual/geographic)
+- Acknowledge if brief lacks detail: "We'd need to clarify [X] with the client before finalizing allocation"
+- Always caveat: "Indicative plan based on available data. [Client/Agency] to validate with proprietary sources."
+
+Planning Brief:
+${docContent}`
   },
   {
     id: 'media-plan',
@@ -37,15 +54,35 @@ const QUICK_ACTIONS = [
     template: (advertiserName, campaignName, docContent) => 
       `Please audit this media plan for ${advertiserName} ${campaignName}.
 
-Focus your analysis on:
-1. **Audience Alignment** - Does the channel mix reach the right demographic? (Spin Masters = Age 25-44, slots-led, mobile-first)
-2. **Budget Allocation** - Is spend weighted toward high-performing channels or potential agency deals?
-3. **Plan Detail** - Are targeting specs sufficient? Do we have spot details, CTV targeting criteria, geographic strategy?
-4. **Red Flags** - Anything that suggests deal-driven vs performance-driven allocation?
+**Your Analysis Should:**
+1. **Acknowledge what's strong first** - What does this plan get right?
+2. **Audience Alignment** - Does the channel mix reach the stated target demographic?
+   - If target is broad (e.g., "18-44 men" = 11M+ people), FLAG IT and note that budget + frequency requirements likely mean only 40-50% reach is possible
+   - Ask: What sub-segment prioritization exists beneath the broad demographic?
+3. **Channel Mix vs Audience Behavior** - Compare allocations to where target actually spends media time
+   - Use BARB data as reference (YouTube CTV: 35.6M reach, ITVX: 22.5M, C4: 18.2M)
+   - If target is "mobile-first" but plan is CTV-heavy, STATE CLEARLY: "This allocation appears counter to the data we have on audience reach and behavior"
+4. **Targeting Precision** - Are targeting specs sufficient or vague?
+   - "Adults 16+" or "Adults 18+" = red flag (too broad)
+   - Look for behavioral, contextual, geographic targeting detail
+5. **Geographic Strategy** - Is there one?
+   - If missing, SUGGEST (don't mandate): "A geographic approach COULD help maximize budget efficiency and enable holdout testing for incrementality"
+   - Frame as option with trade-offs, not requirement
+6. **Red Flags** - Deal-driven language, missing testing budget, unconfirmed inventory
 
-Use BARB data context (YouTube CTV: 35.6M reach, ITVX: 22.5M, C4: 18.2M) and Tombola's audience (71.58% direct traffic, engaged base, mobile-first).
+**If You Disagree:**
+- State it clearly with data: "Based on BARB data showing X, this Y% allocation to Z seems misaligned"
+- Generate specific clarification questions for the agency:
+  • "Why X% on [channel] for [mobile-first] audience? Please show demographic indexing."
+  • "What behavioral, contextual, geographic targeting is applied to CTV beyond 'Adults 18+'?"
+  • "Where's the testing budget for validating creative/positioning before £XM spend?"
 
-Caveat your analysis: "We don't have full performance data or MMM, but based on available intelligence..."
+**Use Signal Data Appropriately:**
+- Reference competitive intelligence as SUPPORTING evidence, not lead insight
+- Example: "The brief targets 18-44 men. Signal data shows ${advertiserName}'s current strength is [different demographic], so this represents a NEW audience segment requiring distinct positioning."
+
+**Always Caveat:**
+"Without full performance data or MMM, this analysis is based on audience intelligence, BARB reach data, and media planning best practices. [Agency Name] should validate with proprietary sources."
 
 Media Plan:
 ${docContent}`
