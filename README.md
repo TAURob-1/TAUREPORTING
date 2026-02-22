@@ -1,40 +1,79 @@
-# CarShield CTV Campaign Intelligence Platform
+# TAU Reporting Platform
 
-## Overview
-Interactive CTV campaign planning and measurement demo for CarShield/Intermedia.
+Campaign intelligence and planning platform with Signal integration and AI-powered insights.
 
-## Architecture
-- **Frontend:** React 18 + Vite + Tailwind CSS + Recharts + Leaflet
-- **Data Layer:** Config-driven (see /src/data/)
-- **No backend required** — all computation runs client-side
+## Features
 
-## Data Files (/src/data/)
-| File | Purpose |
-|------|---------|
-| audienceDefinitions.js | 18 pre-built audience segments with scoring criteria |
-| customAudienceConfig.js | NLP mappings and demographic builder config |
-| channelInventory.js | 18 CTV + 4 traditional TV providers |
-| planningConfig.js | Reach curves, audience overlaps, budget optimization |
-| dashboardData.js | Campaign results and metrics |
-| signalData.js | Signal Intelligence tab data |
-| zipDemographics.js | ZIP code demographic mappings |
-| zipMapping.js | ZIP to geographic region mapping |
+- **AI Campaign Planner** - Claude-powered strategic planning
+- **Signal Intelligence** - Competitive intel from TAU Signal platform  
+- **Audience Targeting** - UK MSOA demographic enrichment + audience sizing
+- **Media Reach** - UK + US media platform coverage analysis
+- **User Authentication** - Role-based access control
 
-## Modules (Separable)
-1. **Audience Targeting** — Audience selection, affinity slider, geographic targeting
-2. **Campaign Planning** — Budget allocation, reach/frequency, scenario comparison
-3. **Campaign Results** — Measurement dashboard, incrementality testing
-4. **Signal Intelligence** — Competitive intelligence overlay
+## Authentication
 
-Each module can operate independently. For measurement-only use cases, modules 1+3 suffice.
+Two user tiers:
 
-## Running
+### Full Access
+- **Username:** `TAU`
+- **Password:** `Demo2026`
+- Access to all companies and features
+
+### Limited Access (Tombola)
+- **Username:** `Tombola`
+- **Password:** `Tombola2026`
+- Limited to Tombola company data only
+
+## Deployment
+
+### Local Development
+
 ```bash
+# Install dependencies
 npm install
-npm run dev -- --host
+
+# Start dev server (frontend)
+npm run dev
+
+# Start API server (backend)
+npm run server
 ```
 
-## Configuration
-All audience, provider, and planning data is in `/src/data/` config files.
-To add a new audience: edit `audienceDefinitions.js`
-To add a new CTV provider: edit `channelInventory.js` + `planningConfig.js`
+Frontend: `http://localhost:5173`  
+API: `http://localhost:5176`
+
+### Railway Production
+
+Required environment variables:
+
+```
+ANTHROPIC_API_KEY=sk-ant-...
+SESSION_SECRET=<random-string>
+NODE_ENV=production
+API_PORT=5176
+```
+
+Build command: `npm run build`  
+Start command: `node server.js`
+
+## Data Sources
+
+- **UK MSOA Demographics**: `public/data/uk/raw/uk_demographics_enriched_msoa.csv` (4.7MB)
+- **UK Media Platforms**: `public/data/uk/uk-media-platforms.json` (BARB data)
+- **Signal Intelligence**: Loaded from `/home/r2/Signal/companies/` (local only)
+
+## Tech Stack
+
+- **Frontend**: React + Vite + Tailwind CSS
+- **Backend**: Express + Anthropic API
+- **Maps**: Leaflet + React-Leaflet
+- **Charts**: Recharts
+- **Auth**: Express-session
+
+## GitHub
+
+Repository: https://github.com/TAURob-1/TAUREPORTING
+
+## License
+
+Proprietary - TAU (The Independent Marketing Intelligence Architect)
