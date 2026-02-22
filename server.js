@@ -158,7 +158,7 @@ app.post('/api/chat', requireAuth, async (req, res) => {
 // Serve index.html for all other routes (SPA routing)
 if (process.env.NODE_ENV === 'production') {
   const __dirname = path.dirname(new URL(import.meta.url).pathname);
-  app.get('*', (req, res) => {
+  app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
   });
 }
