@@ -5,7 +5,7 @@ export async function sendPlannerMessage(message, plannerContext) {
 
   const envelope = buildContextEnvelope(message, plannerContext);
   console.log('[Planner] Sending to Anthropic API');
-  console.log('[Planner] Context preview:', envelope.messages[0].content.substring(0, 300));
+  console.log('[Planner] Messages count:', envelope.messages.length);
 
   try {
     // Use local proxy server to avoid CORS issues
@@ -16,8 +16,14 @@ export async function sendPlannerMessage(message, plannerContext) {
       },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 4096,
-        messages: envelope.messages
+        max_tokens: 16000,
+        system: envelope.system,
+        messages: envelope.messages,
+        tools: [{
+          type: 'web_search_20250305',
+          name: 'web_search',
+          max_uses: 5
+        }]
       })
     });
 
@@ -27,7 +33,7 @@ export async function sendPlannerMessage(message, plannerContext) {
     }
 
     const data = await response.json();
-    const text = data.content?.[0]?.text || 'No response text';
+    const text = extractTextFromResponse(data);
 
     console.log('[Planner] Got response from Anthropic API, length:', text.length);
     return text;
@@ -36,6 +42,30 @@ export async function sendPlannerMessage(message, plannerContext) {
     console.error('[Planner] API error:', error);
     throw new Error(`Failed to get AI response: ${error.message}`);
   }
+}
+
+/**
+ * Extract text from Anthropic response, handling both simple responses
+ * and tool-use responses (web search results interspersed with text).
+ */
+function extractTextFromResponse(data) {
+  const content = data.content;
+  if (!Array.isArray(content) || content.length === 0) {
+    return 'No response text';
+  }
+
+  const textParts = [];
+
+  for (const block of content) {
+    if (block.type === 'text' && block.text) {
+      textParts.push(block.text);
+    }
+    // web_search_tool_result blocks contain the search results the model used —
+    // we don't need to display these to the user, the model incorporates
+    // the findings into its text blocks.
+  }
+
+  return textParts.join('\n\n') || 'No response text';
 }
 
 function buildContextEnvelope(message, plannerContext) {
@@ -49,10 +79,11 @@ function buildContextEnvelope(message, plannerContext) {
     campaignConfig,
     planningState,
     documentContent,
+    chatHistory,
   } = plannerContext;
 
-  // Build rich context prefix
-  let contextPrefix = `[Platform Context]
+  // Build system prompt with context as a top-level system parameter
+  const systemContent = `[Platform Context]
 Advertiser: ${advertiser?.name || 'Unknown'}
 Country: ${country?.shortLabel || 'Unknown'}
 
@@ -73,26 +104,31 @@ Media Budgets: ${planningState?.mediaBudgets && Object.keys(planningState.mediaB
     : 'Not set'}
 
 [System Instructions]
-${systemPrompt}
+${systemPrompt}`;
 
----
+  // Build messages array with conversation history (last 4 exchanges = 8 messages)
+  const messages = [];
+  const recentHistory = (chatHistory || []).slice(-8);
 
-`;
-
-  // If document content is provided, include it in the message
-  let fullMessage = message;
-  if (documentContent) {
-    // The message already contains the document content from the template,
-    // so we just pass it through
-    fullMessage = message;
+  for (const msg of recentHistory) {
+    messages.push({
+      role: msg.role === 'assistant' ? 'assistant' : 'user',
+      content: msg.content,
+    });
   }
 
+  // Add the current user message
+  let fullMessage = message;
+  if (documentContent) {
+    fullMessage = message;
+  }
+  messages.push({
+    role: 'user',
+    content: fullMessage,
+  });
+
   return {
-    messages: [
-      {
-        role: 'user',
-        content: contextPrefix + 'User message: ' + fullMessage
-      }
-    ]
+    system: systemContent,
+    messages,
   };
 }

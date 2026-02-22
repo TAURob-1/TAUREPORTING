@@ -7,6 +7,7 @@ import { usePlatform } from '../context/PlatformContext.jsx';
 import { AUDIENCES } from '../data/audienceDefinitions';
 
 const PRESETS = [
+  { label: '100/0 (No Holdout)', minScore: 20, exposedRatio: 1.0 },
   { label: '60/40 Split', minScore: 40, exposedRatio: 0.6 },
   { label: '70/30', minScore: 50, exposedRatio: 0.7 },
   { label: '80/20', minScore: 60, exposedRatio: 0.8 },
@@ -99,7 +100,7 @@ function buildPlannerAudience(primaryAudienceText, countryCode) {
 }
 
 const AudienceTargeting = () => {
-  const { countryCode, countryConfig, campaignConfig, updateCampaignConfig, audienceStrategy } = usePlatform();
+  const { countryCode, countryConfig, campaignConfig, updateCampaignConfig, audienceStrategy, customSecondary, setCustomSecondary } = usePlatform();
   const [selectedAudience, setSelectedAudience] = useState(null);
   const [demographicsData, setDemographicsData] = useState(null);
   const [recommendations, setRecommendations] = useState(null);
@@ -307,6 +308,32 @@ const AudienceTargeting = () => {
         </div>
       </div>
 
+      {/* Secondary Audience */}
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
+        <h3 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
+          Secondary Audience (Refinement)
+        </h3>
+        {audienceStrategy.secondaryAudience && !customSecondary.trim() && (
+          <div className="mb-3 bg-indigo-50 border border-indigo-200 rounded-md px-3 py-2 text-sm text-indigo-900">
+            <span className="font-medium">AI Recommended:</span> {audienceStrategy.secondaryAudience}
+            {audienceStrategy.isNiche && (
+              <span className="ml-2 text-xs text-indigo-600">(auto-detected niche audience)</span>
+            )}
+          </div>
+        )}
+        <div>
+          <label className="block text-xs text-gray-500 font-medium mb-1">Custom Secondary Audience</label>
+          <input
+            type="text"
+            value={customSecondary}
+            onChange={(e) => setCustomSecondary(e.target.value)}
+            placeholder="e.g., interest in online games, gambling"
+            className="w-full px-3 py-2 rounded-md border border-gray-300 text-sm text-gray-900 placeholder-gray-400"
+          />
+          <p className="mt-1 text-xs text-gray-400">Enter a custom secondary audience for precision targeting refinement</p>
+        </div>
+      </div>
+
       {/* Audience Selector */}
       <AudienceSelector
         selectedAudience={selectedAudience}
@@ -474,7 +501,7 @@ const AudienceTargeting = () => {
                 <input
                   type="range"
                   min="0.4"
-                  max="0.8"
+                  max="1.0"
                   step="0.05"
                   value={settings.exposedRatio}
                   onChange={(e) => handleSettingsChange('exposedRatio', parseFloat(e.target.value))}
@@ -482,8 +509,8 @@ const AudienceTargeting = () => {
                 />
                 <div className="flex justify-between text-xs text-gray-500 mt-1">
                   <span>40%</span>
-                  <span>60%</span>
-                  <span>80%</span>
+                  <span>70%</span>
+                  <span>100%</span>
                 </div>
               </div>
 

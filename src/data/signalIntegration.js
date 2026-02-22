@@ -13,6 +13,8 @@ const SIGNAL_FILES = {
   insights: import.meta.glob('/home/r2/Signal/companies/*/summary/insights_and_actions.json', { import: 'default' }),
   trends: import.meta.glob('/home/r2/Signal/companies/*/summary/trends_intelligence.json', { import: 'default' }),
   spend: import.meta.glob('/home/r2/Signal/companies/*/data/spend/spend_estimation.json', { import: 'default' }),
+  strategicBrief: import.meta.glob('/home/r2/Signal/companies/*/strategic_brief/*.txt', { query: '?raw', import: 'default' }),
+  summaryMd: import.meta.glob('/home/r2/Signal/companies/*/summary/strategic_brief.md', { query: '?raw', import: 'default' }),
 };
 
 const ADVERTISER_SLUG_HINTS = {
@@ -24,8 +26,13 @@ const ADVERTISER_SLUG_HINTS = {
 
 const SIGNAL_DATA_CACHE = new Map();
 const SIGNAL_SLUGS = Array.from(new Set(
-  Object.keys(SIGNAL_FILES.traffic)
-    .concat(Object.keys(SIGNAL_FILES.config))
+  [
+    ...Object.keys(SIGNAL_FILES.traffic),
+    ...Object.keys(SIGNAL_FILES.config),
+    ...Object.keys(SIGNAL_FILES.seo),
+    ...Object.keys(SIGNAL_FILES.insights),
+    ...Object.keys(SIGNAL_FILES.strategicBrief),
+  ]
     .map((path) => {
       const match = path.match(/\/companies\/([^/]+)\//);
       return match ? match[1] : null;
@@ -199,6 +206,8 @@ async function loadRealSignalData(slug, countryCode = 'UK') {
     return SIGNAL_DATA_CACHE.get(cacheKey);
   }
 
+  console.log('[SignalIntegration] Loading data for slug:', slug, 'Known slugs:', SIGNAL_SLUGS);
+
   const [
     config,
     status,
@@ -222,6 +231,11 @@ async function loadRealSignalData(slug, countryCode = 'UK') {
     loadJson(SIGNAL_FILES.trends, slug, 'summary/trends_intelligence.json'),
     loadJson(SIGNAL_FILES.spend, slug, 'data/spend/spend_estimation.json'),
   ]);
+
+  console.log('[SignalIntegration] Loaded:', {
+    config: !!config, traffic: !!traffic, seo: !!seo,
+    aiVisibility: !!aiVisibility, insights: !!insights, spend: !!spend,
+  });
 
   const summary = summaryRoot || summaryNested || {};
   const advertiserDomain = config?.domain || traffic?.main_company?.domain || `${slug}.com`;

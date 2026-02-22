@@ -794,10 +794,12 @@ export function generateRecommendations(demographicsData, audience, options = {}
   
   // Score all ZIPs
   const scoredZips = scoreZIPsForAudience(demographicsData, audience);
-  
-  // Filter by minimum score
-  const qualified = scoredZips.filter(z => z.score >= minScore);
-  
+
+  // When slider at minimum (20 = max reach), include ALL geo units
+  const qualified = minScore <= 20
+    ? scoredZips
+    : scoredZips.filter(z => z.score >= minScore);
+
   // Limit to maxZips
   const limited = qualified.slice(0, maxZips);
   

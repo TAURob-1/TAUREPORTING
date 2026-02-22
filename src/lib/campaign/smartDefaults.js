@@ -145,8 +145,21 @@ export function mapMediaMixToProviderBudgets(mediaMix, campaignBudget, countryCo
   return allocations;
 }
 
+function parseAgeRange(text) {
+  const rangeMatch = text.match(/(\d{1,2})\s*-\s*(\d{1,2})/);
+  if (rangeMatch) {
+    return { min: parseInt(rangeMatch[1], 10), max: parseInt(rangeMatch[2], 10) };
+  }
+  const plusMatch = text.match(/(\d{1,2})\s*\+/);
+  if (plusMatch) {
+    return { min: parseInt(plusMatch[1], 10), max: 99 };
+  }
+  return null;
+}
+
 export function getAudienceMediaRecommendations(audienceName = '') {
   const text = String(audienceName || '').toLowerCase();
+  const ageRange = parseAgeRange(text);
 
   if (/affluent|wealth|high net worth|luxury|premium/.test(text)) {
     return {
@@ -157,12 +170,24 @@ export function getAudienceMediaRecommendations(audienceName = '') {
     };
   }
 
-  if (/young|gen z|student|18-24|16-24/.test(text)) {
+  // Detect young/youth audiences including age ranges where max <= 40 or min < 30
+  const isYouthAudience = /young|gen z|student|18-24|16-24/.test(text)
+    || (ageRange && (ageRange.max <= 40 || ageRange.min < 30));
+
+  if (isYouthAudience) {
+    // If age range spans across (e.g. 19-36, 18-35), include both social + traditional
+    const isWideRange = ageRange && ageRange.max > 30;
     return {
-      recommendedPlatforms: ['TikTok', 'Instagram', 'YouTube', 'Spotify'],
-      contentFocus: ['Short-form video', 'Music', 'Creator-led entertainment'],
-      avoid: ['Daytime linear TV', 'Long-form legacy radio'],
-      estimatedCombinedReach: '28M UK adults',
+      recommendedPlatforms: isWideRange
+        ? ['TikTok', 'YouTube', 'Instagram', 'Spotify', 'ITVX', 'Meta']
+        : ['TikTok', 'Instagram', 'YouTube', 'Spotify'],
+      contentFocus: isWideRange
+        ? ['Short-form video', 'Music', 'Creator-led entertainment', 'Prime-time CTV', 'Podcasts']
+        : ['Short-form video', 'Music', 'Creator-led entertainment'],
+      avoid: isWideRange
+        ? ['Daytime linear TV', 'Legacy print media']
+        : ['Daytime linear TV', 'Long-form legacy radio'],
+      estimatedCombinedReach: isWideRange ? '32M UK adults' : '28M UK adults',
     };
   }
 

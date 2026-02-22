@@ -1,7 +1,10 @@
 import React, { useState, useRef } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { usePlanner } from '../../../context/PlannerContext';
 import { usePlatform } from '../../../context/PlatformContext';
 import { sendPlannerMessage } from '../../../services/plannerChat';
+import { getSystemPromptForMode } from '../../../context/PlannerContext';
 import { getSelectedSignalContext } from '../../../data/signalIntegration';
 import { parseAIResponse } from '../../../utils/plannerResponseParser';
 import { getProviderPlanning } from '../../../data/countryPlanning';
@@ -15,150 +18,15 @@ function normalizeBudgetKey(value) {
   return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/(^_|_$)/g, '');
 }
 
-const QUICK_ACTIONS = [
-  {
-    id: 'analyze-brief',
-    label: '📋 Analyze Brief',
-    requiresDoc: true,
-    template: (advertiserName, campaignName, docContent) => 
-      `Here is our planning brief for ${advertiserName} ${campaignName}. Please analyze:
-
-**1) What do you think of the brief and how can it be improved?** (MODE 1: Consultative)
-- Acknowledge what's strong first
-- If target audience is broad (e.g., "18-44 men" = 11M+ people), note that budget + frequency constraints mean only partial reach is possible
-- SUGGEST clarifying sub-segmentation: "You might want to clarify: what sub-segment prioritization exists beneath this broad demographic?"
-- Use Signal data as SUPPORTING context (e.g., "Signal shows ${advertiserName}'s current strength is [demographic], so this brief represents audience expansion")
-- If geographic targeting is absent, SUGGEST it as an option: "A geo-focused approach COULD help maximize budget and enable holdout testing"
-
-**2) What would you recommend as a plan? Paid media only.** (MODE 2: Directive - Take Ownership)
-- Be confident and specific: "We recommend..." not "You could consider..."
-- **Geographic strategy:** If appropriate, be forthright: "We recommend starting focused: concentrate Month 1 spend on 500 high-propensity MSOAs (20-30% CPM reduction, enables holdout testing). Prove-out, then scale Month 2-3 if CPA targets hold."
-- **Targeting precision:** Specify behavioral, contextual, geographic (not vague "Adults 18+")
-  - "Target: Gaming app users, competitor site visitors, lookalike from top 20% existing players, mobile moments (commute/lunch/evening)"
-- **Channel mix:** Take a position: "This plan prioritizes mobile-first platforms (38% TikTok + Meta) where 'Spin Masters' spend media time, vs CTV (35% for scale, not dominance)"
-- Cite BARB reach data for credibility (YouTube CTV: 35.6M, ITVX: 22.5M, C4: 18.2M)
-- Always caveat: "Indicative plan based on available data. Performance to be validated in-flight."
-
-Planning Brief:
-${docContent}`
-  },
-  {
-    id: 'media-plan',
-    label: '📊 Media Plan Only',
-    requiresDoc: true,
-    template: (advertiserName, campaignName, docContent) =>
-      `Based on this brief for ${advertiserName} ${campaignName}, please provide a detailed paid media plan with budget recommendations.
-
-**MODE 2: Directive - Take ownership of the recommendation**
-
-Be confident and specific:
-- "We recommend..." not "You could consider..."
-- **Geographic strategy:** If appropriate: "We recommend starting focused: concentrate Month 1 spend on 500 high-propensity MSOAs (20-30% CPM reduction, enables holdout testing). Prove-out, then scale Month 2-3."
-- **Targeting beneath demographics:** Specify behavioral, contextual, geographic (not vague "Adults 18+")
-  - Example: "Target: Gaming app users, competitor site visitors, lookalike from top 20% existing players, mobile moments (commute/lunch/evening)"
-- **Channel mix:** Take a position: "This plan prioritizes mobile-first platforms (38%) where target spends media time, vs CTV (35% for scale)"
-- Cite BARB reach data for credibility (YouTube CTV: 35.6M, ITVX: 22.5M, C4: 18.2M)
-- Include testing budget (10%) for creative/channel validation
-- Always caveat: "Indicative plan based on available data. Performance to be validated in-flight."
-
-Brief:
-${docContent}`
-  },
-  {
-    id: 'audit-plan',
-    label: '🔍 Audit Media Plan',
-    requiresDoc: true,
-    template: (advertiserName, campaignName, docContent) => 
-      `Please audit this media plan for ${advertiserName} ${campaignName}.
-
-**MODE 1: Consultative - Help client evaluate and hold agency accountable**
-
-**Your Analysis Should:**
-1. **Acknowledge what's strong first** - What does this plan get right?
-2. **Audience Alignment** - Does the channel mix reach the stated target demographic?
-   - If target is broad (e.g., "18-44 men" = 11M+ people), FLAG IT and note that budget + frequency requirements likely mean only 40-50% reach is possible
-   - Ask: What sub-segment prioritization exists beneath the broad demographic?
-3. **Channel Mix vs Audience Behavior** - Compare allocations to where target actually spends media time
-   - Use BARB data as reference (YouTube CTV: 35.6M reach, ITVX: 22.5M, C4: 18.2M)
-   - If target is "mobile-first" but plan is CTV-heavy, STATE CLEARLY: "This allocation appears counter to the data we have on audience reach and behavior"
-4. **Targeting Precision** - Are targeting specs sufficient or vague?
-   - "Adults 16+" or "Adults 18+" = red flag (too broad)
-   - Look for behavioral, contextual, geographic targeting detail
-5. **Geographic Strategy** - Is there one?
-   - If missing, SUGGEST (don't mandate): "A geographic approach COULD help maximize budget efficiency and enable holdout testing for incrementality"
-   - Frame as option with trade-offs, not requirement
-6. **Red Flags** - Deal-driven language, missing testing budget, unconfirmed inventory
-
-**If You Disagree:**
-- State it clearly with data: "Based on BARB data showing X, this Y% allocation to Z seems misaligned"
-- Generate specific clarification questions for the agency:
-  • "Why X% on [channel] for [mobile-first] audience? Please show demographic indexing."
-  • "What behavioral, contextual, geographic targeting is applied to CTV beyond 'Adults 18+'?"
-  • "Where's the testing budget for validating creative/positioning before £XM spend?"
-
-**Use Signal Data Appropriately:**
-- Reference competitive intelligence as SUPPORTING evidence, not lead insight
-- Example: "The brief targets 18-44 men. Signal data shows ${advertiserName}'s current strength is [different demographic], so this represents a NEW audience segment requiring distinct positioning."
-
-**Always Caveat:**
-"Without full performance data or MMM, this analysis is based on audience intelligence, BARB reach data, and media planning best practices. [Agency Name] should validate with proprietary sources."
-
-Media Plan:
-${docContent}`
-  },
-  {
-    id: 'agency-questions',
-    label: '❓ Questions for Agency',
-    requiresDoc: true,
-    template: (advertiserName, campaignName, docContent) =>
-      `Based on this media plan for ${advertiserName} ${campaignName}, generate a list of specific questions to ask the agency (Mediacom) to:
-1. Understand their rationale
-2. Uncover any deal-driven vs performance-driven decisions
-3. Get missing targeting details
-4. Clarify measurement strategy
-
-Focus on areas where the plan lacks specificity or seems misaligned with the Spin Masters target audience.
-
-Media Plan:
-${docContent}`
-  },
-  {
-    id: 'competitive',
-    label: '🎯 How to Compete',
-    requiresDoc: false,
-    template: (advertiserName, campaignName) =>
-      `How should ${advertiserName} compete in this crowded market?
-
-**Go beyond paid media:** Use Signal intelligence to identify strategic advantages competitors lack.
-
-**Standard Strategic Levers:**
-1. Owned channel leverage (direct traffic %, reactivation opportunities)
-2. AI visibility gaps (where we show up vs competitors)
-3. Reactivation vs acquisition economics (warm audience first)
-4. Market timing windows (competitor gaps, seasonal opportunities)
-5. Creative differentiation (unique positioning angles)
-6. Emerging platform advantages (where competitors aren't yet)
-7. Data & targeting precision (proprietary insights)
-8. Geographic arbitrage (legendary in 1 city vs famous in 8)
-
-**Advanced Provocations (Gaming/Gambling):**
-9. Positioning psychology: Own an uncomfortable truth ("honest about odds" vs generic "fun")
-10. Product experience > media spend (first 90 seconds in app matters more than £4.2M media)
-11. Turn compliance into brand (responsible gambling message AS the ad, not small print)
-12. Geographic cultural embedding (become part of a city's identity, let story spread)
-13. Reframe competitive set (competing against Netflix/boredom, not other casinos)
-14. Make social competition real (shareable mechanics that generate organic content)
-15. Age restriction as positioning ("not for kids" = premium signal, not constraint)
-16. Price as quality signal (premium tier makes free tier feel valuable)
-17. Optimize for memorability (500K remarkable > 5M ordinary)
-18. Define the brand blank ("${advertiserName} is the one that ___" - what goes there?)
-
-Prioritize the 3-4 most distinctive strategic advantages, then provide conventional paid media plan separately.`
-  }
+const CHAT_MODES = [
+  { id: '7-stage', label: '7-Stage Planning', icon: '\u{1F4CB}', description: 'Structured 7-layer media planning process' },
+  { id: 'free', label: 'Free Questions', icon: '\u{1F4AC}', description: 'Flexible planning questions \u2014 audiences, channels, budgets, strategy' },
+  { id: 'analyse', label: 'Analyse Brief/Plan', icon: '\u{1F50D}', description: 'Upload and analyse briefs or media plans' },
+  { id: 'strategic', label: 'Strategic Questions', icon: '\u{1F3AF}', description: 'Competitive strategy, market position & agency accountability' },
 ];
 
 export default function ChatTab() {
-  const { state, addChatMessage, updateMediaPlan, updateLayerProgress, addFlightingData, addPersonasData } = usePlanner();
+  const { state, addChatMessage, updateMediaPlan, updateLayerProgress, addFlightingData, addPersonasData, clearChatHistory } = usePlanner();
   const {
     advertiser,
     countryCode,
@@ -169,6 +37,7 @@ export default function ChatTab() {
     setPlanningState,
     addAdvertiser,
   } = usePlatform();
+  const [activeMode, setActiveMode] = useState('7-stage');
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -301,22 +170,6 @@ export default function ChatTab() {
     }
   };
 
-  const handleQuickAction = (action) => {
-    if (action.requiresDoc && !documentContent) {
-      setError('Please upload a document first');
-      setTimeout(() => setError(null), 3000);
-      return;
-    }
-
-    const prompt = action.template(
-      advertiser?.name || 'Unknown Advertiser',
-      campaignConfig?.campaignName || 'Unknown Campaign',
-      documentContent || ''
-    );
-    
-    setInput(prompt);
-  };
-
   const handleRemoveDocument = () => {
     setUploadedFile(null);
     setDocumentContent(null);
@@ -353,7 +206,7 @@ export default function ChatTab() {
 
     try {
       const plannerContext = {
-        systemPrompt: state.systemPrompt,
+        systemPrompt: getSystemPromptForMode(activeMode),
         advertiser,
         country: countryConfig,
         signalContext: getSelectedSignalContext(state.selectedDataSources, state.signalData),
@@ -362,6 +215,7 @@ export default function ChatTab() {
         campaignConfig,
         planningState,
         documentContent: hasDocument ? documentContent : null,
+        chatHistory: state.chatHistory,
       };
 
       const responseText = await sendPlannerMessage(messageText, plannerContext);
@@ -484,18 +338,40 @@ export default function ChatTab() {
         {audienceStrategy.reasoning}
       </div>
 
-      {/* Quick Action Templates */}
-      <div className="flex flex-wrap gap-2">
-        {QUICK_ACTIONS.map(action => (
-          <button
-            key={action.id}
-            onClick={() => handleQuickAction(action)}
-            disabled={isLoading || isProcessingFile}
-            className="px-3 py-1.5 text-sm border border-blue-300 dark:border-blue-700 bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 rounded-md hover:bg-blue-100 dark:hover:bg-blue-900/40 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-          >
-            {action.label}
-          </button>
-        ))}
+      {/* Mode Toggle */}
+      <div className="space-y-1">
+        <div className="flex flex-wrap gap-2 items-center">
+          {CHAT_MODES.map(mode => (
+            <button
+              key={mode.id}
+              onClick={() => setActiveMode(mode.id)}
+              className={`px-3 py-1.5 text-sm rounded-md font-medium transition-colors ${
+                activeMode === mode.id
+                  ? 'bg-blue-600 text-white'
+                  : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-slate-300 hover:bg-gray-200 dark:hover:bg-slate-700'
+              }`}
+            >
+              {mode.icon} {mode.label}
+            </button>
+          ))}
+          {state.chatHistory.length > 0 && (
+            <button
+              onClick={() => {
+                clearChatHistory();
+                setUploadedFile(null);
+                setDocumentContent(null);
+                setError(null);
+                setNotification(null);
+              }}
+              className="ml-auto px-3 py-1.5 text-sm rounded-md font-medium text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/40 transition-colors"
+            >
+              + New Chat
+            </button>
+          )}
+        </div>
+        <p className="text-xs text-gray-500 dark:text-slate-400 pl-1">
+          {CHAT_MODES.find(m => m.id === activeMode)?.description}
+        </p>
       </div>
 
       {/* Document Upload Badge */}
@@ -558,14 +434,33 @@ export default function ChatTab() {
       <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-lg p-4 min-h-[300px] max-h-[500px] overflow-y-auto">
         {state.chatHistory.length === 0 ? (
           <div className="text-center text-gray-500 dark:text-slate-400 py-8">
-            <p className="text-lg mb-2">👋 Welcome to AI Media Planning</p>
-            <p className="text-sm">Ask me to help with any of the 7 planning layers:</p>
-            <p className="text-xs mt-2 text-gray-400 dark:text-slate-500">
-              Strategic Comms • Comms Channel • Channel • Audience • Measurement • Message/Creative • Flighting
-            </p>
-            <p className="text-sm mt-4 text-blue-600 dark:text-blue-400">
-              💡 Upload a brief document and click "Analyze Brief" for instant planning
-            </p>
+            {activeMode === '7-stage' && (
+              <>
+                <p className="text-lg mb-2">{'\u{1F44B}'} Welcome to AI Media Planning</p>
+                <p className="text-sm">Ask me to help with any of the 7 planning layers:</p>
+                <p className="text-xs mt-2 text-gray-400 dark:text-slate-500">
+                  Strategic Comms {'\u2022'} Comms Channel {'\u2022'} Channel {'\u2022'} Audience {'\u2022'} Measurement {'\u2022'} Message/Creative {'\u2022'} Flighting
+                </p>
+              </>
+            )}
+            {activeMode === 'free' && (
+              <>
+                <p className="text-lg mb-2">{'\u{1F4AC}'} Free Planning Questions</p>
+                <p className="text-sm">Ask any planning question {'\u2014'} audiences, channels, budgets, strategy</p>
+              </>
+            )}
+            {activeMode === 'analyse' && (
+              <>
+                <p className="text-lg mb-2">{'\u{1F50D}'} Analyse Brief/Plan</p>
+                <p className="text-sm">Upload a brief or media plan to get started</p>
+              </>
+            )}
+            {activeMode === 'strategic' && (
+              <>
+                <p className="text-lg mb-2">{'\u{1F3AF}'} Strategic Questions</p>
+                <p className="text-sm">Ask about competitive strategy, market position, or agency accountability</p>
+              </>
+            )}
           </div>
         ) : (
           <div className="space-y-4">
@@ -583,7 +478,13 @@ export default function ChatTab() {
                       📎 {msg.documentName}
                     </p>
                   )}
-                  <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                  {msg.role === 'assistant' ? (
+                    <div className="text-sm prose prose-sm dark:prose-invert max-w-none prose-p:my-1 prose-li:my-0.5 prose-headings:mt-3 prose-headings:mb-1 prose-table:text-xs prose-td:px-2 prose-td:py-1 prose-th:px-2 prose-th:py-1">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content}</ReactMarkdown>
+                    </div>
+                  ) : (
+                    <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                  )}
                   <p className="text-xs opacity-70 mt-1">{new Date(msg.timestamp).toLocaleTimeString()}</p>
                 </div>
               </div>
@@ -593,9 +494,10 @@ export default function ChatTab() {
               <div className="flex justify-start">
                 <div className="bg-gray-100 dark:bg-slate-800 rounded-lg p-3">
                   <p className="text-sm text-gray-600 dark:text-slate-400">
-                    {documentContent 
-                      ? '🤔 Analyzing brief with 7-layer planning framework...'
-                      : '🤔 Thinking with 7-layer planning framework...'}
+                    {activeMode === '7-stage' && '\u{1F914} Thinking with 7-layer planning framework...'}
+                    {activeMode === 'free' && '\u{1F914} Thinking...'}
+                    {activeMode === 'analyse' && '\u{1F914} Analyzing document...'}
+                    {activeMode === 'strategic' && '\u{1F914} Analyzing competitive landscape...'}
                   </p>
                 </div>
               </div>

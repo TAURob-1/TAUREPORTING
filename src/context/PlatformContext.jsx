@@ -1,6 +1,7 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { ADVERTISER_OPTIONS, COUNTRY_CONFIG } from '../config/platformConfig';
 import { segmentAudience } from '../lib/campaign/smartDefaults';
+import { useAuth } from './AuthContext';
 
 const PlatformContext = createContext(null);
 const ADVERTISERS_STORAGE_KEY = 'tau_advertisers';
@@ -80,11 +81,15 @@ function normalizePrimaryAudience(value) {
 }
 
 export function PlatformProvider({ children }) {
-  const [countryCode, setCountryCode] = useState('US');
+  const { user } = useAuth();
+  const isTombolaOnly = user?.access === 'tombola-only';
+
+  const [countryCode, setCountryCode] = useState(() => isTombolaOnly ? 'UK' : 'US');
   const [customAdvertisers, setCustomAdvertisers] = useState([]);
-  const [advertiserId, setAdvertiserId] = useState(ADVERTISER_OPTIONS[0]?.id || 'demo');
+  const [advertiserId, setAdvertiserId] = useState(() => isTombolaOnly ? 'tombola' : (ADVERTISER_OPTIONS[0]?.id || 'demo'));
   const [campaignConfig, setCampaignConfig] = useState(getDefaultCampaignConfig);
   const [planningState, setPlanningStateRaw] = useState(getDefaultPlanningState);
+  const [customSecondary, setCustomSecondary] = useState('');
 
   const advertisers = useMemo(() => {
     const merged = [...ADVERTISER_OPTIONS];
@@ -93,15 +98,27 @@ export function PlatformProvider({ children }) {
         merged.push(entry);
       }
     });
+    if (isTombolaOnly) {
+      return merged.filter((entry) => entry.id === 'tombola');
+    }
     return merged;
-  }, [customAdvertisers]);
+  }, [customAdvertisers, isTombolaOnly]);
 
   const countryConfig = COUNTRY_CONFIG[countryCode] || COUNTRY_CONFIG.US;
   const advertiser = advertisers.find((entry) => entry.id === advertiserId) || advertisers[0] || ADVERTISER_OPTIONS[0];
   const campaignStorageKey = `tau_campaign_${advertiserId}_${countryCode}`;
   const audienceStrategy = useMemo(
-    () => segmentAudience(campaignConfig.primaryAudience, countryCode),
-    [campaignConfig.primaryAudience, countryCode]
+    () => {
+      const strategy = segmentAudience(campaignConfig.primaryAudience, countryCode);
+      if (customSecondary.trim()) {
+        strategy.customSecondary = customSecondary.trim();
+        if (!strategy.secondaryAudience) {
+          strategy.secondaryAudience = customSecondary.trim();
+        }
+      }
+      return strategy;
+    },
+    [campaignConfig.primaryAudience, countryCode, customSecondary]
   );
 
   useEffect(() => {
@@ -156,6 +173,13 @@ export function PlatformProvider({ children }) {
   useEffect(() => {
     localStorage.setItem(ADVERTISERS_STORAGE_KEY, JSON.stringify(customAdvertisers));
   }, [customAdvertisers]);
+
+  // Auto-set UK country when switching to Tombola advertiser
+  useEffect(() => {
+    if (advertiserId === 'tombola') {
+      setCountryCode('UK');
+    }
+  }, [advertiserId]);
 
   useEffect(() => {
     const onStorage = (event) => {
@@ -246,6 +270,8 @@ export function PlatformProvider({ children }) {
     planningState,
     setPlanningState,
     audienceStrategy,
+    customSecondary,
+    setCustomSecondary,
     advertiser: {
       ...advertiser,
       slug: slugify(advertiser?.name || 'advertiser'),
@@ -262,6 +288,7 @@ export function PlatformProvider({ children }) {
     planningState,
     setPlanningState,
     audienceStrategy,
+    customSecondary,
     advertiser,
   ]);
 

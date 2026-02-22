@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { usePlanner } from '../../../context/PlannerContext';
 
 export default function MediaPlanTab() {
@@ -34,23 +36,38 @@ export default function MediaPlanTab() {
     const printWindow = window.open('', '_blank', 'width=900,height=700');
     if (!printWindow) return;
 
-    const escaped = state.mediaPlan.markdown
+    // Simple markdown-to-HTML conversion for print
+    const htmlContent = state.mediaPlan.markdown
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+      .replace(/>/g, '&gt;')
+      .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+      .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+      .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/^- (.+)$/gm, '<li>$1</li>')
+      .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
+      .replace(/\n\n/g, '<br/><br/>');
 
     printWindow.document.write(`
       <html>
         <head>
           <title>Media Plan Export</title>
           <style>
-            body { font-family: Arial, sans-serif; padding: 24px; color: #111827; }
-            pre { white-space: pre-wrap; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; }
+            body { font-family: Arial, sans-serif; padding: 24px; color: #111827; line-height: 1.6; max-width: 800px; }
+            h1 { font-size: 24px; border-bottom: 2px solid #1d4ed8; padding-bottom: 8px; }
+            h2 { font-size: 20px; margin-top: 24px; color: #1e40af; }
+            h3 { font-size: 16px; margin-top: 16px; }
+            ul { padding-left: 20px; }
+            li { margin: 4px 0; }
+            table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+            th, td { border: 1px solid #d1d5db; padding: 8px 12px; text-align: left; font-size: 13px; }
+            th { background: #f3f4f6; font-weight: 600; }
           </style>
         </head>
         <body>
-          <h1>Media Plan</h1>
-          <pre>${escaped}</pre>
+          ${htmlContent}
         </body>
       </html>
     `);
@@ -101,8 +118,8 @@ export default function MediaPlanTab() {
       {state.mediaPlan.markdown ? (
         <div className="space-y-4">
           <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-lg p-6">
-            <div className="prose dark:prose-invert max-w-none">
-              <pre className="whitespace-pre-wrap text-sm">{state.mediaPlan.markdown}</pre>
+            <div className="prose dark:prose-invert max-w-none prose-table:text-sm prose-td:px-3 prose-td:py-1.5 prose-th:px-3 prose-th:py-1.5 prose-headings:text-gray-900 dark:prose-headings:text-white">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{state.mediaPlan.markdown}</ReactMarkdown>
             </div>
           </div>
 

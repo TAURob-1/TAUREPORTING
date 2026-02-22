@@ -16,6 +16,7 @@ import PublisherTable from './media/PublisherTable';
 import ContentInsights from './media/ContentInsights';
 import AudiencePreferences from './media/AudiencePreferences';
 import RecommendationsPanel from './media/RecommendationsPanel';
+import MediaChatWidget from './media/MediaChatWidget';
 
 function MediaReach() {
   const { countryCode, audienceStrategy } = usePlatform();
@@ -95,6 +96,12 @@ function MediaReach() {
           incomeRows={INCOME_PREFERENCES}
         />
       </div>
+
+      <MediaChatWidget
+        countryCode={countryCode}
+        audienceName={audienceStrategy.primaryAudience}
+        recommendations={recommendations}
+      />
     </div>
   );
 }

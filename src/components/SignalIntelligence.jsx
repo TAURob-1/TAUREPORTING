@@ -15,6 +15,9 @@ import {
 } from 'recharts';
 import MetricCard from './MetricCard';
 import MediaReachTable from './MediaReachTable';
+import CompetitorComparison from './signal/CompetitorComparison';
+import SegmentView from './signal/SegmentView';
+import SignalChatWidget from './signal/SignalChatWidget';
 import { usePlatform } from '../context/PlatformContext.jsx';
 import { getSignalDataset } from '../data/signalIntegration';
 import { getCountryMarketContext, getMediaReachTable } from '../data/marketData';
@@ -30,12 +33,21 @@ function formatVisits(value) {
   return `${v}`;
 }
 
+const SIGNAL_TABS = [
+  { key: 'overview', label: 'Overview' },
+  { key: 'competitors', label: 'Competitors' },
+  { key: 'segments', label: 'Bingo vs Arcade' },
+];
+
 function SignalIntelligence() {
   const { advertiser, advertiserId, countryCode } = usePlatform();
   const [signal, setSignal] = useState(null);
   const [loadError, setLoadError] = useState(null);
+  const [activeTab, setActiveTab] = useState('overview');
   const marketContext = getCountryMarketContext(countryCode);
   const mediaReachTable = getMediaReachTable(countryCode);
+
+  const isTombola = advertiserId === 'tombola';
 
   useEffect(() => {
     let active = true;
@@ -71,8 +83,8 @@ function SignalIntelligence() {
       .map((row) => ({
         name: row.isAdvertiser ? advertiser.name : row.name,
         visits: Math.round(row.visits / 1000),
-        pages: Number(row.pagesPerVisit.toFixed(1)),
-        bounce: Number((row.bounceRate * 100).toFixed(1)),
+        pages: Number((row.pagesPerVisit || 0).toFixed(1)),
+        bounce: Number(((row.bounceRate || 0) * 100).toFixed(1)),
         advertiser: row.isAdvertiser,
       }))
       .sort((a, b) => b.visits - a.visits)
@@ -103,6 +115,8 @@ function SignalIntelligence() {
     );
   }
 
+  const visibleTabs = isTombola ? SIGNAL_TABS : SIGNAL_TABS.filter((t) => t.key !== 'segments');
+
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
       <div className="max-w-7xl mx-auto space-y-6">
@@ -119,9 +133,26 @@ function SignalIntelligence() {
             </div>
             <div className="text-right text-xs text-blue-100">
               <div className="uppercase tracking-wider">Planning Focus</div>
-              <div className="font-semibold mt-1">{marketContext.primaryVideoFocus.join(' • ')}</div>
+              <div className="font-semibold mt-1">{marketContext.primaryVideoFocus.join(' * ')}</div>
             </div>
           </div>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="flex space-x-1 bg-gray-100 rounded-lg p-1">
+          {visibleTabs.map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                activeTab === tab.key
+                  ? 'bg-white text-blue-700 shadow-sm ring-1 ring-blue-100'
+                  : 'text-gray-500 hover:text-gray-800 hover:bg-gray-50'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
@@ -156,109 +187,120 @@ function SignalIntelligence() {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6">
-            <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Competitive Share of Visits</h3>
-              <div className="h-72">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={marketShareData}
-                      cx="50%"
-                      cy="50%"
-                      outerRadius={105}
-                      innerRadius={50}
-                      dataKey="visits"
-                      label={({ name, share }) => `${name}: ${share}%`}
-                      labelLine={false}
-                    >
-                      {marketShareData.map((entry, index) => (
-                        <Cell key={entry.name} fill={entry.isAdvertiser ? '#1d4ed8' : palette[index % palette.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip formatter={(v) => `${formatVisits(v)} visits`} />
-                  </PieChart>
-                </ResponsiveContainer>
+        {/* Tab Content */}
+        {activeTab === 'overview' && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 space-y-6">
+              <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Competitive Share of Visits</h3>
+                <div className="h-72">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={marketShareData}
+                        cx="50%"
+                        cy="50%"
+                        outerRadius={105}
+                        innerRadius={50}
+                        dataKey="visits"
+                        label={({ name, share }) => `${name}: ${share}%`}
+                        labelLine={false}
+                      >
+                        {marketShareData.map((entry, index) => (
+                          <Cell key={entry.name} fill={entry.isAdvertiser ? '#1d4ed8' : palette[index % palette.length]} />
+                        ))}
+                      </Pie>
+                      <Tooltip formatter={(v) => `${formatVisits(v)} visits`} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Traffic Trend</h3>
+                <div className="h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={signal.traffic.trend} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                      <XAxis dataKey="month" tick={{ fill: '#64748b', fontSize: 12 }} tickLine={false} stroke="#e2e8f0" />
+                      <YAxis tick={{ fill: '#64748b', fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={(v) => `${Math.round(v / 1000)}K`} />
+                      <Tooltip formatter={(v) => `${formatVisits(v)} visits`} />
+                      <Line type="monotone" dataKey="visits" stroke="#1d4ed8" strokeWidth={3} dot={{ fill: '#1d4ed8', r: 5 }} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+                <h3 className="text-lg font-bold text-gray-900 mb-4">Top Competitor Quality Metrics</h3>
+                <div className="h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={competitorBars} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                      <XAxis dataKey="name" tick={{ fill: '#64748b', fontSize: 11 }} tickLine={false} />
+                      <YAxis tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} />
+                      <Tooltip formatter={(value, key) => (key === 'visits' ? [`${value}K`, 'Visits'] : [value, key])} />
+                      <Bar dataKey="visits" fill="#0ea5e9" name="Visits (K)" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+                <div className="mt-3 text-xs text-gray-500">Quality columns include bounce rate, pages per visit, and time-on-site in source snapshot.</div>
               </div>
             </div>
 
-            <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Traffic Trend</h3>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={signal.traffic.trend} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                    <XAxis dataKey="month" tick={{ fill: '#64748b', fontSize: 12 }} tickLine={false} stroke="#e2e8f0" />
-                    <YAxis tick={{ fill: '#64748b', fontSize: 11 }} tickLine={false} axisLine={false} tickFormatter={(v) => `${Math.round(v / 1000)}K`} />
-                    <Tooltip formatter={(v) => `${formatVisits(v)} visits`} />
-                    <Line type="monotone" dataKey="visits" stroke="#1d4ed8" strokeWidth={3} dot={{ fill: '#1d4ed8', r: 5 }} />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-4">Top Competitor Quality Metrics</h3>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={competitorBars} margin={{ top: 5, right: 10, left: 0, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                    <XAxis dataKey="name" tick={{ fill: '#64748b', fontSize: 11 }} tickLine={false} />
-                    <YAxis tick={{ fill: '#64748b', fontSize: 10 }} tickLine={false} axisLine={false} />
-                    <Tooltip formatter={(value, key) => (key === 'visits' ? [`${value}K`, 'Visits'] : [value, key])} />
-                    <Bar dataKey="visits" fill="#0ea5e9" name="Visits (K)" radius={[4, 4, 0, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </div>
-              <div className="mt-3 text-xs text-gray-500">Quality columns include bounce rate, pages per visit, and time-on-site in source snapshot.</div>
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-3">SEO Opportunity Gaps</h3>
-              <div className="space-y-2">
-                {seoOpportunities.slice(0, 8).map((row) => (
-                  <div key={`${row.keyword}-${row.competitor}`} className="p-3 bg-slate-50 rounded-md border border-slate-100">
-                    <div className="text-sm font-semibold text-gray-900">{row.keyword}</div>
-                    <div className="text-xs text-gray-600 mt-1">Competitor: {row.competitor}</div>
-                    <div className="text-xs text-blue-700 mt-1">
-                      {row.volume ? `${row.volume.toLocaleString()} monthly searches` : 'Category-critical keyword gap'}
+            <div className="space-y-6">
+              <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+                <h3 className="text-lg font-bold text-gray-900 mb-3">SEO Opportunity Gaps</h3>
+                <div className="space-y-2">
+                  {seoOpportunities.slice(0, 8).map((row) => (
+                    <div key={`${row.keyword}-${row.competitor}`} className="p-3 bg-slate-50 rounded-md border border-slate-100">
+                      <div className="text-sm font-semibold text-gray-900">{row.keyword}</div>
+                      <div className="text-xs text-gray-600 mt-1">Competitor: {row.competitor}</div>
+                      <div className="text-xs text-blue-700 mt-1">
+                        {row.volume ? `${row.volume.toLocaleString()} monthly searches` : 'Category-critical keyword gap'}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
 
-            <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-3">AI Visibility Ranking</h3>
-              <div className="space-y-2">
-                {signal.aiVisibility.rankings.slice(0, 5).map((row) => (
-                  <div key={row.name} className="flex items-center justify-between bg-slate-50 rounded-md px-3 py-2">
-                    <div className="text-sm font-medium text-gray-900">#{row.rank} {row.name}</div>
-                    <div className="text-sm font-bold text-blue-700">{row.score}%</div>
-                  </div>
-                ))}
+              <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+                <h3 className="text-lg font-bold text-gray-900 mb-3">AI Visibility Ranking</h3>
+                <div className="space-y-2">
+                  {signal.aiVisibility.rankings.slice(0, 5).map((row) => (
+                    <div key={row.name} className="flex items-center justify-between bg-slate-50 rounded-md px-3 py-2">
+                      <div className="text-sm font-medium text-gray-900">#{row.rank} {row.name}</div>
+                      <div className="text-sm font-bold text-blue-700">{row.score}%</div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
 
-            <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
-              <h3 className="text-lg font-bold text-gray-900 mb-2">Market Notes</h3>
-              <div className="space-y-2 text-sm text-gray-700">
-                {signal.insights.map((insight) => (
-                  <div key={insight} className="flex gap-2">
-                    <span className="text-blue-600">•</span>
-                    <span>{insight}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-4 text-xs text-gray-500">
-                Demographic source: {marketContext.demographicsSource}
+              <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-100">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Market Notes</h3>
+                <div className="space-y-2 text-sm text-gray-700">
+                  {signal.insights.map((insight) => (
+                    <div key={insight} className="flex gap-2">
+                      <span className="text-blue-600">*</span>
+                      <span>{insight}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 text-xs text-gray-500">
+                  Demographic source: {marketContext.demographicsSource}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
+
+        {activeTab === 'competitors' && (
+          <CompetitorComparison signal={signal} advertiserName={advertiser.name} />
+        )}
+
+        {activeTab === 'segments' && isTombola && (
+          <SegmentView signal={signal} advertiserName={advertiser.name} />
+        )}
 
         <MediaReachTable
           title={mediaReachTable.title}
@@ -266,6 +308,12 @@ function SignalIntelligence() {
           rows={mediaReachTable.rows}
         />
       </div>
+
+      <SignalChatWidget
+        signal={signal}
+        advertiserName={advertiser.name}
+        countryCode={countryCode}
+      />
     </div>
   );
 }

@@ -1,0 +1,143 @@
+# Tombola Strategic Intelligence Report
+# Part 3 of 4: SEO and Keyword Intelligence
+
+---
+
+## SEO OVERVIEW
+
+BRAND_KEYWORDS:
+Total brand terms: 19
+Terms in top ten: 19
+Top ten percentage: 100.0 percent
+Primary term: tombola at position 1
+
+GENERIC_KEYWORDS:
+Total generic terms: 281
+Terms in top ten: 71
+Top ten percentage: 25.3 percent
+
+SEO_ASSESSMENT: Strong performance. 71 generic keywords in top ten.
+
+---
+
+## HIGH-VALUE KEYWORD OPPORTUNITIES
+
+KEYWORD_ONE:
+Term: bingo gala
+Current position: 16
+Monthly search volume: 1.0M
+Opportunity: Move to top ten
+
+KEYWORD_TWO:
+Term: bingo foxy
+Current position: 52
+Monthly search volume: 823.0K
+Opportunity: Create dedicated content
+
+KEYWORD_THREE:
+Term: spin gala
+Current position: 60
+Monthly search volume: 301.0K
+Opportunity: Create dedicated content
+
+KEYWORD_FOUR:
+Term: free to game
+Current position: 74
+Monthly search volume: 201.0K
+Opportunity: Create dedicated content
+
+KEYWORD_FIVE:
+Term: bongo bingo
+Current position: 68
+Monthly search volume: 90.5K
+Opportunity: Create dedicated content
+
+KEYWORD_SIX:
+Term: bingo
+Current position: 16
+Monthly search volume: 74.0K
+Opportunity: Move to top ten
+
+KEYWORD_SEVEN:
+Term: free online game
+Current position: 57
+Monthly search volume: 60.5K
+Opportunity: Create dedicated content
+
+KEYWORD_EIGHT:
+Term: all british casino
+Current position: 85
+Monthly search volume: 60.5K
+Opportunity: Create dedicated content
+
+KEYWORD_NINE:
+Term: free game online
+Current position: 44
+Monthly search volume: 49.5K
+Opportunity: Create dedicated content
+
+KEYWORD_TEN:
+Term: no deal or no deal
+Current position: 17
+Monthly search volume: 40.5K
+Opportunity: Move to top ten
+
+---
+
+## KEYWORD GAP ANALYSIS
+
+Keyword gap data not available. Run competitive SEO analysis to generate.
+
+---
+
+## SEO OPPORTUNITY SUMMARY
+
+TOTAL_OPPORTUNITY:
+Keywords outside top ten: 210
+Assessment: Significant untapped organic traffic potential
+
+---
+
+## COMPETITOR SEO COMPARISON
+
+TOMBOLA_SEO_POSITION:
+Company: Tombola
+Generic keywords in top ten: 71
+
+BUZZBINGO_SEO_POSITION:
+Company: buzzbingo.com
+Keywords in top ten: 77
+
+FOXYBINGO_SEO_POSITION:
+Company: foxybingo.com
+Keywords in top ten: 36
+
+GALABINGO_SEO_POSITION:
+Company: galabingo.com
+Keywords in top ten: 60
+
+MECCABINGO_SEO_POSITION:
+Company: meccabingo.com
+Keywords in top ten: 30
+
+---
+
+## WEBSITE TECHNICAL ASSESSMENT
+
+SCHEMA_ASSESSMENT:
+Schema.org coverage: Assessment pending
+
+---
+
+## SEO RECOMMENDATIONS
+
+RECOMMENDATION_ONE:
+Priority: HIGH
+Action: Content push targeting 42 high-volume keyword gaps
+Effort: Ongoing
+Impact: High
+
+---
+
+End of Part 3.
+Continue to Part 4 for AI Visibility and Recommendations.
