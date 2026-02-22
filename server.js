@@ -4,6 +4,7 @@ import session from 'express-session';
 import cors from 'cors';
 import 'dotenv/config';
 import fs from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 
 const app = express();
@@ -154,20 +155,15 @@ app.post('/api/chat', requireAuth, async (req, res) => {
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const distPath = path.join(__dirname, 'dist');
 
-try {
-  const distExists = await fs.access(distPath).then(() => true).catch(() => false);
-  if (distExists) {
-    app.use(express.static(distPath));
+if (existsSync(distPath)) {
+  app.use(express.static(distPath));
 
-    // SPA fallback - serve index.html for any unmatched routes
-    app.use((req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
-    });
-    console.log('Static files served from dist/');
-  } else {
-    console.log('No dist/ folder found — run npm run build or use vite dev server');
-  }
-} catch {
+  // SPA fallback - serve index.html for any unmatched routes
+  app.use((req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+  console.log('Static files served from dist/');
+} else {
   console.log('No dist/ folder found — run npm run build or use vite dev server');
 }
 
