@@ -112,14 +112,14 @@ app.post('/api/chat', requireAuth, async (req, res) => {
 
     // For Tombola user, ensure only tombola-co-uk data is accessible
     if (userAccess === 'tombola-only') {
-      // Inject system context about data restrictions
-      const systemMessage = {
-        role: 'system',
-        content: 'You are working with Tombola company data only. The advertiser is tombola-co-uk. All intelligence and planning should focus on Tombola.'
-      };
-
-      if (Array.isArray(requestBody.messages)) {
-        requestBody.messages = [systemMessage, ...requestBody.messages];
+      // Inject system context about data restrictions into the system parameter (not messages array)
+      const tombolaContext = 'You are working with Tombola company data only. The advertiser is tombola-co-uk. All intelligence and planning should focus on Tombola.';
+      
+      // Anthropic API requires system messages as a top-level "system" parameter, not in messages array
+      if (requestBody.system) {
+        requestBody.system = requestBody.system + '\n\n' + tombolaContext;
+      } else {
+        requestBody.system = tombolaContext;
       }
     }
 
