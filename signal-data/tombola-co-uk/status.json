@@ -1,0 +1,242 @@
+{
+  "slug": "tombola-co-uk",
+  "company_name": "Tombola",
+  "started_at": "2025-12-26T23:56:21.359680",
+  "completed_at": "2025-12-27T00:01:40.788107",
+  "agents": {
+    "validation": {
+      "status": "completed",
+      "started_at": "2025-12-26T23:56:21.360578",
+      "completed_at": "2025-12-26T23:56:22.571227",
+      "files_created": [
+        "validation/company_identity.json"
+      ],
+      "error": null,
+      "optional": false
+    },
+    "trends": {
+      "status": "completed",
+      "started_at": "2025-12-26T23:56:22.571928",
+      "completed_at": "2025-12-26T23:56:49.159233",
+      "files_created": [
+        "trends/trends_brand.json",
+        "trends/trends_comparison.json"
+      ],
+      "error": null,
+      "optional": false
+    },
+    "seo": {
+      "status": "completed",
+      "started_at": "2025-12-26T23:56:49.160135",
+      "completed_at": "2025-12-26T23:58:20.983288",
+      "files_created": [
+        "seo/serp_rankings.json",
+        "seo/keyword_metrics.json",
+        "seo/domain_keywords.json",
+        "seo/domain_keywords_meccabingo_com.json",
+        "seo/domain_keywords_galabingo_com.json",
+        "seo/domain_keywords_foxybingo_com.json",
+        "seo/domain_keywords_buzzbingo_com.json",
+        "seo/keyword_gaps.json",
+        "seo/competitor_analysis.json",
+        "seo/keyword_analysis.json",
+        "seo/paid_search.json",
+        "seo/ad_copies.json"
+      ],
+      "error": null,
+      "optional": false
+    },
+    "crawler": {
+      "status": "completed",
+      "started_at": "2025-12-26T23:58:20.984072",
+      "completed_at": "2025-12-26T23:59:33.073532",
+      "files_created": [
+        "crawler/main_site.json",
+        "crawler/mecca_bingo.json",
+        "crawler/gala_bingo.json",
+        "crawler/foxy_bingo.json",
+        "crawler/buzz_bingo.json"
+      ],
+      "error": null,
+      "optional": false
+    },
+    "traffic": {
+      "status": "completed",
+      "started_at": "2025-12-26T23:59:33.074889",
+      "completed_at": "2025-12-26T23:59:42.797504",
+      "files_created": [
+        "traffic/traffic_main.json",
+        "traffic/traffic_meccabingo_com.json",
+        "traffic/traffic_galabingo_com.json",
+        "traffic/traffic_foxybingo_com.json",
+        "traffic/traffic_buzzbingo_com.json",
+        "traffic/traffic_comparison.json"
+      ],
+      "error": null,
+      "optional": false
+    },
+    "techstack": {
+      "status": "completed",
+      "started_at": "2025-12-26T23:59:42.798234",
+      "completed_at": "2025-12-26T23:59:53.604418",
+      "files_created": [
+        "techstack/techstack_main.json",
+        "techstack/techstack_meccabingo_com.json",
+        "techstack/techstack_galabingo_com.json",
+        "techstack/techstack_foxybingo_com.json",
+        "techstack/techstack_buzzbingo_com.json",
+        "techstack/techstack_comparison.json"
+      ],
+      "error": null,
+      "optional": false
+    },
+    "deep_research": {
+      "status": "completed",
+      "started_at": "2025-12-26T23:59:53.605935",
+      "completed_at": "2025-12-27T00:00:29.443090",
+      "files_created": [
+        "research/research_main.json",
+        "research/research_mecca_bingo.json",
+        "research/research_gala_bingo.json",
+        "research/research_foxy_bingo.json",
+        "research/research_buzz_bingo.json",
+        "research/research_industry.json"
+      ],
+      "error": null,
+      "optional": false
+    },
+    "news": {
+      "status": "completed",
+      "started_at": "2025-12-27T00:00:29.444217",
+      "completed_at": "2025-12-27T00:00:33.977852",
+      "files_created": [
+        "news/news_main.json",
+        "news/news_mecca_bingo.json",
+        "news/news_gala_bingo.json",
+        "news/news_foxy_bingo.json",
+        "news/news_buzz_bingo.json"
+      ],
+      "error": null,
+      "optional": false
+    },
+    "reviews": {
+      "status": "completed",
+      "started_at": "2025-12-27T00:00:33.979775",
+      "completed_at": "2025-12-27T00:00:47.010349",
+      "files_created": [],
+      "error": null,
+      "optional": false
+    },
+    "jobs": {
+      "status": "completed",
+      "started_at": "2025-12-27T00:00:47.012105",
+      "completed_at": "2025-12-27T00:01:08.823992",
+      "files_created": [
+        "jobs/jobs_main.json"
+      ],
+      "error": null,
+      "optional": false
+    },
+    "ads": {
+      "status": "completed",
+      "started_at": "2025-12-27T00:01:08.825410",
+      "completed_at": "2025-12-27T00:01:19.558937",
+      "files_created": [
+        "ads/ads_main.json",
+        "ads/ads_mecca_bingo.json",
+        "ads/ads_gala_bingo.json",
+        "ads/ads_foxy_bingo.json"
+      ],
+      "error": null,
+      "optional": true
+    },
+    "apps": {
+      "status": "completed",
+      "started_at": "2025-12-27T00:01:19.560042",
+      "completed_at": "2025-12-27T00:01:30.029866",
+      "files_created": [
+        "apps/apps_main.json"
+      ],
+      "error": null,
+      "optional": true
+    },
+    "twitter": {
+      "status": "failed",
+      "started_at": "2025-12-27T00:01:30.031446",
+      "completed_at": "2025-12-27T00:01:30.036706",
+      "files_created": [],
+      "error": "Client.__init__() got an unexpected keyword argument 'proxies'",
+      "optional": true
+    },
+    "tiktok": {
+      "status": "failed",
+      "started_at": "2025-12-27T00:01:30.037933",
+      "completed_at": "2025-12-27T00:01:30.041920",
+      "files_created": [],
+      "error": "Client.__init__() got an unexpected keyword argument 'proxies'",
+      "optional": true
+    },
+    "demographics": {
+      "status": "completed",
+      "started_at": "2025-12-27T00:01:30.042861",
+      "completed_at": "2025-12-27T00:01:33.878488",
+      "files_created": [
+        "demographics/demographics_main.json"
+      ],
+      "error": null,
+      "optional": false
+    },
+    "ai_search": {
+      "status": "failed",
+      "started_at": "2025-12-27T00:01:33.879525",
+      "completed_at": "2025-12-27T00:01:35.103748",
+      "files_created": [],
+      "error": "Client.__init__() got an unexpected keyword argument 'proxies'",
+      "optional": false
+    },
+    "spend_estimation": {
+      "status": "completed",
+      "started_at": "2025-12-27T00:01:35.104915",
+      "completed_at": "2025-12-27T00:01:35.674509",
+      "files_created": [
+        "spend/spend_estimation.json"
+      ],
+      "error": null,
+      "optional": false
+    },
+    "trajectory": {
+      "status": "completed",
+      "started_at": "2025-12-27T00:01:35.675857",
+      "completed_at": "2025-12-27T00:01:40.361836",
+      "files_created": [
+        "analysis/trajectory.json"
+      ],
+      "error": null,
+      "optional": false
+    },
+    "summary": {
+      "status": "completed",
+      "started_at": "2025-12-27T00:01:40.362892",
+      "completed_at": "2025-12-27T00:01:40.753705",
+      "files_created": [],
+      "error": null,
+      "optional": false
+    },
+    "diagnostic": {
+      "status": "completed",
+      "started_at": "2025-12-27T00:01:40.754845",
+      "completed_at": "2025-12-27T00:01:40.786735",
+      "files_created": [
+        "diagnostic_report.json"
+      ],
+      "error": null,
+      "optional": false
+    }
+  },
+  "summary": {
+    "total_agents": 20,
+    "completed": 17,
+    "failed": 3,
+    "success": false
+  }
+}

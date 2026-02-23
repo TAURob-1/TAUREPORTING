@@ -1,0 +1,145 @@
+{
+  "domain": "tombola.co.uk",
+  "company_name": "Tombola",
+  "currency": "GBP",
+  "estimated_at": "2025-12-27T00:01:35.670213",
+  "estimated_annual_spend": {
+    "total": "\u00a318.1M - \u00a333.7M",
+    "total_range": {
+      "min": 18123515,
+      "max": 33701530
+    },
+    "confidence": "low",
+    "breakdown": {
+      "paid_search": {
+        "estimate": "\u00a318.1M - \u00a333.6M",
+        "range": {
+          "min": 18085388,
+          "max": 33587149
+        },
+        "confidence": "low",
+        "signals": [
+          "Smart sampling: 4 keywords analyzed",
+          "Monthly estimate: \u00a32,153,022",
+          "Method: keyword_potential_extrapolation_with_industry_benchmark"
+        ],
+        "methodology": "Smart sampling from SEO agent paid search analysis"
+      },
+      "display": {
+        "estimate": null,
+        "range": {
+          "min": 0,
+          "max": 0
+        },
+        "confidence": "low",
+        "signals": [],
+        "methodology": "Estimated from display traffic percentage and CPM benchmarks"
+      },
+      "social_ads": {
+        "estimate": null,
+        "range": {
+          "min": 0,
+          "max": 0
+        },
+        "confidence": "low",
+        "signals": [],
+        "methodology": "Estimated from active ad count and average spend per ad"
+      },
+      "tv_sponsorship": {
+        "estimate": null,
+        "range": {
+          "min": 0,
+          "max": 0
+        },
+        "confidence": "low",
+        "signals": [],
+        "methodology": "Detected from news mentions of sponsorships and deals"
+      },
+      "seo_content": {
+        "estimate": "\u00a338K - \u00a3114K",
+        "range": {
+          "min": 38127,
+          "max": 114381
+        },
+        "confidence": "low",
+        "signals": [
+          "5,418 ranking keywords",
+          "Estimated 541 content pages"
+        ],
+        "methodology": "Estimated from indexed pages and content costs"
+      }
+    }
+  },
+  "vs_competitors": {
+    "meccabingo.com": {
+      "estimated_total": "\u00a3735K - \u00a32.2M",
+      "confidence": "low",
+      "monthly_visits": 1224883
+    },
+    "galabingo.com": {
+      "estimated_total": "\u00a32.0M - \u00a35.9M",
+      "confidence": "low",
+      "monthly_visits": 3292891
+    },
+    "foxybingo.com": {
+      "estimated_total": "\u00a31.3M - \u00a33.9M",
+      "confidence": "low",
+      "monthly_visits": 2189929
+    }
+  },
+  "methodology": [],
+  "by_channel": {
+    "paid_search": {
+      "estimate": "\u00a318.1M - \u00a333.6M",
+      "confidence": "low",
+      "signals": [
+        "Smart sampling: 4 keywords analyzed",
+        "Monthly estimate: \u00a32,153,022",
+        "Method: keyword_potential_extrapolation_with_industry_benchmark"
+      ],
+      "range": {
+        "min": 18085388,
+        "max": 33587149
+      }
+    },
+    "display": {
+      "estimate": null,
+      "confidence": "low",
+      "signals": [],
+      "range": {
+        "min": 0,
+        "max": 0
+      }
+    },
+    "social_ads": {
+      "estimate": null,
+      "confidence": "low",
+      "signals": [],
+      "range": {
+        "min": 0,
+        "max": 0
+      }
+    },
+    "tv_sponsorship": {
+      "estimate": null,
+      "confidence": "low",
+      "signals": [],
+      "range": {
+        "min": 0,
+        "max": 0
+      }
+    },
+    "seo_content": {
+      "estimate": "\u00a338K - \u00a3114K",
+      "confidence": "low",
+      "signals": [
+        "5,418 ranking keywords",
+        "Estimated 541 content pages"
+      ],
+      "range": {
+        "min": 38127,
+        "max": 114381
+      }
+    }
+  }
+}

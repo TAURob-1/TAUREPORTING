@@ -1,0 +1,174 @@
+# Tombola Strategic Intelligence Report
+# Part 2 of 4: Traffic and Engagement Datasets
+
+---
+
+## TRAFFIC SOURCE BREAKDOWN: TOMBOLA
+
+TOMBOLA_ORGANIC_SEARCH:
+Channel: Organic search
+Traffic share: 14.77 percent
+Assessment: Moderate organic presence
+
+TOMBOLA_DIRECT:
+Channel: Direct traffic
+Traffic share: 71.58 percent
+Assessment: Strong brand awareness
+
+TOMBOLA_REFERRALS:
+Channel: Referral traffic
+Traffic share: 12.81 percent
+
+TOMBOLA_PAID_REFERRALS:
+Channel: Paid search
+Traffic share: 0.57 percent
+
+TOMBOLA_SOCIAL:
+Channel: Social media
+Traffic share: 0.2 percent
+
+TOMBOLA_MAIL:
+Channel: Email marketing
+Traffic share: 0.06 percent
+Assessment: Underutilized opportunity
+
+---
+
+## TRAFFIC SOURCE COMPARISON: ORGANIC SEARCH
+
+TOMBOLA_ORGANIC_SEARCH_COMPARE:
+Company: Tombola
+Organic Search share: 14.77 percent
+
+MECCABINGO_ORGANIC_SEARCH_COMPARE:
+Company: Meccabingo
+Organic Search share: 28.12 percent
+
+GALABINGO_ORGANIC_SEARCH_COMPARE:
+Company: Galabingo
+Organic Search share: 21.37 percent
+
+FOXYBINGO_ORGANIC_SEARCH_COMPARE:
+Company: Foxybingo
+Organic Search share: 14.74 percent
+
+BUZZBINGO_ORGANIC_SEARCH_COMPARE:
+Company: Buzzbingo
+Organic Search share: 29.8 percent
+
+---
+
+## TRAFFIC SOURCE COMPARISON: DIRECT TRAFFIC
+
+TOMBOLA_DIRECT_COMPARE:
+Company: Tombola
+Direct Traffic share: 71.58 percent
+
+MECCABINGO_DIRECT_COMPARE:
+Company: Meccabingo
+Direct Traffic share: 65.8 percent
+
+GALABINGO_DIRECT_COMPARE:
+Company: Galabingo
+Direct Traffic share: 66.92 percent
+
+FOXYBINGO_DIRECT_COMPARE:
+Company: Foxybingo
+Direct Traffic share: 78.6 percent
+
+BUZZBINGO_DIRECT_COMPARE:
+Company: Buzzbingo
+Direct Traffic share: 62.15 percent
+
+---
+
+## TRAFFIC SOURCE COMPARISON: EMAIL
+
+TOMBOLA_MAIL_COMPARE:
+Company: Tombola
+Email share: 0.06 percent
+
+MECCABINGO_MAIL_COMPARE:
+Company: Meccabingo
+Email share: 0.07 percent
+
+GALABINGO_MAIL_COMPARE:
+Company: Galabingo
+Email share: 0.04 percent
+
+FOXYBINGO_MAIL_COMPARE:
+Company: Foxybingo
+Email share: 0.03 percent
+
+BUZZBINGO_MAIL_COMPARE:
+Company: Buzzbingo
+Email share: 0.06 percent
+
+---
+
+## ENGAGEMENT QUALITY METRICS
+
+---
+
+## SHARE OF MARKET: TRAFFIC
+
+TOMBOLA_MARKET_SHARE:
+Company: Tombola
+Traffic share: 26.8%
+
+MECCABINGO_MARKET_SHARE:
+Company: Meccabingo
+Traffic share: 8.3%
+
+GALABINGO_MARKET_SHARE:
+Company: Galabingo
+Traffic share: 29.3%
+
+FOXYBINGO_MARKET_SHARE:
+Company: Foxybingo
+Traffic share: 22.2%
+
+BUZZBINGO_MARKET_SHARE:
+Company: Buzzbingo
+Traffic share: 13.5%
+
+---
+
+## SHARE OF SOCIAL CONVERSATION
+
+TOMBOLA_SOCIAL_SHARE:
+Company: Tombola
+Social conversation share: 45.5%
+
+MECCABINGO_SOCIAL_SHARE:
+Company: Meccabingo
+Social conversation share: 45.5%
+
+GALABINGO_SOCIAL_SHARE:
+Company: Galabingo
+Social conversation share: 4.5%
+
+FOXYBINGO_SOCIAL_SHARE:
+Company: Foxybingo
+Social conversation share: 4.5%
+
+BUZZBINGO_SOCIAL_SHARE:
+Company: Buzzbingo
+Social conversation share: 0.0%
+
+---
+
+## SOCIAL LISTENING: TOPIC BREAKDOWN
+
+Social topic breakdown not available.
+
+---
+
+## NOTABLE INFLUENCERS
+
+Influencer data not available in current dataset.
+
+---
+
+End of Part 2.
+Continue to Part 3 for SEO and Keyword Intelligence.

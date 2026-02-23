@@ -1,0 +1,174 @@
+# Tombolaarcade Co Uk Strategic Intelligence Report
+# Part 2 of 4: Traffic and Engagement Datasets
+
+---
+
+## TRAFFIC SOURCE BREAKDOWN: TOMBOLAARCADE CO UK
+
+TOMBOLAARCADE_CO_UK_ORGANIC_SEARCH:
+Channel: Organic search
+Traffic share: 19.57 percent
+Assessment: Moderate organic presence
+
+TOMBOLAARCADE_CO_UK_DIRECT:
+Channel: Direct traffic
+Traffic share: 51.41 percent
+Assessment: Strong brand awareness
+
+TOMBOLAARCADE_CO_UK_REFERRALS:
+Channel: Referral traffic
+Traffic share: 28.61 percent
+
+TOMBOLAARCADE_CO_UK_PAID_REFERRALS:
+Channel: Paid search
+Traffic share: 0.29 percent
+
+TOMBOLAARCADE_CO_UK_SOCIAL:
+Channel: Social media
+Traffic share: 0.08 percent
+
+TOMBOLAARCADE_CO_UK_MAIL:
+Channel: Email marketing
+Traffic share: 0.03 percent
+Assessment: Underutilized opportunity
+
+---
+
+## TRAFFIC SOURCE COMPARISON: ORGANIC SEARCH
+
+TOMBOLAARCADE_CO_UK_ORGANIC_SEARCH_COMPARE:
+Company: Tombolaarcade Co Uk
+Organic Search share: 19.57 percent
+
+GALASPINS_ORGANIC_SEARCH_COMPARE:
+Company: Galaspins
+Organic Search share: 7.47 percent
+
+FOXYGAMES_ORGANIC_SEARCH_COMPARE:
+Company: Foxygames
+Organic Search share: 10.13 percent
+
+JACKPOTJOY_ORGANIC_SEARCH_COMPARE:
+Company: Jackpotjoy
+Organic Search share: 14.41 percent
+
+VIRGINGAMES_ORGANIC_SEARCH_COMPARE:
+Company: Virgingames
+Organic Search share: 21.35 percent
+
+---
+
+## TRAFFIC SOURCE COMPARISON: DIRECT TRAFFIC
+
+TOMBOLAARCADE_CO_UK_DIRECT_COMPARE:
+Company: Tombolaarcade Co Uk
+Direct Traffic share: 51.41 percent
+
+GALASPINS_DIRECT_COMPARE:
+Company: Galaspins
+Direct Traffic share: 68.97 percent
+
+FOXYGAMES_DIRECT_COMPARE:
+Company: Foxygames
+Direct Traffic share: 51.24 percent
+
+JACKPOTJOY_DIRECT_COMPARE:
+Company: Jackpotjoy
+Direct Traffic share: 80.21 percent
+
+VIRGINGAMES_DIRECT_COMPARE:
+Company: Virgingames
+Direct Traffic share: 74.31 percent
+
+---
+
+## TRAFFIC SOURCE COMPARISON: EMAIL
+
+TOMBOLAARCADE_CO_UK_MAIL_COMPARE:
+Company: Tombolaarcade Co Uk
+Email share: 0.03 percent
+
+GALASPINS_MAIL_COMPARE:
+Company: Galaspins
+Email share: 0.01 percent
+
+FOXYGAMES_MAIL_COMPARE:
+Company: Foxygames
+Email share: 0.03 percent
+
+JACKPOTJOY_MAIL_COMPARE:
+Company: Jackpotjoy
+Email share: 0.04 percent
+
+VIRGINGAMES_MAIL_COMPARE:
+Company: Virgingames
+Email share: 0.05 percent
+
+---
+
+## ENGAGEMENT QUALITY METRICS
+
+---
+
+## SHARE OF MARKET: TRAFFIC
+
+TOMBOLAARCADE_MARKET_SHARE:
+Company: Tombolaarcade
+Traffic share: 12.5%
+
+GALASPINS_MARKET_SHARE:
+Company: Galaspins
+Traffic share: 1.1%
+
+FOXYGAMES_MARKET_SHARE:
+Company: Foxygames
+Traffic share: 0.9%
+
+JACKPOTJOY_MARKET_SHARE:
+Company: Jackpotjoy
+Traffic share: 44.0%
+
+VIRGINGAMES_MARKET_SHARE:
+Company: Virgingames
+Traffic share: 41.5%
+
+---
+
+## SHARE OF SOCIAL CONVERSATION
+
+TOMBOLAARCADE_CO_UK_SOCIAL_SHARE:
+Company: Tombolaarcade Co Uk
+Social conversation share: 0.0%
+
+GALASPINS_SOCIAL_SHARE:
+Company: Galaspins
+Social conversation share: 0.0%
+
+FOXYGAMES_SOCIAL_SHARE:
+Company: Foxygames
+Social conversation share: 0.0%
+
+JACKPOTJOY_SOCIAL_SHARE:
+Company: Jackpotjoy
+Social conversation share: 50.0%
+
+VIRGINGAMES_SOCIAL_SHARE:
+Company: Virgingames
+Social conversation share: 50.0%
+
+---
+
+## SOCIAL LISTENING: TOPIC BREAKDOWN
+
+Social topic breakdown not available.
+
+---
+
+## NOTABLE INFLUENCERS
+
+Influencer data not available in current dataset.
+
+---
+
+End of Part 2.
+Continue to Part 3 for SEO and Keyword Intelligence.

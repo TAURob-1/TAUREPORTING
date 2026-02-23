@@ -1,0 +1,685 @@
+{
+  "generated_at": "2026-01-17T19:38:57.249816",
+  "company_name": "Tombola",
+  "domain": "tombola.co.uk",
+  "executive_summary": {
+    "situation": "Tombola operates in online bingo and gambling, competing against Mecca Bingo, Gala Bingo, Foxy Bingo. Currently ranked 1/5 in traffic (market leader).",
+    "rankings": [
+      {
+        "area": "Monthly Traffic",
+        "rank": "1/5",
+        "entries": [
+          {
+            "name": "Tombola",
+            "value": "4.3M",
+            "is_subject": true
+          },
+          {
+            "name": "Galabingo",
+            "value": "3.3M",
+            "is_subject": false
+          },
+          {
+            "name": "Foxybingo",
+            "value": "2.2M",
+            "is_subject": false
+          },
+          {
+            "name": "Buzzbingo",
+            "value": "1.4M",
+            "is_subject": false
+          },
+          {
+            "name": "Meccabingo",
+            "value": "1.2M",
+            "is_subject": false
+          }
+        ]
+      },
+      {
+        "area": "Estimated Spend",
+        "rank": "2/4",
+        "entries": [
+          {
+            "name": "Meccabingo",
+            "value": "£735K - £2.2M",
+            "is_subject": false
+          },
+          {
+            "name": "Tombola",
+            "value": "£18.1M - £33.7M",
+            "is_subject": true
+          },
+          {
+            "name": "Galabingo",
+            "value": "£2.0M - £5.9M",
+            "is_subject": false
+          },
+          {
+            "name": "Foxybingo",
+            "value": "£1.3M - £3.9M",
+            "is_subject": false
+          }
+        ]
+      },
+      {
+        "area": "SEO Keywords (Top 10)",
+        "rank": "1/5",
+        "entries": [
+          {
+            "name": "Tombola",
+            "value": "79",
+            "is_subject": true
+          },
+          {
+            "name": "Buzzbingo",
+            "value": "66",
+            "is_subject": false
+          },
+          {
+            "name": "Galabingo",
+            "value": "64",
+            "is_subject": false
+          },
+          {
+            "name": "Meccabingo",
+            "value": "54",
+            "is_subject": false
+          },
+          {
+            "name": "Foxybingo",
+            "value": "22",
+            "is_subject": false
+          }
+        ]
+      },
+      {
+        "area": "AI Visibility",
+        "rank": "1/5",
+        "entries": [
+          {
+            "name": "Tombola",
+            "value": "50.7%",
+            "is_subject": true
+          },
+          {
+            "name": "Galabingo",
+            "value": "50.0%",
+            "is_subject": false
+          },
+          {
+            "name": "Foxybingo",
+            "value": "50.0%",
+            "is_subject": false
+          },
+          {
+            "name": "Meccabingo",
+            "value": "25.0%",
+            "is_subject": false
+          },
+          {
+            "name": "Buzzbingo",
+            "value": "25.0%",
+            "is_subject": false
+          }
+        ]
+      },
+      {
+        "area": "Site Engagement (Pages/Visit)",
+        "rank": "1/5",
+        "entries": [
+          {
+            "name": "Tombola",
+            "value": "8.8",
+            "is_subject": true
+          },
+          {
+            "name": "Galabingo",
+            "value": "6.7",
+            "is_subject": false
+          },
+          {
+            "name": "Meccabingo",
+            "value": "6.6",
+            "is_subject": false
+          },
+          {
+            "name": "Foxybingo",
+            "value": "6.0",
+            "is_subject": false
+          },
+          {
+            "name": "Buzzbingo",
+            "value": "5.4",
+            "is_subject": false
+          }
+        ]
+      }
+    ],
+    "overall_position": "Leading in monthly traffic, seo keywords (top 10). Focus on defending market position and extending competitive advantages."
+  },
+  "competitive_rankings": [
+    {
+      "area": "Monthly Traffic",
+      "rank": "1/5",
+      "entries": [
+        {
+          "name": "Tombola",
+          "value": "4.3M",
+          "is_subject": true
+        },
+        {
+          "name": "Galabingo",
+          "value": "3.3M",
+          "is_subject": false
+        },
+        {
+          "name": "Foxybingo",
+          "value": "2.2M",
+          "is_subject": false
+        },
+        {
+          "name": "Buzzbingo",
+          "value": "1.4M",
+          "is_subject": false
+        },
+        {
+          "name": "Meccabingo",
+          "value": "1.2M",
+          "is_subject": false
+        }
+      ]
+    },
+    {
+      "area": "Estimated Spend",
+      "rank": "2/4",
+      "entries": [
+        {
+          "name": "Meccabingo",
+          "value": "£735K - £2.2M",
+          "is_subject": false
+        },
+        {
+          "name": "Tombola",
+          "value": "£18.1M - £33.7M",
+          "is_subject": true
+        },
+        {
+          "name": "Galabingo",
+          "value": "£2.0M - £5.9M",
+          "is_subject": false
+        },
+        {
+          "name": "Foxybingo",
+          "value": "£1.3M - £3.9M",
+          "is_subject": false
+        }
+      ]
+    },
+    {
+      "area": "SEO Keywords (Top 10)",
+      "rank": "1/5",
+      "entries": [
+        {
+          "name": "Tombola",
+          "value": "79",
+          "is_subject": true
+        },
+        {
+          "name": "Buzzbingo",
+          "value": "66",
+          "is_subject": false
+        },
+        {
+          "name": "Galabingo",
+          "value": "64",
+          "is_subject": false
+        },
+        {
+          "name": "Meccabingo",
+          "value": "54",
+          "is_subject": false
+        },
+        {
+          "name": "Foxybingo",
+          "value": "22",
+          "is_subject": false
+        }
+      ]
+    },
+    {
+      "area": "AI Visibility",
+      "rank": "1/5",
+      "entries": [
+        {
+          "name": "Tombola",
+          "value": "50.7%",
+          "is_subject": true
+        },
+        {
+          "name": "Galabingo",
+          "value": "50.0%",
+          "is_subject": false
+        },
+        {
+          "name": "Foxybingo",
+          "value": "50.0%",
+          "is_subject": false
+        },
+        {
+          "name": "Meccabingo",
+          "value": "25.0%",
+          "is_subject": false
+        },
+        {
+          "name": "Buzzbingo",
+          "value": "25.0%",
+          "is_subject": false
+        }
+      ]
+    },
+    {
+      "area": "Site Engagement (Pages/Visit)",
+      "rank": "1/5",
+      "entries": [
+        {
+          "name": "Tombola",
+          "value": "8.8",
+          "is_subject": true
+        },
+        {
+          "name": "Galabingo",
+          "value": "6.7",
+          "is_subject": false
+        },
+        {
+          "name": "Meccabingo",
+          "value": "6.6",
+          "is_subject": false
+        },
+        {
+          "name": "Foxybingo",
+          "value": "6.0",
+          "is_subject": false
+        },
+        {
+          "name": "Buzzbingo",
+          "value": "5.4",
+          "is_subject": false
+        }
+      ]
+    }
+  ],
+  "swot": {
+    "strengths": [
+      {
+        "point": "ENGAGEMENT LEADER: #1 in site engagement (pages/visit) - users find value",
+        "source": "competitive_rankings"
+      },
+      {
+        "point": "AI VISIBILITY LEADER: #1 among competitors for AI search presence",
+        "source": "competitive_rankings"
+      },
+      {
+        "point": "SEO LEADER: #1 in seo keywords (top 10) among competitors",
+        "source": "competitive_rankings"
+      },
+      {
+        "point": "MARKET LEADER: #1 in monthly traffic with 4.3M monthly visits",
+        "source": "competitive_rankings"
+      },
+      {
+        "point": "Exceptional engagement: 8.8 pages/visit, 14 min avg session - indicates sticky product",
+        "source": "traffic_main.json"
+      },
+      {
+        "point": "Exceptional bounce rate (19%) - highly relevant traffic",
+        "source": "traffic_main.json"
+      }
+    ],
+    "weaknesses": [
+      {
+        "point": "Email drives only 0.05% of traffic - retention marketing underutilized",
+        "source": "traffic_main.json"
+      },
+      {
+        "point": "Weak organic reach: only 28% of generic keywords in top 10 (79/284)",
+        "source": "keyword_analysis.json"
+      }
+    ],
+    "opportunities": [
+      {
+        "point": "MARKET SHARE GAIN: Tighter regulation forces weaker competitors out - consolidation opportunity for compliant operators",
+        "source": "industry_context"
+      },
+      {
+        "point": "DIFFERENTIATION: First-mover on responsible gambling features can capture safety-conscious segment",
+        "source": "industry_context"
+      },
+      {
+        "point": "AI LEAPFROG: Implement AI chatbot to reduce support costs 20-40% and improve conversion",
+        "source": "adoption_score.json"
+      },
+      {
+        "point": "AI SEARCH OPPORTUNITY: Optimize for AI Overviews to capture emerging search channel",
+        "source": "ai_overview.json"
+      },
+      {
+        "point": "SEO MARKET SHARE: 147 keyword gaps vs Meccabingo - capture competitor traffic",
+        "source": "keyword_gaps.json"
+      },
+      {
+        "point": "EMAIL ROI: Email drives <2% traffic - low-cost channel to increase repeat purchases and LTV",
+        "source": "traffic_main.json"
+      }
+    ],
+    "threats": [
+      {
+        "point": "Geographic concentration risk: 98.5% of traffic from GB - single market regulatory changes could devastate business",
+        "source": "traffic_main.json"
+      },
+      {
+        "point": "Social drives only 0.18% of traffic - missing audience shift to social discovery",
+        "source": "traffic_main.json"
+      },
+      {
+        "point": "BRAND INTEREST DECLINING: 'Tombola' search trend is down - demand erosion",
+        "source": "trends_brand.json"
+      },
+      {
+        "point": "REGULATORY RISK: UK gambling faces tightening regulation - affordability checks, stake limits, advertising restrictions",
+        "source": "industry_context"
+      },
+      {
+        "point": "TAX PRESSURE: UK Remote Gaming Duty at 21% + potential increases - margin compression risk",
+        "source": "industry_context"
+      },
+      {
+        "point": "AI GAP: No chatbot or AI search detected - risk of being outpaced by AI-enabled competitors",
+        "source": "adoption_score.json"
+      }
+    ]
+  },
+  "strategic_areas": {
+    "website_technical": {
+      "facts": [
+        "Tech stack: Google Analytics 4 (analytics), Google Tag Manager (tag_managers), Magento (cms), Optimizely (ab_testing), Cloudflare (cdn)",
+        "Schema.org completeness: 2.7%",
+        "Technologies detected: 5"
+      ],
+      "opinions": [
+        "Partial schema implementation leaves visibility gaps"
+      ],
+      "recommendations": [
+        {
+          "priority": "HIGH",
+          "action": "Audit and complete schema markup",
+          "effort": "1 week",
+          "impact": "Medium"
+        }
+      ]
+    },
+    "seo_organic": {
+      "facts": [
+        "BRAND KEYWORDS: 16 terms, 15 in top 10",
+        "GENERIC KEYWORDS: 284 terms, 79 in top 10 (avg position: 37.2)",
+        "Generic top 10 ratio: 27.8% (79/284)",
+        "High-volume keywords outside top 10: bingo gala (pos 22, 1.0M vol), foxy bingo (pos 52, 823.0K vol), mecca bingo (pos 46, 823.0K vol), sun bingo (pos 40, 368.0K vol), free game (pos 27, 201.0K vol)",
+        "Appearing on competitor searches: bingo gala (pos 22), bingo ladbrokes (pos 18), mecca bingo login (pos 27), buzz bingo log in (pos 10), buzz bingo login (pos 12)",
+        "Organic search drives 16.6% of traffic",
+        "Keyword gaps vs meccabingo.com: 147 opportunities (gala bingo, rainbow of riches, rainbow riches)"
+      ],
+      "opinions": [
+        "WARNING: Brand keyword avg position is 3.4 - competitors may be bidding on your brand",
+        "OPPORTUNITY: 40 keywords with 4.5M monthly searches are ranking outside top 10",
+        "Defensive positioning: capturing traffic from 8 competitor brand searches",
+        "WEAK: Only 28% of generic keywords in top 10 - organic acquisition severely limited"
+      ],
+      "recommendations": [
+        {
+          "priority": "URGENT",
+          "action": "Investigate brand keyword erosion - run brand protection campaign",
+          "effort": "1 day",
+          "impact": "High"
+        },
+        {
+          "priority": "HIGH",
+          "action": "Content push targeting 40 high-volume keyword gaps",
+          "effort": "Ongoing",
+          "impact": "High"
+        }
+      ]
+    },
+    "paid_media": {
+      "facts": [
+        "Estimated annual spend: £18.1M - £33.7M",
+        "meccabingo.com: £735K - £2.2M",
+        "galabingo.com: £2.0M - £5.9M",
+        "foxybingo.com: £1.3M - £3.9M",
+        "Active social ads detected: 0"
+      ],
+      "opinions": [
+        "Spend gap to market leader is significant - cannot compete on volume",
+        "Must focus on efficiency and targeted segments rather than broad reach"
+      ],
+      "recommendations": [
+        {
+          "priority": "HIGH",
+          "action": "Focus paid spend on high-intent, long-tail keywords",
+          "effort": "Ongoing",
+          "impact": "Medium"
+        },
+        {
+          "priority": "MEDIUM",
+          "action": "Test performance max campaigns for incremental reach",
+          "effort": "1 week setup",
+          "impact": "Medium"
+        }
+      ]
+    },
+    "content_messaging": {
+      "facts": [
+        "Pages crawled: 22",
+        "Key offers: Bingo free game T&Cs, ✓ Win up to £1,000✓ Play for free every day✓ Made for you, only at tombola✓ Daily chance to win, Register for an account to play Deal or No Deal Bingo, Looking for even more bingo? Here's a few more of our exclusive tombola games..., Similar gamesLooking for even more bingo? Here's a few more of our exclusive tombola games...",
+        "CTAs found: Download app"
+      ],
+      "opinions": [
+        "Content strategy should focus on differentiating value propositions",
+        "Guide content appears to drive significant organic traffic"
+      ],
+      "recommendations": [
+        {
+          "priority": "MEDIUM",
+          "action": "Audit competitor messaging for differentiation gaps",
+          "effort": "2 days",
+          "impact": "Medium"
+        }
+      ]
+    },
+    "brand_ai_visibility": {
+      "facts": [
+        "Knowledge Graph: Found",
+        "Schema.org score: 2.7%",
+        "AI citation rate: 100.0% (2 tests)",
+        "Overall AI visibility score: 50.7%"
+      ],
+      "opinions": [
+        "AI visibility is below average - at risk of losing share as AI search grows",
+        "Schema implementation is the fastest path to improved AI visibility",
+        "Knowledge Graph entity may be wrong: 'tombola' vs 'Tombola'"
+      ],
+      "recommendations": [
+        {
+          "priority": "MEDIUM",
+          "action": "Consider creating a Wikidata entry with proper citations; review Wikipedia notability guidelines",
+          "effort": "1 day",
+          "impact": "Medium"
+        }
+      ]
+    },
+    "market_competitive": {
+      "facts": [
+        "Market position: #1 of 5 analyzed",
+        "Largest competitor by traffic: galabingo.com (3.3M visits)",
+        "Recent news articles: 20"
+      ],
+      "opinions": [
+        "Market is dominated by established players with significant budget advantages",
+        "Differentiation on experience, price transparency, or niche segments is essential"
+      ],
+      "recommendations": [
+        {
+          "priority": "HIGH",
+          "action": "Identify underserved customer segments for focused targeting",
+          "effort": "1 week",
+          "impact": "High"
+        },
+        {
+          "priority": "MEDIUM",
+          "action": "Monitor competitor moves via news and ad tracking",
+          "effort": "Ongoing",
+          "impact": "Medium"
+        }
+      ]
+    }
+  },
+  "share_of_voice": {
+    "share_of_traffic": {
+      "Tombola": "34.9%",
+      "Meccabingo": "9.9%",
+      "Galabingo": "26.6%",
+      "Foxybingo": "17.7%",
+      "Buzzbingo": "10.9%"
+    },
+    "share_of_search": {
+      "Tombola": "79",
+      "note": "Top 10 keyword count - full comparison requires competitor keyword data"
+    },
+    "share_of_voice": {
+      "Tombola": "20.0%",
+      "Buzz Bingo": "20.0%",
+      "Foxy Bingo": "20.0%",
+      "Gala Bingo": "20.0%",
+      "Mecca Bingo": "20.0%"
+    },
+    "share_of_social": {
+      "Tombola": "0.0%",
+      "Mecca Bingo": "0.0%",
+      "Gala Bingo": "0.0%",
+      "Foxy Bingo": "0.0%"
+    }
+  },
+  "trajectory": {
+    "company_trajectory": "flat",
+    "trend_12_month": "+10%",
+    "vs_competitors": {
+      "Mecca Bingo": {
+        "status": "outpacing",
+        "description": "outpacing (they're flat)",
+        "their_trend": "-1%",
+        "our_trend": "+10%",
+        "gap": 10.4
+      },
+      "Gala Bingo": {
+        "status": "outpacing",
+        "description": "outpacing (they're flat)",
+        "their_trend": "+2%",
+        "our_trend": "+10%",
+        "gap": 8.2
+      },
+      "Foxy Bingo": {
+        "status": "outpacing",
+        "description": "outpacing (they're falling)",
+        "their_trend": "-14%",
+        "our_trend": "+10%",
+        "gap": 24.1
+      },
+      "Buzz Bingo": {
+        "status": "outpacing",
+        "description": "outpacing (they're falling)",
+        "their_trend": "-14%",
+        "our_trend": "+10%",
+        "gap": 23.7
+      }
+    },
+    "momentum_score": 7.0,
+    "momentum_interpretation": "Positive momentum - growing interest"
+  },
+  "data_confidence": [
+    {
+      "area": "Traffic",
+      "confidence": "high",
+      "notes": "Data collected successfully"
+    },
+    {
+      "area": "SEO",
+      "confidence": "high",
+      "notes": "Data collected successfully"
+    },
+    {
+      "area": "Tech Stack",
+      "confidence": "high",
+      "notes": "Data collected successfully"
+    },
+    {
+      "area": "News",
+      "confidence": "high",
+      "notes": "Data collected successfully"
+    },
+    {
+      "area": "Apps",
+      "confidence": "high",
+      "notes": "Data collected successfully"
+    },
+    {
+      "area": "Reviews",
+      "confidence": "unavailable",
+      "notes": "No data collected"
+    },
+    {
+      "area": "AI Visibility",
+      "confidence": "unavailable",
+      "notes": "Client.__init__() got an unexpected keyword argume"
+    },
+    {
+      "area": "Content",
+      "confidence": "high",
+      "notes": "Data collected successfully"
+    },
+    {
+      "area": "Spend",
+      "confidence": "medium",
+      "notes": "Data available, status unclear"
+    }
+  ],
+  "not_assessed": [
+    "Customer reviews: Trustpilot blocked or no data - manual check recommended"
+  ],
+  "next_steps": [
+    "URGENT: Investigate brand keyword erosion - run brand protection campaign",
+    "Schedule follow-up analysis in 30 days to track progress",
+    "Consider deeper competitive analysis on specific segments"
+  ],
+  "data_sources_used": [
+    "config",
+    "status",
+    "ads",
+    "ai_search",
+    "analysis",
+    "apps",
+    "crawler",
+    "demographics",
+    "feeds",
+    "jobs",
+    "news",
+    "research",
+    "reviews",
+    "seo",
+    "social",
+    "spend",
+    "techstack",
+    "traffic",
+    "trends",
+    "validation"
+  ]
+}

@@ -35,7 +35,7 @@ const SIGNAL_SLUGS = Array.from(new Set(
     ...Object.keys(SIGNAL_FILES.strategicBrief),
   ]
     .map((path) => {
-      const match = path.match(/\/companies\/([^/]+)\//);
+      const match = path.match(/\/signal-data\/([^/]+)\//);
       return match ? match[1] : null;
     })
     .filter(Boolean)

@@ -1,0 +1,28 @@
+{
+  "company_name": "Tombola",
+  "slug": "tombola-co-uk",
+  "url": "https://tombola.co.uk",
+  "domain": "tombola.co.uk",
+  "industry": "online bingo and gambling",
+  "competitors": [
+    {
+      "name": "Mecca Bingo",
+      "url": "https://meccabingo.com"
+    },
+    {
+      "name": "Gala Bingo",
+      "url": "https://galabingo.com"
+    },
+    {
+      "name": "Foxy Bingo",
+      "url": "https://foxybingo.com"
+    },
+    {
+      "name": "Buzz Bingo",
+      "url": "https://buzzbingo.com"
+    }
+  ],
+  "country": "GB",
+  "keywords": ["bingo", "online bingo", "tombola"],
+  "created_at": "2025-12-26T23:56:21.358674"
+}

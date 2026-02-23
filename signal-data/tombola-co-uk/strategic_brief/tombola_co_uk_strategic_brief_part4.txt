@@ -1,0 +1,279 @@
+# Tombola Strategic Intelligence Report
+# Part 4 of 4: AI Visibility, Recommendations, and Data Confidence
+
+---
+
+## AI VISIBILITY ASSESSMENT
+
+TOMBOLA_AI_OVERVIEW:
+Company: Tombola
+Overall AI visibility score: 50.7 percent
+Knowledge Graph status: Found
+Schema.org coverage: 2.7 percent
+AI citation rate: 100.0 percent in 2 tests
+
+---
+
+## AI VISIBILITY: COMPETITOR COMPARISON
+
+BUZZBINGO_AI_DETAIL:
+Company: Buzzbingo
+Overall score: 0 percent
+Knowledge Graph: Not found
+
+COMPARISON_AI_DETAIL:
+Company: Comparison
+Overall score: 0 percent
+Knowledge Graph: Not found
+
+FOXYBINGO_AI_DETAIL:
+Company: Foxybingo
+Overall score: 0 percent
+Knowledge Graph: Not found
+
+GALABINGO_AI_DETAIL:
+Company: Galabingo
+Overall score: 0 percent
+Knowledge Graph: Not found
+
+MECCABINGO_AI_DETAIL:
+Company: Meccabingo
+Overall score: 0 percent
+Knowledge Graph: Not found
+
+TOMBOLA_AI_DETAIL:
+Company: Tombola
+Overall score: 50.7 percent
+Knowledge Graph: Found
+Schema coverage: 2.7 percent
+AI citations: 100.0 percent
+
+---
+
+## NINETY DAY AI VISIBILITY ROADMAP
+
+PHASE_ONE:
+Name: Foundation
+Timeframe: Weeks one to two
+Actions: Add Organization schema and verify Knowledge Graph entity
+Expected impact: Plus ten points
+
+PHASE_TWO:
+Name: Product Visibility
+Timeframe: Weeks three to four
+Actions: Add Product schema to all listing pages
+Expected impact: Plus fifteen points
+
+PHASE_THREE:
+Name: Content Optimization
+Timeframe: Weeks five to eight
+Actions: Create FAQ content with schema and question-based content
+Expected impact: Plus ten points
+
+PHASE_FOUR:
+Name: Authority Building
+Timeframe: Weeks nine to twelve
+Actions: Wikidata entry and authoritative citations
+Expected impact: Plus fifteen points
+
+ROADMAP_TARGET: Move from 50.7 percent to 100 percent or higher within ninety days.
+
+---
+
+## PAID MEDIA POSITION
+
+SPEND_CONTEXT: Paid media spend estimates have low confidence and should be used directionally only.
+
+TOMBOLA_SPEND:
+Company: Tombola
+Estimated annual spend: £0 to £0
+
+MECCABINGO_COM_SPEND:
+Company: meccabingo.com
+Estimated annual spend: £0 to £0
+
+GALABINGO_COM_SPEND:
+Company: galabingo.com
+Estimated annual spend: £0 to £0
+
+FOXYBINGO_COM_SPEND:
+Company: foxybingo.com
+Estimated annual spend: £0 to £0
+
+---
+
+## IMMEDIATE ACTIONS: NEXT THIRTY DAYS
+
+ACTION_ONE:
+Task: Audit and complete schema markup
+Effort: 1 week
+Impact: Medium
+
+ACTION_TWO:
+Task: Content push targeting 42 high-volume keyword gaps
+Effort: Ongoing
+Impact: High
+
+ACTION_THREE:
+Task: Focus paid spend on high-intent, long-tail keywords
+Effort: Ongoing
+Impact: Medium
+
+---
+
+## MEDIUM TERM ACTIONS: THIRTY TO NINETY DAYS
+
+ACTION_FOUR:
+Task: Audit and complete schema markup
+Effort: 1 week
+Impact: Medium
+
+ACTION_FIVE:
+Task: Content push targeting 42 high-volume keyword gaps
+Effort: Ongoing
+Impact: High
+
+ACTION_SIX:
+Task: Focus paid spend on high-intent, long-tail keywords
+Effort: Ongoing
+Impact: Medium
+
+ACTION_SEVEN:
+Task: Identify underserved customer segments for focused targeting
+Effort: 1 week
+Impact: High
+
+---
+
+## STRATEGIC INITIATIVES: NINETY PLUS DAYS
+
+ACTION_EIGHT:
+Task: Monitor competitor moves via news and ad tracking
+Effort: Ongoing
+Impact: Medium
+
+---
+
+## DATA CONFIDENCE LEVELS
+
+TRAFFIC_CONFIDENCE:
+Data area: Traffic
+Confidence level: High
+Notes: Data collected successfully
+
+SEO_CONFIDENCE:
+Data area: SEO
+Confidence level: High
+Notes: Data collected successfully
+
+TECH_STACK_CONFIDENCE:
+Data area: Tech Stack
+Confidence level: High
+Notes: Data collected successfully
+
+NEWS_CONFIDENCE:
+Data area: News
+Confidence level: High
+Notes: Data collected successfully
+
+APPS_CONFIDENCE:
+Data area: Apps
+Confidence level: Unavailable
+Notes: Collection failed
+
+REVIEWS_CONFIDENCE:
+Data area: Reviews
+Confidence level: Unavailable
+Notes: No data collected
+
+AI_VISIBILITY_CONFIDENCE:
+Data area: AI Visibility
+Confidence level: High
+Notes: Data collected successfully
+
+CONTENT_CONFIDENCE:
+Data area: Content
+Confidence level: High
+Notes: Data collected successfully
+
+SPEND_CONFIDENCE:
+Data area: Spend
+Confidence level: Medium
+Notes: Data available, status unclear
+
+---
+
+## SWOT SUMMARY
+
+STRENGTH_ONE:
+Category: traffic_main.json
+Detail: Exceptional engagement: 8.2 pages/visit, 13 min avg session - indicates sticky product
+
+STRENGTH_TWO:
+Category: traffic_main.json
+Detail: Exceptional bounce rate (20%) - highly relevant traffic
+
+STRENGTH_THREE:
+Category: traffic_main.json
+Detail: Strong brand loyalty: 72% direct traffic indicates repeat customers and brand awareness
+
+WEAKNESS_ONE:
+Category: traffic_main.json
+Detail: Email drives only 0.06% of traffic - retention marketing underutilized
+
+WEAKNESS_TWO:
+Category: keyword_analysis.json
+Detail: Weak organic reach: only 25% of generic keywords in top 10 (71/281)
+
+WEAKNESS_THREE:
+Category: twitter_analysis.json
+Detail: Recurring customer complaints: Withdrawal Delays - Frustrations over delays in receiving winnings or issues with payment processing.
+
+OPPORTUNITY_ONE:
+Category: adoption_score.json
+Detail: AI LEAPFROG: Implement AI chatbot to reduce support costs 20-40% and improve conversion
+
+OPPORTUNITY_TWO:
+Category: ai_overview.json
+Detail: AI SEARCH OPPORTUNITY: Optimize for AI Overviews to capture emerging search channel
+
+OPPORTUNITY_THREE:
+Category: keyword_gaps.json
+Detail: SEO MARKET SHARE: 153 keyword gaps vs Meccabingo - capture competitor traffic
+
+OPPORTUNITY_FOUR:
+Category: traffic_main.json
+Detail: EMAIL ROI: Email drives <2% traffic - low-cost channel to increase repeat purchases and LTV
+
+THREAT_ONE:
+Category: traffic_main.json
+Detail: Geographic concentration risk: 98.2% of traffic from GB - single market regulatory changes could devastate business
+
+THREAT_TWO:
+Category: traffic_main.json
+Detail: Social drives only 0.20% of traffic - missing audience shift to social discovery
+
+THREAT_THREE:
+Category: trends_brand.json
+Detail: BRAND INTEREST DECLINING: 'Tombola' search trend is down - demand erosion
+
+THREAT_FOUR:
+Category: research_main.json
+Detail: Regulatory activity detected in company/industry research - monitor for compliance impact
+
+---
+
+## WHAT WE COULD NOT ASSESS
+
+LIMITATION_ONE:
+Area: Customer reviews: Trustpilot blocked or no data - manual check recommended
+
+LIMITATION_TWO:
+Area: Mobile apps: Not found or API failed - verify in App Store/Play Store
+
+---
+
+Report generated by TAU Signal
+Data as of February 2026
+
+End of Report

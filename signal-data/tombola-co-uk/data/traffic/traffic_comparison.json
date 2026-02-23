@@ -1,0 +1,78 @@
+{
+  "domains": [
+    "tombola.co.uk",
+    "meccabingo.com",
+    "galabingo.com",
+    "foxybingo.com",
+    "buzzbingo.com"
+  ],
+  "rankings": [
+    {
+      "domain": "tombola.co.uk",
+      "global_rank": 9977,
+      "country_rank": 316,
+      "category_rank": "1"
+    },
+    {
+      "domain": "galabingo.com",
+      "global_rank": 13756,
+      "country_rank": 450,
+      "category_rank": "2"
+    },
+    {
+      "domain": "foxybingo.com",
+      "global_rank": 20566,
+      "country_rank": 692,
+      "category_rank": "5"
+    },
+    {
+      "domain": "buzzbingo.com",
+      "global_rank": 33652,
+      "country_rank": 1167,
+      "category_rank": "6"
+    },
+    {
+      "domain": "meccabingo.com",
+      "global_rank": 34504,
+      "country_rank": 1227,
+      "category_rank": "7"
+    }
+  ],
+  "traffic_comparison": [
+    {
+      "domain": "tombola.co.uk",
+      "visits": "4315535",
+      "bounce_rate": "0.19254960827371592",
+      "time_on_site": "845.9591400119313",
+      "pages_per_visit": "8.815966673103373"
+    },
+    {
+      "domain": "meccabingo.com",
+      "visits": "1224883",
+      "bounce_rate": "0.2752023628272206",
+      "time_on_site": "427.2569610794973",
+      "pages_per_visit": "6.577342307677028"
+    },
+    {
+      "domain": "galabingo.com",
+      "visits": "3292891",
+      "bounce_rate": "0.2878033390187394",
+      "time_on_site": "266.9958316229738",
+      "pages_per_visit": "6.739066089216041"
+    },
+    {
+      "domain": "foxybingo.com",
+      "visits": "2189929",
+      "bounce_rate": "0.2693000933406354",
+      "time_on_site": "406.304709154357",
+      "pages_per_visit": "6.00840219917026"
+    },
+    {
+      "domain": "buzzbingo.com",
+      "visits": "1350197",
+      "bounce_rate": "0.2854495301803092",
+      "time_on_site": "299.49093462792746",
+      "pages_per_visit": "5.376553124327996"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "domain": "tombola.co.uk",
+  "data_source": "similarweb_free",
+  "site_name": "tombola.co.uk",
+  "description": "join tombola today and play great online bingo and slot games. free \u00a320 bonus and 20 free plays when you deposit \u00a320. low-stake bingo games start from just 1p. register today!",
+  "global_rank": 9977,
+  "country_rank": 316,
+  "country_code": "GB",
+  "category": "gambling/bingo",
+  "category_rank": "1",
+  "title": "Play Online Bingo | Bingo Games Online | tombola",
+  "engagement": {
+    "visits": "4315535",
+    "time_on_site": "845.9591400119313",
+    "page_per_visit": "8.815966673103373",
+    "bounce_rate": "0.19254960827371592"
+  },
+  "estimated_monthly_visits": {
+    "2025-09-01": 3756366,
+    "2025-10-01": 3652379,
+    "2025-11-01": 4315535
+  },
+  "traffic_sources": {
+    "social": 0.0018350370516983369,
+    "paid_referrals": 0.0043724565624683786,
+    "organic_search": 0.16603286230431621,
+    "direct": 0.6941004919611006,
+    "referrals": 0.13313691842891826,
+    "mail": 0.0005222336909043671
+  },
+  "top_country_shares": [
+    {
+      "Country": 826,
+      "CountryCode": "GB",
+      "Value": 0.9850508216847366
+    },
+    {
+      "Country": 840,
+      "CountryCode": "US",
+      "Value": 0.004925676681377078
+    },
+    {
+      "Country": 643,
+      "CountryCode": "RU",
+      "Value": 0.00126317944636839
+    },
+    {
+      "Country": 250,
+      "CountryCode": "FR",
+      "Value": 0.00113673181561492
+    },
+    {
+      "Country": 372,
+      "CountryCode": "IE",
+      "Value": 0.0009051290018955032
+    }
+  ],
+  "is_small_site": false,
+  "large_screenshot": "https://site-images.similarcdn.com/image?url=tombola.co.uk&t=1&s=1&h=64f1956feebf7f0d4e7d1053e5523d199206806df7a0309a7a5449bd33c893a8"
+}

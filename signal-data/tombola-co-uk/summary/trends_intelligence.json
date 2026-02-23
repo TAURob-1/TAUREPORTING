@@ -1,0 +1,1819 @@
+{
+  "generated_at": "2026-01-17T19:38:57.245369",
+  "company": "Tombola",
+  "data_quality": {
+    "geo_validation": {
+      "geo_used": "GB",
+      "expected_geo": "GB",
+      "is_valid": true,
+      "issues": []
+    },
+    "issues": [],
+    "is_reliable": true
+  },
+  "brand_trend_summary": {
+    "direction": "flat",
+    "12_month_trend": "+10%",
+    "momentum_score": 7.0,
+    "interpretation": "Positive momentum - growing interest"
+  },
+  "volatility_analysis": {
+    "Tombola": {
+      "max": 100,
+      "min": 67,
+      "avg": 76.1,
+      "current": 94,
+      "trend": "down",
+      "volatility_ratio": 1.49,
+      "interpretation": "STABLE | TRENDING DOWN | Currently 24% above average"
+    }
+  },
+  "competitor_comparison": {
+    "vs_competitors": {
+      "Mecca Bingo": {
+        "status": "outpacing",
+        "description": "outpacing (they're flat)",
+        "their_trend": "-1%",
+        "our_trend": "+10%",
+        "gap": 10.4
+      },
+      "Gala Bingo": {
+        "status": "outpacing",
+        "description": "outpacing (they're flat)",
+        "their_trend": "+2%",
+        "our_trend": "+10%",
+        "gap": 8.2
+      },
+      "Foxy Bingo": {
+        "status": "outpacing",
+        "description": "outpacing (they're falling)",
+        "their_trend": "-14%",
+        "our_trend": "+10%",
+        "gap": 24.1
+      },
+      "Buzz Bingo": {
+        "status": "outpacing",
+        "description": "outpacing (they're falling)",
+        "their_trend": "-14%",
+        "our_trend": "+10%",
+        "gap": 23.7
+      }
+    },
+    "competitor_trajectories": {
+      "Mecca Bingo": {
+        "direction": "flat",
+        "trend_12_month": -0.6,
+        "trend_12_month_formatted": "-1%",
+        "recent_trend": 2.2,
+        "volatility": 0.07,
+        "current_index": 58,
+        "peak_index": 64,
+        "data_points": 53
+      },
+      "Gala Bingo": {
+        "direction": "flat",
+        "trend_12_month": 1.6,
+        "trend_12_month_formatted": "+2%",
+        "recent_trend": 5.3,
+        "volatility": 0.08,
+        "current_index": 65,
+        "peak_index": 65,
+        "data_points": 53
+      },
+      "Foxy Bingo": {
+        "direction": "falling",
+        "trend_12_month": -14.3,
+        "trend_12_month_formatted": "-14%",
+        "recent_trend": -3.3,
+        "volatility": 0.09,
+        "current_index": 36,
+        "peak_index": 45,
+        "data_points": 53
+      },
+      "Buzz Bingo": {
+        "direction": "falling",
+        "trend_12_month": -13.9,
+        "trend_12_month_formatted": "-14%",
+        "recent_trend": -1.0,
+        "volatility": 0.09,
+        "current_index": 39,
+        "peak_index": 43,
+        "data_points": 53
+      }
+    }
+  },
+  "interest_over_time": {},
+  "seasonal_patterns": {
+    "available": true,
+    "monthly_pattern": {
+      "Dec": 92.4,
+      "Jan": 71.0,
+      "Feb": 72.8,
+      "Mar": 73.8,
+      "Apr": 72.5,
+      "May": 71.0,
+      "Jun": 73.4,
+      "Jul": 72.0,
+      "Aug": 76.2,
+      "Sep": 80.0,
+      "Oct": 70.0,
+      "Nov": 83.4
+    },
+    "peak_month": "Dec",
+    "low_month": "Oct",
+    "volatility_ratio": 1.32,
+    "interpretation": [
+      "STABLE: Low seasonal variation"
+    ],
+    "marketing_implication": "EVEN DISTRIBUTION: Spread marketing spend evenly throughout the year."
+  },
+  "geographic_breakdown": [
+    {
+      "geoName": "England",
+      "Tombola": 53
+    },
+    {
+      "geoName": "Northern Ireland",
+      "Tombola": 43
+    },
+    {
+      "geoName": "Scotland",
+      "Tombola": 85
+    },
+    {
+      "geoName": "Wales",
+      "Tombola": 100
+    }
+  ],
+  "raw_brand_trends": {
+    "keywords": [
+      "Tombola"
+    ],
+    "geo": "GB",
+    "timeframe": "today 12-m",
+    "fetched_at": "2025-12-26T23:56:24.201942",
+    "interest_over_time": [
+      {
+        "date": "2024-12-22T00:00:00",
+        "Tombola": 100,
+        "isPartial": false
+      },
+      {
+        "date": "2024-12-29T00:00:00",
+        "Tombola": 80,
+        "isPartial": false
+      },
+      {
+        "date": "2025-01-05T00:00:00",
+        "Tombola": 70,
+        "isPartial": false
+      },
+      {
+        "date": "2025-01-12T00:00:00",
+        "Tombola": 69,
+        "isPartial": false
+      },
+      {
+        "date": "2025-01-19T00:00:00",
+        "Tombola": 74,
+        "isPartial": false
+      },
+      {
+        "date": "2025-01-26T00:00:00",
+        "Tombola": 71,
+        "isPartial": false
+      },
+      {
+        "date": "2025-02-02T00:00:00",
+        "Tombola": 77,
+        "isPartial": false
+      },
+      {
+        "date": "2025-02-09T00:00:00",
+        "Tombola": 68,
+        "isPartial": false
+      },
+      {
+        "date": "2025-02-16T00:00:00",
+        "Tombola": 74,
+        "isPartial": false
+      },
+      {
+        "date": "2025-02-23T00:00:00",
+        "Tombola": 72,
+        "isPartial": false
+      },
+      {
+        "date": "2025-03-02T00:00:00",
+        "Tombola": 75,
+        "isPartial": false
+      },
+      {
+        "date": "2025-03-09T00:00:00",
+        "Tombola": 69,
+        "isPartial": false
+      },
+      {
+        "date": "2025-03-16T00:00:00",
+        "Tombola": 71,
+        "isPartial": false
+      },
+      {
+        "date": "2025-03-23T00:00:00",
+        "Tombola": 82,
+        "isPartial": false
+      },
+      {
+        "date": "2025-03-30T00:00:00",
+        "Tombola": 72,
+        "isPartial": false
+      },
+      {
+        "date": "2025-04-06T00:00:00",
+        "Tombola": 70,
+        "isPartial": false
+      },
+      {
+        "date": "2025-04-13T00:00:00",
+        "Tombola": 77,
+        "isPartial": false
+      },
+      {
+        "date": "2025-04-20T00:00:00",
+        "Tombola": 71,
+        "isPartial": false
+      },
+      {
+        "date": "2025-04-27T00:00:00",
+        "Tombola": 72,
+        "isPartial": false
+      },
+      {
+        "date": "2025-05-04T00:00:00",
+        "Tombola": 71,
+        "isPartial": false
+      },
+      {
+        "date": "2025-05-11T00:00:00",
+        "Tombola": 67,
+        "isPartial": false
+      },
+      {
+        "date": "2025-05-18T00:00:00",
+        "Tombola": 74,
+        "isPartial": false
+      },
+      {
+        "date": "2025-05-25T00:00:00",
+        "Tombola": 72,
+        "isPartial": false
+      },
+      {
+        "date": "2025-06-01T00:00:00",
+        "Tombola": 74,
+        "isPartial": false
+      },
+      {
+        "date": "2025-06-08T00:00:00",
+        "Tombola": 70,
+        "isPartial": false
+      },
+      {
+        "date": "2025-06-15T00:00:00",
+        "Tombola": 76,
+        "isPartial": false
+      },
+      {
+        "date": "2025-06-22T00:00:00",
+        "Tombola": 72,
+        "isPartial": false
+      },
+      {
+        "date": "2025-06-29T00:00:00",
+        "Tombola": 75,
+        "isPartial": false
+      },
+      {
+        "date": "2025-07-06T00:00:00",
+        "Tombola": 75,
+        "isPartial": false
+      },
+      {
+        "date": "2025-07-13T00:00:00",
+        "Tombola": 71,
+        "isPartial": false
+      },
+      {
+        "date": "2025-07-20T00:00:00",
+        "Tombola": 70,
+        "isPartial": false
+      },
+      {
+        "date": "2025-07-27T00:00:00",
+        "Tombola": 72,
+        "isPartial": false
+      },
+      {
+        "date": "2025-08-03T00:00:00",
+        "Tombola": 75,
+        "isPartial": false
+      },
+      {
+        "date": "2025-08-10T00:00:00",
+        "Tombola": 75,
+        "isPartial": false
+      },
+      {
+        "date": "2025-08-17T00:00:00",
+        "Tombola": 77,
+        "isPartial": false
+      },
+      {
+        "date": "2025-08-24T00:00:00",
+        "Tombola": 76,
+        "isPartial": false
+      },
+      {
+        "date": "2025-08-31T00:00:00",
+        "Tombola": 78,
+        "isPartial": false
+      },
+      {
+        "date": "2025-09-07T00:00:00",
+        "Tombola": 80,
+        "isPartial": false
+      },
+      {
+        "date": "2025-09-14T00:00:00",
+        "Tombola": 76,
+        "isPartial": false
+      },
+      {
+        "date": "2025-09-21T00:00:00",
+        "Tombola": 79,
+        "isPartial": false
+      },
+      {
+        "date": "2025-09-28T00:00:00",
+        "Tombola": 85,
+        "isPartial": false
+      },
+      {
+        "date": "2025-10-05T00:00:00",
+        "Tombola": 67,
+        "isPartial": false
+      },
+      {
+        "date": "2025-10-12T00:00:00",
+        "Tombola": 69,
+        "isPartial": false
+      },
+      {
+        "date": "2025-10-19T00:00:00",
+        "Tombola": 68,
+        "isPartial": false
+      },
+      {
+        "date": "2025-10-26T00:00:00",
+        "Tombola": 76,
+        "isPartial": false
+      },
+      {
+        "date": "2025-11-02T00:00:00",
+        "Tombola": 74,
+        "isPartial": false
+      },
+      {
+        "date": "2025-11-09T00:00:00",
+        "Tombola": 76,
+        "isPartial": false
+      },
+      {
+        "date": "2025-11-16T00:00:00",
+        "Tombola": 90,
+        "isPartial": false
+      },
+      {
+        "date": "2025-11-23T00:00:00",
+        "Tombola": 84,
+        "isPartial": false
+      },
+      {
+        "date": "2025-11-30T00:00:00",
+        "Tombola": 93,
+        "isPartial": false
+      },
+      {
+        "date": "2025-12-07T00:00:00",
+        "Tombola": 98,
+        "isPartial": false
+      },
+      {
+        "date": "2025-12-14T00:00:00",
+        "Tombola": 90,
+        "isPartial": false
+      },
+      {
+        "date": "2025-12-21T00:00:00",
+        "Tombola": 94,
+        "isPartial": true
+      }
+    ],
+    "interest_by_region": [
+      {
+        "geoName": "England",
+        "Tombola": 53
+      },
+      {
+        "geoName": "Northern Ireland",
+        "Tombola": 43
+      },
+      {
+        "geoName": "Scotland",
+        "Tombola": 85
+      },
+      {
+        "geoName": "Wales",
+        "Tombola": 100
+      }
+    ],
+    "related_queries": {
+      "Tombola": {
+        "top": [
+          {
+            "query": "tombola bingo",
+            "value": 100
+          },
+          {
+            "query": "tombola arcade",
+            "value": 64
+          },
+          {
+            "query": "tombola login",
+            "value": 44
+          },
+          {
+            "query": "gala",
+            "value": 19
+          },
+          {
+            "query": "william hill",
+            "value": 17
+          },
+          {
+            "query": "coral",
+            "value": 16
+          },
+          {
+            "query": "ladbrokes",
+            "value": 16
+          },
+          {
+            "query": "gala bingo",
+            "value": 15
+          },
+          {
+            "query": "tombola bingo login",
+            "value": 12
+          },
+          {
+            "query": "paddy power",
+            "value": 12
+          }
+        ],
+        "rising": [
+          {
+            "query": "mr q",
+            "value": 140
+          },
+          {
+            "query": "gala casino",
+            "value": 90
+          },
+          {
+            "query": "sky vegas",
+            "value": 70
+          },
+          {
+            "query": "gala bingo",
+            "value": 50
+          },
+          {
+            "query": "foxy",
+            "value": 50
+          },
+          {
+            "query": "foxy bingo",
+            "value": 50
+          },
+          {
+            "query": "betfred",
+            "value": 50
+          },
+          {
+            "query": "sky bingo",
+            "value": 40
+          },
+          {
+            "query": "tombola online",
+            "value": 40
+          }
+        ]
+      }
+    },
+    "summary": {
+      "Tombola": {
+        "avg_interest": 76.09433962264151,
+        "max_interest": 100,
+        "min_interest": 67,
+        "current": 94,
+        "trend": "down"
+      }
+    }
+  },
+  "raw_comparison_trends": {
+    "keywords": [
+      "Tombola",
+      "Mecca Bingo",
+      "Gala Bingo",
+      "Foxy Bingo",
+      "Buzz Bingo"
+    ],
+    "geo": "GB",
+    "timeframe": "today 12-m",
+    "fetched_at": "2025-12-26T23:56:32.356568",
+    "interest_over_time": [
+      {
+        "date": "2024-12-22T00:00:00",
+        "Tombola": 100,
+        "Mecca Bingo": 64,
+        "Gala Bingo": 59,
+        "Foxy Bingo": 41,
+        "Buzz Bingo": 40,
+        "isPartial": false
+      },
+      {
+        "date": "2024-12-29T00:00:00",
+        "Tombola": 80,
+        "Mecca Bingo": 59,
+        "Gala Bingo": 59,
+        "Foxy Bingo": 45,
+        "Buzz Bingo": 43,
+        "isPartial": false
+      },
+      {
+        "date": "2025-01-05T00:00:00",
+        "Tombola": 70,
+        "Mecca Bingo": 50,
+        "Gala Bingo": 52,
+        "Foxy Bingo": 37,
+        "Buzz Bingo": 34,
+        "isPartial": false
+      },
+      {
+        "date": "2025-01-12T00:00:00",
+        "Tombola": 69,
+        "Mecca Bingo": 52,
+        "Gala Bingo": 50,
+        "Foxy Bingo": 38,
+        "Buzz Bingo": 36,
+        "isPartial": false
+      },
+      {
+        "date": "2025-01-19T00:00:00",
+        "Tombola": 74,
+        "Mecca Bingo": 47,
+        "Gala Bingo": 50,
+        "Foxy Bingo": 35,
+        "Buzz Bingo": 38,
+        "isPartial": false
+      },
+      {
+        "date": "2025-01-26T00:00:00",
+        "Tombola": 71,
+        "Mecca Bingo": 51,
+        "Gala Bingo": 49,
+        "Foxy Bingo": 35,
+        "Buzz Bingo": 37,
+        "isPartial": false
+      },
+      {
+        "date": "2025-02-02T00:00:00",
+        "Tombola": 77,
+        "Mecca Bingo": 54,
+        "Gala Bingo": 52,
+        "Foxy Bingo": 41,
+        "Buzz Bingo": 37,
+        "isPartial": false
+      },
+      {
+        "date": "2025-02-09T00:00:00",
+        "Tombola": 68,
+        "Mecca Bingo": 51,
+        "Gala Bingo": 49,
+        "Foxy Bingo": 37,
+        "Buzz Bingo": 41,
+        "isPartial": false
+      },
+      {
+        "date": "2025-02-16T00:00:00",
+        "Tombola": 74,
+        "Mecca Bingo": 50,
+        "Gala Bingo": 51,
+        "Foxy Bingo": 37,
+        "Buzz Bingo": 39,
+        "isPartial": false
+      },
+      {
+        "date": "2025-02-23T00:00:00",
+        "Tombola": 72,
+        "Mecca Bingo": 51,
+        "Gala Bingo": 50,
+        "Foxy Bingo": 34,
+        "Buzz Bingo": 37,
+        "isPartial": false
+      },
+      {
+        "date": "2025-03-02T00:00:00",
+        "Tombola": 75,
+        "Mecca Bingo": 47,
+        "Gala Bingo": 51,
+        "Foxy Bingo": 37,
+        "Buzz Bingo": 39,
+        "isPartial": false
+      },
+      {
+        "date": "2025-03-09T00:00:00",
+        "Tombola": 69,
+        "Mecca Bingo": 51,
+        "Gala Bingo": 51,
+        "Foxy Bingo": 35,
+        "Buzz Bingo": 42,
+        "isPartial": false
+      },
+      {
+        "date": "2025-03-16T00:00:00",
+        "Tombola": 71,
+        "Mecca Bingo": 48,
+        "Gala Bingo": 52,
+        "Foxy Bingo": 36,
+        "Buzz Bingo": 39,
+        "isPartial": false
+      },
+      {
+        "date": "2025-03-23T00:00:00",
+        "Tombola": 82,
+        "Mecca Bingo": 49,
+        "Gala Bingo": 45,
+        "Foxy Bingo": 34,
+        "Buzz Bingo": 37,
+        "isPartial": false
+      },
+      {
+        "date": "2025-03-30T00:00:00",
+        "Tombola": 72,
+        "Mecca Bingo": 49,
+        "Gala Bingo": 53,
+        "Foxy Bingo": 39,
+        "Buzz Bingo": 39,
+        "isPartial": false
+      },
+      {
+        "date": "2025-04-06T00:00:00",
+        "Tombola": 70,
+        "Mecca Bingo": 46,
+        "Gala Bingo": 50,
+        "Foxy Bingo": 36,
+        "Buzz Bingo": 36,
+        "isPartial": false
+      },
+      {
+        "date": "2025-04-13T00:00:00",
+        "Tombola": 77,
+        "Mecca Bingo": 54,
+        "Gala Bingo": 51,
+        "Foxy Bingo": 35,
+        "Buzz Bingo": 41,
+        "isPartial": false
+      },
+      {
+        "date": "2025-04-20T00:00:00",
+        "Tombola": 71,
+        "Mecca Bingo": 54,
+        "Gala Bingo": 46,
+        "Foxy Bingo": 34,
+        "Buzz Bingo": 39,
+        "isPartial": false
+      },
+      {
+        "date": "2025-04-27T00:00:00",
+        "Tombola": 72,
+        "Mecca Bingo": 55,
+        "Gala Bingo": 49,
+        "Foxy Bingo": 35,
+        "Buzz Bingo": 35,
+        "isPartial": false
+      },
+      {
+        "date": "2025-05-04T00:00:00",
+        "Tombola": 71,
+        "Mecca Bingo": 48,
+        "Gala Bingo": 51,
+        "Foxy Bingo": 35,
+        "Buzz Bingo": 35,
+        "isPartial": false
+      },
+      {
+        "date": "2025-05-11T00:00:00",
+        "Tombola": 67,
+        "Mecca Bingo": 44,
+        "Gala Bingo": 44,
+        "Foxy Bingo": 35,
+        "Buzz Bingo": 32,
+        "isPartial": false
+      },
+      {
+        "date": "2025-05-18T00:00:00",
+        "Tombola": 74,
+        "Mecca Bingo": 47,
+        "Gala Bingo": 46,
+        "Foxy Bingo": 33,
+        "Buzz Bingo": 33,
+        "isPartial": false
+      },
+      {
+        "date": "2025-05-25T00:00:00",
+        "Tombola": 72,
+        "Mecca Bingo": 47,
+        "Gala Bingo": 47,
+        "Foxy Bingo": 35,
+        "Buzz Bingo": 32,
+        "isPartial": false
+      },
+      {
+        "date": "2025-06-01T00:00:00",
+        "Tombola": 74,
+        "Mecca Bingo": 49,
+        "Gala Bingo": 53,
+        "Foxy Bingo": 42,
+        "Buzz Bingo": 34,
+        "isPartial": false
+      },
+      {
+        "date": "2025-06-08T00:00:00",
+        "Tombola": 70,
+        "Mecca Bingo": 47,
+        "Gala Bingo": 48,
+        "Foxy Bingo": 33,
+        "Buzz Bingo": 31,
+        "isPartial": false
+      },
+      {
+        "date": "2025-06-15T00:00:00",
+        "Tombola": 76,
+        "Mecca Bingo": 45,
+        "Gala Bingo": 47,
+        "Foxy Bingo": 33,
+        "Buzz Bingo": 32,
+        "isPartial": false
+      },
+      {
+        "date": "2025-06-22T00:00:00",
+        "Tombola": 72,
+        "Mecca Bingo": 49,
+        "Gala Bingo": 49,
+        "Foxy Bingo": 39,
+        "Buzz Bingo": 32,
+        "isPartial": false
+      },
+      {
+        "date": "2025-06-29T00:00:00",
+        "Tombola": 75,
+        "Mecca Bingo": 46,
+        "Gala Bingo": 51,
+        "Foxy Bingo": 34,
+        "Buzz Bingo": 34,
+        "isPartial": false
+      },
+      {
+        "date": "2025-07-06T00:00:00",
+        "Tombola": 75,
+        "Mecca Bingo": 47,
+        "Gala Bingo": 48,
+        "Foxy Bingo": 34,
+        "Buzz Bingo": 33,
+        "isPartial": false
+      },
+      {
+        "date": "2025-07-13T00:00:00",
+        "Tombola": 71,
+        "Mecca Bingo": 47,
+        "Gala Bingo": 51,
+        "Foxy Bingo": 33,
+        "Buzz Bingo": 31,
+        "isPartial": false
+      },
+      {
+        "date": "2025-07-20T00:00:00",
+        "Tombola": 70,
+        "Mecca Bingo": 50,
+        "Gala Bingo": 48,
+        "Foxy Bingo": 33,
+        "Buzz Bingo": 32,
+        "isPartial": false
+      },
+      {
+        "date": "2025-07-27T00:00:00",
+        "Tombola": 72,
+        "Mecca Bingo": 49,
+        "Gala Bingo": 50,
+        "Foxy Bingo": 34,
+        "Buzz Bingo": 36,
+        "isPartial": false
+      },
+      {
+        "date": "2025-08-03T00:00:00",
+        "Tombola": 75,
+        "Mecca Bingo": 54,
+        "Gala Bingo": 55,
+        "Foxy Bingo": 41,
+        "Buzz Bingo": 36,
+        "isPartial": false
+      },
+      {
+        "date": "2025-08-10T00:00:00",
+        "Tombola": 75,
+        "Mecca Bingo": 49,
+        "Gala Bingo": 51,
+        "Foxy Bingo": 33,
+        "Buzz Bingo": 33,
+        "isPartial": false
+      },
+      {
+        "date": "2025-08-17T00:00:00",
+        "Tombola": 77,
+        "Mecca Bingo": 51,
+        "Gala Bingo": 49,
+        "Foxy Bingo": 33,
+        "Buzz Bingo": 33,
+        "isPartial": false
+      },
+      {
+        "date": "2025-08-24T00:00:00",
+        "Tombola": 76,
+        "Mecca Bingo": 49,
+        "Gala Bingo": 49,
+        "Foxy Bingo": 31,
+        "Buzz Bingo": 34,
+        "isPartial": false
+      },
+      {
+        "date": "2025-08-31T00:00:00",
+        "Tombola": 78,
+        "Mecca Bingo": 48,
+        "Gala Bingo": 51,
+        "Foxy Bingo": 34,
+        "Buzz Bingo": 35,
+        "isPartial": false
+      },
+      {
+        "date": "2025-09-07T00:00:00",
+        "Tombola": 80,
+        "Mecca Bingo": 51,
+        "Gala Bingo": 47,
+        "Foxy Bingo": 31,
+        "Buzz Bingo": 33,
+        "isPartial": false
+      },
+      {
+        "date": "2025-09-14T00:00:00",
+        "Tombola": 76,
+        "Mecca Bingo": 50,
+        "Gala Bingo": 44,
+        "Foxy Bingo": 30,
+        "Buzz Bingo": 31,
+        "isPartial": false
+      },
+      {
+        "date": "2025-09-21T00:00:00",
+        "Tombola": 79,
+        "Mecca Bingo": 52,
+        "Gala Bingo": 53,
+        "Foxy Bingo": 32,
+        "Buzz Bingo": 34,
+        "isPartial": false
+      },
+      {
+        "date": "2025-09-28T00:00:00",
+        "Tombola": 85,
+        "Mecca Bingo": 54,
+        "Gala Bingo": 53,
+        "Foxy Bingo": 33,
+        "Buzz Bingo": 34,
+        "isPartial": false
+      },
+      {
+        "date": "2025-10-05T00:00:00",
+        "Tombola": 67,
+        "Mecca Bingo": 53,
+        "Gala Bingo": 48,
+        "Foxy Bingo": 32,
+        "Buzz Bingo": 32,
+        "isPartial": false
+      },
+      {
+        "date": "2025-10-12T00:00:00",
+        "Tombola": 69,
+        "Mecca Bingo": 52,
+        "Gala Bingo": 48,
+        "Foxy Bingo": 31,
+        "Buzz Bingo": 30,
+        "isPartial": false
+      },
+      {
+        "date": "2025-10-19T00:00:00",
+        "Tombola": 68,
+        "Mecca Bingo": 50,
+        "Gala Bingo": 45,
+        "Foxy Bingo": 30,
+        "Buzz Bingo": 32,
+        "isPartial": false
+      },
+      {
+        "date": "2025-10-26T00:00:00",
+        "Tombola": 76,
+        "Mecca Bingo": 54,
+        "Gala Bingo": 49,
+        "Foxy Bingo": 31,
+        "Buzz Bingo": 34,
+        "isPartial": false
+      },
+      {
+        "date": "2025-11-02T00:00:00",
+        "Tombola": 74,
+        "Mecca Bingo": 52,
+        "Gala Bingo": 51,
+        "Foxy Bingo": 29,
+        "Buzz Bingo": 33,
+        "isPartial": false
+      },
+      {
+        "date": "2025-11-09T00:00:00",
+        "Tombola": 76,
+        "Mecca Bingo": 50,
+        "Gala Bingo": 47,
+        "Foxy Bingo": 30,
+        "Buzz Bingo": 30,
+        "isPartial": false
+      },
+      {
+        "date": "2025-11-16T00:00:00",
+        "Tombola": 90,
+        "Mecca Bingo": 49,
+        "Gala Bingo": 50,
+        "Foxy Bingo": 32,
+        "Buzz Bingo": 34,
+        "isPartial": false
+      },
+      {
+        "date": "2025-11-23T00:00:00",
+        "Tombola": 84,
+        "Mecca Bingo": 48,
+        "Gala Bingo": 55,
+        "Foxy Bingo": 33,
+        "Buzz Bingo": 31,
+        "isPartial": false
+      },
+      {
+        "date": "2025-11-30T00:00:00",
+        "Tombola": 93,
+        "Mecca Bingo": 47,
+        "Gala Bingo": 57,
+        "Foxy Bingo": 33,
+        "Buzz Bingo": 35,
+        "isPartial": false
+      },
+      {
+        "date": "2025-12-07T00:00:00",
+        "Tombola": 98,
+        "Mecca Bingo": 51,
+        "Gala Bingo": 58,
+        "Foxy Bingo": 33,
+        "Buzz Bingo": 34,
+        "isPartial": false
+      },
+      {
+        "date": "2025-12-14T00:00:00",
+        "Tombola": 90,
+        "Mecca Bingo": 53,
+        "Gala Bingo": 60,
+        "Foxy Bingo": 34,
+        "Buzz Bingo": 34,
+        "isPartial": false
+      },
+      {
+        "date": "2025-12-21T00:00:00",
+        "Tombola": 94,
+        "Mecca Bingo": 59,
+        "Gala Bingo": 67,
+        "Foxy Bingo": 37,
+        "Buzz Bingo": 37,
+        "isPartial": true
+      }
+    ],
+    "interest_by_region": [
+      {
+        "geoName": "England",
+        "Tombola": 29,
+        "Mecca Bingo": 20,
+        "Gala Bingo": 21,
+        "Foxy Bingo": 15,
+        "Buzz Bingo": 15
+      },
+      {
+        "geoName": "Northern Ireland",
+        "Tombola": 36,
+        "Mecca Bingo": 19,
+        "Gala Bingo": 22,
+        "Foxy Bingo": 19,
+        "Buzz Bingo": 4
+      },
+      {
+        "geoName": "Scotland",
+        "Tombola": 34,
+        "Mecca Bingo": 24,
+        "Gala Bingo": 18,
+        "Foxy Bingo": 11,
+        "Buzz Bingo": 13
+      },
+      {
+        "geoName": "Wales",
+        "Tombola": 40,
+        "Mecca Bingo": 18,
+        "Gala Bingo": 21,
+        "Foxy Bingo": 15,
+        "Buzz Bingo": 6
+      }
+    ],
+    "related_queries": {
+      "Tombola": {
+        "top": [
+          {
+            "query": "tombola bingo",
+            "value": 100
+          },
+          {
+            "query": "tombola arcade",
+            "value": 64
+          },
+          {
+            "query": "tombola login",
+            "value": 44
+          },
+          {
+            "query": "gala",
+            "value": 19
+          },
+          {
+            "query": "william hill",
+            "value": 17
+          },
+          {
+            "query": "coral",
+            "value": 16
+          },
+          {
+            "query": "ladbrokes",
+            "value": 16
+          },
+          {
+            "query": "gala bingo",
+            "value": 15
+          },
+          {
+            "query": "tombola bingo login",
+            "value": 12
+          },
+          {
+            "query": "paddy power",
+            "value": 12
+          }
+        ],
+        "rising": [
+          {
+            "query": "mr q",
+            "value": 140
+          },
+          {
+            "query": "gala casino",
+            "value": 90
+          },
+          {
+            "query": "sky vegas",
+            "value": 70
+          },
+          {
+            "query": "gala bingo",
+            "value": 50
+          },
+          {
+            "query": "foxy",
+            "value": 50
+          },
+          {
+            "query": "foxy bingo",
+            "value": 50
+          },
+          {
+            "query": "betfred",
+            "value": 50
+          },
+          {
+            "query": "sky bingo",
+            "value": 40
+          },
+          {
+            "query": "tombola online",
+            "value": 40
+          }
+        ]
+      },
+      "Mecca Bingo": {
+        "top": [
+          {
+            "query": "mecca login",
+            "value": 100
+          },
+          {
+            "query": "mecca bingo login",
+            "value": 96
+          },
+          {
+            "query": "gala",
+            "value": 85
+          },
+          {
+            "query": "gala bingo",
+            "value": 82
+          },
+          {
+            "query": "william hill",
+            "value": 52
+          },
+          {
+            "query": "buzz bingo",
+            "value": 48
+          },
+          {
+            "query": "foxy",
+            "value": 45
+          },
+          {
+            "query": "foxy bingo",
+            "value": 45
+          },
+          {
+            "query": "sky bingo",
+            "value": 44
+          },
+          {
+            "query": "coral bingo",
+            "value": 44
+          }
+        ],
+        "rising": [
+          {
+            "query": "netbet",
+            "value": 100
+          },
+          {
+            "query": "bella casino",
+            "value": 100
+          }
+        ]
+      },
+      "Gala Bingo": {
+        "top": [
+          {
+            "query": "gala casino",
+            "value": 100
+          },
+          {
+            "query": "foxy",
+            "value": 95
+          },
+          {
+            "query": "foxy bingo",
+            "value": 94
+          },
+          {
+            "query": "coral",
+            "value": 71
+          },
+          {
+            "query": "coral bingo",
+            "value": 71
+          },
+          {
+            "query": "ladbrokes bingo",
+            "value": 71
+          },
+          {
+            "query": "ladbrokes",
+            "value": 68
+          },
+          {
+            "query": "gala bingo login",
+            "value": 66
+          },
+          {
+            "query": "william hill",
+            "value": 45
+          },
+          {
+            "query": "william hill bingo",
+            "value": 44
+          }
+        ],
+        "rising": [
+          {
+            "query": "partypoker",
+            "value": 100
+          },
+          {
+            "query": "666 casino",
+            "value": 80
+          }
+        ]
+      },
+      "Foxy Bingo": {
+        "top": [
+          {
+            "query": "gala bingo",
+            "value": 100
+          },
+          {
+            "query": "gala",
+            "value": 99
+          },
+          {
+            "query": "foxy casino",
+            "value": 85
+          },
+          {
+            "query": "coral bingo",
+            "value": 62
+          },
+          {
+            "query": "ladbrokes",
+            "value": 62
+          },
+          {
+            "query": "coral",
+            "value": 62
+          },
+          {
+            "query": "ladbrokes bingo",
+            "value": 60
+          },
+          {
+            "query": "foxy games",
+            "value": 49
+          },
+          {
+            "query": "foxy bingo login",
+            "value": 39
+          },
+          {
+            "query": "william hill",
+            "value": 35
+          }
+        ],
+        "rising": [
+          {
+            "query": "midnite",
+            "value": 1100
+          },
+          {
+            "query": "midnite casino",
+            "value": 600
+          },
+          {
+            "query": "lottogo",
+            "value": 180
+          },
+          {
+            "query": "unibet uk",
+            "value": 160
+          },
+          {
+            "query": "dream jackpot",
+            "value": 140
+          },
+          {
+            "query": "lotto go",
+            "value": 130
+          },
+          {
+            "query": "partypoker",
+            "value": 120
+          },
+          {
+            "query": "netbet",
+            "value": 120
+          },
+          {
+            "query": "red casino",
+            "value": 110
+          },
+          {
+            "query": "666 casino",
+            "value": 110
+          }
+        ]
+      },
+      "Buzz Bingo": {
+        "top": [],
+        "rising": []
+      }
+    },
+    "summary": {
+      "Tombola": {
+        "avg_interest": 76.09433962264151,
+        "max_interest": 100,
+        "min_interest": 67,
+        "current": 94,
+        "trend": "down"
+      },
+      "Mecca Bingo": {
+        "avg_interest": 50.43396226415094,
+        "max_interest": 64,
+        "min_interest": 44,
+        "current": 59,
+        "trend": "down"
+      },
+      "Gala Bingo": {
+        "avg_interest": 50.735849056603776,
+        "max_interest": 67,
+        "min_interest": 44,
+        "current": 67,
+        "trend": "up"
+      },
+      "Foxy Bingo": {
+        "avg_interest": 34.660377358490564,
+        "max_interest": 45,
+        "min_interest": 29,
+        "current": 37,
+        "trend": "down"
+      },
+      "Buzz Bingo": {
+        "avg_interest": 35.0,
+        "max_interest": 43,
+        "min_interest": 30,
+        "current": 37,
+        "trend": "down"
+      }
+    }
+  },
+  "raw_trajectory": {
+    "company_name": "Tombola",
+    "analyzed_at": "2025-12-27T00:01:35.692779",
+    "timeframe": "today 12-m",
+    "geo": "GB",
+    "trends_data": {
+      "keywords": [
+        "Tombola",
+        "Mecca Bingo",
+        "Gala Bingo",
+        "Foxy Bingo",
+        "Buzz Bingo"
+      ],
+      "geo": "GB",
+      "timeframe": "today 12-m",
+      "dates": [
+        "2024-12-22T00:00:00",
+        "2024-12-29T00:00:00",
+        "2025-01-05T00:00:00",
+        "2025-01-12T00:00:00",
+        "2025-01-19T00:00:00",
+        "2025-01-26T00:00:00",
+        "2025-02-02T00:00:00",
+        "2025-02-09T00:00:00",
+        "2025-02-16T00:00:00",
+        "2025-02-23T00:00:00",
+        "2025-03-02T00:00:00",
+        "2025-03-09T00:00:00",
+        "2025-03-16T00:00:00",
+        "2025-03-23T00:00:00",
+        "2025-03-30T00:00:00",
+        "2025-04-06T00:00:00",
+        "2025-04-13T00:00:00",
+        "2025-04-20T00:00:00",
+        "2025-04-27T00:00:00",
+        "2025-05-04T00:00:00",
+        "2025-05-11T00:00:00",
+        "2025-05-18T00:00:00",
+        "2025-05-25T00:00:00",
+        "2025-06-01T00:00:00",
+        "2025-06-08T00:00:00",
+        "2025-06-15T00:00:00",
+        "2025-06-22T00:00:00",
+        "2025-06-29T00:00:00",
+        "2025-07-06T00:00:00",
+        "2025-07-13T00:00:00",
+        "2025-07-20T00:00:00",
+        "2025-07-27T00:00:00",
+        "2025-08-03T00:00:00",
+        "2025-08-10T00:00:00",
+        "2025-08-17T00:00:00",
+        "2025-08-24T00:00:00",
+        "2025-08-31T00:00:00",
+        "2025-09-07T00:00:00",
+        "2025-09-14T00:00:00",
+        "2025-09-21T00:00:00",
+        "2025-09-28T00:00:00",
+        "2025-10-05T00:00:00",
+        "2025-10-12T00:00:00",
+        "2025-10-19T00:00:00",
+        "2025-10-26T00:00:00",
+        "2025-11-02T00:00:00",
+        "2025-11-09T00:00:00",
+        "2025-11-16T00:00:00",
+        "2025-11-23T00:00:00",
+        "2025-11-30T00:00:00",
+        "2025-12-07T00:00:00",
+        "2025-12-14T00:00:00",
+        "2025-12-21T00:00:00"
+      ],
+      "interest_over_time": {
+        "Tombola": [
+          100,
+          80,
+          70,
+          69,
+          74,
+          71,
+          77,
+          68,
+          74,
+          72,
+          75,
+          69,
+          71,
+          82,
+          72,
+          70,
+          77,
+          71,
+          72,
+          71,
+          67,
+          74,
+          72,
+          74,
+          70,
+          76,
+          72,
+          75,
+          75,
+          71,
+          70,
+          72,
+          75,
+          75,
+          77,
+          76,
+          78,
+          80,
+          76,
+          79,
+          85,
+          67,
+          69,
+          68,
+          76,
+          74,
+          76,
+          90,
+          84,
+          93,
+          97,
+          90,
+          96
+        ],
+        "Mecca Bingo": [
+          64,
+          59,
+          50,
+          52,
+          47,
+          51,
+          54,
+          51,
+          50,
+          51,
+          47,
+          51,
+          48,
+          49,
+          49,
+          46,
+          54,
+          54,
+          55,
+          48,
+          44,
+          47,
+          47,
+          49,
+          47,
+          45,
+          49,
+          46,
+          47,
+          47,
+          50,
+          49,
+          54,
+          49,
+          51,
+          49,
+          48,
+          51,
+          50,
+          52,
+          54,
+          53,
+          52,
+          50,
+          54,
+          52,
+          50,
+          49,
+          48,
+          47,
+          51,
+          53,
+          58
+        ],
+        "Gala Bingo": [
+          59,
+          59,
+          52,
+          50,
+          50,
+          49,
+          52,
+          49,
+          51,
+          50,
+          51,
+          51,
+          52,
+          45,
+          53,
+          50,
+          51,
+          46,
+          49,
+          51,
+          44,
+          46,
+          47,
+          53,
+          48,
+          47,
+          49,
+          51,
+          48,
+          51,
+          48,
+          50,
+          55,
+          51,
+          49,
+          49,
+          51,
+          47,
+          44,
+          53,
+          53,
+          48,
+          48,
+          45,
+          49,
+          51,
+          47,
+          50,
+          55,
+          57,
+          58,
+          60,
+          65
+        ],
+        "Foxy Bingo": [
+          41,
+          45,
+          37,
+          38,
+          35,
+          35,
+          41,
+          37,
+          37,
+          34,
+          37,
+          35,
+          36,
+          34,
+          39,
+          36,
+          35,
+          34,
+          35,
+          35,
+          35,
+          33,
+          35,
+          42,
+          33,
+          33,
+          39,
+          34,
+          34,
+          33,
+          33,
+          34,
+          41,
+          33,
+          33,
+          31,
+          34,
+          31,
+          30,
+          32,
+          33,
+          32,
+          31,
+          30,
+          31,
+          29,
+          30,
+          32,
+          33,
+          33,
+          34,
+          34,
+          36
+        ],
+        "Buzz Bingo": [
+          40,
+          43,
+          34,
+          36,
+          38,
+          37,
+          37,
+          41,
+          39,
+          37,
+          39,
+          42,
+          39,
+          37,
+          39,
+          36,
+          41,
+          39,
+          35,
+          35,
+          32,
+          33,
+          32,
+          34,
+          31,
+          32,
+          32,
+          34,
+          33,
+          31,
+          32,
+          36,
+          36,
+          33,
+          33,
+          34,
+          35,
+          33,
+          31,
+          34,
+          34,
+          32,
+          30,
+          32,
+          34,
+          33,
+          30,
+          34,
+          31,
+          35,
+          34,
+          34,
+          39
+        ]
+      },
+      "fetched_at": "2025-12-27T00:01:40.358876"
+    },
+    "company_trajectory": {
+      "direction": "flat",
+      "trend_12_month": 9.8,
+      "trend_12_month_formatted": "+10%",
+      "recent_trend": 7.2,
+      "volatility": 0.1,
+      "current_index": 96,
+      "peak_index": 100,
+      "data_points": 53
+    },
+    "competitor_trajectories": {
+      "Mecca Bingo": {
+        "direction": "flat",
+        "trend_12_month": -0.6,
+        "trend_12_month_formatted": "-1%",
+        "recent_trend": 2.2,
+        "volatility": 0.07,
+        "current_index": 58,
+        "peak_index": 64,
+        "data_points": 53
+      },
+      "Gala Bingo": {
+        "direction": "flat",
+        "trend_12_month": 1.6,
+        "trend_12_month_formatted": "+2%",
+        "recent_trend": 5.3,
+        "volatility": 0.08,
+        "current_index": 65,
+        "peak_index": 65,
+        "data_points": 53
+      },
+      "Foxy Bingo": {
+        "direction": "falling",
+        "trend_12_month": -14.3,
+        "trend_12_month_formatted": "-14%",
+        "recent_trend": -3.3,
+        "volatility": 0.09,
+        "current_index": 36,
+        "peak_index": 45,
+        "data_points": 53
+      },
+      "Buzz Bingo": {
+        "direction": "falling",
+        "trend_12_month": -13.9,
+        "trend_12_month_formatted": "-14%",
+        "recent_trend": -1.0,
+        "volatility": 0.09,
+        "current_index": 39,
+        "peak_index": 43,
+        "data_points": 53
+      }
+    },
+    "vs_competitors": {
+      "Mecca Bingo": {
+        "status": "outpacing",
+        "description": "outpacing (they're flat)",
+        "their_trend": "-1%",
+        "our_trend": "+10%",
+        "gap": 10.4
+      },
+      "Gala Bingo": {
+        "status": "outpacing",
+        "description": "outpacing (they're flat)",
+        "their_trend": "+2%",
+        "our_trend": "+10%",
+        "gap": 8.2
+      },
+      "Foxy Bingo": {
+        "status": "outpacing",
+        "description": "outpacing (they're falling)",
+        "their_trend": "-14%",
+        "our_trend": "+10%",
+        "gap": 24.1
+      },
+      "Buzz Bingo": {
+        "status": "outpacing",
+        "description": "outpacing (they're falling)",
+        "their_trend": "-14%",
+        "our_trend": "+10%",
+        "gap": 23.7
+      }
+    },
+    "momentum_score": {
+      "score": 7.0,
+      "interpretation": "Positive momentum - growing interest",
+      "factors": {
+        "absolute_trend": "+10%",
+        "direction": "flat",
+        "vs_competitors": "outperforming"
+      }
+    }
+  }
+}

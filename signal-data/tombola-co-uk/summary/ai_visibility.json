@@ -1,0 +1,425 @@
+{
+  "generated_at": "2026-01-17T19:38:57.243983",
+  "company": "Tombola",
+  "overall_score": 0,
+  "score_breakdown": {
+    "knowledge_graph": {
+      "source": "google_knowledge_graph",
+      "found": true,
+      "entity_id": "kg:/m/012lb6v7",
+      "name": "tombola",
+      "description": "Gambling company",
+      "detailed_description": "Tombola is a British gambling company founded in 2006. It operates the world’s largest online bingo website. Business operations are led from its headquarters in Sunderland, alongside a satellite office in Gibraltar. ",
+      "types": [
+        "Organization",
+        "Thing",
+        "Corporation"
+      ],
+      "url": null,
+      "image": null,
+      "related_entities": [
+        "Tombola",
+        "The Raffle",
+        "Raffle"
+      ],
+      "error": "'NoneType' object has no attribute 'lower'"
+    },
+    "wikidata": {
+      "source": "wikidata",
+      "found": false
+    },
+    "schema_org": {
+      "source": "schema_audit",
+      "completeness_score": 2.7,
+      "pages_with_schema": 1,
+      "total_pages": 22,
+      "schema_coverage_pct": 4.5,
+      "homepage_has_schema": false,
+      "inferred_schemas": [],
+      "schemas_missing": [],
+      "recommendations": [
+        "URGENT: Add Organization schema to homepage",
+        "Add WebSite schema to homepage",
+        "Add Product schema to vehicle listing pages",
+        "Add FAQ schema to help/support pages",
+        "Add BreadcrumbList schema for navigation"
+      ],
+      "competitor_comparison": {
+        "buzz_bingo": {
+          "pages_with_schema": 0,
+          "total_pages": 1,
+          "coverage_pct": 0.0,
+          "homepage_has_schema": false
+        },
+        "foxy_bingo": {
+          "pages_with_schema": 1,
+          "total_pages": 1,
+          "coverage_pct": 100.0,
+          "homepage_has_schema": false
+        },
+        "gala_bingo": {
+          "pages_with_schema": 1,
+          "total_pages": 1,
+          "coverage_pct": 100.0,
+          "homepage_has_schema": false
+        },
+        "mecca_bingo": {
+          "pages_with_schema": 13,
+          "total_pages": 14,
+          "coverage_pct": 92.9,
+          "homepage_has_schema": true
+        }
+      }
+    },
+    "ai_citations": {}
+  },
+  "schema_audit_detail": {
+    "completeness_score": 2.7,
+    "schemas_present": [],
+    "schemas_missing": [],
+    "priority_schemas": [
+      {
+        "type": "Organization",
+        "priority": "HIGH",
+        "impact": "Brand identity in AI responses"
+      },
+      {
+        "type": "Product",
+        "priority": "HIGH",
+        "impact": "Product visibility in AI shopping queries"
+      },
+      {
+        "type": "FAQ",
+        "priority": "MEDIUM",
+        "impact": "Answer visibility in AI assistants"
+      },
+      {
+        "type": "Review",
+        "priority": "MEDIUM",
+        "impact": "Social proof in AI recommendations"
+      },
+      {
+        "type": "LocalBusiness",
+        "priority": "LOW",
+        "impact": "Local AI search visibility"
+      }
+    ]
+  },
+  "ai_citation_tests": {},
+  "competitor_comparison": {
+    "scores": {
+      "Tombola": {
+        "overall": 50.7,
+        "knowledge_graph": true,
+        "wikidata": false,
+        "schema_score": 2.7,
+        "ai_mention_rate": 100.0
+      },
+      "Meccabingo": {
+        "overall": 25.0,
+        "knowledge_graph": true,
+        "wikidata": false,
+        "schema_score": 0,
+        "ai_mention_rate": 0
+      },
+      "Galabingo": {
+        "overall": 50.0,
+        "knowledge_graph": true,
+        "wikidata": false,
+        "schema_score": 0,
+        "ai_mention_rate": 100
+      },
+      "Foxybingo": {
+        "overall": 50.0,
+        "knowledge_graph": true,
+        "wikidata": false,
+        "schema_score": 0,
+        "ai_mention_rate": 100
+      },
+      "Buzzbingo": {
+        "overall": 25.0,
+        "knowledge_graph": true,
+        "wikidata": false,
+        "schema_score": 0,
+        "ai_mention_rate": 0
+      }
+    },
+    "rankings": [
+      {
+        "name": "Tombola",
+        "score": 50.7,
+        "is_main": true,
+        "rank": 1
+      },
+      {
+        "name": "Galabingo",
+        "score": 50.0,
+        "is_main": false,
+        "rank": 2
+      },
+      {
+        "name": "Foxybingo",
+        "score": 50.0,
+        "is_main": false,
+        "rank": 3
+      },
+      {
+        "name": "Meccabingo",
+        "score": 25.0,
+        "is_main": false,
+        "rank": 4
+      },
+      {
+        "name": "Buzzbingo",
+        "score": 25.0,
+        "is_main": false,
+        "rank": 5
+      }
+    ],
+    "details": {
+      "buzzbingo": {
+        "company_name": "Buzzbingo",
+        "domain": "buzzbingo.com",
+        "analyzed_at": "2025-12-27T13:07:37.249363",
+        "knowledge_graph": {
+          "source": "google_knowledge_graph",
+          "found": true,
+          "entity_id": "kg:/g/11gnrlzw3c",
+          "name": "Buzz Bingo",
+          "description": null,
+          "detailed_description": "Buzz Bingo is a chain of bingo clubs in Great Britain owned by Intermediate Capital Group. It has 82 locations. Formerly operating as Gala Bingo clubs, they were re-branded as Buzz Bingo clubs in September 2018, whilst the Gala brand continues to run its own online bingo and casino offerings under the ownership of Entain plc.",
+          "types": [
+            "Organization",
+            "Thing"
+          ],
+          "url": null,
+          "image": null,
+          "related_entities": [],
+          "error": "'NoneType' object has no attribute 'lower'"
+        },
+        "wikidata": {
+          "source": "wikidata",
+          "found": false
+        },
+        "schema_audit": {
+          "completeness_score": 0,
+          "note": "No crawler file found for buzzbingo.com",
+          "schemas_found": []
+        },
+        "ai_citations": {
+          "mention_rate": 0,
+          "total_tests": 1,
+          "mention_count": 0
+        },
+        "visibility_score": {
+          "overall": 25.0,
+          "breakdown": {
+            "knowledge_graph": 25,
+            "wikidata": 0,
+            "schema": 0.0,
+            "ai_citations": 0.0
+          },
+          "max_possible": 100,
+          "interpretation": "Poor - Limited AI search presence"
+        }
+      },
+      "foxybingo": {
+        "company_name": "Foxybingo",
+        "domain": "foxybingo.com",
+        "analyzed_at": "2025-12-27T13:07:26.842151",
+        "knowledge_graph": {
+          "source": "google_knowledge_graph",
+          "found": true,
+          "entity_id": "kg:/g/11c733408y",
+          "name": "Foxy Bingo",
+          "description": "Online bingo company",
+          "detailed_description": "Foxy Bingo is an English online bingo site that launched in 2005. The brand is owned by Cashcade which is one of the gambling brands owned by Entain PLC, a constituent of the FTSE 100 index.",
+          "types": [
+            "Corporation",
+            "Thing",
+            "Organization"
+          ],
+          "url": null,
+          "image": null,
+          "related_entities": [
+            "Cashcade Limited",
+            "Foxy Bingo™ Bingo Slingo Games"
+          ],
+          "error": "'NoneType' object has no attribute 'lower'"
+        },
+        "wikidata": {
+          "source": "wikidata",
+          "found": false
+        },
+        "schema_audit": {
+          "completeness_score": 0,
+          "note": "No crawler file found for foxybingo.com",
+          "schemas_found": []
+        },
+        "ai_citations": {
+          "mention_rate": 100,
+          "total_tests": 1,
+          "mention_count": 1
+        },
+        "visibility_score": {
+          "overall": 50.0,
+          "breakdown": {
+            "knowledge_graph": 25,
+            "wikidata": 0,
+            "schema": 0.0,
+            "ai_citations": 25.0
+          },
+          "max_possible": 100,
+          "interpretation": "Moderate - Significant gaps in AI visibility"
+        }
+      },
+      "galabingo": {
+        "company_name": "Galabingo",
+        "domain": "galabingo.com",
+        "analyzed_at": "2025-12-27T13:07:16.717368",
+        "knowledge_graph": {
+          "source": "google_knowledge_graph",
+          "found": true,
+          "entity_id": "kg:/g/11t1h9z_fw",
+          "name": "Sharon Galabingo",
+          "description": null,
+          "detailed_description": "",
+          "types": [
+            "Person"
+          ],
+          "url": null,
+          "image": null,
+          "related_entities": [
+            "Gala Coral Group",
+            "Ladbrokes Coral Group Limited",
+            "Gala TV"
+          ],
+          "error": "'NoneType' object has no attribute 'lower'"
+        },
+        "wikidata": {
+          "source": "wikidata",
+          "found": false
+        },
+        "schema_audit": {
+          "completeness_score": 0,
+          "note": "No crawler file found for galabingo.com",
+          "schemas_found": []
+        },
+        "ai_citations": {
+          "mention_rate": 100,
+          "total_tests": 1,
+          "mention_count": 1
+        },
+        "visibility_score": {
+          "overall": 50.0,
+          "breakdown": {
+            "knowledge_graph": 25,
+            "wikidata": 0,
+            "schema": 0.0,
+            "ai_citations": 25.0
+          },
+          "max_possible": 100,
+          "interpretation": "Moderate - Significant gaps in AI visibility"
+        }
+      },
+      "meccabingo": {
+        "company_name": "Meccabingo",
+        "domain": "meccabingo.com",
+        "analyzed_at": "2025-12-27T13:07:02.138564",
+        "knowledge_graph": {
+          "source": "google_knowledge_graph",
+          "found": true,
+          "entity_id": "kg:/g/11c54nxysl",
+          "name": "Mecca Bingo",
+          "description": "Gambling company",
+          "detailed_description": "Mecca Bingo is a British operator of bingo clubs, with over 70 locations throughout the country. Mecca Bingo is owned by the Rank Group, which operates bingos, casinos and online gambling in Belgium, Spain and Britain. ",
+          "types": [
+            "Corporation",
+            "Thing",
+            "Organization"
+          ],
+          "url": null,
+          "image": "https://en.wikipedia.org/wiki/Mecca_Bingo",
+          "related_entities": [],
+          "error": "'NoneType' object has no attribute 'lower'"
+        },
+        "wikidata": {
+          "source": "wikidata",
+          "found": false
+        },
+        "schema_audit": {
+          "completeness_score": 0,
+          "note": "No crawler file found for meccabingo.com",
+          "schemas_found": []
+        },
+        "ai_citations": {
+          "mention_rate": 0,
+          "total_tests": 1,
+          "mention_count": 0
+        },
+        "visibility_score": {
+          "overall": 25.0,
+          "breakdown": {
+            "knowledge_graph": 25,
+            "wikidata": 0,
+            "schema": 0.0,
+            "ai_citations": 0.0
+          },
+          "max_possible": 100,
+          "interpretation": "Poor - Limited AI search presence"
+        }
+      }
+    }
+  },
+  "recommendations": [
+    {
+      "priority": "URGENT",
+      "action": "Add Organization schema to homepage",
+      "effort": "2 hours",
+      "impact": "HIGH - Enables AI assistants to correctly identify brand",
+      "expected_improvement": "+10% AI visibility score"
+    }
+  ],
+  "ninety_day_roadmap": [
+    {
+      "phase": "Foundation",
+      "weeks": "1-2",
+      "actions": [
+        "Implement Organization schema on homepage",
+        "Verify Knowledge Graph entity is correct",
+        "Review and update meta descriptions for AI readability"
+      ],
+      "expected_score_increase": "+10 points"
+    },
+    {
+      "phase": "Product Visibility",
+      "weeks": "3-4",
+      "actions": [
+        "Add Product schema to all listing pages",
+        "Implement structured pricing data",
+        "Add review aggregation schema"
+      ],
+      "expected_score_increase": "+15 points"
+    },
+    {
+      "phase": "Content Optimization",
+      "weeks": "5-8",
+      "actions": [
+        "Create FAQ content with schema markup",
+        "Optimize content for question-based queries",
+        "Add How-To schema for guide content"
+      ],
+      "expected_score_increase": "+10 points"
+    },
+    {
+      "phase": "Authority Building",
+      "weeks": "9-12",
+      "actions": [
+        "Consider Wikipedia/Wikidata entry (if notable)",
+        "Build citations on authoritative sources",
+        "Monitor AI citation rates and adjust"
+      ],
+      "expected_score_increase": "+15 points"
+    }
+  ]
+}
