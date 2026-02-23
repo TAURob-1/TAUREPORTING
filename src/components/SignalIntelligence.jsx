@@ -17,6 +17,7 @@ import MetricCard from './MetricCard';
 import MediaReachTable from './MediaReachTable';
 import CompetitorComparison from './signal/CompetitorComparison';
 import SegmentView from './signal/SegmentView';
+import ArcadeView from './signal/ArcadeView';
 import SignalChatWidget from './signal/SignalChatWidget';
 import { usePlatform } from '../context/PlatformContext.jsx';
 import { getSignalDataset } from '../data/signalIntegration';
@@ -36,6 +37,7 @@ function formatVisits(value) {
 const SIGNAL_TABS = [
   { key: 'overview', label: 'Overview' },
   { key: 'competitors', label: 'Competitors' },
+  { key: 'arcade', label: 'Arcade Intelligence' },
   { key: 'segments', label: 'Bingo vs Arcade' },
 ];
 
@@ -115,7 +117,7 @@ function SignalIntelligence() {
     );
   }
 
-  const visibleTabs = isTombola ? SIGNAL_TABS : SIGNAL_TABS.filter((t) => t.key !== 'segments');
+  const visibleTabs = isTombola ? SIGNAL_TABS : SIGNAL_TABS.filter((t) => t.key !== 'segments' && t.key !== 'arcade');
 
   return (
     <div className="min-h-screen bg-gray-50 p-4 md:p-6">
@@ -296,6 +298,10 @@ function SignalIntelligence() {
 
         {activeTab === 'competitors' && (
           <CompetitorComparison signal={signal} advertiserName={advertiser.name} />
+        )}
+
+        {activeTab === 'arcade' && isTombola && (
+          <ArcadeView />
         )}
 
         {activeTab === 'segments' && isTombola && (
