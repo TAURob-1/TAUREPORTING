@@ -147,45 +147,22 @@ export default function SegmentView({ signal, advertiserName }) {
           </div>
           <div className="p-5 space-y-3">
             <div className="grid grid-cols-2 gap-3">
-              {arcadeMetrics ? (
-                <>
-                  <div className="bg-purple-50 rounded-md p-3 text-center">
-                    <div className="text-xs text-purple-600 font-medium">Monthly Visits</div>
-                    <div className="text-lg font-bold text-purple-900">{formatVisits(arcadeMetrics.visits)}</div>
-                  </div>
-                  <div className="bg-purple-50 rounded-md p-3 text-center">
-                    <div className="text-xs text-purple-600 font-medium">Market Share</div>
-                    <div className="text-lg font-bold text-purple-900">{arcadeMetrics.share}%</div>
-                  </div>
-                  <div className="bg-purple-50 rounded-md p-3 text-center">
-                    <div className="text-xs text-purple-600 font-medium">SEO Gaps</div>
-                    <div className="text-lg font-bold text-purple-900">{arcadeMetrics.seoGaps.toLocaleString()}</div>
-                  </div>
-                  <div className="bg-purple-50 rounded-md p-3 text-center">
-                    <div className="text-xs text-purple-600 font-medium">Positioning</div>
-                    <div className="text-sm font-bold text-purple-900">Fun-first casino</div>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="bg-purple-50 rounded-md p-3 text-center">
-                    <div className="text-xs text-purple-600 font-medium">Target Demo</div>
-                    <div className="text-sm font-bold text-purple-900">Men 18-35</div>
-                  </div>
-                  <div className="bg-purple-50 rounded-md p-3 text-center">
-                    <div className="text-xs text-purple-600 font-medium">Growth Status</div>
-                    <div className="text-sm font-bold text-purple-900">Expansion</div>
-                  </div>
-                  <div className="bg-purple-50 rounded-md p-3 text-center">
-                    <div className="text-xs text-purple-600 font-medium">Existing Players</div>
-                    <div className="text-sm font-bold text-purple-900">175K</div>
-                  </div>
-                  <div className="bg-purple-50 rounded-md p-3 text-center">
-                    <div className="text-xs text-purple-600 font-medium">Positioning</div>
-                    <div className="text-sm font-bold text-purple-900">Fun-first</div>
-                  </div>
-                </>
-              )}
+              <div className="bg-purple-50 rounded-md p-3 text-center">
+                <div className="text-xs text-purple-600 font-medium">Target Demo</div>
+                <div className="text-sm font-bold text-purple-900">Men 18-35</div>
+              </div>
+              <div className="bg-purple-50 rounded-md p-3 text-center">
+                <div className="text-xs text-purple-600 font-medium">Growth Status</div>
+                <div className="text-sm font-bold text-purple-900">Expansion</div>
+              </div>
+              <div className="bg-purple-50 rounded-md p-3 text-center">
+                <div className="text-xs text-purple-600 font-medium">Existing Players</div>
+                <div className="text-sm font-bold text-purple-900">175K</div>
+              </div>
+              <div className="bg-purple-50 rounded-md p-3 text-center">
+                <div className="text-xs text-purple-600 font-medium">Positioning</div>
+                <div className="text-sm font-bold text-purple-900">Fun-first casino</div>
+              </div>
             </div>
             <div className="text-sm text-gray-700 space-y-1">
               <div className="flex gap-2"><span className="text-purple-500">*</span> New audience segment: Men 18-35 (different from bingo core)</div>
