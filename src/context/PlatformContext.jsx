@@ -158,10 +158,13 @@ export function PlatformProvider({ children }) {
       }
 
       const parsed = JSON.parse(raw);
+      const storedAudience = parsed?.campaignConfig?.primaryAudience || '';
+      // Clear legacy hardcoded default that was stored before this fix
+      const cleanedAudience = storedAudience === 'Men 18-35' ? '' : storedAudience;
       setCampaignConfig({
         ...defaults,
         ...(parsed.campaignConfig || {}),
-        primaryAudience: normalizePrimaryAudience(parsed?.campaignConfig?.primaryAudience || defaults.primaryAudience),
+        primaryAudience: normalizePrimaryAudience(cleanedAudience),
       });
       setPlanningStateRaw({
         ...defaultPlanning,
