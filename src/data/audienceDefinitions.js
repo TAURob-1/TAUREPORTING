@@ -327,6 +327,7 @@ export const AUDIENCES = {
     icon: '🇮🇳',
     color: '#f59e0b',
     ukSegment: true,
+    strictGeoTargeting: true,
     targetPostcodes: ['UB1', 'UB2', 'HA0', 'HA9', 'HA1', 'HA2', 'W5', 'W13'],
     areas: ['Southall', 'Wembley', 'Harrow', 'Ealing'],
     criteria: [
@@ -344,6 +345,7 @@ export const AUDIENCES = {
     icon: '🇧🇩',
     color: '#06b6d4',
     ukSegment: true,
+    strictGeoTargeting: true,
     targetPostcodes: ['E1', 'E2', 'E3', 'E6', 'E7', 'E10', 'E11'],
     areas: ['Tower Hamlets', 'Newham', 'Redbridge'],
     criteria: [
@@ -361,6 +363,7 @@ export const AUDIENCES = {
     icon: '🇯🇲',
     color: '#84cc16',
     ukSegment: true,
+    strictGeoTargeting: true,
     targetPostcodes: ['SW2', 'SW9', 'SE1', 'SE5', 'E8', 'E9', 'N15', 'N17'],
     areas: ['Lambeth', 'Southwark', 'Hackney', 'Tottenham'],
     criteria: [
@@ -695,17 +698,62 @@ export function scoreZIPsForAudience(demographicsData, audience) {
   if (audience.isCSVBased && audience.csvAffinityMap) {
     Object.entries(demographicsData).forEach(([zip3, demographics]) => {
       const score = audience.csvAffinityMap[zip3] || 0;
-      scores.push({ zip3, score, demographics });
+      const adjustedScore = applyUkGeoAdjustment(score, zip3, audience);
+      scores.push({ zip3, score: adjustedScore, demographics });
     });
   } else {
     Object.entries(demographicsData).forEach(([zip3, demographics]) => {
       const score = calculateAudienceScore(demographics, audience);
-      scores.push({ zip3, score, demographics });
+      const adjustedScore = applyUkGeoAdjustment(score, zip3, audience);
+      scores.push({ zip3, score: adjustedScore, demographics });
     });
   }
 
   // Sort by score descending
   return scores.sort((a, b) => b.score - a.score);
+}
+
+function normalizeUkPostcode(value) {
+  return String(value || '').toUpperCase().replace(/\s+/g, '');
+}
+
+function matchesUkTargetPostcode(zip3, targetPostcodes = []) {
+  const normalizedZip = normalizeUkPostcode(zip3);
+  if (!normalizedZip || !targetPostcodes.length) return false;
+  return targetPostcodes.some((target) => {
+    const normalizedTarget = normalizeUkPostcode(target);
+    if (!normalizedTarget) return false;
+    if (normalizedZip === normalizedTarget) return true;
+
+    // Area-level targets (e.g. "HA") intentionally match all area districts (e.g. HA0, HA1...)
+    if (/^[A-Z]{1,2}$/.test(normalizedTarget)) {
+      return normalizedZip.startsWith(normalizedTarget);
+    }
+
+    // District-level targets (e.g. E1, UB1) should not match different numeric districts (E10/UB10).
+    // Allow letter suffixes only (e.g. EC1 -> EC1A, E1 -> E1W).
+    if (!normalizedZip.startsWith(normalizedTarget)) return false;
+    const nextChar = normalizedZip.charAt(normalizedTarget.length);
+    return !!nextChar && /[A-Z]/.test(nextChar);
+  });
+}
+
+function applyUkGeoAdjustment(score, zip3, audience) {
+  if (!audience?.ukSegment || !Array.isArray(audience.targetPostcodes) || audience.targetPostcodes.length === 0) {
+    return score;
+  }
+
+  const isTargetPostcode = matchesUkTargetPostcode(zip3, audience.targetPostcodes);
+
+  if (isTargetPostcode) {
+    return Math.min(100, Math.round(score * 1.1));
+  }
+
+  if (audience.strictGeoTargeting) {
+    return 0;
+  }
+
+  return Math.max(0, Math.round(score * 0.45));
 }
 
 /**
