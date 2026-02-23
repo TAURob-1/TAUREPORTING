@@ -208,6 +208,8 @@ async function loadRealSignalData(slug, countryCode = 'UK') {
   }
 
   console.log('[SignalIntegration] Loading data for slug:', slug, 'Known slugs:', SIGNAL_SLUGS);
+  console.log('[SignalIntegration] Glob keys (traffic):', Object.keys(SIGNAL_FILES.traffic));
+  console.log('[SignalIntegration] Glob keys (config):', Object.keys(SIGNAL_FILES.config));
 
   const [
     config,
@@ -237,10 +239,17 @@ async function loadRealSignalData(slug, countryCode = 'UK') {
     config: !!config, traffic: !!traffic, seo: !!seo,
     aiVisibility: !!aiVisibility, insights: !!insights, spend: !!spend,
   });
+  if (traffic) {
+    console.log('[SignalIntegration] Traffic keys:', Object.keys(traffic));
+    console.log('[SignalIntegration] Comparison table rows:', traffic?.competitor_comparison_table?.length);
+    console.log('[SignalIntegration] Estimated monthly visits:', traffic?.main_company?.raw_metrics?.estimated_monthly_visits);
+  }
 
   const summary = summaryRoot || summaryNested || {};
   const advertiserDomain = config?.domain || traffic?.main_company?.domain || `${slug}.com`;
-  const estimatedMonthlyVisits = traffic?.main_company?.raw_metrics?.estimated_monthly_visits || {};
+  const estimatedMonthlyVisits = traffic?.main_company?.raw_metrics?.estimated_monthly_visits
+    || traffic?.main_company?.estimated_monthly_visits
+    || {};
   const comparisonTable = Array.isArray(traffic?.competitor_comparison_table)
     ? traffic.competitor_comparison_table
     : [];
@@ -249,15 +258,16 @@ async function loadRealSignalData(slug, countryCode = 'UK') {
   const trafficComparison = comparisonTable
     .map((entry) => {
       const detail = competitorDetails?.[entry.domain]?.engagement || {};
+      const rawVisits = entry.monthly_visits || entry.visits || detail.visits;
       return {
         domain: entry.domain,
-        visits: entry.monthly_visits || entry.visits,
-        bounce_rate: entry.bounce_rate || detail.bounce_rate,
-        pages_per_visit: entry.pages_per_visit || detail.page_per_visit,
-        time_on_site: detail.time_on_site || detail.avg_visit_duration || entry.avg_duration,
+        visits: num(rawVisits),
+        bounce_rate: num(entry.bounce_rate || detail.bounce_rate),
+        pages_per_visit: num(entry.pages_per_visit || detail.page_per_visit),
+        time_on_site: num(detail.time_on_site || detail.avg_visit_duration || entry.avg_duration),
       };
     })
-    .filter((entry) => entry.domain && num(entry.visits) > 0);
+    .filter((entry) => entry.domain && entry.visits > 0);
 
   const gapGroups = seo?.keyword_gaps || {};
   const opportunities = flattenKeywordGaps(gapGroups)
@@ -285,8 +295,9 @@ async function loadRealSignalData(slug, countryCode = 'UK') {
     new Date().toISOString()
   ).slice(0, 10);
 
-  const strengths = insights?.swot_analysis?.strengths || [];
-  const opportunitiesNotes = insights?.swot_analysis?.opportunities || [];
+  const swot = insights?.swot_analysis || insights?.swot || {};
+  const strengths = swot.strengths || [];
+  const opportunitiesNotes = swot.opportunities || [];
   const trendInterpretation = trends?.brand_trend_summary?.interpretation;
   const trendDirection = trends?.brand_trend_summary?.['12_month_trend'];
 
