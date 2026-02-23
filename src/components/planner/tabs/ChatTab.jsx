@@ -10,6 +10,7 @@ import { parseAIResponse } from '../../../utils/plannerResponseParser';
 import { getProviderPlanning } from '../../../data/countryPlanning';
 import { buildCampaignInheritance, mapMediaMixToProviderBudgets } from '../../../lib/campaign/smartDefaults';
 import * as pdfjsLib from 'pdfjs-dist/build/pdf';
+import mammoth from 'mammoth';
 
 // Set up PDF.js worker
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
@@ -139,8 +140,9 @@ export default function ChatTab() {
       } else if (fileExt === '.csv') {
         extractedText = await extractTextFromCSV(file);
       } else if (fileExt === '.docx') {
-        // For now, show an error for DOCX - can be implemented later
-        throw new Error('DOCX support coming soon. Please use PDF, TXT, or CSV for now.');
+        const arrayBuffer = await file.arrayBuffer();
+        const result = await mammoth.extractRawText({ arrayBuffer });
+        extractedText = result.value;
       }
 
       // Truncate if too long (limit to ~50k characters to stay within token limits)

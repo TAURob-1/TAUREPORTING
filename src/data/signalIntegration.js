@@ -176,7 +176,8 @@ function flattenKeywordGaps(keywordGaps = {}) {
   return rows;
 }
 
-function extractPlanningPriorities(insights = {}) {
+function extractPlanningPriorities(insights) {
+  if (!insights) return [];
   const priorityOrder = { URGENT: 0, HIGH: 1, MEDIUM: 2, LOW: 3 };
   const collected = [];
   const strategicAreas = Object.values(insights.strategic_areas || {});

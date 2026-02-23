@@ -117,10 +117,10 @@ ${systemPrompt}`;
     });
   }
 
-  // Add the current user message
+  // Add the current user message, including document content if uploaded
   let fullMessage = message;
   if (documentContent) {
-    fullMessage = message;
+    fullMessage = `${message}\n\n---\n\n**Uploaded Document Content:**\n\n${documentContent}`;
   }
   messages.push({
     role: 'user',
