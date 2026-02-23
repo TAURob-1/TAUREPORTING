@@ -129,7 +129,7 @@ app.post('/api/chat', requireAuth, async (req, res) => {
       headers: {
         'Content-Type': 'application/json',
         'x-api-key': ANTHROPIC_API_KEY,
-        'anthropic-version': '2025-03-26'
+        'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify(requestBody)
     });
