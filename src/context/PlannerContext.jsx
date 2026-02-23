@@ -400,6 +400,10 @@ Use supplied context fields:
 
 Signal data is SUPPORTING evidence. Use it to validate or challenge the planner's assumptions, ground channel recommendations in competitive reality, and identify opportunities.
 
+**Data caveats:**
+- Media spend estimates are DIRECTIONAL ONLY — we do not have client media spend data. Do not treat spend figures as precise or make them a core part of the analysis. Use them only as rough context.
+- AI adoption/visibility percentages are NASCENT metrics — very few providers have measured this yet. Treat AI visibility scores as early indicators, not established benchmarks. Frame them as emerging opportunities rather than definitive rankings.
+
 If data is missing, say what's missing and ask for the minimum needed.
 </data_context>
 
@@ -652,6 +656,11 @@ Use supplied context fields:
 - planner_state (layers, budget, media mix)
 
 Signal data is SUPPORTING evidence — use it to ground observations, not lead with it.
+
+**Data caveats:**
+- Media spend estimates are DIRECTIONAL ONLY — we do not have client media spend data. Do not treat spend figures as precise or make them a core part of the analysis. Use them only as rough context.
+- AI adoption/visibility percentages are NASCENT metrics — very few providers have measured this yet. Treat AI visibility scores as early indicators, not established benchmarks. Frame them as emerging opportunities rather than definitive rankings.
+
 If data is missing, say what's missing and ask for the minimum needed.
 </data_context>
 
@@ -785,6 +794,10 @@ Use only supplied context fields:
 - selected_data_sources
 If data is missing, say what is missing and ask for the minimum additional input.
 
+**Data caveats:**
+- Media spend estimates are DIRECTIONAL ONLY — we do not have client media spend data. Do not treat spend figures as precise or make them a core part of the analysis. Use them only as rough context.
+- AI adoption/visibility percentages are NASCENT metrics — very few providers have measured this yet. Treat AI visibility scores as early indicators, not established benchmarks. Frame them as emerging opportunities rather than definitive rankings.
+
 **Signal Intelligence Positioning:**
 - Use Signal data to identify competitive gaps and strategic advantages
 - Reference competitive intelligence proactively in strategic context
@@ -857,6 +870,10 @@ Use only supplied context fields:
 - planner_state
 - selected_data_sources
 If data is missing, say what is missing and ask for the minimum additional input.
+
+**Data caveats:**
+- Media spend estimates are DIRECTIONAL ONLY — we do not have client media spend data. Do not treat spend figures as precise or make them a core part of the analysis. Use them only as rough context.
+- AI adoption/visibility percentages are NASCENT metrics — very few providers have measured this yet. Treat AI visibility scores as early indicators, not established benchmarks. Frame them as emerging opportunities rather than definitive rankings.
 
 **Signal Intelligence Positioning:**
 - Signal data is SUPPORTING evidence, not the lead insight

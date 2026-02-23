@@ -148,13 +148,13 @@ const USAMapWithAudience = ({ recommendations, selectedAudience }) => {
     let tooltipContent;
     if (zipInfo.type === 'exposed') {
       const extra = ukDemo ? `<br/><span style="font-size: 10px; color: #888;">${ukDemo.region}</span>` : '';
-      tooltipContent = `<div style="text-align: center;"><strong>${countryConfig.geoUnit} ${zipCode}</strong><br/><span style="font-size: 11px; color: #16a34a; font-weight: 600;">In target group: ${zipInfo.score}% affinity</span>${extra}</div>`;
+      tooltipContent = `<div style="text-align: center;"><strong>${countryConfig.geoUnit} ${zipCode}</strong><br/><span style="font-size: 11px; color: #16a34a; font-weight: 600;">In target group</span>${extra}</div>`;
     } else if (zipInfo.type === 'holdout') {
       const extra = ukDemo ? `<br/><span style="font-size: 10px; color: #888;">${ukDemo.region}</span>` : '';
-      tooltipContent = `<div style="text-align: center;"><strong>${countryConfig.geoUnit} ${zipCode}</strong><br/><span style="font-size: 11px; color: #d97706; font-weight: 600;">Holdout: ${zipInfo.score}% affinity</span>${extra}</div>`;
+      tooltipContent = `<div style="text-align: center;"><strong>${countryConfig.geoUnit} ${zipCode}</strong><br/><span style="font-size: 11px; color: #d97706; font-weight: 600;">Holdout group</span>${extra}</div>`;
     } else if (zipInfo.type === 'not-recommended') {
       const extra = ukDemo ? `<br/><span style="font-size: 10px; color: #888;">${ukDemo.region}</span>` : '';
-      tooltipContent = `<div style="text-align: center;"><strong>${countryConfig.geoUnit} ${zipCode}</strong><br/><span style="font-size: 11px; color: #9ca3af;">Audience match: ${zipInfo.score}%</span>${extra}</div>`;
+      tooltipContent = `<div style="text-align: center;"><strong>${countryConfig.geoUnit} ${zipCode}</strong><br/><span style="font-size: 11px; color: #9ca3af;">Outside target</span>${extra}</div>`;
     } else if (ukDemo) {
       tooltipContent = `<div style="text-align: center;"><strong>${countryConfig.geoUnit} ${zipCode}</strong><br/><span style="font-size: 11px; color: #666;">${ukDemo.segment}</span><br/><span style="font-size: 10px; color: #888;">${ukDemo.region}</span></div>`;
     } else {

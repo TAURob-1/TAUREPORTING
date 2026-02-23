@@ -1,0 +1,294 @@
+# Tombolaarcade Co Uk Strategic Intelligence Report
+# Part 4 of 4: AI Visibility, Recommendations, and Data Confidence
+
+---
+
+## AI VISIBILITY ASSESSMENT
+
+TOMBOLAARCADE_CO_UK_AI_OVERVIEW:
+Company: Tombolaarcade Co Uk
+Overall AI visibility score: 12.5 percent
+Knowledge Graph status: Not found
+Schema.org coverage: Zero percent
+AI citation rate: 50.0 percent in 2 tests
+
+---
+
+## AI VISIBILITY: COMPETITOR COMPARISON
+
+COMPARISON_AI_DETAIL:
+Company: Comparison
+Overall score: 0 percent
+Knowledge Graph: Not found
+
+FOXYGAMES_AI_DETAIL:
+Company: Foxygames
+Overall score: 0 percent
+Knowledge Graph: Not found
+
+GALASPINS_AI_DETAIL:
+Company: Galaspins
+Overall score: 0 percent
+Knowledge Graph: Not found
+
+JACKPOTJOY_AI_DETAIL:
+Company: Jackpotjoy
+Overall score: 0 percent
+Knowledge Graph: Not found
+
+VIRGINGAMES_AI_DETAIL:
+Company: Virgingames
+Overall score: 0 percent
+Knowledge Graph: Not found
+
+TOMBOLAARCADE_CO_UK_AI_DETAIL:
+Company: Tombolaarcade Co Uk
+Overall score: 12.5 percent
+Knowledge Graph: Not found
+Schema coverage: Zero percent
+AI citations: 50.0 percent
+
+---
+
+## NINETY DAY AI VISIBILITY ROADMAP
+
+PHASE_ONE:
+Name: Foundation
+Timeframe: Weeks one to two
+Actions: Add Organization schema and verify Knowledge Graph entity
+Expected impact: Plus ten points
+
+PHASE_TWO:
+Name: Product Visibility
+Timeframe: Weeks three to four
+Actions: Add Product schema to all listing pages
+Expected impact: Plus fifteen points
+
+PHASE_THREE:
+Name: Content Optimization
+Timeframe: Weeks five to eight
+Actions: Create FAQ content with schema and question-based content
+Expected impact: Plus ten points
+
+PHASE_FOUR:
+Name: Authority Building
+Timeframe: Weeks nine to twelve
+Actions: Wikidata entry and authoritative citations
+Expected impact: Plus fifteen points
+
+ROADMAP_TARGET: Move from 12.5 percent to 62.5 percent or higher within ninety days.
+
+---
+
+## PAID MEDIA POSITION
+
+SPEND_CONTEXT: Paid media spend estimates have low confidence and should be used directionally only.
+
+TOMBOLAARCADE_CO_UK_SPEND:
+Company: Tombolaarcade Co Uk
+Estimated annual spend: £0 to £0
+
+GALASPINS_COM_SPEND:
+Company: galaspins.com
+Estimated annual spend: £0 to £0
+
+FOXYGAMES_COM_SPEND:
+Company: foxygames.com
+Estimated annual spend: £0 to £0
+
+JACKPOTJOY_COM_SPEND:
+Company: jackpotjoy.com
+Estimated annual spend: £0 to £0
+
+---
+
+## IMMEDIATE ACTIONS: NEXT THIRTY DAYS
+
+ACTION_ONE:
+Task: Add Organization schema to homepage
+Effort: 2 hours
+Impact: High
+
+ACTION_TWO:
+Task: Add Product schema to vehicle listing pages
+Effort: 1 day
+Impact: High
+
+ACTION_THREE:
+Task: Investigate brand keyword erosion - run brand protection campaign
+Effort: 1 day
+Impact: High
+
+---
+
+## MEDIUM TERM ACTIONS: THIRTY TO NINETY DAYS
+
+ACTION_FOUR:
+Task: Content push targeting 23 high-volume keyword gaps
+Effort: Ongoing
+Impact: High
+
+ACTION_FIVE:
+Task: Focus paid spend on high-intent, long-tail keywords
+Effort: Ongoing
+Impact: Medium
+
+ACTION_SIX:
+Task: Create/claim Google Business Profile, ensure Wikipedia presence, build structured citations
+Effort: 1 day
+Impact: High
+
+ACTION_SEVEN:
+Task: Add Organization schema for brand identity
+Effort: 1 day
+Impact: High
+
+---
+
+## STRATEGIC INITIATIVES: NINETY PLUS DAYS
+
+ACTION_EIGHT:
+Task: Add FAQ schema to appear in rich results
+Effort: 1 day
+Impact: Medium
+
+ACTION_NINE:
+Task: Add Review schema to show ratings in search
+Effort: 1 day
+Impact: Medium
+
+ACTION_TEN:
+Task: Add breadcrumb schema for navigation context
+Effort: 1 day
+Impact: Medium
+
+ACTION_ELEVEN:
+Task: Strengthen brand associations through consistent messaging and thought leadership
+Effort: 1 day
+Impact: Medium
+
+---
+
+## DATA CONFIDENCE LEVELS
+
+TRAFFIC_CONFIDENCE:
+Data area: Traffic
+Confidence level: High
+Notes: Data collected successfully
+
+SEO_CONFIDENCE:
+Data area: SEO
+Confidence level: High
+Notes: Data collected successfully
+
+TECH_STACK_CONFIDENCE:
+Data area: Tech Stack
+Confidence level: High
+Notes: Data collected successfully
+
+NEWS_CONFIDENCE:
+Data area: News
+Confidence level: High
+Notes: Data collected successfully
+
+APPS_CONFIDENCE:
+Data area: Apps
+Confidence level: High
+Notes: Data collected successfully
+
+REVIEWS_CONFIDENCE:
+Data area: Reviews
+Confidence level: Unavailable
+Notes: No data collected
+
+AI_VISIBILITY_CONFIDENCE:
+Data area: AI Visibility
+Confidence level: High
+Notes: Data collected successfully
+
+CONTENT_CONFIDENCE:
+Data area: Content
+Confidence level: High
+Notes: Data collected successfully
+
+SPEND_CONFIDENCE:
+Data area: Spend
+Confidence level: Medium
+Notes: Data available, status unclear
+
+---
+
+## SWOT SUMMARY
+
+STRENGTH_ONE:
+Category: traffic_main.json
+Detail: Exceptional engagement: 6.5 pages/visit, 10 min avg session - indicates sticky product
+
+STRENGTH_TWO:
+Category: traffic_main.json
+Detail: Exceptional bounce rate (17%) - highly relevant traffic
+
+WEAKNESS_ONE:
+Category: traffic_main.json
+Detail: Email drives only 0.03% of traffic - retention marketing underutilized
+
+WEAKNESS_TWO:
+Category: keyword_analysis.json
+Detail: Brand keyword erosion: avg position 48.5 - competitors may be conquesting
+
+WEAKNESS_THREE:
+Category: keyword_analysis.json
+Detail: Weak organic reach: only 16% of generic keywords in top 10 (47/298)
+
+WEAKNESS_FOUR:
+Category: ai_visibility_main.json
+Detail: No Schema.org markup - invisible to AI search engines
+
+OPPORTUNITY_ONE:
+Category: ai_visibility_main.json
+Detail: Add Organization and Product schema for quick AI visibility gains (1-2 day implementation)
+
+OPPORTUNITY_TWO:
+Category: adoption_score.json
+Detail: AI LEAPFROG: Implement AI chatbot to reduce support costs 20-40% and improve conversion
+
+OPPORTUNITY_THREE:
+Category: ai_overview.json
+Detail: AI SEARCH OPPORTUNITY: Optimize for AI Overviews to capture emerging search channel
+
+OPPORTUNITY_FOUR:
+Category: keyword_gaps.json
+Detail: SEO MARKET SHARE: 187 keyword gaps vs Jackpotjoy - capture competitor traffic
+
+THREAT_ONE:
+Category: traffic_main.json
+Detail: Geographic concentration risk: 99.2% of traffic from GB - single market regulatory changes could devastate business
+
+THREAT_TWO:
+Category: traffic_main.json
+Detail: Social drives only 0.08% of traffic - missing audience shift to social discovery
+
+THREAT_THREE:
+Category: trends_brand.json
+Detail: BRAND INTEREST DECLINING: 'Tombolaarcade Co Uk' search trend is down - demand erosion
+
+THREAT_FOUR:
+Category: research_main.json
+Detail: Regulatory activity detected in company/industry research - monitor for compliance impact
+
+---
+
+## WHAT WE COULD NOT ASSESS
+
+LIMITATION_ONE:
+Area: Customer reviews: Trustpilot blocked or no data - manual check recommended
+
+LIMITATION_TWO:
+Area: Mobile apps: Not found or API failed - verify in App Store/Play Store
+
+---
+
+Report generated by TAU Signal
+Data as of February 2026
+
+End of Report
