@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 const ARCADE_BRIEF_GLOB = import.meta.glob(
-  '/home/r2/Signal/companies/tombola-co-uk/arcade_brief/arcade_brief.txt',
+  '/signal-data/tombola-co-uk/arcade_brief/arcade_brief.txt',
   { query: '?raw', import: 'default', eager: false }
 );
 

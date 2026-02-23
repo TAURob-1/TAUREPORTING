@@ -4,7 +4,7 @@ import { sendPlannerMessage } from '../../services/plannerChat';
 const SIGNAL_SYSTEM_PROMPT = `You are a competitive intelligence analyst for Tombola, working within the TAU Reporting platform. Use the Signal data provided to answer questions about market position, competitor strategies, traffic trends, SEO gaps, AI visibility, and growth opportunities. Be specific and cite data points. Keep responses concise and actionable.`;
 
 const STRATEGIC_BRIEF_GLOB = import.meta.glob(
-  '/home/r2/Signal/companies/tombola-co-uk/strategic_brief/*.txt',
+  '/signal-data/tombola-co-uk/strategic_brief/*.txt',
   { query: '?raw', import: 'default', eager: false }
 );
 

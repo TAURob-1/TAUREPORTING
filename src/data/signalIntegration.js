@@ -1,20 +1,21 @@
 import { formatSignalForPlanner } from '../services/signalDataLoader';
 
-const SIGNAL_ROOT = '/home/r2/Signal/companies';
+// Signal data is symlinked: /home/r2/TAU-Reporting/signal-data -> /home/r2/Signal/companies
+const SIGNAL_ROOT = '/signal-data';
 
 const SIGNAL_FILES = {
-  config: import.meta.glob('/home/r2/Signal/companies/*/config.json', { import: 'default' }),
-  status: import.meta.glob('/home/r2/Signal/companies/*/status.json', { import: 'default' }),
-  summaryRoot: import.meta.glob('/home/r2/Signal/companies/*/summary.json', { import: 'default' }),
-  summaryNested: import.meta.glob('/home/r2/Signal/companies/*/summary/summary.json', { import: 'default' }),
-  traffic: import.meta.glob('/home/r2/Signal/companies/*/summary/traffic_intelligence.json', { import: 'default' }),
-  seo: import.meta.glob('/home/r2/Signal/companies/*/summary/seo_intelligence.json', { import: 'default' }),
-  aiVisibility: import.meta.glob('/home/r2/Signal/companies/*/summary/ai_visibility.json', { import: 'default' }),
-  insights: import.meta.glob('/home/r2/Signal/companies/*/summary/insights_and_actions.json', { import: 'default' }),
-  trends: import.meta.glob('/home/r2/Signal/companies/*/summary/trends_intelligence.json', { import: 'default' }),
-  spend: import.meta.glob('/home/r2/Signal/companies/*/data/spend/spend_estimation.json', { import: 'default' }),
-  strategicBrief: import.meta.glob('/home/r2/Signal/companies/*/strategic_brief/*.txt', { query: '?raw', import: 'default' }),
-  summaryMd: import.meta.glob('/home/r2/Signal/companies/*/summary/strategic_brief.md', { query: '?raw', import: 'default' }),
+  config: import.meta.glob('/signal-data/*/config.json', { import: 'default' }),
+  status: import.meta.glob('/signal-data/*/status.json', { import: 'default' }),
+  summaryRoot: import.meta.glob('/signal-data/*/summary.json', { import: 'default' }),
+  summaryNested: import.meta.glob('/signal-data/*/summary/summary.json', { import: 'default' }),
+  traffic: import.meta.glob('/signal-data/*/summary/traffic_intelligence.json', { import: 'default' }),
+  seo: import.meta.glob('/signal-data/*/summary/seo_intelligence.json', { import: 'default' }),
+  aiVisibility: import.meta.glob('/signal-data/*/summary/ai_visibility.json', { import: 'default' }),
+  insights: import.meta.glob('/signal-data/*/summary/insights_and_actions.json', { import: 'default' }),
+  trends: import.meta.glob('/signal-data/*/summary/trends_intelligence.json', { import: 'default' }),
+  spend: import.meta.glob('/signal-data/*/data/spend/spend_estimation.json', { import: 'default' }),
+  strategicBrief: import.meta.glob('/signal-data/*/strategic_brief/*.txt', { query: '?raw', import: 'default' }),
+  summaryMd: import.meta.glob('/signal-data/*/summary/strategic_brief.md', { query: '?raw', import: 'default' }),
 };
 
 const ADVERTISER_SLUG_HINTS = {

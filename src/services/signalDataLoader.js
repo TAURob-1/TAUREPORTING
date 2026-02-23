@@ -1,23 +1,24 @@
-const SIGNAL_ROOT = '/home/r2/Signal/companies';
+// Signal data is symlinked: /home/r2/TAU-Reporting/signal-data -> /home/r2/Signal/companies
+const SIGNAL_ROOT = '/signal-data';
 
 const SIGNAL_FILES = {
-  trafficRoot: import.meta.glob('/home/r2/Signal/companies/*/traffic_intelligence.json', { import: 'default' }),
-  trafficSummary: import.meta.glob('/home/r2/Signal/companies/*/summary/traffic_intelligence.json', { import: 'default' }),
-  seoRoot: import.meta.glob('/home/r2/Signal/companies/*/seo-analysis.json', { import: 'default' }),
-  seoRootAlt: import.meta.glob('/home/r2/Signal/companies/*/seo_intelligence.json', { import: 'default' }),
-  seoSummary: import.meta.glob('/home/r2/Signal/companies/*/summary/seo-analysis.json', { import: 'default' }),
-  seoSummaryAlt: import.meta.glob('/home/r2/Signal/companies/*/summary/seo_intelligence.json', { import: 'default' }),
-  competitiveRoot: import.meta.glob('/home/r2/Signal/companies/*/competitive-landscape.json', { import: 'default' }),
-  competitiveRootAlt: import.meta.glob('/home/r2/Signal/companies/*/insights_and_actions.json', { import: 'default' }),
-  competitiveSummary: import.meta.glob('/home/r2/Signal/companies/*/summary/competitive-landscape.json', { import: 'default' }),
-  competitiveSummaryAlt: import.meta.glob('/home/r2/Signal/companies/*/summary/insights_and_actions.json', { import: 'default' }),
-  spend: import.meta.glob('/home/r2/Signal/companies/*/data/spend/spend_estimation.json', { import: 'default' }),
-  summaryMdRoot: import.meta.glob('/home/r2/Signal/companies/*/summary.md', { query: '?raw', import: 'default' }),
-  summaryMdSummary: import.meta.glob('/home/r2/Signal/companies/*/summary/summary.md', { query: '?raw', import: 'default' }),
-  summaryStrategic: import.meta.glob('/home/r2/Signal/companies/*/summary/strategic_brief.md', { query: '?raw', import: 'default' }),
-  summaryJsonRoot: import.meta.glob('/home/r2/Signal/companies/*/summary.json', { import: 'default' }),
-  summaryJsonSummary: import.meta.glob('/home/r2/Signal/companies/*/summary/summary.json', { import: 'default' }),
-  strategicBrief: import.meta.glob('/home/r2/Signal/companies/*/strategic_brief/*.txt', { query: '?raw', import: 'default' }),
+  trafficRoot: import.meta.glob('/signal-data/*/traffic_intelligence.json', { import: 'default' }),
+  trafficSummary: import.meta.glob('/signal-data/*/summary/traffic_intelligence.json', { import: 'default' }),
+  seoRoot: import.meta.glob('/signal-data/*/seo-analysis.json', { import: 'default' }),
+  seoRootAlt: import.meta.glob('/signal-data/*/seo_intelligence.json', { import: 'default' }),
+  seoSummary: import.meta.glob('/signal-data/*/summary/seo-analysis.json', { import: 'default' }),
+  seoSummaryAlt: import.meta.glob('/signal-data/*/summary/seo_intelligence.json', { import: 'default' }),
+  competitiveRoot: import.meta.glob('/signal-data/*/competitive-landscape.json', { import: 'default' }),
+  competitiveRootAlt: import.meta.glob('/signal-data/*/insights_and_actions.json', { import: 'default' }),
+  competitiveSummary: import.meta.glob('/signal-data/*/summary/competitive-landscape.json', { import: 'default' }),
+  competitiveSummaryAlt: import.meta.glob('/signal-data/*/summary/insights_and_actions.json', { import: 'default' }),
+  spend: import.meta.glob('/signal-data/*/data/spend/spend_estimation.json', { import: 'default' }),
+  summaryMdRoot: import.meta.glob('/signal-data/*/summary.md', { query: '?raw', import: 'default' }),
+  summaryMdSummary: import.meta.glob('/signal-data/*/summary/summary.md', { query: '?raw', import: 'default' }),
+  summaryStrategic: import.meta.glob('/signal-data/*/summary/strategic_brief.md', { query: '?raw', import: 'default' }),
+  summaryJsonRoot: import.meta.glob('/signal-data/*/summary.json', { import: 'default' }),
+  summaryJsonSummary: import.meta.glob('/signal-data/*/summary/summary.json', { import: 'default' }),
+  strategicBrief: import.meta.glob('/signal-data/*/strategic_brief/*.txt', { query: '?raw', import: 'default' }),
 };
 
 const ADVERTISER_SLUG_HINTS = {
