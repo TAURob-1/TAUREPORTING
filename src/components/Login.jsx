@@ -95,6 +95,8 @@ export default function Login({ onLoginSuccess }) {
             <span className="font-mono text-xs">TAU / Demo2026</span>
             <span className="mx-2">or</span>
             <span className="font-mono text-xs">Tombola / Tombola2026</span>
+            <span className="mx-2">or</span>
+            <span className="font-mono text-xs">Cinch / Cinch2026</span>
           </p>
         </div>
       </div>

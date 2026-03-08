@@ -1,26 +1,28 @@
 import { formatSignalForPlanner } from '../services/signalDataLoader';
 
-// Signal data is symlinked: /home/r2/TAU-Reporting/signal-data -> /home/r2/Signal/companies
-const SIGNAL_ROOT = '/signal-data';
+const SIGNAL_ROOT = '@signal';
 
 const SIGNAL_FILES = {
-  config: import.meta.glob('/signal-data/*/config.json', { import: 'default' }),
-  status: import.meta.glob('/signal-data/*/status.json', { import: 'default' }),
-  summaryRoot: import.meta.glob('/signal-data/*/summary.json', { import: 'default' }),
-  summaryNested: import.meta.glob('/signal-data/*/summary/summary.json', { import: 'default' }),
-  traffic: import.meta.glob('/signal-data/*/summary/traffic_intelligence.json', { import: 'default' }),
-  seo: import.meta.glob('/signal-data/*/summary/seo_intelligence.json', { import: 'default' }),
-  aiVisibility: import.meta.glob('/signal-data/*/summary/ai_visibility.json', { import: 'default' }),
-  insights: import.meta.glob('/signal-data/*/summary/insights_and_actions.json', { import: 'default' }),
-  trends: import.meta.glob('/signal-data/*/summary/trends_intelligence.json', { import: 'default' }),
-  spend: import.meta.glob('/signal-data/*/data/spend/spend_estimation.json', { import: 'default' }),
-  strategicBrief: import.meta.glob('/signal-data/*/strategic_brief/*.txt', { query: '?raw', import: 'default' }),
-  summaryMd: import.meta.glob('/signal-data/*/summary/strategic_brief.md', { query: '?raw', import: 'default' }),
+  config: import.meta.glob('@signal/*/config.json', { import: 'default' }),
+  status: import.meta.glob('@signal/*/status.json', { import: 'default' }),
+  summaryRoot: import.meta.glob('@signal/*/summary.json', { import: 'default' }),
+  summaryNested: import.meta.glob('@signal/*/summary/summary.json', { import: 'default' }),
+  traffic: import.meta.glob('@signal/*/summary/traffic_intelligence.json', { import: 'default' }),
+  trafficDataMain: import.meta.glob('@signal/*/data/traffic/traffic_main.json', { import: 'default' }),
+  trafficDataComparison: import.meta.glob('@signal/*/data/traffic/traffic_comparison.json', { import: 'default' }),
+  seo: import.meta.glob('@signal/*/summary/seo_intelligence.json', { import: 'default' }),
+  aiVisibility: import.meta.glob('@signal/*/summary/ai_visibility.json', { import: 'default' }),
+  insights: import.meta.glob('@signal/*/summary/insights_and_actions.json', { import: 'default' }),
+  trends: import.meta.glob('@signal/*/summary/trends_intelligence.json', { import: 'default' }),
+  spend: import.meta.glob('@signal/*/data/spend/spend_estimation.json', { import: 'default' }),
+  strategicBrief: import.meta.glob('@signal/*/strategic_brief/*.txt', { query: '?raw', import: 'default' }),
+  summaryMd: import.meta.glob('@signal/*/summary/strategic_brief.md', { query: '?raw', import: 'default' }),
 };
 
 const ADVERTISER_SLUG_HINTS = {
   demo: ['tombola-co-uk', 'tombola-uk', 'tombola', 'midnite-com', 'midnite-uk', 'midnite'],
   tombola: ['tombola-co-uk', 'tombola-uk', 'tombola'],
+  cinch: ['cinch-uk', 'cinch'],
   experian: ['experian-uk', 'experian-us', 'experian'],
   flutter: ['flutter', 'flutter-uk', 'betfair', 'paddypower'],
 };
@@ -29,15 +31,13 @@ const SIGNAL_DATA_CACHE = new Map();
 const SIGNAL_SLUGS = Array.from(new Set(
   [
     ...Object.keys(SIGNAL_FILES.traffic),
+    ...Object.keys(SIGNAL_FILES.trafficDataMain),
     ...Object.keys(SIGNAL_FILES.config),
     ...Object.keys(SIGNAL_FILES.seo),
     ...Object.keys(SIGNAL_FILES.insights),
     ...Object.keys(SIGNAL_FILES.strategicBrief),
   ]
-    .map((path) => {
-      const match = path.match(/\/signal-data\/([^/]+)\//);
-      return match ? match[1] : null;
-    })
+    .map(extractSlugFromPath)
     .filter(Boolean)
 ));
 
@@ -63,15 +63,59 @@ function buildCompanyPath(slug, relative) {
   return `${SIGNAL_ROOT}/${slug}/${relative}`;
 }
 
+function extractSlugFromPath(filePath) {
+  const normalized = String(filePath || '').replace(/\\/g, '/');
+  const match = normalized.match(/(?:^|\/)(?:@signal|signal-data|companies)\/([^/]+)\//);
+  return match ? match[1] : null;
+}
+
+function findGlobLoader(globMap, slug, relativePath) {
+  const suffix = `/${slug}/${String(relativePath || '').replace(/^\/+/, '')}`;
+  return Object.entries(globMap).find(([key]) => {
+    const normalizedKey = String(key || '').replace(/\\/g, '/');
+    return normalizedKey.endsWith(suffix);
+  })?.[1] || null;
+}
+
 async function loadJson(globMap, slug, relativePath) {
-  const key = buildCompanyPath(slug, relativePath);
-  const loader = globMap[key];
+  const loader = findGlobLoader(globMap, slug, relativePath);
   if (!loader) return null;
   try {
     return await loader();
   } catch (error) {
     return null;
   }
+}
+
+function normalizeTrafficData(mainTraffic, comparisonTraffic = null) {
+  if (!mainTraffic) return null;
+
+  const comparisonRows = Array.isArray(comparisonTraffic)
+    ? comparisonTraffic
+    : Array.isArray(comparisonTraffic?.comparison)
+      ? comparisonTraffic.comparison
+      : [];
+
+  return {
+    main_company: {
+      domain: mainTraffic.domain,
+      raw_metrics: {
+        ...mainTraffic,
+        visits: mainTraffic.visits || mainTraffic.monthly_visits,
+        pages_per_visit: mainTraffic.pages_per_visit || mainTraffic.engagement?.page_per_visit,
+        avg_visit_duration: mainTraffic.avg_visit_duration || mainTraffic.engagement?.time_on_site,
+        bounce_rate: mainTraffic.bounce_rate || mainTraffic.engagement?.bounce_rate,
+      },
+    },
+    competitor_comparison_table: comparisonRows.map((entry) => ({
+      domain: entry.domain,
+      monthly_visits: entry.monthly_visits || entry.visits,
+      visits: entry.visits || entry.monthly_visits,
+      pages_per_visit: entry.pages_per_visit || entry.page_per_visit,
+      bounce_rate: entry.bounce_rate,
+      avg_duration: entry.avg_duration || entry.time_on_site,
+    })),
+  };
 }
 
 function buildSlugCandidates(advertiserId, countryCode, advertiser = {}) {
@@ -217,7 +261,9 @@ async function loadRealSignalData(slug, countryCode = 'UK') {
     status,
     summaryRoot,
     summaryNested,
-    traffic,
+    trafficSummary,
+    trafficDataMain,
+    trafficDataComparison,
     seo,
     aiVisibility,
     insights,
@@ -229,6 +275,8 @@ async function loadRealSignalData(slug, countryCode = 'UK') {
     loadJson(SIGNAL_FILES.summaryRoot, slug, 'summary.json'),
     loadJson(SIGNAL_FILES.summaryNested, slug, 'summary/summary.json'),
     loadJson(SIGNAL_FILES.traffic, slug, 'summary/traffic_intelligence.json'),
+    loadJson(SIGNAL_FILES.trafficDataMain, slug, 'data/traffic/traffic_main.json'),
+    loadJson(SIGNAL_FILES.trafficDataComparison, slug, 'data/traffic/traffic_comparison.json'),
     loadJson(SIGNAL_FILES.seo, slug, 'summary/seo_intelligence.json'),
     loadJson(SIGNAL_FILES.aiVisibility, slug, 'summary/ai_visibility.json'),
     loadJson(SIGNAL_FILES.insights, slug, 'summary/insights_and_actions.json'),
@@ -237,9 +285,10 @@ async function loadRealSignalData(slug, countryCode = 'UK') {
   ]);
 
   console.log('[SignalIntegration] Loaded:', {
-    config: !!config, traffic: !!traffic, seo: !!seo,
+    config: !!config, traffic: !!trafficSummary || !!trafficDataMain, seo: !!seo,
     aiVisibility: !!aiVisibility, insights: !!insights, spend: !!spend,
   });
+  const traffic = trafficSummary || normalizeTrafficData(trafficDataMain, trafficDataComparison);
   if (traffic) {
     console.log('[SignalIntegration] Traffic keys:', Object.keys(traffic));
     console.log('[SignalIntegration] Comparison table rows:', traffic?.competitor_comparison_table?.length);

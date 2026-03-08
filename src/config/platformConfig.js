@@ -1,6 +1,7 @@
 export const ADVERTISER_OPTIONS = [
   { id: 'demo', name: 'Demo Advertiser', vertical: 'general' },
   { id: 'tombola', name: 'Tombola', vertical: 'gambling' },
+  { id: 'cinch', name: 'Cinch', vertical: 'automotive' },
   { id: 'experian', name: 'Experian', vertical: 'data services' },
 ];
 

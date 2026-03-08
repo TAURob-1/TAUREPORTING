@@ -15,7 +15,13 @@ const SESSION_SECRET = process.env.SESSION_SECRET || 'tau-reporting-secret-chang
 // Users database (simple in-memory for demo)
 const USERS = {
   'TAU': { password: 'Demo2026', access: 'full' },
-  'Tombola': { password: 'Tombola2026', access: 'tombola-only' }
+  'Tombola': { password: 'Tombola2026', access: 'tombola-only' },
+  'Cinch': { password: 'Cinch2026', access: 'cinch-only' }
+};
+
+const ACCESS_CONTEXTS = {
+  'tombola-only': 'You are working with Tombola company data only. The advertiser is tombola-co-uk. All intelligence and planning should focus on Tombola.',
+  'cinch-only': 'You are working with Cinch company data only. The advertiser is cinch-uk. All intelligence and planning should focus on Cinch (UK used car marketplace).',
 };
 
 app.use(cors({ origin: true, credentials: true }));
@@ -109,18 +115,14 @@ app.post('/api/chat', requireAuth, async (req, res) => {
   try {
     // Apply user-based data filtering
     const userAccess = req.session.user.access;
-    let requestBody = req.body;
+    const requestBody = { ...req.body };
+    const accessContext = ACCESS_CONTEXTS[userAccess];
 
-    // For Tombola user, ensure only tombola-co-uk data is accessible
-    if (userAccess === 'tombola-only') {
-      // Inject system context about data restrictions into the system parameter (not messages array)
-      const tombolaContext = 'You are working with Tombola company data only. The advertiser is tombola-co-uk. All intelligence and planning should focus on Tombola.';
-      
-      // Anthropic API requires system messages as a top-level "system" parameter, not in messages array
+    if (accessContext) {
       if (requestBody.system) {
-        requestBody.system = requestBody.system + '\n\n' + tombolaContext;
+        requestBody.system = requestBody.system + '\n\n' + accessContext;
       } else {
-        requestBody.system = tombolaContext;
+        requestBody.system = accessContext;
       }
     }
 

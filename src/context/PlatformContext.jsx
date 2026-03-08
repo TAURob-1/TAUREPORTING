@@ -5,6 +5,11 @@ import { useAuth } from './AuthContext';
 
 const PlatformContext = createContext(null);
 const ADVERTISERS_STORAGE_KEY = 'tau_advertisers';
+const ACCESS_RESTRICTIONS = {
+  'tombola-only': { advertiserId: 'tombola', countryCode: 'UK' },
+  'cinch-only': { advertiserId: 'cinch', countryCode: 'UK' },
+};
+const UK_ADVERTISERS = new Set(['tombola', 'cinch']);
 
 function slugify(value) {
   return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -82,11 +87,12 @@ function normalizePrimaryAudience(value) {
 
 export function PlatformProvider({ children }) {
   const { user } = useAuth();
-  const isTombolaOnly = user?.access === 'tombola-only';
+  const accessRestriction = ACCESS_RESTRICTIONS[user?.access] || null;
+  const restrictedAdvertiserId = accessRestriction?.advertiserId || null;
 
-  const [countryCode, setCountryCode] = useState(() => isTombolaOnly ? 'UK' : 'US');
+  const [countryCode, setCountryCode] = useState(() => accessRestriction?.countryCode || 'US');
   const [customAdvertisers, setCustomAdvertisers] = useState([]);
-  const [advertiserId, setAdvertiserId] = useState(() => isTombolaOnly ? 'tombola' : (ADVERTISER_OPTIONS[0]?.id || 'demo'));
+  const [advertiserId, setAdvertiserId] = useState(() => restrictedAdvertiserId || (ADVERTISER_OPTIONS[0]?.id || 'demo'));
   const [campaignConfig, setCampaignConfig] = useState(getDefaultCampaignConfig);
   const [planningState, setPlanningStateRaw] = useState(getDefaultPlanningState);
   const [customSecondary, setCustomSecondary] = useState('');
@@ -98,11 +104,11 @@ export function PlatformProvider({ children }) {
         merged.push(entry);
       }
     });
-    if (isTombolaOnly) {
-      return merged.filter((entry) => entry.id === 'tombola');
+    if (restrictedAdvertiserId) {
+      return merged.filter((entry) => entry.id === restrictedAdvertiserId);
     }
     return merged;
-  }, [customAdvertisers, isTombolaOnly]);
+  }, [customAdvertisers, restrictedAdvertiserId]);
 
   const countryConfig = COUNTRY_CONFIG[countryCode] || COUNTRY_CONFIG.US;
   const advertiser = advertisers.find((entry) => entry.id === advertiserId) || advertisers[0] || ADVERTISER_OPTIONS[0];
@@ -190,9 +196,9 @@ export function PlatformProvider({ children }) {
     localStorage.setItem(ADVERTISERS_STORAGE_KEY, JSON.stringify(customAdvertisers));
   }, [customAdvertisers]);
 
-  // Auto-set UK country when switching to Tombola advertiser
+  // Auto-set UK country when switching to UK-specific advertisers
   useEffect(() => {
-    if (advertiserId === 'tombola') {
+    if (UK_ADVERTISERS.has(advertiserId)) {
       setCountryCode('UK');
     }
   }, [advertiserId]);
