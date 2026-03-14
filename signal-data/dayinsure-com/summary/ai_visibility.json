@@ -1,0 +1,76 @@
+{
+  "generated_at": "2026-03-13T09:10:00Z",
+  "company": "Day Insure",
+  "overall_score": 31.5,
+  "competitor_comparison": {
+    "scores": {
+      "Day Insure": {
+        "overall": 31.5,
+        "knowledge_graph": true,
+        "wikidata": false,
+        "schema_score": 18.0,
+        "ai_mention_rate": 44.0
+      },
+      "Veygo": {
+        "overall": 0,
+        "knowledge_graph": false,
+        "wikidata": false,
+        "schema_score": 0,
+        "ai_mention_rate": 0
+      },
+      "Tempcover": {
+        "overall": 0,
+        "knowledge_graph": false,
+        "wikidata": false,
+        "schema_score": 0,
+        "ai_mention_rate": 0
+      },
+      "GoShorty": {
+        "overall": 0,
+        "knowledge_graph": false,
+        "wikidata": false,
+        "schema_score": 0,
+        "ai_mention_rate": 0
+      },
+      "Cuvva": {
+        "overall": 0,
+        "knowledge_graph": false,
+        "wikidata": false,
+        "schema_score": 0,
+        "ai_mention_rate": 0
+      }
+    },
+    "rankings": [
+      {
+        "name": "Day Insure",
+        "score": 31.5,
+        "is_main": true,
+        "rank": 1
+      },
+      {
+        "name": "Veygo",
+        "score": 0,
+        "is_main": false,
+        "rank": 2
+      },
+      {
+        "name": "Tempcover",
+        "score": 0,
+        "is_main": false,
+        "rank": 3
+      },
+      {
+        "name": "GoShorty",
+        "score": 0,
+        "is_main": false,
+        "rank": 4
+      },
+      {
+        "name": "Cuvva",
+        "score": 0,
+        "is_main": false,
+        "rank": 5
+      }
+    ]
+  }
+}

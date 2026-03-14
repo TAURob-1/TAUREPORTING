@@ -644,6 +644,110 @@ export const AUDIENCES = {
       { field: 'age_25_44_pct', weight: 20, min: 25, target: 38 },
       { field: 'households_middle_pct', weight: 10, min: 42, target: 55 }
     ]
+  },
+
+  // --- Day Insure / Temporary Insurance Segments ---
+
+  hard_to_insure_drivers: {
+    id: 'hard_to_insure_drivers',
+    name: 'Hard-to-Insure Drivers',
+    description: 'Drivers with convictions, non-UK residents, or non-standard risk factors seeking temporary van/car insurance. Urban, high-density, logistics-heavy areas.',
+    icon: '🚐',
+    color: '#dc2626',
+    ukSegment: true,
+    targetPostcodes: ['E6', 'E13', 'N17', 'N9', 'LE2', 'LE3', 'LE4', 'LE5', 'CV6', 'B8', 'B23', 'WS2', 'BB1'],
+    areas: ['East London', 'North London', 'Leicester', 'Coventry', 'Birmingham', 'Blackburn'],
+    criteria: [
+      { field: 'income_under_50k', weight: 35, min: 35, target: 55 },
+      { field: 'age_25_44_pct', weight: 30, min: 28, target: 42 },
+      { field: 'households_young_pct', weight: 20, min: 22, target: 38 },
+      { field: 'income_50_75k', weight: 15, min: 18, target: 28 }
+    ]
+  },
+
+  bad_credit_insurance: {
+    id: 'bad_credit_insurance',
+    name: 'Bad Credit / Non-Standard Insurance',
+    description: 'Consumers with poor credit history, CCJs, or financial difficulty who need short-term cover. Overlaps with hard-to-insure but broader — includes car and van.',
+    icon: '💳',
+    color: '#b91c1c',
+    ukSegment: true,
+    targetPostcodes: ['E6', 'E13', 'E7', 'RM', 'DA', 'IG', 'SE18', 'SE28', 'BB', 'OL', 'BL', 'WN', 'TS'],
+    areas: ['East London', 'Barking & Dagenham', 'Woolwich', 'Burnley', 'Oldham', 'Bolton', 'Teesside'],
+    criteria: [
+      { field: 'income_under_50k', weight: 45, min: 40, target: 58 },
+      { field: 'age_25_44_pct', weight: 25, min: 25, target: 40 },
+      { field: 'households_young_pct', weight: 20, min: 20, target: 35 },
+      { field: 'age_45_64_pct', weight: 10, min: 20, target: 30 }
+    ]
+  },
+
+  van_traders_sporadic: {
+    id: 'van_traders_sporadic',
+    name: 'Van Traders / Sporadic Cover',
+    description: 'Self-employed tradespeople — plumbers, electricians, couriers — needing temporary van insurance for specific jobs. Suburban industrial belts.',
+    icon: '🔧',
+    color: '#ea580c',
+    ukSegment: true,
+    targetPostcodes: ['DE7', 'ME5', 'ME8', 'SS8', 'CM7', 'RM3', 'PO2', 'PO9', 'LU5', 'S71', 'WN2', 'WS3'],
+    areas: ['Derbyshire', 'Medway', 'Essex fringe', 'Portsmouth', 'Barnsley', 'Wigan'],
+    criteria: [
+      { field: 'age_25_44_pct', weight: 30, min: 26, target: 40 },
+      { field: 'income_50_75k', weight: 30, min: 20, target: 32 },
+      { field: 'households_middle_pct', weight: 25, min: 40, target: 55 },
+      { field: 'age_45_64_pct', weight: 15, min: 22, target: 34 }
+    ]
+  },
+
+  student_holiday_parents: {
+    id: 'student_holiday_parents',
+    name: 'Student Holiday Cover (Parents)',
+    description: 'Parents of university students buying temporary insurance for holiday visits home. Affluent suburban families with multi-car households. Seasonal: Easter, summer, Christmas.',
+    icon: '🎓',
+    color: '#7c3aed',
+    ukSegment: true,
+    targetPostcodes: ['CR2', 'SK7', 'AL5', 'SL6', 'SL9', 'WD3', 'RG4', 'RG9', 'GU9', 'WA4'],
+    areas: ['Croydon', 'Stockport', 'Harpenden', 'Maidenhead', 'Rickmansworth', 'Farnham'],
+    criteria: [
+      { field: 'age_45_64_pct', weight: 35, min: 26, target: 38 },
+      { field: 'income_75_100k', weight: 25, min: 18, target: 30 },
+      { field: 'income_100k_plus', weight: 25, min: 18, target: 35 },
+      { field: 'households_middle_pct', weight: 15, min: 42, target: 56 }
+    ]
+  },
+
+  learner_driver_parents: {
+    id: 'learner_driver_parents',
+    name: 'Learner Driver Insurance (Parents)',
+    description: 'Parents of 17-year-olds buying temporary learner insurance so their child can practise on the family car. Affluent suburban multi-car households.',
+    icon: '🚗',
+    color: '#2563eb',
+    ukSegment: true,
+    targetPostcodes: ['RG4', 'RG9', 'GU9', 'WA4', 'SL9', 'AL5', 'CR2', 'SK7', 'HP', 'KT'],
+    areas: ['Reading', 'Farnham', 'Warrington', 'Gerrards Cross', 'Harpenden', 'Surrey', 'Herts'],
+    criteria: [
+      { field: 'age_45_64_pct', weight: 35, min: 26, target: 38 },
+      { field: 'income_75_100k', weight: 25, min: 18, target: 30 },
+      { field: 'income_100k_plus', weight: 25, min: 18, target: 35 },
+      { field: 'households_middle_pct', weight: 15, min: 42, target: 56 }
+    ]
+  },
+
+  young_driver_temp_insurance: {
+    id: 'young_driver_temp_insurance',
+    name: 'Young Drivers — Temp Insurance',
+    description: 'Young drivers 17-24 needing short-term cover. Includes learners, newly passed, and students borrowing cars. Broader than parent-buyer — captures direct purchasers too.',
+    icon: '🔑',
+    color: '#0891b2',
+    ukSegment: true,
+    targetPostcodes: ['OX', 'CB', 'BS', 'NG', 'LE', 'CV', 'M13', 'EH', 'LS', 'CF'],
+    areas: ['Oxford', 'Cambridge', 'Bristol', 'Nottingham', 'Leicester', 'Manchester', 'Edinburgh', 'Leeds', 'Cardiff'],
+    criteria: [
+      { field: 'age_under_25_pct', weight: 45, min: 18, target: 32 },
+      { field: 'age_25_44_pct', weight: 25, min: 28, target: 42 },
+      { field: 'income_under_50k', weight: 20, min: 30, target: 45 },
+      { field: 'households_young_pct', weight: 10, min: 25, target: 40 }
+    ]
   }
 };
 

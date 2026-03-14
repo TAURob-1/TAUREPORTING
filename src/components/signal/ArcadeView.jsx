@@ -73,7 +73,10 @@ export default function ArcadeView() {
   const aiBlocks = parseBlocks(parseSection(parts[1], 'COMPETITIVE POSITION: AI VISIBILITY'));
   const seoBlocks = parseBlocks(parseSection(parts[1], 'COMPETITIVE POSITION: SEO KEYWORDS'));
   const priorities = parseBlocks(parseSection(parts[1], 'TOP THREE STRATEGIC PRIORITIES'));
-  const personas = parseBlocks(parseSection(parts[1], 'CUSTOMER PERSONAS'));
+  const personasSection = parseSection(parts[1], 'CUSTOMER PERSONAS') || '';
+  const personas = parseBlocks(personasSection);
+  const personaSource = parseMetric(personasSection, 'PERSONA_SOURCE');
+  const personaNote = parseMetric(personasSection, 'PERSONA_NOTE');
   const appealBlocks = parseBlocks(parseSection(parts[1], 'COMPETITOR APPEAL ANALYSIS'));
 
   // Parse Part 2: Traffic
@@ -334,36 +337,68 @@ export default function ArcadeView() {
         </div>
       )}
 
-      {/* Immediate Actions */}
-      {immediateActions.length > 0 && (
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
-          <h3 className="text-base font-bold text-gray-900 mb-3">Immediate Actions (Next 30 Days)</h3>
-          <div className="space-y-2">
-            {immediateActions.map(b => (
-              <div key={b.id} className="flex items-center justify-between bg-gray-50 rounded-md px-3 py-2 text-sm">
-                <span className="text-gray-800">{b.fields.Task}</span>
-                <div className="flex gap-3 text-xs">
-                  <span className="text-gray-500">{b.fields.Effort}</span>
-                  <span className={`font-medium ${b.fields.Impact === 'High' ? 'text-red-600' : 'text-amber-600'}`}>{b.fields.Impact} impact</span>
-                </div>
+      {/* Immediate + Medium-Term Actions */}
+      {(immediateActions.length > 0 || mediumActions.length > 0) && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {immediateActions.length > 0 && (
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
+              <h3 className="text-base font-bold text-gray-900 mb-3">Immediate Actions (Next 30 Days)</h3>
+              <div className="space-y-2">
+                {immediateActions.map(b => (
+                  <div key={b.id} className="flex items-center justify-between bg-gray-50 rounded-md px-3 py-2 text-sm">
+                    <span className="text-gray-800">{b.fields.Task}</span>
+                    <div className="flex gap-3 text-xs">
+                      <span className="text-gray-500">{b.fields.Effort}</span>
+                      <span className={`font-medium ${b.fields.Impact === 'High' ? 'text-red-600' : 'text-amber-600'}`}>{b.fields.Impact} impact</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          )}
+
+          {mediumActions.length > 0 && (
+            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
+              <h3 className="text-base font-bold text-gray-900 mb-3">Medium-Term Actions (30-90 Days)</h3>
+              <div className="space-y-2">
+                {mediumActions.map(b => (
+                  <div key={b.id} className="flex items-center justify-between bg-blue-50 rounded-md px-3 py-2 text-sm">
+                    <span className="text-gray-800">{b.fields.Task}</span>
+                    <div className="flex gap-3 text-xs">
+                      <span className="text-gray-500">{b.fields.Effort}</span>
+                      <span className={`font-medium ${b.fields.Impact === 'High' ? 'text-red-600' : 'text-blue-700'}`}>{b.fields.Impact} impact</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
       {/* Customer Personas */}
-      {personas.length > 0 && (
+      {(personas.length > 0 || personaNote) && (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
           <h3 className="text-base font-bold text-gray-900 mb-3">Customer Personas</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-            {personas.map(b => (
-              <div key={b.id} className="bg-purple-50 rounded-lg p-4 text-center">
-                <div className="text-sm font-bold text-purple-900">{b.fields.Name}</div>
-                <div className="text-xs text-gray-600 mt-1">{b.fields.Description}</div>
-              </div>
-            ))}
-          </div>
+          {personas.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              {personas.map(b => (
+                <div key={b.id} className="bg-purple-50 rounded-lg p-4 text-center">
+                  <div className="text-sm font-bold text-purple-900">{b.fields.Name}</div>
+                  <div className="text-xs text-gray-600 mt-1">{b.fields.Description}</div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+              {personaNote || 'Customer personas: insufficient data.'}
+            </div>
+          )}
+          {personaSource && (
+            <div className="mt-3 text-xs uppercase tracking-wide text-gray-500">
+              Source: {personaSource.replace(/_/g, ' ')}
+            </div>
+          )}
         </div>
       )}
     </div>

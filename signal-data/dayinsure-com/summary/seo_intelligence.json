@@ -1,0 +1,94 @@
+{
+  "generated_at": "2026-03-13T09:08:00Z",
+  "domain": "dayinsure.com",
+  "summary": {
+    "total_keywords": 142,
+    "brand_keywords_count": 18,
+    "generic_keywords_count": 124,
+    "top_10_generic": 26,
+    "competitors_analyzed": 4
+  },
+  "brand_keywords": {
+    "count": 18,
+    "avg_position": 1.4
+  },
+  "generic_keywords": {
+    "count": 124,
+    "top_10": [
+      {
+        "keyword": "temporary car insurance",
+        "position": 4,
+        "url": "https://dayinsure.com/",
+        "search_volume": 40500,
+        "competition": 0.82,
+        "cpc": 7.2
+      },
+      {
+        "keyword": "one day car insurance",
+        "position": 3,
+        "url": "https://dayinsure.com/",
+        "search_volume": 27100,
+        "competition": 0.79,
+        "cpc": 6.4
+      },
+      {
+        "keyword": "short term car insurance",
+        "position": 5,
+        "url": "https://dayinsure.com/",
+        "search_volume": 18100,
+        "competition": 0.77,
+        "cpc": 6.1
+      }
+    ]
+  },
+  "keyword_gaps": {
+    "tempcover.com": {
+      "total_opportunities": 41,
+      "all_gap_keywords": [
+        {
+          "keyword": "temporary learner insurance",
+          "search_volume": 12100
+        },
+        {
+          "keyword": "hourly car insurance",
+          "search_volume": 6600
+        }
+      ]
+    },
+    "veygo.com": {
+      "total_opportunities": 53,
+      "all_gap_keywords": [
+        {
+          "keyword": "student car insurance temporary",
+          "search_volume": 8100
+        },
+        {
+          "keyword": "young driver temporary insurance",
+          "search_volume": 5400
+        }
+      ]
+    },
+    "cuvva.com": {
+      "total_opportunities": 19,
+      "all_gap_keywords": [
+        {
+          "keyword": "car insurance by the hour",
+          "search_volume": 6600
+        }
+      ]
+    },
+    "goshorty.co.uk": {
+      "total_opportunities": 34,
+      "all_gap_keywords": [
+        {
+          "keyword": "temp van insurance",
+          "search_volume": 4400
+        },
+        {
+          "keyword": "short term van insurance",
+          "search_volume": 3600
+        }
+      ]
+    }
+  }
+}

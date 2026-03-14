@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TAU Channel Rules &amp; Skills Review</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', system-ui, sans-serif; }
+    body { background: #f8fafc; }
+    .rule-card { transition: all 0.2s ease; }
+    .rule-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .comment-box { transition: height 0.2s ease; }
+    .comment-box:focus { outline: none; box-shadow: 0 0 0 2px #3b82f6; }
+    .status-badge { transition: all 0.15s ease; cursor: pointer; user-select: none; }
+    .status-badge:hover { transform: scale(1.05); }
+    .tier-HIGH { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+    .tier-MID { background: #fef9c3; color: #854d0e; border: 1px solid #fef08a; }
+    .tier-WEAK { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+    .tier-MISSING { background: #fecaca; color: #7f1d1d; border: 1px solid #fca5a5; }
+    .tier-NEW { background: #dbeafe; color: #1e40af; border: 1px solid #bfdbfe; }
+    .channel-nav { position: sticky; top: 0; z-index: 50; }
+    .channel-section { scroll-margin-top: 80px; }
+    @media print {
+      .no-print { display: none !important; }
+      .rule-card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Header -->
+  <div class="bg-white border-b border-gray-200 px-6 py-5">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">TAU Channel Rules & Skills Review</h1>
+        <p class="text-sm text-gray-500 mt-1">Review rules, flag gaps, add comments. Rules persist in localStorage.</p>
+      </div>
+      <div class="flex gap-3 no-print">
+        <button onclick="exportComments()" class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">Export Comments</button>
+        <button onclick="clearAllComments()" class="px-4 py-2 text-sm font-medium bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition">Clear All</button>
+        <div class="flex items-center gap-2 ml-4 text-sm text-gray-500">
+          <span class="inline-block w-3 h-3 rounded-full bg-green-200 border border-green-300"></span> Approved
+          <span class="inline-block w-3 h-3 rounded-full bg-yellow-200 border border-yellow-300"></span> Needs Work
+          <span class="inline-block w-3 h-3 rounded-full bg-red-200 border border-red-300"></span> Disagree
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Channel Navigation -->
+  <div class="channel-nav bg-white border-b border-gray-200 shadow-sm no-print">
+    <div class="max-w-6xl mx-auto flex gap-1 px-6 py-2 overflow-x-auto">
+      <a href="#paid-search" class="px-4 py-2 text-sm font-medium rounded-lg hover:bg-blue-50 text-gray-600 hover:text-blue-700 whitespace-nowrap">Paid Search</a>
+      <a href="#social" class="px-4 py-2 text-sm font-medium rounded-lg hover:bg-blue-50 text-gray-600 hover:text-blue-700 whitespace-nowrap">Social / Meta</a>
+      <a href="#display" class="px-4 py-2 text-sm font-medium rounded-lg hover:bg-blue-50 text-gray-600 hover:text-blue-700 whitespace-nowrap">Display / Programmatic</a>
+      <a href="#ctv" class="px-4 py-2 text-sm font-medium rounded-lg hover:bg-blue-50 text-gray-600 hover:text-blue-700 whitespace-nowrap">CTV / AV</a>
+      <a href="#tv" class="px-4 py-2 text-sm font-medium rounded-lg hover:bg-blue-50 text-gray-600 hover:text-blue-700 whitespace-nowrap">Linear TV</a>
+      <a href="#cross-channel" class="px-4 py-2 text-sm font-medium rounded-lg hover:bg-blue-50 text-gray-600 hover:text-blue-700 whitespace-nowrap">Cross-Channel</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="max-w-6xl mx-auto px-6 py-8" id="rules-container">
+  </div>
+
+  <!-- Export Modal -->
+  <div id="export-modal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 no-print" onclick="if(event.target===this)this.classList.add('hidden')">
+    <div class="bg-white rounded-2xl shadow-xl max-w-3xl w-full mx-4 max-h-[80vh] flex flex-col">
+      <div class="p-6 border-b border-gray-200 flex justify-between items-center">
+        <h3 class="text-lg font-semibold">Export Comments</h3>
+        <button onclick="document.getElementById('export-modal').classList.add('hidden')" class="text-gray-400 hover:text-gray-600">&times;</button>
+      </div>
+      <div class="p-6 overflow-y-auto flex-1">
+        <pre id="export-content" class="text-sm text-gray-700 whitespace-pre-wrap font-mono bg-gray-50 p-4 rounded-lg"></pre>
+      </div>
+      <div class="p-4 border-t border-gray-200 flex justify-end gap-3">
+        <button onclick="copyExport()" class="px-4 py-2 text-sm font-medium bg-blue-600 text-white rounded-lg hover:bg-blue-700">Copy to Clipboard</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+const RULES = {
+  'paid-search': {
+    title: 'Paid Search',
+    icon: '🔍',
+    skills: ['paid-search', 'search'],
+    rules: [
+      { id: 'ps-1', rule: 'Default to exact match. Expand with evidence only.', detail: 'All high-value commercial terms, brand terms, and competitor terms on exact. Phrase match secondary. Broad match only after 50+ conversions/month with smart bidding active.', tier: 'HIGH', source: 'Austin LeClear (Grow My Ads), Brad Geddes (Adalysis), Daniel Gilbert (Brainlabs)' },
+      { id: 'ps-2', rule: 'Brand campaigns always separate from generic.', detail: 'Brand ROAS averages 1299% vs generic 68% (Echelonn). Mixing corrupts smart bidding signals, inflates reported ROAS, and makes performance reporting meaningless. Separate budgets, separate reporting, always.', tier: 'HIGH', source: 'Echelonn, Blake/Nosko/Tadelis (eBay study, Econometrica 2015)' },
+      { id: 'ps-3', rule: 'Test brand search incrementality before assuming value.', detail: 'eBay study: 99.5% of brand search traffic arrived organically when ads paused. Run geo-holdout or on/off tests. If no competitors bid on your brand, question whether brand spend is needed.', tier: 'HIGH', source: 'Blake/Nosko/Tadelis 2015, Recast (Marti Sanchez)' },
+      { id: 'ps-4', rule: 'PMax is necessary but must be controlled with negatives.', detail: 'Add brand terms and top exact match terms as PMax negatives. Isolate budget. Use URL exclusions. Separate asset groups by intent. Judge on incremental conversions only, not platform-reported.', tier: 'HIGH', source: 'Kirk Williams (ZATO), Sam Tomlinson, Adalytics (Dr. Franaszek)' },
+      { id: 'ps-5', rule: 'Do not run PMax without incrementality testing.', detail: 'PMax will claim conversions from brand search, Shopping, and remarketing. Run geo-based holdouts or on/off tests to verify genuine incremental value. Google profits from your automation trust.', tier: 'HIGH', source: 'Measured.com, Michael Taylor (Vexpower)' },
+      { id: 'ps-6', rule: 'Google\'s data-driven attribution does not measure incrementality.', detail: 'DDA identifies correlation (someone clicked before converting), not causation (the ad caused the conversion). Google removed attribution models that disadvantaged its own platform. Verify with independent measurement.', tier: 'HIGH', source: 'Michael Taylor (Vexpower/Measured), Dmitri Kazanski (MGID/AdExchanger)' },
+      { id: 'ps-7', rule: 'Quality Score is a strategic lever, not hygiene.', detail: 'QS 10 = 80% less per conversion than QS 5. Every point above 5 = ~16% CPA reduction. A 3-point QS improvement often outperforms a 30% budget increase. Focus on landing page experience and ad relevance.', tier: 'HIGH', source: 'Larry Kim (WordStream, ~$100M spend study), Frederick Vallaeys (Optmyzr)' },
+      { id: 'ps-8', rule: 'Segment campaigns by intent tier, never mix.', detail: 'Brand / High commercial / Consideration / Informational / Competitor — each gets its own campaign with appropriate match types, bid strategy, and budget. Mixed intent corrupts everything.', tier: 'HIGH', source: 'Echelonn ("95% of brands waste budget on mixed traffic"), Greenlane Marketing' },
+      { id: 'ps-9', rule: 'Refresh RSA copy every 4-6 weeks.', detail: 'Stale ads decay in CTR, quality score, and conversion rate simultaneously. Google\'s own Ad Strength metric is unreliable — "average" Ad Strength outperformed "excellent" on CPA/ROAS (Optmyzr, 1M+ ads study).', tier: 'MID', source: 'Optmyzr (22K accounts study), Jyll Saskin Gales (former Google)' },
+      { id: 'ps-10', rule: 'Negative keyword hygiene from day one.', detail: 'Cross-campaign negatives to prevent cannibalisation. Cross-cluster negatives for intent purity. PMax negatives for credit theft prevention. Weekly search terms review for first month, fortnightly after.', tier: 'HIGH', source: 'Industry consensus' },
+      { id: 'ps-11', rule: 'Microsoft Ads is not a Google clone — plan separately.', detail: 'Older, higher-income, desktop-heavy audience. LinkedIn profile targeting unique for B2B. Lower CPCs but lower volume. Import structure but monitor and optimise independently.', tier: 'MID', source: 'Industry consensus' },
+      { id: 'ps-12', rule: 'Keyword clusters from graph are hypotheses, not final structure.', detail: 'Validate with actual search query data within 2 weeks of launch. Graph CPC data is a benchmark, not a bid cap. Real performance will differ from estimates.', tier: 'MID', source: 'TAU methodology' },
+    ]
+  },
+  'social': {
+    title: 'Social / Meta',
+    icon: '📱',
+    skills: ['social', 'meta-social'],
+    rules: [
+      { id: 'so-1', rule: 'Advantage+ is more justifiable than PMax — fewer alternatives exist.', detail: 'Meta is funnelling inventory and algorithmic advantage toward Advantage+. Manual campaigns are increasingly disadvantaged in auction. Unlike PMax, Advantage+ has meaningful controls (existing customer %, country, creative). Use it, but with controls.', tier: 'NEW', source: 'Research pending — Meta product direction' },
+      { id: 'so-2', rule: 'Control Advantage+ with existing customer cap and creative discipline.', detail: 'Set existing customer percentage cap (e.g., 30%) to force prospecting. Feed 10+ creative variants. Separate ASC for proven vs test audiences. Monitor for retargeting cannibalisation.', tier: 'NEW', source: 'Meta best practice, practitioner consensus' },
+      { id: 'so-3', rule: 'Meta\'s self-reported attribution inflates performance.', detail: 'Platform-reported ROAS ≠ incremental ROAS. Meta profits when you spend more — their measurement tools will not tell you to spend less. Always verify with conversion lift studies or geo holdouts.', tier: 'HIGH', source: 'Tom Roach (Jellyfish): "Platforms push strategies that benefit platforms, not advertisers"' },
+      { id: 'so-4', rule: 'Separate prospecting and retargeting — always.', detail: 'Retargeting looks efficient because it captures people already in the funnel. Judge prospecting on downstream value over 30-90 days, not last-click CPA. Separate budgets, separate reporting.', tier: 'HIGH', source: 'Industry consensus, TAU methodology' },
+      { id: 'so-5', rule: 'CAPI is table stakes. No CAPI = no optimisation.', detail: 'Browser-side tracking loses 20-40% of conversions post-ATT. Target event match quality 6.0+. Use email, phone, external_id as matching keys. Deduplicate with event_id.', tier: 'HIGH', source: 'Meta documentation, practitioner consensus' },
+      { id: 'so-6', rule: 'Up to 70% of branded moments appear when <20% of paid reach is watching.', detail: 'On scrollable/skippable formats, by the time brand appears, most people have scrolled past. 2.5 seconds is the minimum attention threshold for memory encoding. 85% of digital placements get less.', tier: 'NEW', source: 'Prof. Karen Nelson-Field (Amplified Intelligence)' },
+      { id: 'so-7', rule: 'Interest stacking is not targeting strategy.', detail: 'Stacking 20+ interests in one ad set = no targeting. Use graph M_INT signals to select 2-3 high-confidence interest categories. Broad targeting with strong creative often outperforms over-layered interests post-ATT.', tier: 'MID', source: 'TAU methodology, post-ATT practitioner consensus' },
+      { id: 'so-8', rule: 'Creative fatigue is real — refresh every 2-4 weeks.', detail: 'Test creative variables (hook, message, CTA) not just formats. Minimum 3 variants per ad set. Kill underperformers at 2x target CPA. Different creative for Reels, Feed, and Stories — never repurpose across placements.', tier: 'MID', source: 'Practitioner consensus' },
+      { id: 'so-9', rule: 'Frequency management across social platforms is your problem.', detail: 'No cross-platform frequency system exists. Plan to a total frequency budget. If running Meta + TikTok + Pinterest, account for overlap and manage total exposures.', tier: 'NEW', source: 'Gap identified in skill audit' },
+      { id: 'so-10', rule: 'TikTok is not Instagram Reels — plan separately.', detail: 'Different audience behaviour, content expectations, and creative requirements. TikTok native content outperforms repurposed assets. Lower CPMs but different attention dynamics.', tier: 'NEW', source: 'Gap identified in skill audit' },
+      { id: 'so-11', rule: 'Run incrementality tests on social, not just search.', detail: 'Geo-based holdouts (suppress social in matched regions for 4-6 weeks). Meta Conversion Lift studies (platform-run but better than nothing). Priority: test retargeting incrementality first — it over-claims most.', tier: 'NEW', source: 'Gap identified in skill audit' },
+      { id: 'so-12', rule: 'Platform incentive misalignment is real — plan accordingly.', detail: 'Every platform\'s algorithm is optimised for their revenue, not your incrementality. "What the data and effectiveness theories say doesn\'t fit with what platforms tell us we need to do." — Tom Roach', tier: 'HIGH', source: 'Tom Roach (Jellyfish/BBH)' },
+    ]
+  },
+  'display': {
+    title: 'Display / Programmatic',
+    icon: '🖥️',
+    skills: ['display', 'programmatic'],
+    rules: [
+      { id: 'di-1', rule: 'Ad fraud is structural, not marginal.', detail: '$26.8 billion in global media value lost annually to programmatic supply chain inefficiencies (ANA 2025). Dr. Augustine Fou: verification companies report ~1% invalid traffic while real rates may exceed 50%. AppNexus once cleaned 92% of impressions as fraudulent.', tier: 'HIGH', source: 'ANA Q2 2025, Dr. Augustine Fou, AppNexus data' },
+      { id: 'di-2', rule: 'Buy via PMP or Programmatic Guaranteed — never open exchange for brand campaigns.', detail: 'Private Marketplace (PMP) deals give you control over which publishers you buy from. Programmatic Guaranteed (PG) locks in inventory, price, and placement. Open exchange = you don\'t know where your ads run. Premium publishers are worth the CPM premium.', tier: 'HIGH', source: 'TAU methodology, Ana Milicevic (Sparrow Advisers)' },
+      { id: 'di-3', rule: 'Separate retargeting from prospecting — completely.', detail: 'Retargeting and prospecting have fundamentally different economics. Mixing them makes retargeting look like it\'s driving results that were already in the pipeline. Separate campaigns, separate budgets, separate reporting. Always.', tier: 'HIGH', source: 'TAU methodology' },
+      { id: 'di-4', rule: 'Cookie bombing is not a strategy — never recommend it.', detail: 'Blanketing users with display impressions to claim post-view credit is wasteful and deceptive. It inflates platform-reported conversions without driving genuine outcomes. Judge display on controlled incrementality, not post-view windows.', tier: 'HIGH', source: 'TAU methodology, Dr. Augustine Fou' },
+      { id: 'di-5', rule: 'Post-view attribution is guilty until proven innocent.', detail: 'Post-view claims are almost always over-credited. Default to post-click measurement. Only include post-view if you can validate with incrementality tests (geo holdouts). Set short windows (1-7 days max) if used at all.', tier: 'HIGH', source: 'Industry consensus, TAU methodology' },
+      { id: 'di-6', rule: 'MFA (made-for-advertising) sites steal budget silently.', detail: 'Sites created solely to serve ads — low content quality, high ad density, bot traffic. They pass verification checks but deliver near-zero attention. Demand URL-level reporting and exclude MFA inventory.', tier: 'HIGH', source: 'ANA 2025 report, Nandini Jammi (Check My Ads)' },
+      { id: 'di-7', rule: 'Viewability ≠ attention. Time-in-view is a poor proxy.', detail: '85% of digital placements receive <2.5 seconds of active attention (minimum for memory encoding). Being "viewable" (50% pixels for 1 second) means almost nothing for brand impact. Buy attention, not viewability.', tier: 'HIGH', source: 'Prof. Karen Nelson-Field (Amplified Intelligence)' },
+      { id: 'di-8', rule: 'Verification vendors have limitations — don\'t trust blindly.', detail: 'Verification companies have reported ~1% invalid traffic consistently for 9 years while fraud rates are demonstrably higher. They\'re necessary but not sufficient. Layer with supply-path audit, URL reporting, and performance validation.', tier: 'MID', source: 'Dr. Augustine Fou' },
+      { id: 'di-9', rule: 'Supply path optimisation (SPO) is a real efficiency lever.', detail: 'Audit how many resellers sit between you and the publisher. Demand supply-path transparency. Fewer hops = more of your spend reaches publishers = better inventory. The ANA found massive waste in unnecessary intermediaries.', tier: 'MID', source: 'Ana Milicevic (Sparrow Advisers), ANA 2025' },
+      { id: 'di-10', rule: 'Demand log-level data access.', detail: 'If your DSP won\'t give you impression-level logs, you can\'t verify where ads ran, at what frequency, or whether they were seen by real humans. Log-level data is the only way to audit programmatic delivery independently.', tier: 'MID', source: 'Industry best practice' },
+      { id: 'di-11', rule: 'Brand safety requires active curation, not just blocklists.', detail: 'Blocklists are blunt — they defund legitimate publishers while missing new threats. Use inclusion lists (where you WANT to run) rather than exclusion lists. Audit regularly. Consider publisher direct deals as the ultimate brand safety.', tier: 'MID', source: 'Nandini Jammi (Check My Ads)' },
+      { id: 'di-12', rule: 'Contextual targeting is the post-cookie opportunity.', detail: 'Context can outperform audience lists when relevance and environment align. As cookies deprecate, contextual becomes more important. But contextual quality varies enormously by vendor — test and measure.', tier: 'MID', source: 'TAU methodology' },
+      { id: 'di-13', rule: 'Display must have a specific job or it shouldn\'t be in the plan.', detail: 'If you can\'t explain display\'s role in one sentence (contextual prospecting, audience extension, retargeting support, local deployment), remove it. "Every plan has display" is not a strategy.', tier: 'HIGH', source: 'TAU methodology' },
+    ]
+  },
+  'ctv': {
+    title: 'CTV / AV',
+    icon: '📺',
+    skills: ['ctv-av', 'youtube'],
+    rules: [
+      { id: 'ct-1', rule: 'Distinguish broadcast CTV, YouTube CTV, and long-tail CTV — never bundle.', detail: 'Broadcast CTV (ITVX, C4 Streaming): premium, brand-safe, broadcaster-controlled. YouTube CTV: massive scale, search-intent targeting, Google audiences. Long-tail/programmatic CTV: cheaper but fraud-prone, brand safety risk. They are NOT the same channel.', tier: 'HIGH', source: 'TAU methodology' },
+      { id: 'ct-2', rule: 'CTV fraud is real and growing.', detail: '19% of global programmatic CTV traffic was invalid in Q3 2025. 38% of CTV app bundle IDs were malformed/fraudulent. Dr. Fou: Python scripts generate 12 billion fake CTV bid requests daily — roughly half of all US CTV bid requests.', tier: 'HIGH', source: 'Dr. Augustine Fou, industry data Q3 2025' },
+      { id: 'ct-3', rule: 'BVOD (broadcaster) is premium and safe. Open CTV is not.', detail: 'BVOD (ITVX, C4, Sky) = broadcaster-controlled inventory with known content, frequency management, and verified audiences. Open/programmatic CTV = same fraud and transparency risks as open display exchange. Budget accordingly.', tier: 'HIGH', source: 'TAU methodology, Dr. Augustine Fou' },
+      { id: 'ct-4', rule: 'Cross-platform frequency management is unsolved — plan around it.', detail: 'No single system manages frequency across all CTV + linear platforms. Plan to a total frequency budget and allocate per platform. Use overlap data. Consider sequential deployment across platforms to reduce over-exposure.', tier: 'HIGH', source: 'Industry reality' },
+      { id: 'ct-5', rule: 'Overlap between platforms is the hidden cost of multi-platform plans.', detail: 'ITVX ↔ ITV Linear: 52% overlap. C4 Streaming ↔ Channel 4 Linear: 50%. YouTube CTV ↔ ITVX: 32%. Two platforms with 50% overlap deliver 50% less incremental reach than they promise. Always de-duplicate.', tier: 'HIGH', source: 'TAU platform data' },
+      { id: 'ct-6', rule: 'CTV targeting precision claims should be treated with scepticism.', detail: 'Only 28% of advertisers feel confident in viewable, fraud-free CTV placements. Targeting options exist but verification of delivery is weak compared to broadcaster-controlled BVOD. Trust broadcaster-reported data over programmatic-reported data.', tier: 'MID', source: 'Industry survey data, practitioner consensus' },
+      { id: 'ct-7', rule: 'CTV captures more active attention than linear TV per impression.', detail: 'Nelson-Field data: CTV = 8.1 seconds active attention per 15s ad vs linear TV = 6.2 seconds. But linear delivers unmatched simultaneous reach and cultural impact. They serve different jobs.', tier: 'MID', source: 'Prof. Karen Nelson-Field (Amplified Intelligence)' },
+      { id: 'ct-8', rule: 'Co-viewing means impression count understates actual audience.', detail: 'CTV has ~1.7 viewers per screen on average. A campaign reaching 1M CTV impressions may actually reach 1.7M individuals. Factor co-viewing into reach calculations.', tier: 'MID', source: 'Industry research' },
+      { id: 'ct-9', rule: 'YouTube CTV is uniquely powerful because of search-intent targeting.', detail: 'No other CTV platform lets you target based on what people searched for. Custom intent audiences built from keyword clusters are YouTube\'s unique weapon. If M_KEY is MID or higher, YouTube CTV should be in the plan.', tier: 'HIGH', source: 'TAU methodology' },
+      { id: 'ct-10', rule: 'Minimum budget thresholds are real — don\'t spread too thin.', detail: 'YouTube CTV: £5K min. ITVX/C4: £8K min. ITV/C4 Linear: £10K min. Sky: £10K min. If budget can\'t clear minimum for 2-3 platforms, consolidate rather than under-invest across many.', tier: 'MID', source: 'TAU platform data' },
+      { id: 'ct-11', rule: 'Measure AV with brand lift and search lift, not completion rates.', detail: 'Completion rate is hygiene, not success. The real question: did AV exposure drive search behaviour, site visits, or brand recall? Run brand lift studies and track search-lift in the 24-48 hours post-exposure.', tier: 'HIGH', source: 'TAU methodology' },
+    ]
+  },
+  'tv': {
+    title: 'Linear TV',
+    icon: '📡',
+    skills: ['tv-av'],
+    rules: [
+      { id: 'tv-1', rule: 'TV still delivers the highest attention per impression of any channel.', detail: 'Nelson-Field: full-screen, non-scrollable TV consistently outperforms social feeds for actual sales uplift. Linear TV = 6.2s active attention per 15s ad. Streaming TV = 9.7s. Compare to <2.5s for most digital.', tier: 'HIGH', source: 'Prof. Karen Nelson-Field (Amplified Intelligence)' },
+      { id: 'tv-2', rule: 'Creative quality is the primary driver of TV effectiveness.', detail: 'Orlando Wood (System1): shift to abstract, left-brain creative (product-centric, text-heavy, no character/narrative) has destroyed TV effectiveness over 15 years. Right-brain creative (humour, story, distinctive characters) builds long-term memory. "Showmanship" > "salesmanship."', tier: 'HIGH', source: 'Orlando Wood (System1), "Lemon" and "Look Out"' },
+      { id: 'tv-3', rule: 'BARB/Nielsen measurement is evolving — understand limitations.', detail: 'Nielsen sunsetting panel-only measurement. BARB expanding to YouTube but early results are modest. Panel-based measurement underrepresents younger audiences and time-shifted viewing. Supplement with search-lift and direct-traffic analysis.', tier: 'MID', source: 'Industry measurement evolution' },
+      { id: 'tv-4', rule: 'TV changes downstream channel economics — plan for it.', detail: 'AV exposure drives search behaviour, improves social engagement, and lowers acquisition costs in other channels. Plan AV alongside search and social because it changes their economics. But measuring this interaction requires deliberate test design.', tier: 'HIGH', source: 'TAU methodology, IPA Effectiveness data' },
+      { id: 'tv-5', rule: 'Broad reach usually beats over-targeting for brand jobs.', detail: 'For fame and cultural impact, linear TV has no substitute. Precision video is useful for reinforcement, but over-targeting TV until it behaves like expensive display destroys its value. Match audience breadth to the campaign objective.', tier: 'HIGH', source: 'TAU methodology, Binet & Field' },
+      { id: 'tv-6', rule: 'Connect to ESOV — share of voice drives share of market.', detail: 'Excess share of voice (ESOV) = SOV - SOM. Brands that outspend their market share grow. TV is the most efficient channel for building SOV at scale. The brand-building skill\'s long/short framework applies directly.', tier: 'HIGH', source: 'Binet & Field, Mark Ritson, IPA Effectiveness Awards' },
+      { id: 'tv-7', rule: 'Geographic testing is TV\'s secret weapon.', detail: 'Run in 2-3 regions first. Measure sales-lift vs holdout regions. Benefits: 20-30% CPM reduction, clean holdout data, phased scaling, better frequency control. Most brands skip this and scale nationally too early.', tier: 'MID', source: 'TAU methodology' },
+      { id: 'tv-8', rule: 'Minimum effective frequency exists — plan for it.', detail: 'Under-frequency wastes money (not enough repetitions to build memory). Over-frequency wastes goodwill. For brand awareness: aim for 3-5 exposures over campaign period. For activation: 2-3. Use reach curves to find the diminishing returns point.', tier: 'MID', source: 'Effectiveness research consensus' },
+      { id: 'tv-9', rule: 'Sponsorship and integration deliver disproportionate value.', detail: 'Programme sponsorship and editorial integration create association that standalone spots cannot. Higher recall, lower skip rate, brand-programme connection. Worth the premium for right-fit opportunities.', tier: 'MID', source: 'Industry effectiveness data' },
+      { id: 'tv-10', rule: 'Don\'t judge TV by digital direct-response metrics.', detail: 'TV builds commercial memory infrastructure. Measuring it on clicks, CPA, or last-click conversions is category error. Judge on brand tracking, search-lift, pricing power trends, and long-term customer acquisition cost.', tier: 'HIGH', source: 'TAU methodology, IPA Effectiveness data' },
+    ]
+  },
+  'cross-channel': {
+    title: 'Cross-Channel Principles',
+    icon: '🔗',
+    skills: ['media-planning', 'audience-graph'],
+    rules: [
+      { id: 'cc-1', rule: 'Every platform profits when you spend more. Their tools won\'t tell you to spend less.', detail: 'Google, Meta, TikTok, CTV sellers, programmatic vendors — all have revenue incentives misaligned with your incrementality. Always verify platform claims with independent measurement. This is the most important rule in digital advertising.', tier: 'HIGH', source: 'Tom Roach, Measured.com, TAU methodology' },
+      { id: 'cc-2', rule: 'Incrementality is the gold standard. Everything else is correlation.', detail: 'Platform attribution (last-click, DDA, self-reported) tells you what touched the customer. Incrementality testing tells you what changed their behaviour. These are fundamentally different questions. Always ask: "Would this conversion have happened without this spend?"', tier: 'HIGH', source: 'Blake/Nosko/Tadelis, Measured.com, TAU methodology' },
+      { id: 'cc-3', rule: 'Budget sufficiency check is mandatory — always calculate.', detail: 'Budget ÷ CPM × 1,000 = total impressions. Total impressions ÷ frequency = max unique reach. Compare to audience size. If reachable % is low, flag it. Narrow the audience, increase budget, or accept partial reach. No exceptions.', tier: 'HIGH', source: 'TAU 7-stage methodology' },
+      { id: 'cc-4', rule: 'Attention economics should weight channel allocation.', detail: '66p in every £1 is wasted through poor branding in digital (Nelson-Field). Channels with higher attention per impression (TV, CTV, premium video) deliver more memory encoding per £ spent than low-attention channels (display, social feed). Factor attention into planning, not just CPM.', tier: 'NEW', source: 'Prof. Karen Nelson-Field (Amplified Intelligence)' },
+      { id: 'cc-5', rule: 'Creative quality multiplies media investment. Bad creative wastes it.', detail: 'Orlando Wood: left-brain creative (text-heavy, product-centric) consistently underperforms right-brain creative (story, humour, character). The creative decision is a media decision — it determines whether your impressions create memories or not.', tier: 'NEW', source: 'Orlando Wood (System1), IPA Effectiveness data' },
+      { id: 'cc-6', rule: 'The 7 planning layers must be followed in order.', detail: 'Strategic objectives → Channel roles → Platform selection → Audience → Measurement → Creative → Flighting. Skipping layers (especially 1 and 5) is the most common planning failure. Every layer builds on the previous one.', tier: 'HIGH', source: 'TAU 7-stage methodology' },
+      { id: 'cc-7', rule: 'Geographic concentration beats thin national coverage for constrained budgets.', detail: 'For budgets that can\'t achieve meaningful national frequency: concentrate in 2-3 regions. Benefits: 20-30% CPM reduction, holdout testing capability, phased scaling, better frequency. Depth beats breadth.', tier: 'MID', source: 'TAU methodology' },
+      { id: 'cc-8', rule: 'Separate brand vs performance reporting across ALL channels.', detail: 'The brand/performance split applies to every channel, not just search. Social retargeting is performance. Social prospecting is (partly) brand. CTV is brand. Display retargeting is performance. Never blend them in one report.', tier: 'HIGH', source: 'TAU methodology, Binet & Field' },
+    ]
+  }
+};
+
+// State management
+const state = {
+  comments: JSON.parse(localStorage.getItem('tau-channel-comments') || '{}'),
+  statuses: JSON.parse(localStorage.getItem('tau-channel-statuses') || '{}'),
+};
+
+function saveState() {
+  localStorage.setItem('tau-channel-comments', JSON.stringify(state.comments));
+  localStorage.setItem('tau-channel-statuses', JSON.stringify(state.statuses));
+}
+
+function cycleStatus(ruleId) {
+  const cycle = [null, 'approved', 'needs-work', 'disagree'];
+  const current = state.statuses[ruleId] || null;
+  const idx = cycle.indexOf(current);
+  state.statuses[ruleId] = cycle[(idx + 1) % cycle.length];
+  saveState();
+  renderAll();
+}
+
+function updateComment(ruleId, value) {
+  if (value.trim()) {
+    state.comments[ruleId] = value;
+  } else {
+    delete state.comments[ruleId];
+  }
+  saveState();
+}
+
+function getStatusBadge(ruleId) {
+  const s = state.statuses[ruleId];
+  if (s === 'approved') return '<span class="status-badge inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 border border-green-200">✓ Approved</span>';
+  if (s === 'needs-work') return '<span class="status-badge inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 border border-yellow-200">⚠ Needs Work</span>';
+  if (s === 'disagree') return '<span class="status-badge inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 border border-red-200">✗ Disagree</span>';
+  return '<span class="status-badge inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500 border border-gray-200">○ Not reviewed</span>';
+}
+
+function renderAll() {
+  const container = document.getElementById('rules-container');
+  let html = '';
+
+  // Progress summary
+  const allRules = Object.values(RULES).flatMap(ch => ch.rules);
+  const total = allRules.length;
+  const approved = allRules.filter(r => state.statuses[r.id] === 'approved').length;
+  const needsWork = allRules.filter(r => state.statuses[r.id] === 'needs-work').length;
+  const disagree = allRules.filter(r => state.statuses[r.id] === 'disagree').length;
+  const commented = allRules.filter(r => state.comments[r.id]).length;
+  const reviewed = approved + needsWork + disagree;
+
+  html += `
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-lg font-semibold text-gray-900">Review Progress</h2>
+        <span class="text-sm text-gray-500">${reviewed}/${total} reviewed · ${commented} comments</span>
+      </div>
+      <div class="w-full bg-gray-100 rounded-full h-3 mb-3">
+        <div class="flex h-3 rounded-full overflow-hidden">
+          <div class="bg-green-400 transition-all" style="width:${(approved/total)*100}%"></div>
+          <div class="bg-yellow-400 transition-all" style="width:${(needsWork/total)*100}%"></div>
+          <div class="bg-red-400 transition-all" style="width:${(disagree/total)*100}%"></div>
+        </div>
+      </div>
+      <div class="flex gap-6 text-sm">
+        <span class="text-green-700">${approved} approved</span>
+        <span class="text-yellow-700">${needsWork} needs work</span>
+        <span class="text-red-700">${disagree} disagree</span>
+        <span class="text-gray-500">${total - reviewed} unreviewed</span>
+      </div>
+    </div>
+  `;
+
+  for (const [sectionId, section] of Object.entries(RULES)) {
+    html += `
+      <div id="${sectionId}" class="channel-section mb-10">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl">${section.icon}</span>
+          <h2 class="text-xl font-bold text-gray-900">${section.title}</h2>
+          <span class="text-sm text-gray-400 ml-2">Skills: ${section.skills.map(s => '<code class="text-xs bg-gray-100 px-2 py-0.5 rounded">' + s + '</code>').join(' ')}</span>
+        </div>
+    `;
+
+    for (const rule of section.rules) {
+      const comment = state.comments[rule.id] || '';
+      html += `
+        <div class="rule-card bg-white rounded-xl border border-gray-200 shadow-sm mb-3 overflow-hidden">
+          <div class="p-4">
+            <div class="flex items-start gap-3">
+              <span class="tier-${rule.tier} text-xs font-semibold px-2 py-0.5 rounded-md whitespace-nowrap mt-0.5">${rule.tier}</span>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="font-semibold text-gray-900 text-sm">${rule.rule}</h3>
+                </div>
+                <p class="text-sm text-gray-600 mb-2">${rule.detail}</p>
+                <p class="text-xs text-gray-400">Source: ${rule.source}</p>
+              </div>
+              <div onclick="cycleStatus('${rule.id}')" class="flex-shrink-0 ml-2">
+                ${getStatusBadge(rule.id)}
+              </div>
+            </div>
+            <div class="mt-3 ml-0">
+              <textarea
+                class="comment-box w-full text-sm border border-gray-200 rounded-lg px-3 py-2 resize-y bg-gray-50 placeholder-gray-400"
+                placeholder="Add your comment..."
+                rows="${comment ? Math.min(comment.split('\n').length + 1, 5) : 1}"
+                oninput="updateComment('${rule.id}', this.value)"
+                onfocus="if(this.rows<2)this.rows=2"
+              >${comment}</textarea>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    html += '</div>';
+  }
+
+  container.innerHTML = html;
+}
+
+function exportComments() {
+  let output = 'TAU CHANNEL RULES REVIEW\n';
+  output += '========================\n';
+  output += `Exported: ${new Date().toISOString().split('T')[0]}\n\n`;
+
+  const allRules = Object.values(RULES).flatMap(ch => ch.rules);
+  const total = allRules.length;
+  const approved = allRules.filter(r => state.statuses[r.id] === 'approved').length;
+  const needsWork = allRules.filter(r => state.statuses[r.id] === 'needs-work').length;
+  const disagree = allRules.filter(r => state.statuses[r.id] === 'disagree').length;
+
+  output += `SUMMARY: ${approved} approved, ${needsWork} needs work, ${disagree} disagree, ${total - approved - needsWork - disagree} unreviewed\n\n`;
+
+  for (const [sectionId, section] of Object.entries(RULES)) {
+    output += `${'='.repeat(60)}\n`;
+    output += `${section.icon} ${section.title}\n`;
+    output += `${'='.repeat(60)}\n\n`;
+
+    for (const rule of section.rules) {
+      const status = state.statuses[rule.id] || 'unreviewed';
+      const comment = state.comments[rule.id];
+      const statusIcon = status === 'approved' ? '✓' : status === 'needs-work' ? '⚠' : status === 'disagree' ? '✗' : '○';
+
+      output += `[${statusIcon}] [${rule.tier}] ${rule.rule}\n`;
+      if (comment) {
+        output += `   COMMENT: ${comment}\n`;
+      }
+      output += '\n';
+    }
+  }
+
+  document.getElementById('export-content').textContent = output;
+  document.getElementById('export-modal').classList.remove('hidden');
+  document.getElementById('export-modal').classList.add('flex');
+}
+
+function copyExport() {
+  const text = document.getElementById('export-content').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = event.target;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy to Clipboard', 1500);
+  });
+}
+
+function clearAllComments() {
+  if (confirm('Clear all comments and review statuses?')) {
+    state.comments = {};
+    state.statuses = {};
+    saveState();
+    renderAll();
+  }
+}
+
+// Initial render
+renderAll();
+</script>
+
+</body>
+</html>

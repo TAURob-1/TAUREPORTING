@@ -1,0 +1,179 @@
+.ppt-generator {
+  background: var(--bg-secondary, #1a1a2e);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 20px 0;
+}
+
+.ppt-header {
+  margin-bottom: 24px;
+}
+
+.ppt-header h3 {
+  margin: 0 0 8px 0;
+  color: var(--text-primary, #fff);
+}
+
+.ppt-header p {
+  margin: 0;
+  color: var(--text-secondary, #888);
+  font-size: 14px;
+}
+
+.ppt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary, #aaa);
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 12px 16px;
+  border: 1px solid var(--border-color, #333);
+  border-radius: 8px;
+  background: var(--bg-primary, #0f0f1a);
+  color: var(--text-primary, #fff);
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent, #6366f1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.ppt-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.ppt-actions button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.preview-btn {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+}
+
+.download-btn {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+}
+
+.ppt-actions button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.ppt-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ppt-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-top: 16px;
+}
+
+.ppt-preview {
+  margin-top: 24px;
+}
+
+.ppt-preview h4 {
+  margin: 0 0 16px 0;
+  color: var(--text-primary, #fff);
+}
+
+.preview-slides {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.preview-slide {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
+  min-height: 180px;
+  color: #333;
+}
+
+.preview-slide.title-slide {
+  background: linear-gradient(135deg, #003366, #004488);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.preview-slide.title-slide h2 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+}
+
+.preview-slide.title-slide p {
+  margin: 0;
+  opacity: 0.8;
+  font-size: 14px;
+}
+
+.preview-slide h3 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #003366;
+}
+
+.preview-slide ul {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 12px;
+  color: #555;
+}
+
+.preview-slide li {
+  margin-bottom: 6px;
+}
+
+.slide-number {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  font-size: 11px;
+  color: #999;
+}
+
+.preview-slide.title-slide .slide-number {
+  color: rgba(255, 255, 255, 0.5);
+}

@@ -5,6 +5,7 @@ import AudienceTargeting from './components/AudienceTargeting';
 import SignalIntelligence from './components/SignalIntelligence';
 import StrategicAdvisor from './components/StrategicAdvisor';
 import MediaReach from './components/MediaReach';
+import AudienceGraphPage from './components/audienceGraph/AudienceGraphPage.jsx';
 import { usePlatform } from './context/PlatformContext.jsx';
 import { COUNTRY_OPTIONS, PLATFORM_BRAND } from './config/platformConfig';
 import { getRegulations } from './data/marketData';
@@ -14,6 +15,7 @@ const PAGES = [
   { key: 'targeting', label: 'Audience', fullLabel: 'Audience Targeting' },
   { key: 'planning', label: 'Planning', fullLabel: 'Campaign Planning' },
   { key: 'results', label: 'Results', fullLabel: 'Campaign Results' },
+  { key: 'rosetta', label: 'Rosetta', fullLabel: 'Rosetta Stone' },
   { key: 'media', label: 'Media', fullLabel: 'Media Reach' },
   { key: 'signal', label: 'Intelligence', fullLabel: 'Signal Intelligence' },
 ];
@@ -38,6 +40,7 @@ function App() {
     if (currentPage === 'targeting') return 'Audience Setup';
     if (currentPage === 'planning') return 'Pre-Campaign';
     if (currentPage === 'results') return 'Live Campaign';
+    if (currentPage === 'rosetta') return 'Rosetta Stone';
     if (currentPage === 'media') return 'Media Reach';
     if (currentPage === 'signal') return 'Intelligence';
     return 'AI Planning';
@@ -171,6 +174,8 @@ function App() {
             <CampaignPlanning />
           ) : currentPage === 'results' ? (
             <CampaignResults />
+          ) : currentPage === 'rosetta' ? (
+            <AudienceGraphPage />
           ) : currentPage === 'media' ? (
             <MediaReach />
           ) : currentPage === 'signal' ? (
@@ -192,6 +197,7 @@ function App() {
                 currentPage === 'targeting' ? 'bg-blue-500' :
                 currentPage === 'planning' ? 'bg-purple-500' :
                 currentPage === 'results' ? 'bg-green-500' :
+                currentPage === 'rosetta' ? 'bg-violet-500' :
                 currentPage === 'media' ? 'bg-cyan-500' :
                 currentPage === 'signal' ? 'bg-orange-500' : 'bg-indigo-500'
               }`} />

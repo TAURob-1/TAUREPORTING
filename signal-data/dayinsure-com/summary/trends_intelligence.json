@@ -1,0 +1,42 @@
+{
+  "generated_at": "2026-03-13T09:12:00Z",
+  "company": "Day Insure",
+  "brand_trend_summary": {
+    "direction": "growing",
+    "12_month_trend": "+9%",
+    "momentum_score": 6.8,
+    "interpretation": "Steady positive momentum in branded demand."
+  },
+  "competitor_comparison": {
+    "vs_competitors": {
+      "Tempcover": {
+        "status": "trailing",
+        "description": "trailing a larger traffic base but still within reach",
+        "their_trend": "+6%",
+        "our_trend": "+9%",
+        "gap": 3
+      },
+      "Veygo": {
+        "status": "trailing",
+        "description": "trailing the category traffic leader",
+        "their_trend": "+12%",
+        "our_trend": "+9%",
+        "gap": -3
+      },
+      "Cuvva": {
+        "status": "outpacing",
+        "description": "outpacing a smaller challenger",
+        "their_trend": "+2%",
+        "our_trend": "+9%",
+        "gap": 7
+      },
+      "GoShorty": {
+        "status": "trailing",
+        "description": "slightly behind on scale but moving faster on demand",
+        "their_trend": "+5%",
+        "our_trend": "+9%",
+        "gap": 4
+      }
+    }
+  }
+}

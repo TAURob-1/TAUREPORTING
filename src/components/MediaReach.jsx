@@ -17,9 +17,10 @@ import ContentInsights from './media/ContentInsights';
 import AudiencePreferences from './media/AudiencePreferences';
 import RecommendationsPanel from './media/RecommendationsPanel';
 import MediaChatWidget from './media/MediaChatWidget';
+import { getWeightedAffinities } from '../lib/audienceGraph/computeBlueprint.js';
 
 function MediaReach() {
-  const { countryCode, audienceStrategy } = usePlatform();
+  const { countryCode, audienceStrategy, audienceGraphState, pageNavigator } = usePlatform();
   const marketContext = useMemo(() => getCountryMarketContext(countryCode), [countryCode]);
   const dataQuality = useMemo(() => getMediaDataQuality(countryCode), [countryCode]);
   const intelligenceSummary = useMemo(() => getMediaIntelligenceSummary(countryCode), [countryCode]);
@@ -78,6 +79,29 @@ function MediaReach() {
             </div>
           </div>
         </section>
+
+        {audienceGraphState?.currentBlueprint && (
+          <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-800 rounded-xl p-4 flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-purple-900 dark:text-purple-100">
+                Audience Graph suggests:{' '}
+                {getWeightedAffinities(audienceGraphState.selectedAttributes || [])
+                  .slice(0, 3)
+                  .map((a) => `${a.label} (${a.affinity})`)
+                  .join(', ') || 'View graph for details'}
+              </p>
+              <p className="text-xs text-purple-700 dark:text-purple-300 mt-0.5">
+                {audienceGraphState.selectedAttributes?.length || 0} attributes selected in blueprint
+              </p>
+            </div>
+            <button
+              onClick={() => pageNavigator?.navigateTo?.('graph')}
+              className="px-3 py-1.5 text-xs font-medium bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
+            >
+              View Graph
+            </button>
+          </div>
+        )}
 
         <RecommendationsPanel
           audienceName={audienceStrategy.primaryAudience}

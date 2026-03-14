@@ -1,0 +1,31 @@
+{
+  "domain": "dayinsure.com",
+  "data_source": "reference_snapshot",
+  "site_name": "dayinsure.com",
+  "description": "UK temporary car insurance provider offering short-term digital cover.",
+  "global_rank": 48932,
+  "country_rank": 1821,
+  "country_code": "GB",
+  "category": "finance/insurance",
+  "category_rank": "4",
+  "title": "Temporary Car Insurance | Day Insure",
+  "engagement": {
+    "visits": "307700",
+    "time_on_site": "231.4",
+    "page_per_visit": "3.4",
+    "bounce_rate": "0.412"
+  },
+  "estimated_monthly_visits": {
+    "2025-11-01": 281400,
+    "2025-12-01": 296200,
+    "2026-01-01": 307700
+  },
+  "traffic_sources": {
+    "direct": 0.382,
+    "organic_search": 0.401,
+    "paid_referrals": 0.039,
+    "referrals": 0.118,
+    "social": 0.021,
+    "mail": 0.039
+  }
+}

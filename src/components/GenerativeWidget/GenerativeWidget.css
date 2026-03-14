@@ -1,0 +1,134 @@
+.generative-widget {
+  background: var(--bg-secondary, #1a1a2e);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.widget-input-area {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.widget-input-area input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid var(--border-color, #333);
+  border-radius: 8px;
+  background: var(--bg-primary, #0f0f1a);
+  color: var(--text-primary, #fff);
+  font-size: 14px;
+}
+
+.widget-input-area input:focus {
+  outline: none;
+  border-color: var(--accent, #6366f1);
+}
+
+.widget-input-area button {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.widget-input-area button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.widget-input-area button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.widget-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.widget-container {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.widget-title {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.widget-expand {
+  background: none;
+  border: 1px solid #ddd;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #666;
+}
+
+.widget-expand:hover {
+  background: #eee;
+}
+
+.widget-placeholder {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-secondary, #888);
+}
+
+.placeholder-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.widget-placeholder p {
+  margin-bottom: 20px;
+}
+
+.placeholder-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.placeholder-examples strong {
+  margin-right: 8px;
+}
+
+.placeholder-examples button {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #a5b4fc;
+  padding: 6px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.placeholder-examples button:hover {
+  background: rgba(99, 102, 241, 0.2);
+}

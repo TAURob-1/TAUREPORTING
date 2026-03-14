@@ -1,0 +1,56 @@
+{
+  "slug": "dayinsure-com",
+  "company_name": "Day Insure",
+  "started_at": "2026-03-13T09:00:00Z",
+  "completed_at": "2026-03-13T09:15:00Z",
+  "agents": {
+    "traffic": {
+      "status": "completed",
+      "completed_at": "2026-03-13T09:05:00Z",
+      "files_created": [
+        "data/traffic/traffic_main.json",
+        "data/traffic/traffic_comparison.json",
+        "summary/traffic_intelligence.json"
+      ],
+      "optional": false
+    },
+    "seo": {
+      "status": "completed",
+      "completed_at": "2026-03-13T09:08:00Z",
+      "files_created": [
+        "summary/seo_intelligence.json"
+      ],
+      "optional": false
+    },
+    "ai_search": {
+      "status": "completed",
+      "completed_at": "2026-03-13T09:10:00Z",
+      "files_created": [
+        "summary/ai_visibility.json"
+      ],
+      "optional": false
+    },
+    "research": {
+      "status": "completed",
+      "completed_at": "2026-03-13T09:12:00Z",
+      "files_created": [
+        "summary/insights_and_actions.json",
+        "summary/trends_intelligence.json",
+        "summary/strategic_brief.md",
+        "strategic_brief/dayinsure_com_strategic_brief_part1.txt",
+        "strategic_brief/dayinsure_com_strategic_brief_part2.txt",
+        "strategic_brief/dayinsure_com_strategic_brief_part3.txt",
+        "strategic_brief/dayinsure_com_strategic_brief_part4.txt"
+      ],
+      "optional": false
+    },
+    "spend_estimation": {
+      "status": "completed",
+      "completed_at": "2026-03-13T09:15:00Z",
+      "files_created": [
+        "data/spend/spend_estimation.json"
+      ],
+      "optional": false
+    }
+  }
+}

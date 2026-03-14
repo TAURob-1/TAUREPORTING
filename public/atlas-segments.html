@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atlas — Build Your Own Segment</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="/data/uk/atlas-prebuilt-segments.js"></script>
+  <style>
+    .pill { transition: all .15s ease; user-select:none; }
+    .pill:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+    .pill.active { transform: translateY(0); }
+    #map { height: 520px; }
+    .loader { border: 3px solid #e5e7eb; border-top-color: #3b82f6; border-radius: 50%; width: 24px; height: 24px; animation: spin .6s linear infinite; display: inline-block; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .fade-in { animation: fadeIn .3s ease; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:translateY(0); } }
+    .age-band { transition: all .12s ease; cursor: pointer; user-select:none; }
+    .age-band:hover { filter: brightness(1.05); }
+    .age-band.selected { background: #dbeafe !important; color: #1d4ed8 !important; font-weight: 600; }
+    .idx-bar { height: 8px; border-radius: 4px; transition: width .3s ease; }
+    th.sortable { cursor: pointer; user-select: none; }
+    th.sortable:hover { color: #2563eb; }
+    .leaflet-container { background: #f8fafc; }
+    .seg-group { transition: all .2s ease; }
+    .seg-type { transition: all .15s ease; cursor: pointer; }
+    .seg-type:hover { background: #f0f9ff; }
+    .seg-type.active { background: #eff6ff; border-color: #3b82f6; }
+    .mode-btn { transition: all .15s ease; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<header class="bg-gradient-to-r from-slate-800 to-slate-900 text-white shadow-lg">
+  <div class="max-w-7xl mx-auto px-4 md:px-6 py-5 flex items-center justify-between">
+    <div>
+      <h1 class="text-xl font-bold tracking-tight">Atlas Classification</h1>
+      <p class="text-slate-300 text-sm mt-0.5">UK Audience Segmentation</p>
+    </div>
+    <div class="flex items-center gap-1 bg-slate-700/50 rounded-lg p-1">
+      <button id="mode-simple" onclick="setMode('simple')" class="mode-btn px-3 py-1.5 rounded-md text-xs font-medium bg-blue-500 text-white">Simple Segments</button>
+      <button id="mode-prebuilt" onclick="setMode('prebuilt')" class="mode-btn px-3 py-1.5 rounded-md text-xs font-medium text-slate-300 hover:text-white">Pre-Built Segments</button>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 md:px-6 py-6 space-y-6">
+
+  <div id="loading-overlay" class="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
+    <div class="loader mx-auto mb-4"></div>
+    <p class="text-gray-600 font-medium">Loading MSOA demographic data (7,080 areas)...</p>
+  </div>
+
+  <div id="app" class="hidden space-y-6">
+
+    <!-- PRE-BUILT SEGMENTS PANEL -->
+    <div id="prebuilt-panel" class="hidden">
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <h2 class="text-lg font-semibold text-gray-900 mb-1">Pre-Built Segments</h2>
+        <p class="text-sm text-gray-500 mb-4">Select a segment from the taxonomy below. Click a type to score all UK postcodes against it.</p>
+        <div id="taxonomy-tree" class="space-y-3"></div>
+      </div>
+    </div>
+
+    <!-- SIMPLE SEGMENTS PANEL -->
+    <div id="simple-panel">
+
+    <!-- Primary dimensions: Age + Income -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <h2 class="text-lg font-semibold text-gray-900 mb-1">Define Your Audience</h2>
+      <p class="text-sm text-gray-500 mb-5">Select age and income to target. Multiple selections within a dimension are combined (OR).</p>
+
+      <!-- Age -->
+      <div class="mb-5">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-sm font-semibold text-gray-800">Age</span>
+          <span class="text-xs text-gray-400">Life-stage groups or custom range</span>
+          <div class="ml-auto flex items-center gap-1 text-xs">
+            <button id="age-mode-presets" onclick="setAgeMode('presets')" class="px-2 py-0.5 rounded font-medium bg-blue-100 text-blue-700">Presets</button>
+            <button id="age-mode-range" onclick="setAgeMode('range')" class="px-2 py-0.5 rounded font-medium bg-gray-100 text-gray-500">Range</button>
+          </div>
+        </div>
+        <div id="pills-age" class="flex flex-wrap gap-2"></div>
+        <div id="age-range-bar" class="hidden"></div>
+      </div>
+
+      <!-- Income -->
+      <div class="mb-5">
+        <div class="flex items-baseline gap-2 mb-2">
+          <span class="text-sm font-semibold text-gray-800">Income</span>
+          <span class="text-xs text-gray-400">Median household income quintile</span>
+        </div>
+        <div id="pills-income" class="flex flex-wrap gap-2"></div>
+      </div>
+
+      <!-- More Options (collapsed) -->
+      <details id="more-options" class="border-t border-gray-100 pt-4 mt-4">
+        <summary class="cursor-pointer text-sm text-gray-500 hover:text-blue-600 transition-colors flex items-center gap-2 font-medium">
+          More Options
+          <span class="text-xs text-gray-400">(Household Size, Education, Car Ownership, Housing, Country of Birth, Religion)</span>
+        </summary>
+        <div class="mt-4 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-4">
+          <p class="text-xs text-amber-800">Combining many dimensions narrows the audience significantly. For geographic targeting, 1–2 dimensions usually gives the best reach. Multi-variable selections can make the estimated population too small for meaningful geo-level analysis.</p>
+        </div>
+        <div id="extra-dimensions" class="space-y-4"></div>
+      </details>
+
+      <div class="mt-6 flex items-center gap-3 flex-wrap">
+        <button id="btn-score" onclick="runScoring()" class="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold shadow-sm disabled:opacity-50 disabled:cursor-not-allowed">
+          Score Postcodes
+        </button>
+        <button onclick="clearAll()" class="px-4 py-2.5 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-sm font-medium border border-gray-200">
+          Clear All
+        </button>
+        <span id="selection-summary" class="text-sm text-gray-400 ml-2"></span>
+      </div>
+    </div>
+
+    </div><!-- end simple-panel -->
+
+    <!-- Results (shared between simple and prebuilt) -->
+    <div id="results-panel" class="hidden space-y-6 fade-in">
+
+      <!-- National summary -->
+      <div class="bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl shadow-lg p-5 text-white">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <div class="text-sm font-medium text-blue-100 mb-1">Estimated National Audience</div>
+            <div class="flex items-baseline gap-3">
+              <span id="national-pct" class="text-3xl font-bold">—%</span>
+              <span class="text-blue-200 text-sm">of population matches nationally</span>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-sm text-blue-200">Total UK Population (MSOAs)</div>
+            <div id="national-pop" class="text-xl font-bold">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+        <div class="bg-emerald-50 rounded-lg p-4 border border-emerald-200 text-center">
+          <div class="text-xs text-emerald-700 font-medium mb-1">Postcode Districts</div>
+          <div id="stat-districts" class="text-2xl font-bold text-emerald-600">—</div>
+        </div>
+        <div class="bg-blue-50 rounded-lg p-4 border border-blue-200 text-center">
+          <div class="text-xs text-blue-700 font-medium mb-1">Above Average</div>
+          <div id="stat-above" class="text-2xl font-bold text-blue-600">—</div>
+          <div class="text-xs text-blue-500">index &gt; 100</div>
+        </div>
+        <div class="bg-purple-50 rounded-lg p-4 border border-purple-200 text-center">
+          <div class="text-xs text-purple-700 font-medium mb-1">Avg Index</div>
+          <div id="stat-avg" class="text-2xl font-bold text-purple-600">—</div>
+        </div>
+        <div class="bg-amber-50 rounded-lg p-4 border border-amber-200 text-center">
+          <div class="text-xs text-amber-700 font-medium mb-1">Top-Quartile</div>
+          <div id="stat-top" class="text-2xl font-bold text-amber-600">—</div>
+          <div class="text-xs text-amber-500">index &ge; 150</div>
+        </div>
+        <div class="bg-indigo-50 rounded-lg p-4 border border-indigo-200 text-center">
+          <div class="text-xs text-indigo-700 font-medium mb-1">Selected Pop.</div>
+          <div id="stat-pop" class="text-2xl font-bold text-indigo-600">—</div>
+        </div>
+      </div>
+
+      <!-- Precision slider -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <h3 class="text-base font-semibold text-gray-900 mb-4">Targeting Precision</h3>
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-sm font-semibold text-emerald-600">&larr; Reach</span>
+          <span class="text-sm text-gray-500">Min Index: <strong id="min-score-label" class="text-gray-900">80</strong></span>
+          <span class="text-sm font-semibold text-blue-600">Precision &rarr;</span>
+        </div>
+        <input id="min-score-slider" type="range" min="0" max="200" step="5" value="80"
+               oninput="onSliderChange(this.value)"
+               class="w-full h-2 bg-gradient-to-r from-emerald-400 via-amber-400 to-gray-300 rounded-lg appearance-none cursor-pointer" />
+        <div class="flex justify-between text-xs text-gray-400 mt-1">
+          <span>0 — All</span><span>100 — Average</span><span>200 — Elite</span>
+        </div>
+        <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Exposed Ratio <span id="ratio-label" class="text-xs text-gray-500">(60% / 40%)</span>
+            </label>
+            <input id="ratio-slider" type="range" min="0.4" max="1.0" step="0.05" value="0.6" oninput="onRatioChange(this.value)" class="w-full" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+              Max Postcodes <span id="max-label" class="text-xs text-gray-500">(1500)</span>
+            </label>
+            <input id="max-slider" type="range" min="50" max="2000" step="10" value="1500" oninput="onMaxChange(this.value)" class="w-full" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+          <h3 class="text-base font-semibold text-gray-900">UK Postcode Map</h3>
+          <div class="flex items-center gap-4 text-xs">
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> Exposed</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-amber-400 inline-block"></span> Holdout</span>
+            <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-gray-300 inline-block"></span> Below threshold</span>
+          </div>
+        </div>
+        <div id="map"></div>
+      </div>
+
+      <!-- Detail stats -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-base font-semibold text-gray-900">Detailed Statistics</h3>
+          <div class="flex gap-2">
+            <button onclick="exportJSON()" class="px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 text-xs font-medium">Export JSON</button>
+            <button onclick="exportCSV()" class="px-3 py-1.5 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-xs font-medium">Export CSV</button>
+          </div>
+        </div>
+        <div id="detail-stats" class="grid grid-cols-1 md:grid-cols-3 gap-4"></div>
+      </div>
+
+      <!-- Postcode table -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-base font-semibold text-gray-900">Postcode Rankings</h3>
+          <div class="flex items-center gap-2">
+            <label class="text-xs text-gray-500">Show</label>
+            <select id="table-count" onchange="renderResults()" class="text-xs border border-gray-200 rounded px-2 py-1">
+              <option value="30">Top 30</option>
+              <option value="50">Top 50</option>
+              <option value="100">Top 100</option>
+              <option value="9999">All</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-3 text-xs text-gray-400">Est. % = modelled share of postcode population in the target audience. Index = local % / national avg %.</div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-gray-200 text-left">
+                <th class="py-2 px-3 text-gray-600 font-medium w-10">#</th>
+                <th class="py-2 px-3 text-gray-600 font-medium">Postcode</th>
+                <th class="py-2 px-3 text-gray-600 font-medium sortable" onclick="sortTable('estPct')">Est. %</th>
+                <th class="py-2 px-3 text-gray-600 font-medium">Nat. %</th>
+                <th class="py-2 px-3 text-gray-600 font-medium sortable" onclick="sortTable('index')">Index</th>
+                <th class="py-2 px-3 text-gray-600 font-medium sortable" onclick="sortTable('estAudience')">Est. Audience</th>
+                <th class="py-2 px-3 text-gray-600 font-medium sortable" onclick="sortTable('pop')">Population</th>
+                <th class="py-2 px-3 text-gray-600 font-medium sortable" onclick="sortTable('popPct')">% of UK</th>
+                <th class="py-2 px-3 text-gray-600 font-medium">Group</th>
+              </tr>
+            </thead>
+            <tbody id="top-table"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="max-w-7xl mx-auto px-4 md:px-6 py-6 text-center text-xs text-gray-400">
+  Atlas Classification — Simple Segments — TAU Reporting Platform
+</footer>
+
+<script>
+// =========================================================================
+// STATE
+// =========================================================================
+let MSOA_ROWS = [];
+let GEO_JSON = null;
+let currentSelections = {};
+let currentResults = null;
+let mapInstance = null;
+let geoLayer = null;
+let tableSortCol = 'index';
+let tableSortAsc = false;
+let currentMode = 'simple';
+let selectedPrebuiltCode = null;
+
+// Age
+let ageMode = 'presets';
+let ageRangeStart = null;
+let ageRangeEnd = null;
+let ageRangeDragging = false;
+
+const AGE_BANDS = [
+  { key: '0_4',     label: '0–4',   col: 'sum_age_0_4' },
+  { key: '5_9',     label: '5–9',   col: 'sum_age_5_9' },
+  { key: '10_14',   label: '10–14', col: 'sum_age_10_14' },
+  { key: '15_19',   label: '15–19', col: 'sum_age_15_19' },
+  { key: '20_24',   label: '20–24', col: 'sum_age_20_24' },
+  { key: '25_29',   label: '25–29', col: 'sum_age_25_29' },
+  { key: '30_34',   label: '30–34', col: 'sum_age_30_34' },
+  { key: '35_39',   label: '35–39', col: 'sum_age_35_39' },
+  { key: '40_44',   label: '40–44', col: 'sum_age_40_44' },
+  { key: '45_49',   label: '45–49', col: 'sum_age_45_49' },
+  { key: '50_54',   label: '50–54', col: 'sum_age_50_54' },
+  { key: '55_59',   label: '55–59', col: 'sum_age_55_59' },
+  { key: '60_64',   label: '60–64', col: 'sum_age_60_64' },
+  { key: '65_69',   label: '65–69', col: 'sum_age_65_69' },
+  { key: '70_74',   label: '70–74', col: 'sum_age_70_74' },
+  { key: '75_79',   label: '75–79', col: 'sum_age_75_79' },
+  { key: '80_84',   label: '80–84', col: 'sum_age_80_84' },
+  { key: '85_plus', label: '85+',   col: 'sum_age_85_plus' }
+];
+
+// PRIMARY DIMENSIONS (always visible)
+const PRIMARY_DIMS = {
+  age: {
+    label: 'Age', hasRange: true,
+    options: {
+      young_adults:      { label: 'Young Adults (18–29)',  columns: ['sum_age_15_19','sum_age_20_24','sum_age_25_29'] },
+      early_career:      { label: 'Early Career (30–44)',  columns: ['sum_age_30_34','sum_age_35_39','sum_age_40_44'] },
+      mid_life:          { label: 'Mid-Life (45–59)',      columns: ['sum_age_45_49','sum_age_50_54','sum_age_55_59'] },
+      pre_retirement:    { label: 'Pre-Retirement (60–74)',columns: ['sum_age_60_64','sum_age_65_69','sum_age_70_74'] },
+      retirement:        { label: 'Retirement (75+)',      columns: ['sum_age_75_79','sum_age_80_84','sum_age_85_plus'] },
+      families_children: { label: 'Families (0–17)',       columns: ['sum_age_0_4','sum_age_5_9','sum_age_10_14','sum_age_15_19'] }
+    }
+  },
+  income: {
+    label: 'Income',
+    type: 'quintile', sourceColumn: 'med_inc',
+    options: {
+      low:           { label: 'Low',       percentileRange: [0, 20] },
+      below_average: { label: 'Below Avg', percentileRange: [20, 40] },
+      average:       { label: 'Average',   percentileRange: [40, 60] },
+      above_average: { label: 'Above Avg', percentileRange: [60, 80] },
+      high:          { label: 'High',      percentileRange: [80, 100] }
+    }
+  }
+};
+
+// EXTRA DIMENSIONS (behind "More Options")
+const EXTRA_DIMS = {
+  household_size: {
+    label: 'Household Size',
+    options: {
+      single:       { label: 'Single Person', columns: ['Household size: 1 person in household; measures: Value'] },
+      couples:      { label: 'Couples (2)',    columns: ['Household size: 2 people in household; measures: Value'] },
+      small_family: { label: 'Small Family (3–4)', columns: ['Household size: 3 people in household; measures: Value','Household size: 4 people in household; measures: Value'] },
+      large:        { label: 'Large (5+)',     columns: ['Household size: 5 people in household; measures: Value','Household size: 6 people in household; measures: Value','Household size: 7 people in household; measures: Value','Household size: 8 or more people in household; measures: Value'] }
+    }
+  },
+  education: {
+    label: 'Education',
+    options: {
+      no_qualifications: { label: 'No Qualifications',      columns: ['Highest level of qualification: No qualifications'] },
+      level_1_3:         { label: 'Level 1–3 (Vocational)', columns: ['Highest level of qualification: Level 1 and entry level qualifications','Highest level of qualification: Level 2 qualifications','Highest level of qualification: Apprenticeship','Highest level of qualification: Level 3 qualifications'] },
+      level_4_plus:      { label: 'Level 4+ (Degree)',      columns: ['Highest level of qualification: Level 4 qualifications and above'] }
+    }
+  },
+  car_ownership: {
+    label: 'Car Ownership',
+    options: {
+      no_car:   { label: 'No Car',  columns: ['Number of cars or vans: No cars or vans in household'] },
+      one_car:  { label: '1 Car',   columns: ['Number of cars or vans: 1 car or van in household'] },
+      two_plus: { label: '2+ Cars', columns: ['Number of cars or vans: 2 cars or vans in household','Number of cars or vans: 3 or more cars or vans in household'] }
+    }
+  },
+  housing: {
+    label: 'Bedrooms',
+    options: {
+      one_bed:   { label: '1 Bed',  columns: ['Number of bedrooms: 1 bedroom'] },
+      two_bed:   { label: '2 Bed',  columns: ['Number of bedrooms: 2 bedrooms'] },
+      three_bed: { label: '3 Bed',  columns: ['Number of bedrooms: 3 bedrooms'] },
+      four_plus: { label: '4+ Bed', columns: ['Number of bedrooms: 4 or more bedrooms'] }
+    }
+  },
+  country_of_birth: {
+    label: 'Country of Birth',
+    options: {
+      uk_born:    { label: 'UK Born',              columns: ['Country of birth: Europe: United Kingdom; measures: Value'] },
+      eu_born:    { label: 'EU Born',              columns: ['Country of birth: Europe: EU countries; measures: Value'] },
+      african:    { label: 'African Born',         columns: ['Country of birth: Africa; measures: Value'] },
+      asian:      { label: 'Middle East & Asian',  columns: ['Country of birth: Middle East and Asia; measures: Value'] },
+      americas:   { label: 'Americas & Caribbean', columns: ['Country of birth: The Americas and the Caribbean; measures: Value'] }
+    }
+  },
+  religion: {
+    label: 'Religion',
+    options: {
+      no_religion: { label: 'No Religion', columns: ['Religion: No religion'] },
+      christian:   { label: 'Christian',   columns: ['Religion: Christian'] },
+      muslim:      { label: 'Muslim',      columns: ['Religion: Muslim'] },
+      hindu:       { label: 'Hindu',       columns: ['Religion: Hindu'] },
+      sikh:        { label: 'Sikh',        columns: ['Religion: Sikh'] },
+      jewish:      { label: 'Jewish',      columns: ['Religion: Jewish'] },
+      buddhist:    { label: 'Buddhist',    columns: ['Religion: Buddhist'] }
+    }
+  }
+};
+
+const ALL_DIMS = { ...PRIMARY_DIMS, ...EXTRA_DIMS };
+
+const TOTAL_COL_MAP = {
+  household_size:  'Household size: Total: All household spaces; measures: Value',
+  car_ownership:   'Number of cars or vans: Total: All households',
+  housing:         'Number of bedrooms: Total: All households',
+  education:       'Highest level of qualification: Total: All usual residents aged 16 years and over',
+  country_of_birth:'Country of birth: Total; measures: Value',
+  religion:        'Religion: Total: All usual residents'
+};
+
+// =========================================================================
+// CSV PARSER
+// =========================================================================
+function parseCSV(text) {
+  const lines = text.split('\n');
+  if (lines.length < 2) return [];
+  const headers = parseCSVLine(lines[0]);
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+    const values = parseCSVLine(line);
+    const row = {};
+    for (let j = 0; j < headers.length; j++) {
+      const h = headers[j].trim();
+      const raw = (values[j] || '').trim();
+      const num = Number(raw);
+      row[h] = raw !== '' && !isNaN(num) ? num : raw;
+    }
+    rows.push(row);
+  }
+  return rows;
+}
+function parseCSVLine(line) {
+  const fields = []; let current = ''; let inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (inQ) { if (ch === '"') { if (i+1<line.length && line[i+1]==='"') { current+='"'; i++; } else inQ=false; } else current+=ch; }
+    else if (ch === '"') inQ = true;
+    else if (ch === ',') { fields.push(current); current = ''; }
+    else current += ch;
+  }
+  fields.push(current); return fields;
+}
+function toDistrict(s) {
+  s = (s || '').replace(/\s/g, '');
+  const m = s.match(/^([A-Z]{1,2}\d{1,2})/);
+  return m ? m[1] : s;
+}
+
+// =========================================================================
+// SCORING — computes actual share % per MSOA, then aggregates to postcode
+// =========================================================================
+
+// For share-based dims: compute the actual % of MSOA population in the selected options
+// Returns { shares: Map<msoa, fraction>, nationalShare: fraction }
+function computeShareDimension(rows, dimKey, dim, selectedOpts) {
+  const colSet = new Set();
+  for (const ok of selectedOpts) {
+    for (const c of dim.options[ok].columns) colSet.add(c);
+  }
+  const cols = [...colSet];
+  const totalCol = TOTAL_COL_MAP[dimKey] || 'sum_total';
+  let natNum = 0, natDen = 0;
+  const shares = new Map();
+  for (const row of rows) {
+    const denom = typeof row[totalCol] === 'number' ? row[totalCol] : 0;
+    if (denom <= 0) { shares.set(row.msoa21cd, 0); continue; }
+    let num = 0;
+    for (const c of cols) { const v = row[c]; if (typeof v === 'number') num += v; }
+    natNum += num; natDen += denom;
+    shares.set(row.msoa21cd, num / denom);
+  }
+  return { shares, nationalShare: natDen > 0 ? natNum / natDen : 0 };
+}
+
+// For quintile (income): returns binary share (1 if in band, 0 if not)
+// and national share = fraction of MSOAs in the selected bands
+function computeQuintileDimension(rows, dim, selectedOpts) {
+  const col = dim.sourceColumn;
+  const ranges = selectedOpts.map(ok => dim.options[ok].percentileRange);
+  const sorted = rows
+    .map((r, idx) => ({ idx, value: typeof r[col] === 'number' ? r[col] : NaN }))
+    .filter(d => !isNaN(d.value))
+    .sort((a, b) => a.value - b.value);
+  const n = sorted.length;
+  const shares = new Map();
+  let inCount = 0;
+  sorted.forEach((entry, rank) => {
+    const pct = (rank / n) * 100;
+    const inside = ranges.some(([lo, hi]) => pct >= lo && pct < hi);
+    shares.set(rows[entry.idx].msoa21cd, inside ? 1 : 0);
+    if (inside) inCount++;
+  });
+  return { shares, nationalShare: inCount / n };
+}
+
+// Age range mode: direct columns
+function computeAgeRangeDimension(rows) {
+  const lo = Math.min(ageRangeStart, ageRangeEnd);
+  const hi = Math.max(ageRangeStart, ageRangeEnd);
+  const cols = AGE_BANDS.slice(lo, hi + 1).map(b => b.col);
+  let natNum = 0, natDen = 0;
+  const shares = new Map();
+  for (const row of rows) {
+    const denom = typeof row.sum_total === 'number' ? row.sum_total : 0;
+    if (denom <= 0) { shares.set(row.msoa21cd, 0); continue; }
+    let num = 0;
+    for (const c of cols) { const v = row[c]; if (typeof v === 'number') num += v; }
+    natNum += num; natDen += denom;
+    shares.set(row.msoa21cd, num / denom);
+  }
+  return { shares, nationalShare: natDen > 0 ? natNum / natDen : 0 };
+}
+
+function runFullScoring(selections) {
+  // Collect active dimensions
+  const activeDims = [];
+  for (const [dk, sel] of Object.entries(selections)) {
+    if (sel instanceof Set && sel.size > 0) activeDims.push(dk);
+  }
+  const hasAgeRange = ageMode === 'range' && ageRangeStart !== null && ageRangeEnd !== null;
+  if (hasAgeRange && !activeDims.includes('age')) activeDims.push('age');
+
+  if (activeDims.length === 0) return null;
+
+  // Compute per-dimension share for every MSOA
+  const dimResults = {};
+  const nationalShares = {};
+
+  for (const dk of activeDims) {
+    const dim = ALL_DIMS[dk];
+    if (dk === 'age' && hasAgeRange) {
+      dimResults[dk] = computeAgeRangeDimension(MSOA_ROWS);
+    } else if (dim.type === 'quintile') {
+      dimResults[dk] = computeQuintileDimension(MSOA_ROWS, dim, [...selections[dk]]);
+    } else {
+      dimResults[dk] = computeShareDimension(MSOA_ROWS, dk, dim, [...selections[dk]]);
+    }
+    nationalShares[dk] = dimResults[dk].nationalShare;
+  }
+
+  // Combined national share (independence assumption: multiply)
+  let combinedNationalShare = 1;
+  for (const dk of activeDims) combinedNationalShare *= nationalShares[dk];
+
+  // Per MSOA: estimated audience share = product of dimension shares
+  const totalUKPop = MSOA_ROWS.reduce((s, r) => s + (r.sum_total || 0), 0);
+  const msoas = [];
+  for (const row of MSOA_ROWS) {
+    const msoa = row.msoa21cd;
+    const pop = row.sum_total || 0;
+    let estShare = 1;
+    let anyZero = false;
+    for (const dk of activeDims) {
+      const s = dimResults[dk].shares.get(msoa) ?? 0;
+      if (s <= 0) { anyZero = true; break; }
+      estShare *= s;
+    }
+    if (anyZero) estShare = 0;
+    const index = combinedNationalShare > 0 ? Math.round((estShare / combinedNationalShare) * 100) : 0;
+    const estAudience = Math.round(estShare * pop);
+    msoas.push({
+      msoa, pop, estShare, index, estAudience,
+      income: row.med_inc || 0,
+      district: toDistrict(row.dominant_sector)
+    });
+  }
+  msoas.sort((a, b) => b.index - a.index);
+
+  return { msoas, nationalShares, combinedNationalShare, totalUKPop };
+}
+
+function aggregateToPostcodes(msoas, combinedNationalShare, totalUKPop) {
+  const groups = {};
+  for (const m of msoas) {
+    const d = m.district;
+    if (!d) continue;
+    if (!groups[d]) groups[d] = { postcode: d, pop: 0, msoaCount: 0, income: 0, estAudienceSum: 0 };
+    groups[d].pop += m.pop;
+    groups[d].msoaCount++;
+    groups[d].income += m.income;
+    groups[d].estAudienceSum += m.estAudience;
+  }
+  return Object.values(groups).map(p => {
+    const estPct = p.pop > 0 ? p.estAudienceSum / p.pop : 0;
+    const index = combinedNationalShare > 0 ? Math.round((estPct / combinedNationalShare) * 100) : 0;
+    return {
+      ...p,
+      estPct,
+      estAudience: p.estAudienceSum,
+      index,
+      avgIncome: Math.round(p.income / p.msoaCount),
+      popPct: totalUKPop > 0 ? p.pop / totalUKPop : 0
+    };
+  }).sort((a, b) => b.index - a.index);
+}
+
+// =========================================================================
+// UI — DIMENSIONS
+// =========================================================================
+function renderDimensions() {
+  // Age pills
+  const agePills = document.getElementById('pills-age');
+  agePills.innerHTML = '';
+  for (const [ok, opt] of Object.entries(PRIMARY_DIMS.age.options)) {
+    agePills.appendChild(makePill('age', ok, opt.label));
+  }
+
+  // Income pills
+  const incPills = document.getElementById('pills-income');
+  incPills.innerHTML = '';
+  for (const [ok, opt] of Object.entries(PRIMARY_DIMS.income.options)) {
+    incPills.appendChild(makePill('income', ok, opt.label));
+  }
+
+  // Extra dimensions
+  const extraContainer = document.getElementById('extra-dimensions');
+  extraContainer.innerHTML = '';
+  for (const [dk, dim] of Object.entries(EXTRA_DIMS)) {
+    const section = document.createElement('div');
+    section.innerHTML = `<div class="flex items-baseline gap-2 mb-2"><span class="text-sm font-semibold text-gray-800">${dim.label}</span></div><div id="pills-${dk}" class="flex flex-wrap gap-2"></div>`;
+    extraContainer.appendChild(section);
+    const box = section.querySelector(`#pills-${dk}`);
+    for (const [ok, opt] of Object.entries(dim.options)) {
+      box.appendChild(makePill(dk, ok, opt.label));
+    }
+  }
+
+  renderAgeRangeBar();
+}
+
+function makePill(dim, opt, label) {
+  const btn = document.createElement('button');
+  btn.className = 'pill px-3 py-1.5 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-600 hover:border-blue-400 hover:text-blue-600 cursor-pointer';
+  btn.textContent = label;
+  btn.dataset.dim = dim;
+  btn.dataset.opt = opt;
+  btn.onclick = () => toggleOption(dim, opt);
+  return btn;
+}
+
+function setAgeMode(mode) {
+  ageMode = mode;
+  document.getElementById('age-mode-presets').className = `px-2 py-0.5 rounded font-medium ${mode==='presets'?'bg-blue-100 text-blue-700':'bg-gray-100 text-gray-500'}`;
+  document.getElementById('age-mode-range').className = `px-2 py-0.5 rounded font-medium ${mode==='range'?'bg-blue-100 text-blue-700':'bg-gray-100 text-gray-500'}`;
+  document.getElementById('pills-age').className = mode === 'presets' ? 'flex flex-wrap gap-2' : 'hidden';
+  document.getElementById('age-range-bar').className = mode === 'range' ? '' : 'hidden';
+  if (mode === 'range') { delete currentSelections.age; updatePillStates(); }
+  else { ageRangeStart = null; ageRangeEnd = null; renderAgeRangeBar(); }
+  updateSummary();
+}
+
+function renderAgeRangeBar() {
+  const bar = document.getElementById('age-range-bar');
+  if (!bar) return;
+  const lo = ageRangeStart !== null ? Math.min(ageRangeStart, ageRangeEnd ?? ageRangeStart) : -1;
+  const hi = ageRangeStart !== null ? Math.max(ageRangeStart, ageRangeEnd ?? ageRangeStart) : -1;
+  bar.innerHTML = `
+    <div class="flex rounded-lg overflow-hidden border border-gray-200 mt-1" style="height:36px">
+      ${AGE_BANDS.map((b, i) => `
+        <div class="age-band flex-1 flex items-center justify-center text-xs ${i >= lo && i <= hi ? 'selected' : ''}"
+             style="background:${i >= lo && i <= hi ? '' : '#f9fafb'}; color:${i >= lo && i <= hi ? '' : '#9ca3af'}; border-right:1px solid #e5e7eb;"
+             onmousedown="ageRangeMouseDown(${i})"
+             onmouseenter="ageRangeMouseEnter(${i})"
+             title="${b.label}">${b.label}</div>
+      `).join('')}
+    </div>
+    <div class="mt-1 text-xs text-gray-500">
+      ${lo >= 0 ? `Selected: <strong class="text-blue-700">${AGE_BANDS[lo].label} to ${AGE_BANDS[hi].label}</strong>` : 'Click and drag to select an age range'}
+    </div>`;
+}
+function ageRangeMouseDown(i) { ageRangeDragging = true; ageRangeStart = i; ageRangeEnd = i; renderAgeRangeBar(); document.addEventListener('mouseup', ageRangeMouseUp, { once: true }); }
+function ageRangeMouseEnter(i) { if (!ageRangeDragging) return; ageRangeEnd = i; renderAgeRangeBar(); }
+function ageRangeMouseUp() { ageRangeDragging = false; updateSummary(); }
+
+function toggleOption(dim, opt) {
+  if (!currentSelections[dim]) currentSelections[dim] = new Set();
+  const sel = currentSelections[dim];
+  if (sel.has(opt)) sel.delete(opt); else sel.add(opt);
+  if (sel.size === 0) delete currentSelections[dim];
+  updatePillStates();
+  updateSummary();
+}
+
+function updatePillStates() {
+  document.querySelectorAll('.pill').forEach(btn => {
+    const sel = currentSelections[btn.dataset.dim];
+    const active = sel && sel instanceof Set && sel.has(btn.dataset.opt);
+    btn.className = active
+      ? 'pill active px-3 py-1.5 rounded-full text-xs font-semibold border-2 border-blue-500 bg-blue-50 text-blue-700 cursor-pointer shadow-sm'
+      : 'pill px-3 py-1.5 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-600 hover:border-blue-400 hover:text-blue-600 cursor-pointer';
+  });
+}
+
+function updateSummary() {
+  const parts = [];
+  if (ageMode === 'range' && ageRangeStart !== null && ageRangeEnd !== null) {
+    const lo = Math.min(ageRangeStart, ageRangeEnd), hi = Math.max(ageRangeStart, ageRangeEnd);
+    parts.push(`Age: ${AGE_BANDS[lo].label}–${AGE_BANDS[hi].label}`);
+  }
+  for (const [dk, sel] of Object.entries(currentSelections)) {
+    if (sel instanceof Set && sel.size > 0) {
+      const dim = ALL_DIMS[dk];
+      parts.push(`${dim.label}: ${[...sel].map(ok => dim.options[ok].label).join(', ')}`);
+    }
+  }
+  const el = document.getElementById('selection-summary');
+  el.textContent = parts.length ? parts.join('  ·  ') : '';
+
+  // Show multi-variable warning
+  const dimCount = parts.length;
+  const warn = dimCount > 2;
+  // handled inline
+}
+
+function clearAll() {
+  currentSelections = {};
+  currentResults = null;
+  ageRangeStart = null; ageRangeEnd = null;
+  updatePillStates(); updateSummary(); renderAgeRangeBar();
+  document.getElementById('results-panel').classList.add('hidden');
+}
+
+// =========================================================================
+// SCORING + RENDERING
+// =========================================================================
+function runScoring() {
+  const hasPresets = Object.keys(currentSelections).some(dk => { const s = currentSelections[dk]; return s instanceof Set && s.size > 0; });
+  const hasAgeRange = ageMode === 'range' && ageRangeStart !== null && ageRangeEnd !== null;
+  if (!hasPresets && !hasAgeRange) { alert('Select at least one option.'); return; }
+
+  const btn = document.getElementById('btn-score');
+  btn.disabled = true; btn.innerHTML = '<span class="loader mr-2"></span> Scoring...';
+
+  setTimeout(() => {
+    const result = runFullScoring(currentSelections);
+    if (!result) { btn.disabled = false; btn.textContent = 'Score Postcodes'; return; }
+    const postcodes = aggregateToPostcodes(result.msoas, result.combinedNationalShare, result.totalUKPop);
+    currentResults = { ...result, postcodes };
+    tableSortCol = 'index'; tableSortAsc = false;
+    renderResults();
+    btn.disabled = false; btn.textContent = 'Score Postcodes';
+  }, 50);
+}
+
+function getSettings() {
+  return {
+    minIndex: parseInt(document.getElementById('min-score-slider').value),
+    ratio: parseFloat(document.getElementById('ratio-slider').value),
+    maxPostcodes: parseInt(document.getElementById('max-slider').value)
+  };
+}
+
+function renderResults() {
+  if (!currentResults) return;
+  const s = getSettings();
+  const { postcodes: all, combinedNationalShare, totalUKPop } = currentResults;
+  const qualified = all.filter(p => p.index >= s.minIndex);
+  const limited = qualified.slice(0, s.maxPostcodes);
+  const holdoutN = Math.round(limited.length * (1 - s.ratio));
+  const exposedN = limited.length - holdoutN;
+  const exposed = limited.slice(0, exposedN);
+  const holdout = limited.slice(exposedN);
+
+  const groupMap = {};
+  exposed.forEach(p => groupMap[p.postcode] = 'exposed');
+  holdout.forEach(p => groupMap[p.postcode] = 'holdout');
+
+  // National
+  document.getElementById('national-pct').textContent = (combinedNationalShare * 100).toFixed(1) + '%';
+  document.getElementById('national-pop').textContent = (totalUKPop / 1e6).toFixed(1) + 'M';
+
+  // Stats
+  const avgIdx = limited.length > 0 ? Math.round(limited.reduce((s, p) => s + p.index, 0) / limited.length) : 0;
+  const aboveAvg = all.filter(p => p.index > 100).length;
+  const topQ = all.filter(p => p.index >= 150).length;
+  const totalPop = limited.reduce((s, p) => s + p.pop, 0);
+
+  document.getElementById('stat-districts').textContent = limited.length.toLocaleString();
+  document.getElementById('stat-above').textContent = aboveAvg.toLocaleString();
+  document.getElementById('stat-avg').textContent = avgIdx;
+  document.getElementById('stat-top').textContent = topQ.toLocaleString();
+  document.getElementById('stat-pop').textContent = totalPop >= 1e6 ? (totalPop / 1e6).toFixed(1) + 'M' : Math.round(totalPop / 1000) + 'K';
+
+  // Detail stats
+  const expPop = exposed.reduce((s, p) => s + p.pop, 0);
+  const hoPop = holdout.reduce((s, p) => s + p.pop, 0);
+  const expAud = exposed.reduce((s, p) => s + p.estAudience, 0);
+  const hoAud = holdout.reduce((s, p) => s + p.estAudience, 0);
+  const expAvg = exposed.length ? Math.round(exposed.reduce((s, p) => s + p.index, 0) / exposed.length) : 0;
+  const hoAvg = holdout.length ? Math.round(holdout.reduce((s, p) => s + p.index, 0) / holdout.length) : 0;
+
+  document.getElementById('detail-stats').innerHTML = `
+    <div class="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
+      <div class="text-sm font-medium text-emerald-800 mb-2">Exposed Group</div>
+      <div class="space-y-1.5 text-sm">
+        <div class="flex justify-between"><span class="text-gray-600">Postcodes:</span><span class="font-semibold">${exposedN.toLocaleString()}</span></div>
+        <div class="flex justify-between"><span class="text-gray-600">Population:</span><span class="font-semibold">${fmtPop(expPop)}</span></div>
+        <div class="flex justify-between"><span class="text-gray-600">Est. Audience:</span><span class="font-semibold">${fmtPop(expAud)}</span></div>
+        <div class="flex justify-between"><span class="text-gray-600">Avg Index:</span><span class="font-semibold">${expAvg}</span></div>
+      </div>
+    </div>
+    <div class="bg-amber-50 rounded-lg p-4 border border-amber-200">
+      <div class="text-sm font-medium text-amber-800 mb-2">Holdout Group</div>
+      <div class="space-y-1.5 text-sm">
+        <div class="flex justify-between"><span class="text-gray-600">Postcodes:</span><span class="font-semibold">${holdoutN.toLocaleString()}</span></div>
+        <div class="flex justify-between"><span class="text-gray-600">Population:</span><span class="font-semibold">${fmtPop(hoPop)}</span></div>
+        <div class="flex justify-between"><span class="text-gray-600">Est. Audience:</span><span class="font-semibold">${fmtPop(hoAud)}</span></div>
+        <div class="flex justify-between"><span class="text-gray-600">Avg Index:</span><span class="font-semibold">${hoAvg}</span></div>
+      </div>
+    </div>
+    <div class="bg-blue-50 rounded-lg p-4 border border-blue-200">
+      <div class="text-sm font-medium text-blue-800 mb-2">Overall</div>
+      <div class="space-y-1.5 text-sm">
+        <div class="flex justify-between"><span class="text-gray-600">Total Postcodes:</span><span class="font-semibold">${limited.length.toLocaleString()}</span></div>
+        <div class="flex justify-between"><span class="text-gray-600">Total Population:</span><span class="font-semibold">${fmtPop(expPop+hoPop)}</span></div>
+        <div class="flex justify-between"><span class="text-gray-600">Nat. Avg Share:</span><span class="font-semibold">${(combinedNationalShare*100).toFixed(1)}%</span></div>
+        <div class="flex justify-between"><span class="text-gray-600">Split:</span><span class="font-semibold">${Math.round(s.ratio*100)}/${Math.round((1-s.ratio)*100)}</span></div>
+      </div>
+    </div>`;
+
+  // Table
+  const showCount = parseInt(document.getElementById('table-count').value);
+  let sorted = [...limited];
+  const sortFns = {
+    estPct:       (a,b) => a.estPct - b.estPct,
+    index:        (a,b) => a.index - b.index,
+    estAudience:  (a,b) => a.estAudience - b.estAudience,
+    pop:          (a,b) => a.pop - b.pop,
+    popPct:       (a,b) => a.popPct - b.popPct
+  };
+  if (sortFns[tableSortCol]) { sorted.sort(sortFns[tableSortCol]); if (!tableSortAsc) sorted.reverse(); }
+  const displayed = sorted.slice(0, showCount);
+
+  const natPctStr = (combinedNationalShare * 100).toFixed(1);
+  document.getElementById('top-table').innerHTML = displayed.map((p, i) => {
+    const g = groupMap[p.postcode] || 'below';
+    const badge = g === 'exposed' ? '<span class="px-2 py-0.5 rounded-full text-xs bg-emerald-100 text-emerald-700 font-medium">Exposed</span>'
+      : g === 'holdout' ? '<span class="px-2 py-0.5 rounded-full text-xs bg-amber-100 text-amber-700 font-medium">Holdout</span>'
+      : '<span class="px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-500 font-medium">—</span>';
+    const localPctStr = (p.estPct * 100).toFixed(1);
+    const aboveNat = p.estPct * 100 > parseFloat(natPctStr);
+    const idxColor = p.index >= 150 ? '#10b981' : p.index >= 100 ? '#3b82f6' : p.index >= 70 ? '#f59e0b' : '#ef4444';
+    const idxBarW = Math.min(100, Math.round(p.index / 2));
+    return `<tr class="border-b border-gray-100 hover:bg-gray-50">
+      <td class="py-2 px-3 text-gray-400">${i+1}</td>
+      <td class="py-2 px-3 font-semibold text-gray-900">${p.postcode}</td>
+      <td class="py-2 px-3 font-medium" style="color:${aboveNat?'#059669':'#dc2626'}">${localPctStr}%</td>
+      <td class="py-2 px-3 text-gray-400">${natPctStr}%</td>
+      <td class="py-2 px-3"><div class="flex items-center gap-2"><div class="w-16 h-2 bg-gray-100 rounded-full overflow-hidden"><div class="idx-bar" style="width:${idxBarW}%;background:${idxColor}"></div></div><span class="font-semibold text-sm" style="color:${idxColor}">${p.index}</span></div></td>
+      <td class="py-2 px-3 text-gray-700 font-medium">${p.estAudience.toLocaleString()}</td>
+      <td class="py-2 px-3 text-gray-600">${p.pop.toLocaleString()}</td>
+      <td class="py-2 px-3 text-gray-500">${(p.popPct*100).toFixed(2)}%</td>
+      <td class="py-2 px-3">${badge}</td>
+    </tr>`;
+  }).join('');
+
+  // Map
+  renderMap(all, groupMap, s.minIndex);
+  document.getElementById('results-panel').classList.remove('hidden');
+
+  // Force Leaflet to recalculate size after the panel is shown
+  if (mapInstance) setTimeout(() => mapInstance.invalidateSize(), 100);
+}
+
+function fmtPop(n) { return n >= 1e6 ? (n/1e6).toFixed(2)+'M' : n >= 1e3 ? Math.round(n/1e3)+'K' : n.toString(); }
+
+function sortTable(col) {
+  if (tableSortCol === col) tableSortAsc = !tableSortAsc;
+  else { tableSortCol = col; tableSortAsc = false; }
+  renderResults();
+}
+
+// =========================================================================
+// MAP
+// =========================================================================
+function renderMap(postcodes, groupMap, minIndex) {
+  if (!GEO_JSON) return;
+  const lookup = {};
+  for (const p of postcodes) lookup[p.postcode] = p;
+
+  if (!mapInstance) {
+    mapInstance = L.map('map', { zoomControl: true, scrollWheelZoom: true }).setView([54.5, -3], 6);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+      maxZoom: 18
+    }).addTo(mapInstance);
+    // Ensure tiles render on first show
+    setTimeout(() => mapInstance.invalidateSize(), 200);
+  }
+
+  if (geoLayer) { mapInstance.removeLayer(geoLayer); geoLayer = null; }
+
+  const natShare = currentResults ? currentResults.combinedNationalShare : 0;
+
+  geoLayer = L.geoJSON(GEO_JSON, {
+    style: feature => {
+      const name = feature.properties.name;
+      const p = lookup[name];
+      const group = groupMap[name] || null;
+      const idx = p ? p.index : 0;
+      const isQ = idx >= minIndex && group;
+      let fillColor, strokeColor, weight;
+      if (isQ && group === 'exposed') {
+        const t = Math.max(0.25, Math.min(0.85, idx / 200));
+        fillColor = `rgba(16, 185, 129, ${t})`;
+        strokeColor = '#059669'; weight = 1;
+      } else if (isQ && group === 'holdout') {
+        const t = Math.max(0.25, Math.min(0.85, idx / 200));
+        fillColor = `rgba(245, 158, 11, ${t})`;
+        strokeColor = '#d97706'; weight = 1;
+      } else {
+        fillColor = 'rgba(209, 213, 219, 0.12)';
+        strokeColor = '#e5e7eb'; weight = 0.3;
+      }
+      return { fillColor, fillOpacity: 1, color: strokeColor, weight, opacity: 0.8 };
+    },
+    onEachFeature: (feature, layer) => {
+      const name = feature.properties.name;
+      const p = lookup[name];
+      if (p) {
+        const estPctStr = (p.estPct * 100).toFixed(1);
+        const natPctStr = (natShare * 100).toFixed(1);
+        const idxColor = p.index >= 150 ? '#10b981' : p.index >= 100 ? '#3b82f6' : '#f59e0b';
+        layer.bindTooltip(`
+          <div style="font-size:13px;line-height:1.6;min-width:180px">
+            <strong style="font-size:14px">${name}</strong><br/>
+            <span style="color:${idxColor};font-weight:700">Index: ${p.index}</span><br/>
+            Est. audience: <strong>${estPctStr}%</strong> <span style="color:#9ca3af">(nat: ${natPctStr}%)</span><br/>
+            Est. people: <strong>${p.estAudience.toLocaleString()}</strong> of ${p.pop.toLocaleString()}<br/>
+            Avg Income: &pound;${p.avgIncome ? p.avgIncome.toLocaleString() : '—'}
+          </div>
+        `, { sticky: true });
+      }
+    }
+  }).addTo(mapInstance);
+
+  setTimeout(() => mapInstance.invalidateSize(), 50);
+}
+
+// =========================================================================
+// SLIDER HANDLERS
+// =========================================================================
+function onSliderChange(v) { document.getElementById('min-score-label').textContent = v; if (currentResults) renderResults(); }
+function onRatioChange(v) { document.getElementById('ratio-label').textContent = `(${Math.round(v*100)}% / ${Math.round((1-v)*100)}%)`; if (currentResults) renderResults(); }
+function onMaxChange(v) { document.getElementById('max-label').textContent = `(${v})`; if (currentResults) renderResults(); }
+
+// =========================================================================
+// EXPORT
+// =========================================================================
+function exportJSON() {
+  if (!currentResults) return;
+  const s = getSettings();
+  const qualified = currentResults.postcodes.filter(p => p.index >= s.minIndex).slice(0, s.maxPostcodes);
+  const data = {
+    selections: Object.fromEntries(Object.entries(currentSelections).map(([k,v]) => [k, v instanceof Set ? [...v] : v])),
+    ageRange: ageMode === 'range' && ageRangeStart !== null ? { from: AGE_BANDS[Math.min(ageRangeStart,ageRangeEnd)].label, to: AGE_BANDS[Math.max(ageRangeStart,ageRangeEnd)].label } : null,
+    nationalAvgPct: +(currentResults.combinedNationalShare*100).toFixed(2),
+    settings: s,
+    postcodes: qualified.map(p => ({ postcode: p.postcode, index: p.index, estPct: +(p.estPct*100).toFixed(2), estAudience: p.estAudience, population: p.pop, popPctOfUK: +(p.popPct*100).toFixed(3) }))
+  };
+  dlFile(JSON.stringify(data, null, 2), 'atlas-segment.json', 'application/json');
+}
+function exportCSV() {
+  if (!currentResults) return;
+  const s = getSettings();
+  const qualified = currentResults.postcodes.filter(p => p.index >= s.minIndex).slice(0, s.maxPostcodes);
+  const holdoutN = Math.round(qualified.length * (1 - s.ratio));
+  const exposedN = qualified.length - holdoutN;
+  const natPct = (currentResults.combinedNationalShare*100).toFixed(1);
+  const rows = [['Postcode','Est %','National %','Index','Est Audience','Population','% of UK','Group']];
+  qualified.forEach((p, i) => { rows.push([p.postcode,(p.estPct*100).toFixed(1),natPct,p.index,p.estAudience,p.pop,(p.popPct*100).toFixed(2),i<exposedN?'Exposed':'Holdout']); });
+  dlFile(rows.map(r => r.join(',')).join('\n'), 'atlas-segment.csv', 'text/csv');
+}
+function dlFile(content, filename, type) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content], { type }));
+  a.download = filename; a.click();
+}
+
+// =========================================================================
+// MODE SWITCHING
+// =========================================================================
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('mode-simple').className = `mode-btn px-3 py-1.5 rounded-md text-xs font-medium ${mode==='simple'?'bg-blue-500 text-white':'text-slate-300 hover:text-white'}`;
+  document.getElementById('mode-prebuilt').className = `mode-btn px-3 py-1.5 rounded-md text-xs font-medium ${mode==='prebuilt'?'bg-blue-500 text-white':'text-slate-300 hover:text-white'}`;
+  document.getElementById('simple-panel').className = mode === 'simple' ? '' : 'hidden';
+  document.getElementById('prebuilt-panel').className = mode === 'prebuilt' ? '' : 'hidden';
+  document.getElementById('results-panel').classList.add('hidden');
+  currentResults = null;
+  selectedPrebuiltCode = null;
+  if (mode === 'prebuilt') renderTaxonomy();
+}
+
+// =========================================================================
+// PRE-BUILT TAXONOMY UI
+// =========================================================================
+function renderTaxonomy() {
+  const tree = document.getElementById('taxonomy-tree');
+  if (!window.PREBUILT_TAXONOMY) { tree.innerHTML = '<p class="text-red-500">Taxonomy data not loaded.</p>'; return; }
+  const T = window.PREBUILT_TAXONOMY;
+  tree.innerHTML = '';
+  for (const [catCode, cat] of Object.entries(T)) {
+    const catEl = document.createElement('details');
+    catEl.className = 'seg-group border border-gray-200 rounded-lg overflow-hidden';
+    catEl.innerHTML = `<summary class="px-4 py-3 cursor-pointer hover:bg-gray-50 flex items-center gap-3" style="list-style:none">
+      <span class="w-8 h-8 rounded-lg flex items-center justify-center text-white font-bold text-sm" style="background:${cat.color}">${catCode}</span>
+      <span class="font-semibold text-gray-900">${cat.label}</span>
+      <span class="ml-auto text-xs text-gray-400">${Object.keys(cat.groups).length} groups</span>
+    </summary>`;
+    const inner = document.createElement('div');
+    inner.className = 'px-4 pb-3 space-y-2';
+    for (const [grpCode, grp] of Object.entries(cat.groups)) {
+      const grpEl = document.createElement('details');
+      grpEl.className = 'ml-4';
+      grpEl.innerHTML = `<summary class="cursor-pointer py-1.5 text-sm font-medium text-gray-700 hover:text-blue-600" style="list-style:none">
+        <span class="text-gray-400 mr-1">${grpCode}</span> ${grp.label}
+      </summary>`;
+      const types = document.createElement('div');
+      types.className = 'ml-4 mt-1 space-y-1';
+      for (const [typeCode, type] of Object.entries(grp.types)) {
+        const btn = document.createElement('div');
+        btn.className = 'seg-type px-3 py-2 rounded-lg border border-gray-100 flex items-center gap-3';
+        btn.dataset.code = typeCode;
+        btn.innerHTML = `<span class="text-xs font-mono text-gray-400 w-8">${typeCode}</span>
+          <div class="flex-1"><div class="text-sm font-medium text-gray-800">${type.label}</div><div class="text-xs text-gray-400">${type.description}</div></div>
+          <span class="text-xs text-blue-500 font-medium">${type.criteria.length} criteria</span>`;
+        btn.onclick = () => scorePrebuilt(typeCode);
+        types.appendChild(btn);
+      }
+      grpEl.appendChild(types);
+      inner.appendChild(grpEl);
+    }
+    catEl.appendChild(inner);
+    tree.appendChild(catEl);
+  }
+}
+
+// =========================================================================
+// PRE-BUILT SCORING
+// =========================================================================
+function findPrebuiltType(code) {
+  const T = window.PREBUILT_TAXONOMY;
+  for (const cat of Object.values(T)) {
+    for (const grp of Object.values(cat.groups)) {
+      if (grp.types[code]) return { type: grp.types[code], cat, grp };
+    }
+  }
+  return null;
+}
+
+// Compute percentile ranks for a column across all MSOAs
+function buildPercentileMap(rows, col) {
+  const vals = rows.map((r, i) => ({ i, v: typeof r[col] === 'number' ? r[col] : NaN })).filter(d => !isNaN(d.v));
+  vals.sort((a, b) => a.v - b.v);
+  const pctMap = new Map();
+  const n = vals.length;
+  vals.forEach((d, rank) => pctMap.set(rows[d.i].msoa21cd, (rank / n) * 100));
+  return pctMap;
+}
+
+let _pctlCache = {};
+function getPercentileMap(col) {
+  if (!_pctlCache[col]) _pctlCache[col] = buildPercentileMap(MSOA_ROWS, col);
+  return _pctlCache[col];
+}
+
+function scorePrebuiltCriterion(row, criterion) {
+  const { cols, total, dir, weight } = criterion;
+  const msoa = row.msoa21cd;
+
+  // Percentile-based directions (for med_inc and pop density)
+  if (dir.startsWith('HIGH_PCTL') || dir.startsWith('LOW_PCTL') || dir === 'MID_PCTL' || dir === 'LOW_PCTL_10') {
+    const col = cols[0]; // these are single-column
+    const pctMap = getPercentileMap(col);
+    const pct = pctMap.get(msoa);
+    if (pct === undefined) return 0;
+
+    if (dir === 'HIGH_PCTL') return Math.min(100, Math.round(pct * 1.2));          // top = best
+    if (dir === 'HIGH_PCTL_90') return pct >= 90 ? 100 : Math.max(0, Math.round((pct - 50) * 2.5));
+    if (dir === 'HIGH_PCTL_75') return pct >= 75 ? 100 : Math.max(0, Math.round((pct - 25) * 2));
+    if (dir === 'HIGH_PCTL_50') return pct >= 50 ? Math.min(100, Math.round((pct - 50) * 2)) + 50 : Math.round(pct);
+    if (dir === 'LOW_PCTL_25') return pct <= 25 ? 100 : Math.max(0, Math.round((50 - pct) * 2) + 50);
+    if (dir === 'LOW_PCTL_50') return pct <= 50 ? Math.min(100, Math.round((50 - pct) * 2) + 50) : Math.max(0, Math.round((100 - pct)));
+    if (dir === 'LOW_PCTL_10') return pct <= 10 ? 100 : Math.max(0, Math.round((30 - pct) * 3.3));
+    if (dir === 'MID_PCTL') return Math.max(0, Math.round(100 - Math.abs(pct - 50) * 2.5));
+    return 50;
+  }
+
+  // Share-based: compute local share vs national average
+  if (!total) return 50; // no denominator, skip
+  let num = 0;
+  for (const c of cols) { const v = row[c]; if (typeof v === 'number') num += v; }
+  const den = typeof row[total] === 'number' ? row[total] : 0;
+  if (den <= 0) return 0;
+  const localShare = num / den;
+
+  // We need national average — compute lazily
+  const cacheKey = cols.join('|') + '/' + total;
+  if (!_natAvgCache[cacheKey]) {
+    let natN = 0, natD = 0;
+    for (const r of MSOA_ROWS) {
+      const d = typeof r[total] === 'number' ? r[total] : 0;
+      if (d <= 0) continue;
+      let n = 0;
+      for (const c of cols) { const v = r[c]; if (typeof v === 'number') n += v; }
+      natN += n; natD += d;
+    }
+    _natAvgCache[cacheKey] = natD > 0 ? natN / natD : 0;
+  }
+  const natAvg = _natAvgCache[cacheKey];
+  if (natAvg <= 0) return 0;
+
+  const index = localShare / natAvg;
+
+  if (dir === 'HIGH') return Math.min(100, Math.round(index * 50));
+  if (dir === 'LOW') return Math.min(100, Math.round((1 / Math.max(index, 0.01)) * 50));
+  if (dir === 'MID') return Math.max(0, Math.round(100 - Math.abs(index - 1) * 100));
+  return Math.min(100, Math.round(index * 50));
+}
+
+let _natAvgCache = {};
+
+function scorePrebuilt(code) {
+  const found = findPrebuiltType(code);
+  if (!found) return;
+  selectedPrebuiltCode = code;
+  _natAvgCache = {};
+
+  // Highlight selected in UI
+  document.querySelectorAll('.seg-type').forEach(el => {
+    el.classList.toggle('active', el.dataset.code === code);
+  });
+
+  const btn = document.getElementById('btn-score');
+  // Show scoring state in the taxonomy
+  setTimeout(() => {
+    const criteria = found.type.criteria;
+    const totalUKPop = MSOA_ROWS.reduce((s, r) => s + (r.sum_total || 0), 0);
+
+    // Score every MSOA: weighted geometric mean of criterion scores
+    const msoas = [];
+    for (const row of MSOA_ROWS) {
+      let weightedLogSum = 0;
+      let totalWeight = 0;
+      let anyZero = false;
+      for (const crit of criteria) {
+        const s = scorePrebuiltCriterion(row, crit);
+        const w = crit.weight;
+        if (s <= 0) { anyZero = true; break; }
+        weightedLogSum += Math.log(s) * w;
+        totalWeight += w;
+      }
+      const index = anyZero || totalWeight <= 0 ? 0 : Math.round(Math.exp(weightedLogSum / totalWeight));
+      const pop = row.sum_total || 0;
+      msoas.push({
+        msoa: row.msoa21cd, pop, index,
+        income: row.med_inc || 0,
+        district: toDistrict(row.dominant_sector),
+        estShare: index / 100,
+        estAudience: Math.round((index / 100) * pop)
+      });
+    }
+    msoas.sort((a, b) => b.index - a.index);
+
+    // Compute a synthetic "national share" — average index / 100
+    const avgIndex = msoas.reduce((s, m) => s + m.index, 0) / msoas.length;
+    const combinedNationalShare = avgIndex / 100;
+
+    const postcodes = aggregateToPostcodes(msoas, combinedNationalShare, totalUKPop);
+    currentResults = { msoas, postcodes, combinedNationalShare, totalUKPop };
+    tableSortCol = 'index'; tableSortAsc = false;
+    renderResults();
+  }, 50);
+}
+
+// =========================================================================
+// INIT
+// =========================================================================
+async function init() {
+  renderDimensions();
+  try {
+    const [csvResp, geoResp] = await Promise.all([
+      fetch('/data/uk/raw/uk_demographics_enriched_msoa.csv'),
+      fetch('/data/uk/uk-postcodes-simplified.json')
+    ]);
+    MSOA_ROWS = parseCSV(await csvResp.text());
+    GEO_JSON = await geoResp.json();
+    document.getElementById('loading-overlay').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    applyQueryParams();
+  } catch (err) {
+    document.getElementById('loading-overlay').innerHTML = `<div class="text-red-600 font-medium">Failed to load data: ${err.message}</div>`;
+  }
+}
+
+/** Read URLSearchParams from Audience Graph "Drill Down" link and pre-select pills */
+function applyQueryParams() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.size === 0) return;
+  // Map param keys to dimension + option keys
+  const paramDimMap = {
+    age: 'age', income: 'income', education: 'education',
+    housing: 'housing', density: null, region: null
+  };
+  let changed = false;
+  for (const [pKey, pVal] of params.entries()) {
+    const dimKey = paramDimMap[pKey];
+    if (dimKey === undefined || dimKey === null) continue;
+    if (ALL_DIMS[dimKey] && ALL_DIMS[dimKey].options[pVal]) {
+      if (!currentSelections[dimKey]) currentSelections[dimKey] = new Set();
+      currentSelections[dimKey].add(pVal);
+      changed = true;
+    }
+  }
+  if (changed) {
+    // Open "More Options" if any extra dims were selected
+    const extraKeys = Object.keys(EXTRA_DIMS);
+    if (Object.keys(currentSelections).some(k => extraKeys.includes(k))) {
+      document.getElementById('more-options')?.setAttribute('open', '');
+    }
+    updatePillStates();
+    updateSummary();
+  }
+}
+
+init();
+</script>
+</body>
+</html>

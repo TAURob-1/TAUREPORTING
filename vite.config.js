@@ -3,9 +3,13 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
+  test: {
+    globals: true,
+    environment: 'node',
+  },
   resolve: {
     alias: {
-      '@signal': '/home/r2/Signal/companies',
+      '@signal': '/home/r2/TAU-Reporting/signal-data',
     },
   },
   server: {
@@ -21,7 +25,7 @@ export default defineConfig({
     fs: {
       allow: [
         searchForWorkspaceRoot(process.cwd()),
-        '/home/r2/Signal',
+        '/home/r2/TAU-Reporting',
       ],
     },
   },

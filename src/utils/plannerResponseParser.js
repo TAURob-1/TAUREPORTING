@@ -257,6 +257,34 @@ function extractMediaMixSignals(text) {
   };
 }
 
+/**
+ * Extract graph action tags from AI response text.
+ * Supported tags:
+ *   [GRAPH:navigate] → switch to Graph tab
+ *   [GRAPH:drilldown:M_CHAN] → open specific drill-down
+ *   [GRAPH:load_template:young_affluent_skiers] → load a template
+ */
+export function extractGraphActions(text) {
+  const actions = [];
+  const tagPattern = /\[GRAPH:(\w+)(?::([^\]]+))?\]/gi;
+  let match;
+
+  while ((match = tagPattern.exec(text)) !== null) {
+    const action = match[1].toLowerCase();
+    const param = match[2] || null;
+
+    if (action === 'navigate') {
+      actions.push({ type: 'navigate' });
+    } else if (action === 'drilldown' && param) {
+      actions.push({ type: 'drilldown', mechanism: param.toUpperCase() });
+    } else if (action === 'load_template' && param) {
+      actions.push({ type: 'load_template', template: param });
+    }
+  }
+
+  return { actions };
+}
+
 export function parseAIResponse(responseText) {
   const text = typeof responseText === 'string' ? responseText : '';
   const layersDetected = extractLayerNumbers(text);
@@ -265,6 +293,7 @@ export function parseAIResponse(responseText) {
   const personasData = extractPersonas(text);
   const budgetSignals = extractBudgetSignals(text);
   const mediaMixSignals = extractMediaMixSignals(text);
+  const graphActions = extractGraphActions(text);
 
   return {
     mediaPlanDetected: hasLayerHeaders,
@@ -280,5 +309,7 @@ export function parseAIResponse(responseText) {
     mediaMix: mediaMixSignals.mediaMix,
     mediaMixDetected: mediaMixSignals.mediaMixDetected,
     mediaMixTotalPct: mediaMixSignals.mediaMixTotalPct,
+    graphActions: graphActions.actions,
+    graphActionsDetected: graphActions.actions.length > 0,
   };
 }

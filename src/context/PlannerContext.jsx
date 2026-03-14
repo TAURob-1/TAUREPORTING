@@ -245,6 +245,14 @@ You know the 7-stage media planning framework deeply and understand what each la
 Reference these when relevant to the question, but answer directly. Don't force structure — be useful.
 </planning_knowledge>
 
+<audience_graph_taxonomy>
+TAU Audience Graph uses 8 targeting mechanisms: M_GEO, M_CHAN, M_INT, M_CTX, M_KEY, M_CRM, M_LAL, M_TIME.
+8 attribute classes (~50 attributes): DEMO, SOCIO, GEO, BEHAV, PSYCH, PURCH, CONTEXT, MEDIA.
+When an active blueprint exists, reference its mechanism allocations for channel planning (Layer 3), audience planning (Layer 4), and flighting (Layer 7).
+Channel affinity maps to 6 UK platforms (YouTube CTV, ITVX, C4 Streaming, ITV Linear, C4, Sky) with CPM/reach.
+You may suggest graph actions using tags: [GRAPH:navigate], [GRAPH:drilldown:M_CHAN], [GRAPH:load_template:young_affluent_skiers].
+</audience_graph_taxonomy>
+
 <uk_media_landscape>
 **UK Population & Market (ONS/Census 2021-aligned):**
 - Total UK population: ~58.1M
@@ -439,6 +447,12 @@ You are not adversarial. You are the knowledgeable friend who reads the plan bef
 
 **If you can't tell which type it is, ask the user:** "Is this a brief you're sending to an agency, or a plan the agency has sent back to you? The feedback is quite different."
 </document_type_detection>
+
+<audience_graph_taxonomy>
+TAU Audience Graph uses 8 targeting mechanisms: M_GEO, M_CHAN, M_INT, M_CTX, M_KEY, M_CRM, M_LAL, M_TIME.
+When an active blueprint exists, reference its mechanism allocations in your analysis.
+You may suggest: [GRAPH:navigate], [GRAPH:drilldown:M_CHAN], [GRAPH:load_template:young_affluent_skiers].
+</audience_graph_taxonomy>
 
 <analysis_approach>
 **Stance:** Consultative advisor helping the client evaluate and improve
@@ -680,6 +694,12 @@ function getStrategicPrompt() {
 You are TAU Strategic Intelligence Advisor inside TAU-Reporting. You go beyond conventional paid media planning to identify strategic advantages, competitive gaps, and distinctive positioning opportunities using TAU Signal intelligence.
 </role>
 
+<audience_graph_taxonomy>
+TAU Audience Graph: 8 mechanisms (M_GEO, M_CHAN, M_INT, M_CTX, M_KEY, M_CRM, M_LAL, M_TIME), ~50 attributes.
+When an active blueprint exists, use its mechanism allocations in strategic recommendations.
+You may suggest: [GRAPH:navigate], [GRAPH:drilldown:M_CHAN], [GRAPH:load_template:young_affluent_skiers].
+</audience_graph_taxonomy>
+
 <competitive_strategy>
 **IMPORTANT: Go Beyond Paid Media**
 When discussing strategy, include owned channels, strategic advantages, creative differentiation — not just channel mix and budgets.
@@ -846,6 +866,16 @@ You are TAU Media Planning Agent inside TAU-Reporting. You are a strategic plann
 - Include rationale, KPI, and decision threshold per channel.
 - Respect user guardrails and non-negotiables.
 </budget_rules>
+
+<audience_graph_taxonomy>
+TAU Audience Graph uses 8 targeting mechanisms: M_GEO (Geographic/Demographic), M_CHAN (Channel Selection), M_INT (Interest/Behavioral), M_CTX (Contextual), M_KEY (Search/Keyword), M_CRM (CRM/First-Party), M_LAL (Lookalike/Modeling), M_TIME (Temporal).
+8 attribute classes (~50 attributes): DEMO, SOCIO, GEO, BEHAV, PSYCH, PURCH, CONTEXT, MEDIA.
+Each attribute scores P (Precision 0-5) x S (Scale 0-5) = W (Weight, max 25) per mechanism.
+When an active blueprint exists, reference its mechanism allocations for channel planning (Layer 3), audience planning (Layer 4), and flighting (Layer 7).
+Channel affinity maps to 6 UK platforms (YouTube CTV, ITVX, C4 Streaming, ITV Linear, C4, Sky) with CPM/reach data.
+If the user references a graph blueprint or asks about targeting mechanisms, use this taxonomy to structure your recommendations.
+You may suggest graph actions using tags: [GRAPH:navigate], [GRAPH:drilldown:M_CHAN], [GRAPH:load_template:young_affluent_skiers].
+</audience_graph_taxonomy>
 
 <layer_3_channel_extension>
 - Split Layer 3 into 3.A Strategic Channel Plan and 3.B Implementation Blueprint.

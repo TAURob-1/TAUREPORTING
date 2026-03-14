@@ -1,6 +1,8 @@
 // TAU-Reporting Planner Chat Service
 // Uses Anthropic API directly for AI planning conversations
 
+import { buildGraphContextSummary } from '../lib/audienceGraph/computeBlueprint.js';
+
 export async function sendPlannerMessage(message, plannerContext) {
 
   const envelope = buildContextEnvelope(message, plannerContext);
@@ -80,6 +82,7 @@ function buildContextEnvelope(message, plannerContext) {
     planningState,
     documentContent,
     chatHistory,
+    audienceGraphState,
   } = plannerContext;
 
   // Build system prompt with context as a top-level system parameter
@@ -102,6 +105,9 @@ Campaign Budget: ${planningState?.campaignBudget ? `${country?.currencySymbol ||
 Media Budgets: ${planningState?.mediaBudgets && Object.keys(planningState.mediaBudgets).length > 0
     ? JSON.stringify(planningState.mediaBudgets)
     : 'Not set'}
+
+[Audience Graph State]
+${buildGraphContextSummary(audienceGraphState)}
 
 [System Instructions]
 ${systemPrompt}`;

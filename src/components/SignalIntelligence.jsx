@@ -130,7 +130,7 @@ function SignalIntelligence() {
                 Competitive landscape for {advertiser.name} ({countryCode}) powered by Signal source snapshots.
               </p>
               <p className="text-xs text-blue-200 mt-2">
-                Source: /home/r2/Signal/companies/{signal.source.slug} ({signal.source.updatedAt})
+                Source: signal-data/{signal.source.slug} ({signal.source.updatedAt})
               </p>
             </div>
             <div className="text-right text-xs text-blue-100">

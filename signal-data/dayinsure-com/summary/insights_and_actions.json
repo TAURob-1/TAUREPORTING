@@ -1,0 +1,63 @@
+{
+  "generated_at": "2026-03-13T09:12:00Z",
+  "company_name": "Day Insure",
+  "domain": "dayinsure.com",
+  "executive_summary": {
+    "situation": "Day Insure operates in temporary car insurance / digital services, competing against Tempcover, Veygo, Cuvva, and GoShorty. It is currently ranked 4/5 on monthly traffic but shows stronger AI visibility than the rest of the cohort.",
+    "overall_position": "Challenger in traffic with an opportunity to convert AI visibility and digital-service positioning into more efficient acquisition."
+  },
+  "swot_analysis": {
+    "strengths": [
+      {
+        "point": "AI visibility lead in the cohort at 31.5%, giving Day Insure a discoverability edge despite lower traffic rank."
+      },
+      {
+        "point": "Traffic base of 307.7K monthly visits keeps Day Insure within striking distance of Tempcover and GoShorty."
+      }
+    ],
+    "opportunities": [
+      {
+        "point": "Search gaps around learner, hourly, and van insurance create efficient conquest space against Tempcover, Veygo, and GoShorty."
+      },
+      {
+        "point": "Digital-service positioning can differentiate the brand on speed, convenience, and mobile-first cover activation."
+      }
+    ],
+    "threats": [
+      {
+        "point": "Veygo leads traffic at 488.7K visits and can outspend in high-intent search categories."
+      }
+    ]
+  },
+  "strategic_areas": {
+    "seo": {
+      "recommendations": [
+        {
+          "priority": "HIGH",
+          "action": "Build category landing pages for one-day, hourly, learner, and van cover terms where competitors currently own the gap."
+        }
+      ]
+    },
+    "positioning": {
+      "recommendations": [
+        {
+          "priority": "HIGH",
+          "action": "Sharpen messaging around instant digital cover activation to separate Day Insure from quote-led comparison experiences."
+        }
+      ]
+    },
+    "ai_visibility": {
+      "recommendations": [
+        {
+          "priority": "URGENT",
+          "action": "Defend the AI visibility lead with stronger organization schema, citation-building, and FAQ content before larger competitors catch up."
+        }
+      ]
+    }
+  },
+  "next_steps": [
+    "Create a search-led competitor conquest brief for Tempcover and Veygo.",
+    "Expand structured data and FAQ coverage on dayinsure.com.",
+    "Package mobile-first proof points for Rob's Day Insure meeting."
+  ]
+}

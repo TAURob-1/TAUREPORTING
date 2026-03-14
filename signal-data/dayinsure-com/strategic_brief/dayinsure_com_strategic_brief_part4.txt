@@ -1,0 +1,11 @@
+# Dayinsure Strategic Intelligence Report
+
+AI visibility:
+- Day Insure overall AI visibility score: 31.5%
+- Tempcover: 0%
+- Veygo: 0%
+- Cuvva: 0%
+- GoShorty: 0%
+
+Implication:
+Day Insure already has an AI discoverability edge. The immediate goal is to defend that advantage with stronger structured data, citation-building, and FAQ coverage while turning it into measurable search and conversion gains.

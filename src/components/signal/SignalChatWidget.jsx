@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { sendPlannerMessage } from '../../services/plannerChat';
 
-const SIGNAL_SYSTEM_PROMPT = `You are a competitive intelligence analyst for Tombola, working within the TAU Reporting platform. Use the Signal data provided to answer questions about market position, competitor strategies, traffic trends, SEO gaps, AI visibility, and growth opportunities. Be specific and cite data points. Keep responses concise and actionable.`;
-
 const STRATEGIC_BRIEF_GLOB = import.meta.glob(
-  '/signal-data/tombola-co-uk/strategic_brief/*.txt',
+  '@signal/*/strategic_brief/*.txt',
   { query: '?raw', import: 'default', eager: false }
 );
+
+function buildSystemPrompt(advertiserName) {
+  return `You are a competitive intelligence analyst for ${advertiserName}, working within the TAU Reporting platform. Use the Signal data provided to answer questions about market position, competitor strategies, traffic trends, SEO gaps, AI visibility, and growth opportunities. Be specific and cite data points. Keep responses concise and actionable.`;
+}
 
 export default function SignalChatWidget({ signal, advertiserName, countryCode }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,12 +23,16 @@ export default function SignalChatWidget({ signal, advertiserName, countryCode }
   }, [messages]);
 
   useEffect(() => {
-    const keys = Object.keys(STRATEGIC_BRIEF_GLOB).sort();
+    const slug = signal?.source?.slug;
+    const keys = Object.keys(STRATEGIC_BRIEF_GLOB)
+      .filter((key) => !slug || key.replace(/\\/g, '/').includes(`/${slug}/`))
+      .sort();
+    setStrategicBrief('');
     if (keys.length === 0) return;
     Promise.all(keys.map((k) => STRATEGIC_BRIEF_GLOB[k]()))
       .then((texts) => setStrategicBrief(texts.join('\n\n---\n\n')))
       .catch(() => {});
-  }, []);
+  }, [signal?.source?.slug]);
 
   const buildSignalContext = () => {
     if (!signal) return 'Signal data not loaded yet.';
@@ -77,7 +83,7 @@ export default function SignalChatWidget({ signal, advertiserName, countryCode }
 
     try {
       const context = {
-        systemPrompt: SIGNAL_SYSTEM_PROMPT,
+        systemPrompt: buildSystemPrompt(advertiserName),
         advertiser: { name: advertiserName },
         country: { shortLabel: countryCode },
         signalContext: buildSignalContext(),
@@ -130,8 +136,8 @@ export default function SignalChatWidget({ signal, advertiserName, countryCode }
           <div className="text-center text-gray-400 text-xs mt-8">
             <p className="mb-2">Ask questions about competitive intelligence</p>
             <div className="space-y-1">
-              <button onClick={() => setInput("How does Tombola compare to Gala Bingo?")} className="block w-full text-left px-2 py-1 rounded text-orange-600 hover:bg-orange-50 text-xs">
-                "How does Tombola compare to Gala Bingo?"
+              <button onClick={() => setInput(`How does ${advertiserName} compare to the top traffic competitor?`)} className="block w-full text-left px-2 py-1 rounded text-orange-600 hover:bg-orange-50 text-xs">
+                {`"How does ${advertiserName} compare to the top traffic competitor?"`}
               </button>
               <button onClick={() => setInput("What are our biggest SEO gaps?")} className="block w-full text-left px-2 py-1 rounded text-orange-600 hover:bg-orange-50 text-xs">
                 "What are our biggest SEO gaps?"

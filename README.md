@@ -24,6 +24,11 @@ Two user tiers:
 - **Password:** `Tombola2026`
 - Limited to Tombola company data only
 
+### Limited Access (Day Insure)
+- **Username:** `Dayinsure`
+- **Password:** `Dayinsure2026`
+- Limited to Day Insure company data only
+
 ## Deployment
 
 ### Local Development
@@ -60,7 +65,7 @@ Start command: `node server.js`
 
 - **UK MSOA Demographics**: `public/data/uk/raw/uk_demographics_enriched_msoa.csv` (4.7MB)
 - **UK Media Platforms**: `public/data/uk/uk-media-platforms.json` (BARB data)
-- **Signal Intelligence**: Loaded from `/home/r2/Signal/companies/` (local only)
+- **Signal Intelligence**: Loaded from `signal-data/` (repo-local)
 
 ## Tech Stack
 

@@ -27,6 +27,7 @@ const ADVERTISER_SLUG_HINTS = {
   demo: ['tombola-co-uk', 'tombola-uk', 'tombola', 'midnite-com', 'midnite-uk', 'midnite'],
   tombola: ['tombola-co-uk', 'tombola-uk', 'tombola'],
   cinch: ['cinch-uk', 'cinch'],
+  dayinsure: ['dayinsure-com', 'dayinsure'],
   experian: ['experian-uk', 'experian-us', 'experian'],
   flutter: ['flutter', 'flutter-uk', 'betfair', 'paddypower'],
 };

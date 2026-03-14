@@ -1,0 +1,67 @@
+{
+  "generated_at": "2026-03-13T09:05:00Z",
+  "main_company": {
+    "domain": "dayinsure.com",
+    "raw_metrics": {
+      "visits": 307700,
+      "estimated_monthly_visits": {
+        "2025-11-01": 281400,
+        "2025-12-01": 296200,
+        "2026-01-01": 307700
+      },
+      "pages_per_visit": 3.4,
+      "avg_visit_duration": 231.4,
+      "bounce_rate": 0.412,
+      "traffic_sources": {
+        "direct": 0.382,
+        "organic_search": 0.401,
+        "paid_referrals": 0.039,
+        "referrals": 0.118,
+        "social": 0.021,
+        "mail": 0.039
+      }
+    }
+  },
+  "competitor_comparison_table": [
+    {
+      "domain": "dayinsure.com",
+      "monthly_visits": 307700,
+      "visits": 307700,
+      "pages_per_visit": 3.4,
+      "bounce_rate": 0.412,
+      "avg_duration": 231.4
+    },
+    {
+      "domain": "tempcover.com",
+      "monthly_visits": 343300,
+      "visits": 343300,
+      "pages_per_visit": 3.6,
+      "bounce_rate": 0.398,
+      "avg_duration": 248.2
+    },
+    {
+      "domain": "veygo.com",
+      "monthly_visits": 488700,
+      "visits": 488700,
+      "pages_per_visit": 3.9,
+      "bounce_rate": 0.384,
+      "avg_duration": 276.8
+    },
+    {
+      "domain": "cuvva.com",
+      "monthly_visits": 140500,
+      "visits": 140500,
+      "pages_per_visit": 2.8,
+      "bounce_rate": 0.441,
+      "avg_duration": 184.1
+    },
+    {
+      "domain": "goshorty.co.uk",
+      "monthly_visits": 362500,
+      "visits": 362500,
+      "pages_per_visit": 3.5,
+      "bounce_rate": 0.405,
+      "avg_duration": 239.3
+    }
+  ]
+}

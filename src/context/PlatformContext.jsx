@@ -8,8 +8,9 @@ const ADVERTISERS_STORAGE_KEY = 'tau_advertisers';
 const ACCESS_RESTRICTIONS = {
   'tombola-only': { advertiserId: 'tombola', countryCode: 'UK' },
   'cinch-only': { advertiserId: 'cinch', countryCode: 'UK' },
+  'dayinsure-only': { advertiserId: 'dayinsure', countryCode: 'UK' },
 };
-const UK_ADVERTISERS = new Set(['tombola', 'cinch']);
+const UK_ADVERTISERS = new Set(['tombola', 'cinch', 'dayinsure']);
 
 function slugify(value) {
   return String(value || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
@@ -96,6 +97,12 @@ export function PlatformProvider({ children }) {
   const [campaignConfig, setCampaignConfig] = useState(getDefaultCampaignConfig);
   const [planningState, setPlanningStateRaw] = useState(getDefaultPlanningState);
   const [customSecondary, setCustomSecondary] = useState('');
+  const [audienceGraphState, setAudienceGraphState] = useState({
+    selectedAttributes: [],
+    currentBlueprint: null,
+    scoreOverrides: {},
+  });
+  const [pageNavigator, setPageNavigator] = useState({ navigateTo: null });
 
   const advertisers = useMemo(() => {
     const merged = [...ADVERTISER_OPTIONS];
@@ -300,6 +307,10 @@ export function PlatformProvider({ children }) {
     audienceStrategy,
     customSecondary,
     setCustomSecondary,
+    audienceGraphState,
+    setAudienceGraphState,
+    pageNavigator,
+    setPageNavigator,
     resetPlanningSession,
     advertiser: {
       ...advertiser,
@@ -318,6 +329,8 @@ export function PlatformProvider({ children }) {
     setPlanningState,
     audienceStrategy,
     customSecondary,
+    audienceGraphState,
+    pageNavigator,
     resetPlanningSession,
     advertiser,
   ]);

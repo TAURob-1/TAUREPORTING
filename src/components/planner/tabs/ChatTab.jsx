@@ -38,6 +38,8 @@ export default function ChatTab() {
     setPlanningState,
     addAdvertiser,
     resetPlanningSession,
+    audienceGraphState,
+    pageNavigator,
   } = usePlatform();
   const [activeMode, setActiveMode] = useState('7-stage');
   const [input, setInput] = useState('');
@@ -219,6 +221,7 @@ export default function ChatTab() {
         planningState,
         documentContent: hasDocument ? documentContent : null,
         chatHistory: state.chatHistory,
+        audienceGraphState,
       };
 
       const responseText = await sendPlannerMessage(messageText, plannerContext);
@@ -282,6 +285,16 @@ export default function ChatTab() {
         }
         if (Object.keys(derivedProviderBudgets).length > 0) {
           updates.push(`Media budgets synced: ${Object.keys(derivedProviderBudgets).length} provider(s)`);
+        }
+      }
+
+      // Handle graph actions
+      if (parsed.graphActionsDetected && parsed.graphActions.length > 0) {
+        for (const action of parsed.graphActions) {
+          if (action.type === 'navigate' && pageNavigator?.navigateTo) {
+            pageNavigator.navigateTo('graph');
+            updates.push('Navigated to Audience Graph');
+          }
         }
       }
 

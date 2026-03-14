@@ -1,0 +1,39 @@
+{
+  "comparison": [
+    {
+      "domain": "dayinsure.com",
+      "visits": 307700,
+      "bounce_rate": 0.412,
+      "time_on_site": 231.4,
+      "pages_per_visit": 3.4
+    },
+    {
+      "domain": "tempcover.com",
+      "visits": 343300,
+      "bounce_rate": 0.398,
+      "time_on_site": 248.2,
+      "pages_per_visit": 3.6
+    },
+    {
+      "domain": "veygo.com",
+      "visits": 488700,
+      "bounce_rate": 0.384,
+      "time_on_site": 276.8,
+      "pages_per_visit": 3.9
+    },
+    {
+      "domain": "cuvva.com",
+      "visits": 140500,
+      "bounce_rate": 0.441,
+      "time_on_site": 184.1,
+      "pages_per_visit": 2.8
+    },
+    {
+      "domain": "goshorty.co.uk",
+      "visits": 362500,
+      "bounce_rate": 0.405,
+      "time_on_site": 239.3,
+      "pages_per_visit": 3.5
+    }
+  ]
+}

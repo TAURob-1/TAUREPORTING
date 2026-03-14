@@ -1,0 +1,72 @@
+{
+  "domain": "dayinsure.com",
+  "company_name": "Day Insure",
+  "currency": "GBP",
+  "estimated_at": "2026-03-13T09:15:00Z",
+  "estimated_annual_spend": {
+    "total": "£450K - £900K",
+    "total_range": {
+      "min": 450000,
+      "max": 900000
+    },
+    "confidence": "low"
+  },
+  "vs_competitors": {
+    "tempcover.com": {
+      "estimated_total": "£500K - £1.0M",
+      "confidence": "low",
+      "monthly_visits": 343300
+    },
+    "veygo.com": {
+      "estimated_total": "£700K - £1.3M",
+      "confidence": "low",
+      "monthly_visits": 488700
+    },
+    "cuvva.com": {
+      "estimated_total": "£250K - £500K",
+      "confidence": "low",
+      "monthly_visits": 140500
+    },
+    "goshorty.co.uk": {
+      "estimated_total": "£550K - £1.1M",
+      "confidence": "low",
+      "monthly_visits": 362500
+    }
+  },
+  "by_channel": {
+    "paid_search": {
+      "estimate": "£300K - £600K",
+      "confidence": "low",
+      "range": {
+        "min": 300000,
+        "max": 600000
+      },
+      "signals": [
+        "Temporary insurance category is search-led",
+        "Range scaled from sector traffic and commercial-intent terms"
+      ]
+    },
+    "display": {
+      "estimate": "£60K - £140K",
+      "confidence": "low",
+      "range": {
+        "min": 60000,
+        "max": 140000
+      },
+      "signals": [
+        "Retargeting and partner inventory likely support conversion recovery"
+      ]
+    },
+    "social_ads": {
+      "estimate": "£90K - £160K",
+      "confidence": "low",
+      "range": {
+        "min": 90000,
+        "max": 160000
+      },
+      "signals": [
+        "Digital-first brand with mobile-first acquisition patterns"
+      ]
+    }
+  }
+}

@@ -225,3 +225,15 @@ Simply run `npm install && npm run dev` to see it in action!
 ---
 
 **Built with ❤️ - January 2025**
+
+---
+
+## 2026-03-03: Graph Function Implementation
+
+**Assigned to:** Claude Code
+**Specs location:** `Data_Taxonomy/`
+- `TAU_Audience_Graph_Specification_v1.docx`
+- `Taxonomy_study_mosaic_kantar_tgi.pdf`
+- `segment_criteria_mapping.xlsx`
+
+**Purpose:** Implement audience graph visualization based on TAU taxonomy specs.
