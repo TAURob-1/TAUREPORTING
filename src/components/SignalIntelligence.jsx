@@ -19,6 +19,9 @@ import CompetitorComparison from './signal/CompetitorComparison';
 import SegmentView from './signal/SegmentView';
 import ArcadeView from './signal/ArcadeView';
 import SignalChatWidget from './signal/SignalChatWidget';
+import SignalVoiceStudio from './signal/SignalVoiceStudio';
+import GenerativeWidget from './GenerativeWidget';
+import PPTGenerator from './PPTGenerator';
 import { usePlatform } from '../context/PlatformContext.jsx';
 import { getSignalDataset } from '../data/signalIntegration';
 import { getCountryMarketContext, getMediaReachTable } from '../data/marketData';
@@ -37,6 +40,7 @@ function formatVisits(value) {
 const SIGNAL_TABS = [
   { key: 'overview', label: 'Overview' },
   { key: 'competitors', label: 'Competitors' },
+  { key: 'studio', label: 'Studio' },
   { key: 'arcade', label: 'Arcade Intelligence' },
   { key: 'segments', label: 'Bingo vs Arcade' },
 ];
@@ -96,6 +100,25 @@ function SignalIntelligence() {
   const palette = ['#1d4ed8', '#0ea5e9', '#10b981', '#f59e0b', '#8b5cf6', '#ef4444'];
 
   const seoOpportunities = signal?.seoSummary?.opportunities || [];
+  const creativeContext = useMemo(() => {
+    if (!signal) return null;
+    return {
+      company: advertiser.name,
+      marketShare: signal.traffic.marketShare.slice(0, 6).map((row) => ({
+        name: row.isAdvertiser ? advertiser.name : row.name,
+        share: row.share,
+        visits: row.visits,
+      })),
+      trafficTrend: signal.traffic.trend.slice(-6),
+      seoOpportunities: seoOpportunities.slice(0, 5).map((row) => ({
+        keyword: row.keyword,
+        competitor: row.competitor,
+        volume: row.volume || row.searchVolume || 0,
+      })),
+      aiVisibility: signal.aiVisibility.rankings.slice(0, 5),
+      insights: signal.insights.slice(0, 5),
+    };
+  }, [advertiser.name, seoOpportunities, signal]);
 
   if (loadError) {
     return (
@@ -298,6 +321,39 @@ function SignalIntelligence() {
 
         {activeTab === 'competitors' && (
           <CompetitorComparison signal={signal} advertiserName={advertiser.name} />
+        )}
+
+        {activeTab === 'studio' && (
+          <div className="grid grid-cols-1 xl:grid-cols-[1.05fr,1.25fr] gap-6">
+            <div className="space-y-6">
+              <SignalVoiceStudio
+                companySlug={signal.source.slug}
+                companyName={advertiser.name}
+              />
+
+              <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+                <div className="mb-4">
+                  <p className="text-[11px] uppercase tracking-[0.18em] text-emerald-600 font-semibold">Deck</p>
+                  <h3 className="text-lg font-bold text-gray-900">PowerPoint Generator</h3>
+                  <p className="text-sm text-gray-600 mt-1">Generate TAU-branded decks from Signal prompts and download the `.pptx` output.</p>
+                </div>
+                <PPTGenerator company={advertiser.name} />
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
+              <div className="mb-4">
+                <p className="text-[11px] uppercase tracking-[0.18em] text-violet-600 font-semibold">Graphics</p>
+                <h3 className="text-lg font-bold text-gray-900">Generative Widget</h3>
+                <p className="text-sm text-gray-600 mt-1">Create interactive charts against the current Signal dataset for this advertiser.</p>
+              </div>
+              <GenerativeWidget
+                company={advertiser.name}
+                data={creativeContext}
+                initialPrompt={`Create a chart comparing ${advertiser.name} and its main competitors on traffic share.`}
+              />
+            </div>
+          </div>
         )}
 
         {activeTab === 'arcade' && isTombola && (

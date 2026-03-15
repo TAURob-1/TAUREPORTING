@@ -27,6 +27,8 @@ export const CHANNEL_AFFINITY = {
   'DEMO.age_65_plus':   { youtube_ctv: 25, itvx: 35, c4_streaming: 30, itv_linear: 88, channel4_linear: 82, sky_linear: 75 },
   'DEMO.gender_male':   { youtube_ctv: 72, itvx: 55, c4_streaming: 52, itv_linear: 62, channel4_linear: 58, sky_linear: 68 },
   'DEMO.gender_female': { youtube_ctv: 68, itvx: 65, c4_streaming: 62, itv_linear: 70, channel4_linear: 68, sky_linear: 55 },
+  'DEMO.age_15_17':     { youtube_ctv: 95, itvx: 52, c4_streaming: 58, itv_linear: 22, channel4_linear: 28, sky_linear: 18 },
+  'DEMO.parent_40_60':  { youtube_ctv: 52, itvx: 66, c4_streaming: 58, itv_linear: 82, channel4_linear: 76, sky_linear: 70 },
 
   // SOCIO
   'SOCIO.income_low':          { youtube_ctv: 70, itvx: 62, c4_streaming: 55, itv_linear: 72, channel4_linear: 65, sky_linear: 35 },
@@ -53,12 +55,17 @@ export const CHANNEL_AFFINITY = {
   'BEHAV.grocery_frequent':     { youtube_ctv: 52, itvx: 68, c4_streaming: 55, itv_linear: 80, channel4_linear: 75, sky_linear: 48 },
   'BEHAV.diy_home_improvement': { youtube_ctv: 72, itvx: 62, c4_streaming: 55, itv_linear: 68, channel4_linear: 72, sky_linear: 52 },
   'BEHAV.gaming':               { youtube_ctv: 92, itvx: 38, c4_streaming: 42, itv_linear: 25, channel4_linear: 30, sky_linear: 35 },
+  'BEHAV.van_owner':            { youtube_ctv: 64, itvx: 58, c4_streaming: 50, itv_linear: 72, channel4_linear: 68, sky_linear: 60 },
+  'BEHAV.self_employed_trader': { youtube_ctv: 70, itvx: 52, c4_streaming: 46, itv_linear: 62, channel4_linear: 58, sky_linear: 55 },
+  'BEHAV.learner_driver':       { youtube_ctv: 90, itvx: 60, c4_streaming: 62, itv_linear: 32, channel4_linear: 38, sky_linear: 24 },
 
   // PSYCH
   'PSYCH.health_conscious':     { youtube_ctv: 72, itvx: 62, c4_streaming: 60, itv_linear: 58, channel4_linear: 62, sky_linear: 48 },
   'PSYCH.eco_conscious':        { youtube_ctv: 68, itvx: 55, c4_streaming: 65, itv_linear: 50, channel4_linear: 62, sky_linear: 40 },
   'PSYCH.luxury_oriented':      { youtube_ctv: 70, itvx: 48, c4_streaming: 50, itv_linear: 55, channel4_linear: 52, sky_linear: 85 },
   'PSYCH.price_sensitive_psych':{ youtube_ctv: 72, itvx: 70, c4_streaming: 62, itv_linear: 75, channel4_linear: 72, sky_linear: 35 },
+  'PSYCH.parent_of_teen':       { youtube_ctv: 58, itvx: 68, c4_streaming: 60, itv_linear: 80, channel4_linear: 74, sky_linear: 62 },
+  'PSYCH.parent_of_student':    { youtube_ctv: 56, itvx: 65, c4_streaming: 58, itv_linear: 78, channel4_linear: 72, sky_linear: 64 },
 
   // PURCH
   'PURCH.premium_buyer':         { youtube_ctv: 68, itvx: 48, c4_streaming: 45, itv_linear: 55, channel4_linear: 50, sky_linear: 82 },
@@ -66,6 +73,8 @@ export const CHANNEL_AFFINITY = {
   'PURCH.auto_intender':         { youtube_ctv: 75, itvx: 58, c4_streaming: 52, itv_linear: 65, channel4_linear: 60, sky_linear: 72 },
   'PURCH.fashion_buyer':         { youtube_ctv: 78, itvx: 62, c4_streaming: 65, itv_linear: 55, channel4_linear: 60, sky_linear: 52 },
   'PURCH.fmcg_regular':          { youtube_ctv: 55, itvx: 70, c4_streaming: 58, itv_linear: 82, channel4_linear: 78, sky_linear: 48 },
+  'PURCH.insurance_comparison':  { youtube_ctv: 66, itvx: 56, c4_streaming: 50, itv_linear: 52, channel4_linear: 48, sky_linear: 38 },
+  'PURCH.temp_cover_buyer':      { youtube_ctv: 74, itvx: 52, c4_streaming: 48, itv_linear: 46, channel4_linear: 42, sky_linear: 34 },
 
   // CONTEXT
   'CONTEXT.seasonal_summer':  { youtube_ctv: 72, itvx: 62, c4_streaming: 58, itv_linear: 65, channel4_linear: 62, sky_linear: 55 },
@@ -73,6 +82,8 @@ export const CHANNEL_AFFINITY = {
   'CONTEXT.commute_window':   { youtube_ctv: 80, itvx: 55, c4_streaming: 50, itv_linear: 35, channel4_linear: 38, sky_linear: 30 },
   'CONTEXT.evening_leisure':  { youtube_ctv: 70, itvx: 72, c4_streaming: 68, itv_linear: 82, channel4_linear: 78, sky_linear: 75 },
   'CONTEXT.back_to_school':   { youtube_ctv: 68, itvx: 65, c4_streaming: 58, itv_linear: 72, channel4_linear: 68, sky_linear: 55 },
+  'CONTEXT.university_term_end':{ youtube_ctv: 72, itvx: 60, c4_streaming: 56, itv_linear: 50, channel4_linear: 46, sky_linear: 36 },
+  'CONTEXT.driving_test_window':{ youtube_ctv: 78, itvx: 58, c4_streaming: 54, itv_linear: 44, channel4_linear: 40, sky_linear: 32 },
 
   // MEDIA
   'MEDIA.digital_heavy':     { youtube_ctv: 95, itvx: 72, c4_streaming: 70, itv_linear: 30, channel4_linear: 35, sky_linear: 28 },

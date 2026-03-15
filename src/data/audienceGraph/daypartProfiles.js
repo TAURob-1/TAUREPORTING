@@ -63,6 +63,16 @@ export const DAYPART_PROFILES = {
     peak: ['primetime', 'late_morning'],
     dow: [100, 98, 100, 102, 108, 105, 92]
   },
+  'DEMO.age_15_17': {
+    hourly: [70, 58, 42, 28, 18, 12, 18, 32, 48, 60, 72, 80, 88, 85, 82, 84, 92, 110, 132, 150, 160, 162, 150, 118],
+    peak: ['primetime', 'late_night'],
+    dow: [88, 90, 92, 95, 108, 128, 115]
+  },
+  'DEMO.parent_40_60': {
+    hourly: [26, 20, 14, 12, 10, 24, 52, 84, 100, 108, 112, 114, 116, 112, 104, 98, 102, 112, 122, 128, 130, 124, 98, 52],
+    peak: ['primetime', 'lunchtime'],
+    dow: [102, 100, 102, 100, 104, 101, 94]
+  },
 
   // SOCIO
   'SOCIO.income_low': {
@@ -169,6 +179,21 @@ export const DAYPART_PROFILES = {
     peak: ['primetime', 'late_night'],
     dow: [90, 88, 92, 95, 112, 125, 115]
   },
+  'BEHAV.van_owner': {
+    hourly: [22, 18, 14, 12, 12, 34, 70, 118, 128, 110, 100, 98, 102, 100, 98, 102, 110, 122, 118, 104, 92, 80, 58, 34],
+    peak: ['morning_commute', 'evening_commute'],
+    dow: [108, 106, 108, 106, 110, 92, 78]
+  },
+  'BEHAV.self_employed_trader': {
+    hourly: [18, 14, 12, 10, 12, 30, 68, 112, 122, 118, 112, 108, 105, 102, 104, 110, 118, 120, 108, 96, 84, 72, 52, 28],
+    peak: ['morning_commute', 'afternoon'],
+    dow: [110, 108, 110, 108, 112, 88, 74]
+  },
+  'BEHAV.learner_driver': {
+    hourly: [48, 36, 24, 18, 14, 14, 20, 32, 48, 62, 78, 90, 100, 104, 102, 100, 108, 122, 138, 148, 152, 148, 132, 96],
+    peak: ['early_evening', 'primetime'],
+    dow: [86, 88, 92, 96, 110, 126, 118]
+  },
 
   // PSYCH
   'PSYCH.health_conscious': {
@@ -190,6 +215,16 @@ export const DAYPART_PROFILES = {
     hourly: [45, 35, 25, 20, 18, 20, 38, 62, 80, 92, 105, 110, 115, 112, 108, 102, 100, 108, 118, 128, 130, 125, 110, 68],
     peak: ['lunchtime', 'primetime'],
     dow: [95, 92, 95, 98, 110, 118, 100]
+  },
+  'PSYCH.parent_of_teen': {
+    hourly: [28, 22, 16, 12, 10, 22, 48, 82, 98, 106, 110, 112, 114, 110, 102, 98, 105, 120, 132, 138, 136, 126, 96, 54],
+    peak: ['early_evening', 'primetime'],
+    dow: [100, 98, 100, 102, 106, 108, 94]
+  },
+  'PSYCH.parent_of_student': {
+    hourly: [24, 18, 14, 12, 10, 20, 44, 76, 94, 104, 110, 114, 116, 112, 104, 100, 108, 122, 134, 140, 138, 128, 98, 56],
+    peak: ['early_evening', 'primetime'],
+    dow: [98, 96, 98, 102, 108, 112, 96]
   },
 
   // PURCH
@@ -218,6 +253,16 @@ export const DAYPART_PROFILES = {
     peak: ['lunchtime', 'late_morning'],
     dow: [98, 95, 98, 100, 105, 118, 100]
   },
+  'PURCH.insurance_comparison': {
+    hourly: [30, 22, 16, 12, 10, 18, 40, 78, 108, 118, 114, 108, 102, 100, 98, 102, 112, 128, 132, 124, 114, 102, 78, 46],
+    peak: ['morning_commute', 'early_evening'],
+    dow: [104, 102, 104, 102, 108, 88, 78]
+  },
+  'PURCH.temp_cover_buyer': {
+    hourly: [26, 20, 16, 12, 10, 16, 38, 70, 96, 108, 112, 110, 106, 104, 102, 108, 120, 136, 144, 138, 126, 112, 84, 50],
+    peak: ['early_evening', 'primetime'],
+    dow: [100, 98, 100, 102, 110, 106, 92]
+  },
 
   // CONTEXT
   'CONTEXT.seasonal_summer': {
@@ -244,6 +289,16 @@ export const DAYPART_PROFILES = {
     hourly: [30, 22, 15, 12, 10, 20, 42, 70, 88, 100, 112, 118, 115, 110, 105, 100, 98, 108, 120, 125, 122, 112, 88, 45],
     peak: ['late_morning', 'primetime'],
     dow: [105, 102, 105, 100, 98, 110, 88]
+  },
+  'CONTEXT.university_term_end': {
+    hourly: [36, 28, 20, 14, 10, 14, 28, 52, 74, 88, 102, 112, 118, 116, 112, 110, 118, 132, 142, 146, 142, 132, 108, 68],
+    peak: ['early_evening', 'primetime'],
+    dow: [88, 86, 88, 94, 118, 130, 124]
+  },
+  'CONTEXT.driving_test_window': {
+    hourly: [34, 24, 18, 14, 10, 16, 34, 72, 108, 122, 118, 112, 108, 106, 108, 114, 124, 136, 142, 138, 128, 114, 88, 56],
+    peak: ['morning_commute', 'early_evening'],
+    dow: [100, 102, 104, 102, 110, 98, 86]
   },
 
   // MEDIA

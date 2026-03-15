@@ -52,6 +52,37 @@ export async function previewPPT(options) {
   return response.json();
 }
 
+export async function generateVoiceResponse(audioBlob, options = {}) {
+  const formData = new FormData();
+  const extension = audioBlob.type?.includes('mp4') ? 'm4a' : audioBlob.type?.includes('mpeg') ? 'mp3' : audioBlob.type?.includes('wav') ? 'wav' : 'webm';
+
+  formData.append('audio', audioBlob, `signal-voice.${extension}`);
+  if (options.companySlug) {
+    formData.append('company_slug', options.companySlug);
+  }
+  if (options.maxCompanies) {
+    formData.append('max_companies', String(options.maxCompanies));
+  }
+
+  const response = await fetch(`${API_BASE}/api/voice`, {
+    method: 'POST',
+    body: formData,
+  });
+
+  if (!response.ok) {
+    let message = `Voice request failed: ${response.statusText}`;
+    try {
+      const payload = await response.json();
+      message = payload.detail || payload.error || message;
+    } catch {
+      // ignore parse failures
+    }
+    throw new Error(message);
+  }
+
+  return response.json();
+}
+
 export function downloadPPT(blob, filename) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');

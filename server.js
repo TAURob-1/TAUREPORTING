@@ -11,6 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 5176;
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || process.env.VITE_ANTHROPIC_API_KEY;
 const SESSION_SECRET = process.env.SESSION_SECRET || 'tau-reporting-secret-change-in-production';
+const SIGNAL_BASE_URL = process.env.SIGNAL_BASE_URL || 'http://localhost:3001';
 
 // Users database (simple in-memory for demo)
 const USERS = {
@@ -94,6 +95,38 @@ async function tryReadJson(filePath) {
   }
 }
 
+async function proxySignalJson(req, res, targetPath) {
+  try {
+    const response = await fetch(`${SIGNAL_BASE_URL}${targetPath}`, {
+      method: req.method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(req.body || {}),
+    });
+
+    const contentType = response.headers.get('content-type') || '';
+    const body = contentType.includes('application/json')
+      ? await response.json().catch(() => ({}))
+      : await response.text();
+
+    if (!response.ok) {
+      return res.status(response.status).json(
+        typeof body === 'string' ? { error: body || 'Signal request failed' } : body
+      );
+    }
+
+    if (contentType.includes('application/json')) {
+      return res.json(body);
+    }
+
+    return res.status(response.status).send(body);
+  } catch (error) {
+    console.error('[Signal Proxy] JSON proxy failed:', error);
+    return res.status(502).json({ error: 'Signal proxy unavailable', details: error.message });
+  }
+}
+
 app.get('/api/media/:resource', requireAuth, async (req, res) => {
   const resource = String(req.params.resource || '').toLowerCase();
   if (!['channels', 'ctv', 'radio'].includes(resource)) {
@@ -153,6 +186,83 @@ app.post('/api/chat', requireAuth, async (req, res) => {
   } catch (error) {
     console.error('[Proxy] Error:', error);
     res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/widget', requireAuth, async (req, res) => {
+  return proxySignalJson(req, res, '/api/widget');
+});
+
+app.get('/api/widget/demo', requireAuth, async (req, res) => {
+  try {
+    const response = await fetch(`${SIGNAL_BASE_URL}/api/widget/demo`);
+    const payload = await response.json().catch(() => ({}));
+    return res.status(response.status).json(payload);
+  } catch (error) {
+    console.error('[Signal Proxy] Widget demo proxy failed:', error);
+    return res.status(502).json({ error: 'Signal proxy unavailable', details: error.message });
+  }
+});
+
+app.post('/api/ppt/preview', requireAuth, async (req, res) => {
+  return proxySignalJson(req, res, '/api/ppt/preview');
+});
+
+app.post('/api/ppt/generate', requireAuth, async (req, res) => {
+  try {
+    const response = await fetch(`${SIGNAL_BASE_URL}/api/ppt/generate`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(req.body || {}),
+    });
+
+    if (!response.ok) {
+      const contentType = response.headers.get('content-type') || '';
+      const payload = contentType.includes('application/json')
+        ? await response.json().catch(() => ({}))
+        : { error: await response.text().catch(() => 'PPT generation failed') };
+      return res.status(response.status).json(payload);
+    }
+
+    const buffer = Buffer.from(await response.arrayBuffer());
+    const contentDisposition = response.headers.get('content-disposition') || 'attachment; filename=presentation.pptx';
+    res.setHeader(
+      'Content-Type',
+      response.headers.get('content-type') || 'application/vnd.openxmlformats-officedocument.presentationml.presentation'
+    );
+    res.setHeader('Content-Disposition', contentDisposition);
+    return res.send(buffer);
+  } catch (error) {
+    console.error('[Signal Proxy] PPT proxy failed:', error);
+    return res.status(502).json({ error: 'Signal proxy unavailable', details: error.message });
+  }
+});
+
+app.post('/api/voice', requireAuth, async (req, res) => {
+  try {
+    const headers = {};
+    if (req.headers['content-type']) {
+      headers['content-type'] = req.headers['content-type'];
+    }
+
+    const response = await fetch(`${SIGNAL_BASE_URL}/api/voice`, {
+      method: 'POST',
+      headers,
+      body: req,
+      duplex: 'half',
+    });
+
+    const contentType = response.headers.get('content-type') || '';
+    const payload = contentType.includes('application/json')
+      ? await response.json().catch(() => ({}))
+      : { error: await response.text().catch(() => 'Voice request failed') };
+
+    return res.status(response.status).json(payload);
+  } catch (error) {
+    console.error('[Signal Proxy] Voice proxy failed:', error);
+    return res.status(502).json({ error: 'Signal proxy unavailable', details: error.message });
   }
 });
 
