@@ -5,6 +5,54 @@
   margin: 20px 0;
 }
 
+.widget-presets {
+  margin-bottom: 16px;
+}
+
+.widget-presets__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.widget-presets__label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #a5b4fc;
+}
+
+.widget-presets__hint {
+  font-size: 12px;
+  color: var(--text-secondary, #888);
+}
+
+.widget-presets__buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.widget-preset-button {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  color: #c7d2fe;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.widget-preset-button.is-active,
+.widget-preset-button:hover {
+  background: rgba(99, 102, 241, 0.2);
+}
+
 .widget-input-area {
   display: flex;
   gap: 10px;

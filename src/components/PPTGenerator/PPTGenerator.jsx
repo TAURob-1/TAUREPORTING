@@ -2,17 +2,28 @@
  * PPT Generator Component
  * Generate TAU-branded PowerPoint presentations
  */
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { generatePPT, previewPPT, downloadPPT } from '../../services/widgetService';
+import { getDefaultPptPreset, getPptPresets } from '../../data/studioPresets';
 import './PPTGenerator.css';
 
-export default function PPTGenerator({ company = null }) {
-  const [title, setTitle] = useState('');
-  const [subtitle, setSubtitle] = useState('');
-  const [prompt, setPrompt] = useState('');
+export default function PPTGenerator({ company = null, contextData = null }) {
+  const presets = useMemo(() => getPptPresets(company || 'the selected advertiser'), [company]);
+  const defaultPreset = useMemo(() => getDefaultPptPreset(company || 'the selected advertiser'), [company]);
+  const [title, setTitle] = useState(defaultPreset.title);
+  const [subtitle, setSubtitle] = useState(defaultPreset.subtitle);
+  const [prompt, setPrompt] = useState(defaultPreset.prompt);
+  const [selectedPresetId, setSelectedPresetId] = useState(defaultPreset.id);
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(null);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    setTitle(defaultPreset.title);
+    setSubtitle(defaultPreset.subtitle);
+    setPrompt(defaultPreset.prompt);
+    setSelectedPresetId(defaultPreset.id);
+  }, [defaultPreset.id, defaultPreset.prompt, defaultPreset.subtitle, defaultPreset.title]);
   
   const handlePreview = async () => {
     if (!title.trim() || !prompt.trim()) return;
@@ -25,7 +36,8 @@ export default function PPTGenerator({ company = null }) {
         title,
         subtitle,
         prompt,
-        company
+        company,
+        context_data: contextData,
       });
       setPreview(result);
     } catch (err) {
@@ -47,6 +59,7 @@ export default function PPTGenerator({ company = null }) {
         subtitle,
         prompt,
         company,
+        context_data: contextData,
         slides: preview?.slides
       });
       
@@ -64,6 +77,30 @@ export default function PPTGenerator({ company = null }) {
       <div className="ppt-header">
         <h3>📊 PowerPoint Generator</h3>
         <p>Generate TAU-branded presentations with AI</p>
+      </div>
+
+      <div className="ppt-presets">
+        <div className="ppt-presets__header">
+          <span className="ppt-presets__label">Controlled presets</span>
+          <span className="ppt-presets__hint">Use these first before widening prompt scope.</span>
+        </div>
+        <div className="ppt-presets__buttons">
+          {presets.map((preset) => (
+            <button
+              key={preset.id}
+              type="button"
+              className={`ppt-preset-button ${selectedPresetId === preset.id ? 'is-active' : ''}`}
+              onClick={() => {
+                setSelectedPresetId(preset.id);
+                setTitle(preset.title);
+                setSubtitle(preset.subtitle);
+                setPrompt(preset.prompt);
+              }}
+            >
+              {preset.label}
+            </button>
+          ))}
+        </div>
       </div>
       
       <div className="ppt-form">

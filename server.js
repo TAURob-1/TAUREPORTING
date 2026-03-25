@@ -20,12 +20,14 @@ const USERS = {
   'Cinch': { password: 'Cinch2026', access: 'cinch-only' },
   'Dayinsure': { password: 'Dayinsure2026', access: 'dayinsure-only' },
   'Day Insure': { password: 'Dayinsure2026', access: 'dayinsure-only' },
+  'Midnite': { password: 'Midnite2026', access: 'midnite-only' },
 };
 
 const ACCESS_CONTEXTS = {
   'tombola-only': 'You are working with Tombola company data only. The advertiser is tombola-co-uk. All intelligence and planning should focus on Tombola.',
   'cinch-only': 'You are working with Cinch company data only. The advertiser is cinch-uk. All intelligence and planning should focus on Cinch (UK used car marketplace).',
   'dayinsure-only': 'You are working with Day Insure company data only. The advertiser is dayinsure with Signal slug dayinsure-com. All intelligence and planning should focus on Day Insure (UK temporary car insurance / digital services).',
+  'midnite-only': 'You are working with Midnite company data only. The advertiser is midnite-com. Midnite is a UK-based esports and sports betting platform targeting 18-34 male audiences. All intelligence and planning should focus on Midnite. Key context: Midnite is currently ranked #5 by traffic (1.8% market share) and is executing a bold 2026-2028 growth strategy targeting Tier 1 operator status. CTV-first media allocation, "Built Different" positioning, and creator-led frequency strategy are core pillars. Competitors: Bet365, Sky Bet, Paddy Power, Betfair.',
 };
 
 app.use(cors({ origin: true, credentials: true }));
@@ -373,7 +375,155 @@ Rules:
   }
 });
 
-// Serve static files from dist directory (AFTER all API routes)
+// ─── Midnite Signal Intelligence endpoint ─────────────────────────────────────
+// Returns pre-fetched Signal-v1 data for Midnite (and optionally other clients)
+app.get('/api/signal-data/:client', requireAuth, async (req, res) => {
+  const client = String(req.params.client || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
+  const userAccess = req.session.user?.access;
+
+  // Access control: restrict client data to appropriate users
+  const accessMap = {
+    'midnite': 'midnite-only',
+    'tombola': 'tombola-only',
+    'cinch': 'cinch-only',
+    'dayinsure': 'dayinsure-only',
+  };
+
+  const requiredAccess = accessMap[client];
+  if (requiredAccess && userAccess !== 'full' && userAccess !== requiredAccess) {
+    return res.status(403).json({ error: 'Access denied for this client' });
+  }
+
+  const dataDir = path.join(__dirname, 'signal-data', client);
+  try {
+    const files = await fs.readdir(dataDir).catch(() => []);
+    if (files.length === 0) {
+      return res.status(404).json({ error: `No signal data found for client: ${client}` });
+    }
+
+    const result = { client, files: {} };
+    for (const file of files.filter(f => f.endsWith('.json'))) {
+      const key = file.replace('.json', '');
+      result.files[key] = await tryReadJson(path.join(dataDir, file));
+    }
+    return res.json(result);
+  } catch (error) {
+    console.error('[SignalData] Error reading client data:', error);
+    return res.status(500).json({ error: 'Failed to load signal data', details: error.message });
+  }
+});
+
+// Shorthand: fetch latest Midnite intelligence
+app.get('/api/midnite/intelligence', requireAuth, async (req, res) => {
+  const userAccess = req.session.user?.access;
+  if (userAccess !== 'full' && userAccess !== 'midnite-only') {
+    return res.status(403).json({ error: 'Access denied' });
+  }
+
+  try {
+    const [company, summary, data] = await Promise.all([
+      tryReadJson(path.join(__dirname, 'signal-data/midnite/company.json')),
+      tryReadJson(path.join(__dirname, 'signal-data/midnite/summary.json')),
+      tryReadJson(path.join(__dirname, 'signal-data/midnite/data.json')),
+    ]);
+
+    const strategy = await fs.readFile(path.join(__dirname, 'signal-data/midnite/growth-strategy.md'), 'utf8').catch(() => null);
+
+    return res.json({
+      client: 'midnite',
+      slug: 'midnite-com',
+      source: 'Signal-v1',
+      retrieved_at: new Date().toISOString(),
+      company: company?.config || {},
+      status: company?.status || {},
+      summary: summary || {},
+      intelligence: data || {},
+      growth_strategy_available: !!strategy,
+    });
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed to load Midnite intelligence', details: error.message });
+  }
+});
+
+// ─── TAU Skills API ───────────────────────────────────────────────────────────
+// All 18+ skills available as structured reference data
+const TAU_SKILLS = [
+  { id: 'abm-prospecting', name: 'ABM Prospecting', category: 'strategy', description: 'Account-based marketing prospecting: ICP definition, account-list building, Companies House enrichment workflows, TAU outbound methodology.' },
+  { id: 'attribution-diagnostic', name: 'Attribution Diagnostic', category: 'measurement', description: 'Diagnose attribution model health, identify measurement gaps, and recommend fit-for-purpose attribution frameworks.' },
+  { id: 'audience-graph', name: 'Audience Graph', category: 'audience', description: 'Build audience graphs using the Rosetta Stone P×S scoring framework across 8 targeting mechanisms and ~50 audience attributes.' },
+  { id: 'blueprint-sprint', name: 'Blueprint Sprint', category: 'strategy', description: 'Rapid strategic planning sprint to produce a media and audience blueprint. Scoping, prioritisation, and commercial framing.' },
+  { id: 'brand-building', name: 'Brand Building', category: 'strategy', description: 'Long-term brand growth strategy using Binet & Field econometrics, share of voice principles, and emotional vs rational channel mix.' },
+  { id: 'channel-approach', name: 'Channel Approach', category: 'planning', description: 'Channel selection and weighting framework. Maps audience attributes to best-fit media channels with rationale and budget guidance.' },
+  { id: 'commercial-proposal', name: 'Commercial Proposal', category: 'commercial', description: 'Structure and write client-facing commercial proposals. Includes pricing logic, scope definition, and value articulation.' },
+  { id: 'context-engineering', name: 'Context Engineering', category: 'ai', description: 'Design AI agent prompts and context structures. Covers system prompt architecture, multi-agent coordination, and context windows.' },
+  { id: 'ctv-av', name: 'CTV / AV', category: 'channel', description: 'Connected TV and audio-visual planning: reach curves, frequency caps, CPM benchmarks, CTV vs linear trade-offs, and measurement.' },
+  { id: 'display', name: 'Display', category: 'channel', description: 'Programmatic and direct display advertising: formats, targeting, viewability, brand safety, and performance benchmarks.' },
+  { id: 'email', name: 'Email', category: 'channel', description: 'Email marketing strategy: segmentation, lifecycle programmes, deliverability, creative best practices, and measurement.' },
+  { id: 'media-planning', name: 'Media Planning', category: 'planning', description: 'Full-funnel media planning: budget allocation, channel mix, reach & frequency objectives, flighting, and optimisation loops.' },
+  { id: 'meta-social', name: 'Meta / Social', category: 'channel', description: 'Meta (Facebook/Instagram) and broader social media advertising: audience targeting, creative formats, campaign structure, and bidding.' },
+  { id: 'paid-search', name: 'Paid Search', category: 'channel', description: 'Google and Bing paid search: keyword strategy, match types, Quality Score, smart bidding, and search vs shopping trade-offs.' },
+  { id: 'programmatic', name: 'Programmatic', category: 'channel', description: 'Programmatic buying: DSP strategy, inventory quality, PMPs vs open auction, data activation, and bid landscape analysis.' },
+  { id: 'psychological', name: 'Psychological', category: 'audience', description: 'Psychographic audience modelling: values-based segmentation, emotional triggers, and psychological targeting frameworks.' },
+  { id: 'rosetta-stone', name: 'Rosetta Stone', category: 'audience', description: "TAU's proprietary audience translation framework. Maps any audience to 8 targeting mechanisms (KEY, GEO, CRM, CTX, LAL, CHAN, INT, TIME) with P×S scoring." },
+  { id: 'search', name: 'Search (Organic)', category: 'channel', description: 'SEO strategy: keyword research, technical SEO, content planning, SERP analysis, and search visibility measurement.' },
+  { id: 'social', name: 'Social (Organic)', category: 'channel', description: 'Organic social media strategy: content planning, community management, influencer selection, and social listening.' },
+  { id: 'tau-os', name: 'TAU OS', category: 'framework', description: "TAU's operating system for AI-powered marketing consultancy. Covers agent orchestration, client delivery frameworks, and methodology principles." },
+  { id: 'tv-av', name: 'TV / AV (Linear)', category: 'channel', description: 'Linear TV and video advertising: BARB audiences, buying mechanics, sponsorship, and TV-digital attribution.' },
+  { id: 'youtube', name: 'YouTube', category: 'channel', description: 'YouTube advertising: formats (skippable, bumper, masthead), audience targeting, content adjacency, and performance measurement.' },
+];
+
+// List all skills
+app.get('/api/skills', requireAuth, (req, res) => {
+  const { category } = req.query;
+  const skills = category
+    ? TAU_SKILLS.filter(s => s.category === category)
+    : TAU_SKILLS;
+  res.json({ skills, total: skills.length });
+});
+
+// Get skill categories
+app.get('/api/skills/categories', requireAuth, (req, res) => {
+  const categories = [...new Set(TAU_SKILLS.map(s => s.category))].sort();
+  res.json({ categories });
+});
+
+// Get specific skill metadata + content
+app.get('/api/skills/:skillId', requireAuth, async (req, res) => {
+  const skillId = String(req.params.skillId || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
+  const skill = TAU_SKILLS.find(s => s.id === skillId);
+
+  if (!skill) {
+    return res.status(404).json({ error: `Skill not found: ${skillId}` });
+  }
+
+  // Try to load SKILL.md content from TAU_Skills directory
+  const skillPaths = [
+    `/home/r2/TAU_Skills/skills/${skillId}/SKILL.md`,
+    `/home/r2/TAU_Skills/skills/${skillId === 'context-engineering' ? 'context_engineering.md' : skillId}/SKILL.md`,
+    `/home/r2/TAU_Skills/skills/context_engineering.md`, // special case
+  ];
+
+  let content = null;
+  for (const p of skillPaths) {
+    try {
+      content = await fs.readFile(p, 'utf8');
+      break;
+    } catch { /* try next */ }
+  }
+
+  // For the context_engineering.md special case (flat file, not directory)
+  if (!content && skillId === 'context-engineering') {
+    content = await fs.readFile('/home/r2/TAU_Skills/skills/context_engineering.md', 'utf8').catch(() => null);
+  }
+
+  res.json({
+    ...skill,
+    content: content || null,
+    content_available: !!content,
+  });
+});
+
+// ─── Serve static files from dist directory (AFTER all API routes) ─────────────
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const distPath = path.join(__dirname, 'dist');
 

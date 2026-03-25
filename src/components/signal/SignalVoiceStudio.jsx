@@ -92,7 +92,7 @@ export default function SignalVoiceStudio({ companySlug, companyName }) {
       setTranscript(payload.transcript || '');
       setAnswer(payload.answer || '');
       setMatchedCompanies(payload.matched_companies || []);
-      setStatus(payload.tts_provider === 'elevenlabs' ? 'Speaking...' : 'Answer ready');
+      setStatus(payload.browser_tts_fallback ? 'Answer ready' : 'Speaking...');
       setMeta(
         payload.browser_tts_fallback
           ? 'Browser voice fallback used.'

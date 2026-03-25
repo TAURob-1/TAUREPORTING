@@ -20,6 +20,54 @@
   font-size: 14px;
 }
 
+.ppt-presets {
+  margin-bottom: 20px;
+}
+
+.ppt-presets__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.ppt-presets__label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #93c5fd;
+}
+
+.ppt-presets__hint {
+  font-size: 12px;
+  color: var(--text-secondary, #888);
+}
+
+.ppt-presets__buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ppt-preset-button {
+  background: rgba(51, 133, 214, 0.12);
+  border: 1px solid rgba(51, 133, 214, 0.35);
+  color: #bfdbfe;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ppt-preset-button.is-active,
+.ppt-preset-button:hover {
+  background: rgba(51, 133, 214, 0.22);
+}
+
 .ppt-form {
   display: flex;
   flex-direction: column;

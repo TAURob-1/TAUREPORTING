@@ -2,8 +2,9 @@
  * GenerativeWidget Component
  * Renders AI-generated interactive charts
  */
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { generateWidget } from '../../services/widgetService';
+import { getDefaultWidgetPreset, getWidgetPresets } from '../../data/studioPresets';
 import './GenerativeWidget.css';
 
 export default function GenerativeWidget({ 
@@ -12,12 +13,25 @@ export default function GenerativeWidget({
   data = null,
   onGenerated = null 
 }) {
-  const [prompt, setPrompt] = useState(initialPrompt);
+  const presets = useMemo(() => getWidgetPresets(company || 'the selected advertiser'), [company]);
+  const defaultPreset = useMemo(() => getDefaultWidgetPreset(company || 'the selected advertiser'), [company]);
+  const [prompt, setPrompt] = useState(initialPrompt || defaultPreset.prompt);
+  const [selectedPresetId, setSelectedPresetId] = useState(initialPrompt ? '' : defaultPreset.id);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [widgetHtml, setWidgetHtml] = useState('');
   const [title, setTitle] = useState('');
   const containerRef = useRef(null);
+
+  useEffect(() => {
+    if (initialPrompt) {
+      setPrompt(initialPrompt);
+      setSelectedPresetId('');
+      return;
+    }
+    setPrompt(defaultPreset.prompt);
+    setSelectedPresetId(defaultPreset.id);
+  }, [company, defaultPreset.id, defaultPreset.prompt, initialPrompt]);
   
   const handleGenerate = async () => {
     if (!prompt.trim()) return;
@@ -70,6 +84,28 @@ export default function GenerativeWidget({
   
   return (
     <div className="generative-widget">
+      <div className="widget-presets">
+        <div className="widget-presets__header">
+          <span className="widget-presets__label">Controlled presets</span>
+          <span className="widget-presets__hint">Recommended first pass for lower-variance testing.</span>
+        </div>
+        <div className="widget-presets__buttons">
+          {presets.map((preset) => (
+            <button
+              key={preset.id}
+              type="button"
+              className={`widget-preset-button ${selectedPresetId === preset.id ? 'is-active' : ''}`}
+              onClick={() => {
+                setSelectedPresetId(preset.id);
+                setPrompt(preset.prompt);
+              }}
+            >
+              {preset.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="widget-input-area">
         <input
           type="text"
@@ -121,16 +157,25 @@ export default function GenerativeWidget({
       {!widgetHtml && !loading && (
         <div className="widget-placeholder">
           <div className="placeholder-icon">📊</div>
-          <p>Enter a prompt to generate an interactive chart</p>
+          <p>Use a controlled preset or enter a prompt to generate an interactive chart.</p>
           <div className="placeholder-examples">
             <strong>Try:</strong>
-            <button onClick={() => setPrompt('Create a bar chart comparing Q1 vs Q2 revenue')}>
+            <button onClick={() => {
+              setSelectedPresetId(presets[0]?.id || '');
+              setPrompt(presets[0]?.prompt || 'Create a bar chart comparing Q1 vs Q2 revenue');
+            }}>
               Bar chart
             </button>
-            <button onClick={() => setPrompt('Show website traffic as a line chart over 12 months')}>
+            <button onClick={() => {
+              setSelectedPresetId(presets[1]?.id || '');
+              setPrompt(presets[1]?.prompt || 'Show website traffic as a line chart over 12 months');
+            }}>
               Line chart
             </button>
-            <button onClick={() => setPrompt('Display market share as a donut chart')}>
+            <button onClick={() => {
+              setSelectedPresetId(presets[2]?.id || '');
+              setPrompt(presets[2]?.prompt || 'Display market share as a donut chart');
+            }}>
               Donut chart
             </button>
           </div>

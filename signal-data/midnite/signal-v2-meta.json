@@ -1,0 +1,10 @@
+{
+  "source": "Signal-v2",
+  "status": "stub",
+  "note": "Signal-v2 (port 3012) is currently in Phase 2 stub mode. No company data available yet. All Midnite intelligence sourced from Signal-v1.",
+  "retrieved_at": "2026-03-25T09:00:00Z",
+  "midnite_slug": "midnite-com",
+  "signal_v1_slug": "midnite-com",
+  "signal_v1_available": true,
+  "signal_v2_available": false
+}

@@ -6,6 +6,8 @@ import SignalIntelligence from './components/SignalIntelligence';
 import StrategicAdvisor from './components/StrategicAdvisor';
 import MediaReach from './components/MediaReach';
 import AudienceGraphPage from './components/audienceGraph/AudienceGraphPage.jsx';
+import SkillsPanel from './components/SkillsPanel.jsx';
+import MidniteIntelligence from './components/MidniteIntelligence.jsx';
 import { usePlatform } from './context/PlatformContext.jsx';
 import { COUNTRY_OPTIONS, PLATFORM_BRAND } from './config/platformConfig';
 import { getRegulations } from './data/marketData';
@@ -18,6 +20,7 @@ const PAGES = [
   { key: 'rosetta', label: 'Rosetta', fullLabel: 'Rosetta Stone' },
   { key: 'media', label: 'Media', fullLabel: 'Media Reach' },
   { key: 'signal', label: 'Intelligence', fullLabel: 'Signal Intelligence' },
+  { key: 'skills', label: 'Skills', fullLabel: 'TAU Skills' },
 ];
 
 function App() {
@@ -43,6 +46,7 @@ function App() {
     if (currentPage === 'rosetta') return 'Rosetta Stone';
     if (currentPage === 'media') return 'Media Reach';
     if (currentPage === 'signal') return 'Intelligence';
+    if (currentPage === 'skills') return 'TAU Skills';
     return 'AI Planning';
   }, [currentPage]);
 
@@ -179,7 +183,9 @@ function App() {
           ) : currentPage === 'media' ? (
             <MediaReach />
           ) : currentPage === 'signal' ? (
-            <SignalIntelligence />
+            advertiserId === 'midnite' ? <MidniteIntelligence /> : <SignalIntelligence />
+          ) : currentPage === 'skills' ? (
+            <SkillsPanel />
           ) : (
             <StrategicAdvisor />
           )}

@@ -3,6 +3,7 @@ export const ADVERTISER_OPTIONS = [
   { id: 'tombola', name: 'Tombola', vertical: 'gambling' },
   { id: 'cinch', name: 'Cinch', vertical: 'automotive' },
   { id: 'dayinsure', name: 'Day Insure', vertical: 'temporary car insurance' },
+  { id: 'midnite', name: 'Midnite', vertical: 'esports & sports betting', signalSlug: 'midnite-com', country: 'UK' },
   { id: 'experian', name: 'Experian', vertical: 'data services' },
 ];
 

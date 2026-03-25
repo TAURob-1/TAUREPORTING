@@ -337,7 +337,7 @@ function SignalIntelligence() {
                   <h3 className="text-lg font-bold text-gray-900">PowerPoint Generator</h3>
                   <p className="text-sm text-gray-600 mt-1">Generate TAU-branded decks from Signal prompts and download the `.pptx` output.</p>
                 </div>
-                <PPTGenerator company={advertiser.name} />
+                <PPTGenerator company={advertiser.name} contextData={creativeContext} />
               </div>
             </div>
 
